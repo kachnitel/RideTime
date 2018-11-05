@@ -5,7 +5,8 @@ import mapLayers from '../mockMapLayers';
 import { mapboxToken } from '../secrets';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
-// import geolocation from 'react';
+import LocationsProvider from '../providers/LocationsProvider';
+import LocationsList from '../lists/LocationsList';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -18,7 +19,7 @@ export default class HomeScreen extends React.Component {
     this.mapRef = createRef();
     this.state = { 
       mapCenterPosition: {
-        name: 'streets',  // the name of the layer, this will be seen in the layer selection control
+        name: 'OpenStreetMap',  // the name of the layer, this will be seen in the layer selection control
         checked: 'true',  // if the layer is selected in the layer selection control
         type: 'TileLayer',  // the type of layer as shown at https://react-leaflet.js.org/docs/en/components.html#raster-layers
         baseLayer: true,
@@ -31,51 +32,45 @@ export default class HomeScreen extends React.Component {
       },
       // use last known position
       currentLocation: [28.417839, -81.563808],
-      markers: {
-        one: {
-          id: 'testMarker', // The ID attached to the marker. It will be returned when onMarkerClicked is called
-          coords: [28.417839, -81.563808], // Latitude and Longitude of the marker
-          icon: 'md-location', // HTML element that will be displayed as the marker.  It can also be text or an SVG string.
-        
-          // The child object, "animation", controls the optional animation that will be attached to the marker.
-          // See below for a list of available animations
-/*           animation: {
-            name: animations[Math.floor(Math.random() * animations.length)],
-            duration: Math.floor(Math.random() _ 3) + 1,
-            delay: Math.floor(Math.random()) _ 0.5,
-            interationCount
-          }, */
-          // optional size for this individual icon
-          // will default to the WebViewLeaflet `defaultIconSize` property if not provided
-          size: [64, 64],
-        }
-      }
+      markers: []
     }
   }
 
   componentDidMount() {
     location = navigator.geolocation.getCurrentPosition(
       (loc) => {
-        console.log(loc);
-        console.log("LOCATION LOGGED");
-        this.setState({currentLocation: loc.coords})
-        // this.setState({mapCenterPosition: {centerPosition: loc.coords}});
-        // this.webViewLeaflet.flyTo([loc.coords.latitude, loc.coords.longitude]);
-        console.log("\nwebViewLeaflet\n");
-        // console.log(this.webViewLeaflet.constructor.name);
+        // console.log(loc);
+        // console.log("LOCATION LOGGED");
+
+        this.setState({currentLocation: [loc.coords.latitude, loc.coords.longitude]})
         this.webViewLeaflet.sendMessage({centerPosition: [loc.coords.latitude, loc.coords.longitude]});
+
+        // update to reload nearby markers (eventually, is it even needed? has to be done when map moves)
+        this.forceUpdate();
       },
       (error) => {
         console.log(error);
         console.log("ERROR LOGGED");
-      }
-      // {maximumAge: 5000}
+      },
+      {maximumAge: 5000}
     );
-    // this.mapRef.current.leafletElement.flyTo([loc.coords.latitude, loc.coords.longitude]);
 
-    // console.log("AAAAA");
-    // console.log(location);
-    // this.setState({mapCenterPosition: location.coords})
+    // console.log(LocationsProvider.getLocations());
+    // this.setState({markers: LocationsProvider.getLocations()});
+    // this.webViewLeaflet.sendMessage({locations: [...this.state.markers]})
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("update");
+    // console.log(prevState.markers);
+
+    locations = LocationsProvider.getLocations();
+
+    if(locations !== null && locations !== [] && JSON.stringify(prevState.markers) !== JSON.stringify(locations)) {
+      console.log("SEND MARKERS");
+      this.setState({markers: locations});
+      this.webViewLeaflet.sendMessage({locations: [...this.state.markers]})
+    }
   }
 
   onLoad = (event) => {
@@ -116,13 +111,16 @@ export default class HomeScreen extends React.Component {
             // Optional: display a marker to be at a given location
             ownPositionMarker={{
               coords: this.state.currentLocation,
-              icon: "❤️",
-              size: [24, 24],
+              icon: '◉',
+              size: [16, 16],
+              // style: {
+              //   color: '#FF0000'
+              // },
               animation: {
                 name: "pulse",
-                duration: ".5",
+                duration: "1",
                 delay: 0,
-                interationCount: "infinite"
+                interationCount: "3"
               }
             }}
 
@@ -130,20 +128,26 @@ export default class HomeScreen extends React.Component {
             centerButton={true}
           />
         </View>
+
         <View style={{ flex: 65, backgroundColor: 'black'}}>
           <Text style={{color: 'pink'}}>Rides list here.
             Default within 24hr start
             Some filters etc..
             Filter at top header?
-            PENISPENIS
           </Text>
           <Text style={{backgroundColor: '#ff0000'}}>
-            Lat: {this.state.currentLocation.latitude}
+            Lat: {this.state.currentLocation[0]}
           </Text>
           <Text style={{backgroundColor: '#ff0000'}}>
-            Lon: {this.state.currentLocation.longitude}
+            Lon: {this.state.currentLocation[1]}
           </Text>
         </View>
+
+        <View style={{flex: 30}}>
+          <Text>Locations(just here for map testing)</Text>
+          <LocationsList  data={this.state.markers}/>
+        </View>
+
         {/* Action button setup */}
         <ActionButton buttonColor="rgba(231,76,60,1)">
           <ActionButton.Item buttonColor='#9b59b6' title="Road ride" onPress={() => console.log("notes tapped!")}>
