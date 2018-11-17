@@ -1,13 +1,11 @@
 // TODO move map to own Component ASAP
 import React, {createRef} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import WebViewLeaflet from 'react-native-webview-leaflet';
-import mapLayers from '../mockMapLayers';
-import { mapboxToken } from '../secrets';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LocationsProvider from '../providers/LocationsProvider';
 import LocationsList from '../lists/LocationsList';
+import { AreaMap } from '../components/AreaMap';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -17,35 +15,14 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
 
+    // get from cache
+    location = [28.417839, -81.563808];
     this.mapRef = createRef();
     this.state = { 
-      // mapCenterPosition: {
-      //   name: 'OpenStreetMap',  // the name of the layer, this will be seen in the layer selection control
-      //   checked: 'true',  // if the layer is selected in the layer selection control
-      //   type: 'TileLayer',  // the type of layer as shown at https://react-leaflet.js.org/docs/en/components.html#raster-layers
-      //   baseLayer: true,
-      //   // url of tiles
-      //   url: `https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=${mapboxToken}`,
-      //   // attribution string to be shown for this layer
-      //   attribution:
-      //     '&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors',
-      //   centerPosition: [49.0010305292 -123.155249379]
-      // },
       // use last known position
-      currentLocation: [28.417839, -81.563808],
-      markers: [{
-         coords: [
-            "50.076298",
-            "-123.015439",
-          ],
-          icon: "⛰",
-          id: "Whistler South",
-          key: "Whistler South",
-          size: Array [
-            24,
-            24
-          ]
-        }]
+      currentLocation: location,
+      // 
+      markers: LocationsProvider.getLocations(location)
     }
   }
 
@@ -55,14 +32,12 @@ export default class HomeScreen extends React.Component {
       (loc) => {
         this.setState({currentLocation: [loc.coords.latitude, loc.coords.longitude]})
 
-        this.webViewLeaflet.sendMessage({centerPosition: [loc.coords.latitude, loc.coords.longitude]});
-
         // update to reload nearby markers (eventually, is it even needed? has to be done when map moves)
         this.forceUpdate();
       },
       (error) => {
         console.log(error);
-        console.log("ERROR LOGGED");
+        console.log("LOCATION ERROR LOGGED");
       },
       {maximumAge: 5000}
     );
@@ -72,76 +47,12 @@ export default class HomeScreen extends React.Component {
     // this.webViewLeaflet.sendMessage({locations: [...this.state.markers]})
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log("update");
-    // console.log(prevState.markers);
-
-    spots = LocationsProvider.getLocations();
-
-    if(spots !== null && spots !== [] && JSON.stringify(prevState.markers) !== JSON.stringify(spots)) {
-      console.log("SEND MARKERS");
-      this.setState({markers: spots});
-
-      sendobject = {locations: [...spots]};
-      console.log(sendobject);
-      // this.webViewLeaflet.sendMessage(sendobject);
-    }
-  }
-
-  onLoad = (event) => {
-    // log a message showing the map has been loaded
-    // console.log('onLoad received : ', event);
-  
-    // optionally set state
-    this.setState(
-      {
-        ...this.state,
-        mapState: { ...this.state.mapState, mapLoaded: true }
-      },
-      () => {
-        // send an array of map layer information to the map
-        this.webViewLeaflet.sendMessage({
-          mapLayers
-        });
-      }
-    );
-  }
-
   render() {
     // console.log(this.state);
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
         <View style={{flex: 25}}>
-          <WebViewLeaflet
-            ref={component => (this.webViewLeaflet = component)}
-            onLoad={this.onLoad}
-            eventReceiver={this} // the component that will receive map events
-            
-            // the center of the displayed map
-            centerPosition={this.state.mapCenterPosition}
-
-            // a list of markers that will be displayed on the map
-            markers={this.state.markers}
-
-            // Optional: display a marker to be at a given location
-            ownPositionMarker={{
-              coords: this.state.currentLocation,
-              icon: '◉',
-              size: [16, 16],
-              // style: {
-              //   color: '#FF0000'
-              // },
-              animation: {
-                name: "pulse",
-                duration: "1",
-                delay: 0,
-                interationCount: "2"
-              }
-            }}
-
-            // Optional: display a button that centers the map on the coordinates of ownPostionMarker. Requires that "ownPositionMarker" prop be set
-            centerButton={true}
-          />
+          <AreaMap currentLocation={this.state.currentLocation} locations={this.state.markers}/>
         </View>
 
         <View style={{ flex: 25, backgroundColor: 'black'}}>
