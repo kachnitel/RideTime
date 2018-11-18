@@ -19,8 +19,9 @@ export default class LocationsProvider {
         return(
             locations.map((location) => {
                 return {
-                    id: location.name,
-                    key: location.name,
+                    id: location.nid,
+                    key: location.nid,
+                    name: location.name,
                     coords: [location.lat, location.lon],
                     icon: '⛰AA',
                     size: [24, 24]

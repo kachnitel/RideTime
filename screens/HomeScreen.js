@@ -2,7 +2,7 @@
 import React, {createRef} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import LocationsProvider from '../providers/LocationsProvider';
-import LocationsList from '../lists/LocationsList';
+import { RidesList } from '../components/lists/RidesList';
 import { AreaMap } from '../components/AreaMap';
 import { CreateRideButton } from '../components/CreateRideButton';
 
@@ -20,7 +20,19 @@ export default class HomeScreen extends React.Component {
     this.state = { 
       // use last known position
       currentLocation: location,
-      markers: LocationsProvider.getLocations(location)
+      locations: LocationsProvider.getLocations(location),
+      rides: [
+        {
+          name: 'Joey\'s Alice lake lap',
+          key: '1',
+          difficulty: 3
+        },
+        {
+          name: 'Quest Shuttle',
+          key: '2',
+          difficulty: 4 
+        }
+      ]
     }
   }
 
@@ -45,12 +57,11 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
         <View style={{flex: 35}}>
-          <AreaMap currentLocation={this.state.currentLocation} locations={this.state.markers}/>
+          <AreaMap currentLocation={this.state.currentLocation} locations={this.state.locations}/>
         </View>
 
         <View style={{flex: 65}}>
-          <Text>Locations</Text>
-          <LocationsList  data={this.state.markers}/>
+          <RidesList rides={this.state.rides}/>
         </View>
 
         <CreateRideButton />
