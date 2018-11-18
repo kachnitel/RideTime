@@ -8,7 +8,7 @@ export default class RideDetailScreen extends React.Component {
 
   render() {
     return (
-      <Text>Details</Text>
+      <Text>Name: {this.props.navigation.getParam('name', 'NO NAME')}</Text>
     );
   }
 }

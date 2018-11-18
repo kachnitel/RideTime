@@ -3,12 +3,15 @@ import { Text, View, StyleSheet } from 'react-native';
 
 export class RideItemDetail extends React.Component {
   render() {
+    const ride = this.props.ride;
+    difficulty = ride.difficulty ? ride.difficulty : '0';
+
     return <View style={styles.detail}>
-      <View style={{flex: 65}}>
-        <Text>Difficulty, Pace, ...</Text>
+      <View style={{flex: 1}}>
+        <Text>Difficulty: {difficulty}, Pace, ...</Text>
       </View>
-      <View style={{flex: 35}}>
-        <Text>12:30</Text>
+      <View style={{flex: 1}}>
+        <Text>11:30</Text>
       </View>
     </View>;
   }
@@ -17,6 +20,7 @@ export class RideItemDetail extends React.Component {
 const styles = StyleSheet.create({
     detail: {
       flex: 1,
-      flexDirection: 'row'
+      flexDirection: 'row',
+
     }
 })

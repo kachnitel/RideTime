@@ -6,7 +6,7 @@ import { withNavigation } from 'react-navigation';
 class RideItem extends React.Component {
   render() {
     return (
-      <TouchableHighlight onPress={() => this.props.navigation.navigate('RideDetails')}>
+      <TouchableHighlight onPress={() => this.props.navigation.navigate('RideDetails', this.props.ride)}>
         <View style={styles.ride}>
           <Text style={styles.name}>{this.props.ride.name}</Text>
           <RideItemDetail ride={this.props.ride} />
