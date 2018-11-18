@@ -1,15 +1,22 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 import { RideItemDetail } from './RideItemDetail';
+import { withNavigation } from 'react-navigation';
 
-export class RideItem extends React.Component {
+class RideItem extends React.Component {
   render() {
-    return <View style={styles.ride}>
-      <Text style={styles.name}>{this.props.ride.name}</Text>
-      <RideItemDetail ride={this.props.ride} />
-    </View>;
+    return (
+      <TouchableHighlight onPress={() => this.props.navigation.navigate('RideDetails')}>
+        <View style={styles.ride}>
+          <Text style={styles.name}>{this.props.ride.name}</Text>
+          <RideItemDetail ride={this.props.ride} />
+          </View>
+      </TouchableHighlight>
+    );
   }
 }
+
+export default withNavigation(RideItem);
 
 const styles = StyleSheet.create({
     name: {
@@ -28,5 +35,6 @@ const styles = StyleSheet.create({
       borderRadius: 4,
       borderWidth: 0.5,
       borderColor: '#d6d7da',
+      padding: 3
     }
 })

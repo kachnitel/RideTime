@@ -8,6 +8,7 @@ import { CreateRideButton } from '../components/CreateRideButton';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
+    // https://reactnavigation.org/docs/en/stack-navigator.html#navigationoptions-for-screens-inside-of-the-navigator
     title: "RideTime"
   };
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AppRegistry, FlatList, StyleSheet, Text, View } from 'react-native';
-import { RideItem } from '../RideItem';
+import RideItem from '../RideItem';
 
 export class RidesList extends Component {
   render() {
@@ -10,7 +10,10 @@ export class RidesList extends Component {
         <FlatList
           data={this.props.rides}
           renderItem={({item}) => 
-            <RideItem ride={item}/>}
+            <RideItem 
+              ride={item} 
+            />
+          }
         />
       </View>
     );
@@ -20,6 +23,7 @@ export class RidesList extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 2
+    paddingTop: 2,
+    padding: 3
   }
 })
