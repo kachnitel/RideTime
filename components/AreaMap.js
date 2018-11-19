@@ -80,7 +80,7 @@ export class AreaMap extends React.Component {
       // Optional: display a marker to be at a given location
       ownPositionMarker={{
         coords: this.state.currentLocation,
-        icon: '◉',
+        icon: '◉', // {<Icon... />} or something
         size: [16, 16],
         // style: {
         //   color: '#FF0000'

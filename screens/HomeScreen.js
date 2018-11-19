@@ -1,15 +1,29 @@
 // TODO move map to own Component ASAP
 import React, {createRef} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import LocationsProvider from '../providers/LocationsProvider';
 import { RidesList } from '../components/lists/RidesList';
 import { AreaMap } from '../components/AreaMap';
 import { CreateRideButton } from '../components/CreateRideButton';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { TouchableHighlight } from 'react-native';
+
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    // https://reactnavigation.org/docs/en/stack-navigator.html#navigationoptions-for-screens-inside-of-the-navigator
-    title: "RideTime"
+  static navigationOptions = ({ navigation }) => {
+    return {
+      // https://reactnavigation.org/docs/en/stack-navigator.html#navigationoptions-for-screens-inside-of-the-navigator
+      title: "RideTime",
+      drawerLabel: 'Home',
+      headerLeft: (
+        <TouchableHighlight
+          onPress={() => navigation.toggleDrawer()}>
+          <View>
+            <Icon name='menu' />
+          </View>
+        </TouchableHighlight>
+      ),
+    };
   };
 
   constructor(props) {
@@ -73,3 +87,11 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  drawerIcon: {
+    fontSize: 32,
+    height: 36,
+    color: 'green',
+  },
+});
