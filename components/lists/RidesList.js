@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import RideItem from '../RideItem';
 
 export class RidesList extends Component {
@@ -14,6 +14,7 @@ export class RidesList extends Component {
               ride={item} 
             />
           }
+          keyExtractor={(item, index) => "index_" + index.toString()}
         />
       </View>
     );

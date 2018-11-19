@@ -4,11 +4,10 @@ import { RidersList } from '../components/lists/RidersList';
 
 export class RideDetail extends Component {
   render() {
-    console.log(this.props);
     return (
-      <View>
+      <View style={{flex: 1}}>
         <Text>Difficulty: {this.props.ride.difficulty}</Text>
-        <Text>Riders list</Text>
+        <RidersList riderIds={this.props.ride.members} />
       </View>
     );
   }

@@ -7,7 +7,7 @@ import RideDetailScreen from '../screens/RideDetailScreen';
 const RootStack = createStackNavigator(
   {
     Home: {screen: HomeScreen},
-    RideDetails: {screen: RideDetailScreen},
+    RideDetail: {screen: RideDetailScreen},
   },
   {
     initialRouteName: 'Home',

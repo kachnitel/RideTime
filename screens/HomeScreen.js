@@ -25,7 +25,6 @@ export default class HomeScreen extends React.Component {
       rides: [
         {
           name: 'Joey\'s Alice lake lap',
-          key: '1',
           difficulty: 3,
           location: 'Alice Lake',
           locationGps: [49.775666, -123.123307],
@@ -33,7 +32,6 @@ export default class HomeScreen extends React.Component {
         },
         {
           name: 'Quest Shuttle there',
-          key: '2',
           difficulty: 4,
           locationGps: [49.775666, -123.123307],
           members: [1,2]

@@ -7,8 +7,11 @@ export class RideItemDetail extends React.Component {
     difficulty = ride.difficulty ? ride.difficulty : '0';
 
     return <View style={styles.detail}>
+    <View style={{flex: 1}}>
+      <Text>Difficulty: {difficulty}, Pace, ...</Text>
+    </View>
       <View style={{flex: 1}}>
-        <Text>Difficulty: {difficulty}, Pace, ...</Text>
+        <Text>Riders: {ride.members.length}, Pace, ...</Text>
       </View>
       <View style={{flex: 1}}>
         <Text>11:30</Text>
@@ -20,7 +23,6 @@ export class RideItemDetail extends React.Component {
 const styles = StyleSheet.create({
     detail: {
       flex: 1,
-      flexDirection: 'row',
-
+      flexDirection: 'row'
     }
 })
