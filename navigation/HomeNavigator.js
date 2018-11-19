@@ -13,6 +13,7 @@ const RootStack = createStackNavigator(
   },
   {
     initialRouteName: 'Home',
+    cardStyle: { backgroundColor: '#FFFFFF' }
   }
 );
 
