@@ -19,6 +19,9 @@ export class AreaMap extends React.Component {
       centerPosition: [...this.state.currentLocation]
       // TODO center once location is established 
       // and then make available to parent once moved on map?
+      // Use inverse data flow to update parent so the list
+      // of rides can reflect what the map shows
+      // https://reactjs.org/docs/thinking-in-react.html#step-5-add-inverse-data-flow
     });
   }
 
@@ -64,35 +67,35 @@ export class AreaMap extends React.Component {
 
   render() {
     return <WebViewLeaflet
-    ref={component => (this.webViewLeaflet = component)}
-    onLoad={this.onLoad}
-    eventReceiver={this} // the component that will receive map events
-    
-    // the center of the displayed map
-    centerPosition={this.state.mapCenterPosition}
+      ref={component => (this.webViewLeaflet = component)}
+      onLoad={this.onLoad}
+      eventReceiver={this} // the component that will receive map events
+      
+      // the center of the displayed map
+      centerPosition={this.state.mapCenterPosition}
 
-    // a list of markers that will be displayed on the map
-    markers={this.state.markers}
+      // a list of markers that will be displayed on the map
+      markers={this.state.markers}
 
-    // Optional: display a marker to be at a given location
-    ownPositionMarker={{
-      coords: this.state.currentLocation,
-      icon: '◉',
-      size: [16, 16],
-      // style: {
-      //   color: '#FF0000'
-      // },
-      animation: {
-        name: "pulse",
-        duration: "1",
-        delay: 0,
-        interationCount: "2"
-      }
-    }}
+      // Optional: display a marker to be at a given location
+      ownPositionMarker={{
+        coords: this.state.currentLocation,
+        icon: '◉',
+        size: [16, 16],
+        // style: {
+        //   color: '#FF0000'
+        // },
+        animation: {
+          name: "pulse",
+          duration: "1",
+          delay: 0,
+          interationCount: "2"
+        }
+      }}
 
-    // Optional: display a button that centers the map on the coordinates of ownPostionMarker. Requires that "ownPositionMarker" prop be set
-    centerButton={true}
-    showZoomControl={true}
-  />;
+      // Optional: display a button that centers the map on the coordinates of ownPostionMarker. Requires that "ownPositionMarker" prop be set
+      centerButton={true}
+      showZoomControl={true}
+    />;
   }
 }

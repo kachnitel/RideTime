@@ -2,33 +2,35 @@ import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 import { RideItemDetail } from './RideItemDetail';
 import { withNavigation } from 'react-navigation';
+import { ListItem } from './ListItem';
 
-class RideItem extends React.Component {
+class RideItem extends ListItem {
   render() {
+    console.log(this.getStyles());
     return (
       <TouchableHighlight onPress={() => this.props.navigation.navigate('RideDetails', this.props.ride)}>
-        <View style={styles.ride}>
-          <Text style={styles.name}>{this.props.ride.name}</Text>
+        <View style={this.getStyles().listItem}>
+          <Text style={this.getStyles().name}>{this.props.ride.name}</Text>
           <RideItemDetail ride={this.props.ride} />
           </View>
       </TouchableHighlight>
     );
-  }
+  }  
 }
 
 export default withNavigation(RideItem);
 
-const styles = StyleSheet.create({
+/* const styles = StyleSheet.create({
     name: {
       padding: 3,
       fontSize: 16,
       height: 26,
     },
-    itemCoords: {
-      paddingLeft: 5,
-      fontSize: 10,
-      height: 12,
-    },
+    // itemCoords: {
+    //   paddingLeft: 5,
+    //   fontSize: 10,
+    //   height: 12,
+    // },
     ride: {
       height: 64,
       backgroundColor: 'white',
@@ -38,3 +40,4 @@ const styles = StyleSheet.create({
       padding: 3
     }
 })
+ */

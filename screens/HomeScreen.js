@@ -16,7 +16,7 @@ export default class HomeScreen extends React.Component {
     super(props);
 
     // get from cache
-    location = [28.417839, -81.563808];
+    location = [49.355813, -123.036993];
     this.mapRef = createRef();
     this.state = { 
       // use last known position
@@ -26,12 +26,17 @@ export default class HomeScreen extends React.Component {
         {
           name: 'Joey\'s Alice lake lap',
           key: '1',
-          difficulty: 3
+          difficulty: 3,
+          location: 'Alice Lake',
+          locationGps: [49.775666, -123.123307],
+          members: [1]
         },
         {
-          name: 'Quest Shuttle',
+          name: 'Quest Shuttle there',
           key: '2',
-          difficulty: 4 
+          difficulty: 4,
+          locationGps: [49.775666, -123.123307],
+          members: [1,2]
         }
       ]
     }
