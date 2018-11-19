@@ -5,7 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import RideDetailScreen from '../screens/RideDetailScreen';
 import PublicProfileScreen from '../screens/PublicProfileScreen';
 
-const RootStack = createStackNavigator(
+const HomeStack = createStackNavigator(
   {
     Home: {screen: HomeScreen},
     RideDetail: {screen: RideDetailScreen},
@@ -18,4 +18,4 @@ const RootStack = createStackNavigator(
 );
 
 
-export default RootStack;
+export default HomeStack;
