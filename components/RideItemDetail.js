@@ -7,9 +7,9 @@ export class RideItemDetail extends React.Component {
     difficulty = ride.difficulty ? ride.difficulty : '0';
 
     return <View style={styles.detail}>
-    <View style={styles.lowerRowItem}>
-      <Text>Difficulty: {difficulty}, Pace, ...</Text>
-    </View>
+      <View style={styles.lowerRowItem}>
+        <Text>Difficulty: {difficulty}, Pace, ...</Text>
+      </View>
       <View style={styles.lowerRowItem}>
         <Text>Riders: {ride.members.length}, Pace, ...</Text>
       </View>

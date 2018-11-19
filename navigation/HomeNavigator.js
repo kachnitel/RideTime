@@ -3,11 +3,13 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
 import HomeScreen from '../screens/HomeScreen';
 import RideDetailScreen from '../screens/RideDetailScreen';
+import PublicProfileScreen from '../screens/PublicProfileScreen';
 
 const RootStack = createStackNavigator(
   {
     Home: {screen: HomeScreen},
     RideDetail: {screen: RideDetailScreen},
+    PublicProfile: {screen: PublicProfileScreen}
   },
   {
     initialRouteName: 'Home',

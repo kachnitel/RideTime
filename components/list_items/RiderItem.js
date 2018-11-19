@@ -6,7 +6,7 @@ import { ListItem } from './ListItem';
 class RiderItem extends ListItem {
   render() {
     return (
-      <TouchableHighlight onPress={() => this.props.navigation.navigate('ProfileDetail', this.props.rider)}>
+      <TouchableHighlight onPress={() => this.props.navigation.navigate('PublicProfile', this.props.rider)}>
       {/* <TouchableHighlight> */}
         <View style={this.getStyles().listItem}>
           {<Text style={this.getStyles().name}>{this.props.rider.name}</Text>}

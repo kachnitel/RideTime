@@ -1,3 +1,4 @@
+// maybe use for global scaling?
 const styles = StyleSheet.create({
   name: {
     padding: 3,
