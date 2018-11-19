@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableHighlight } from 'react-native';
-import { RideItemDetail } from './RideItemDetail';
+import { RideItemDetail } from '../RideItemDetail';
 import { withNavigation } from 'react-navigation';
 import { ListItem } from './ListItem';
 

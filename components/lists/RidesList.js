@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import RideItem from '../RideItem';
+import RideItem from '../list_items/RideItem';
 
 export class RidesList extends Component {
   render() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { LocationItemDetail } from './LocationItemDetail';
+import { LocationItemDetail } from '../LocationItemDetail';
 import ListItem from './ListItem';
 
 export class LocationItem extends ListItem {
