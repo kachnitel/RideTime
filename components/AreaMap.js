@@ -3,6 +3,24 @@ import WebViewLeaflet from 'react-native-webview-leaflet';
 import mapLayers from '../mockMapLayers';
 import { mapboxToken } from '../secrets';
 
+
+/* 
+ * TODO replace with MapView?
+ * docs: https://docs.expo.io/versions/latest/sdk/map-view
+ * docs: https://github.com/react-community/react-native-maps
+ * location: https://docs.expo.io/versions/latest/sdk/location.html
+import { MapView } from 'expo';
+
+<MapView
+style={{ flex: 1 }}
+initialRegion={{
+  latitude: 37.78825,
+  longitude: -122.4324,
+  latitudeDelta: 0.0922,
+  longitudeDelta: 0.04231,
+}}
+/> */
+
 export class AreaMap extends React.Component {
   constructor(props) {
     super(props);
