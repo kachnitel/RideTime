@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import DifficultyIcon from './icons/DifficultyIcon';
 
 export class RideItemDetail extends React.Component {
   render() {
@@ -8,7 +9,7 @@ export class RideItemDetail extends React.Component {
 
     return <View style={styles.detail}>
       <View style={styles.lowerRowItem}>
-        <Text>Difficulty: {difficulty}, Pace, ...</Text>
+        <DifficultyIcon d={difficulty} />
       </View>
       <View style={styles.lowerRowItem}>
         <Text>Riders: {ride.members.length}, Pace, ...</Text>

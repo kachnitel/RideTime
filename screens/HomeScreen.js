@@ -39,14 +39,14 @@ export default class HomeScreen extends React.Component {
       rides: [
         {
           name: 'Joey\'s Alice lake lap',
-          difficulty: 3,
+          difficulty: 1,
           location: 'Alice Lake',
           locationGps: [49.775666, -123.123307],
           members: [1]
         },
         {
           name: 'Quest Shuttle there',
-          difficulty: 4,
+          difficulty: 3,
           locationGps: [49.775666, -123.123307],
           members: [1,2]
         }
@@ -87,11 +87,3 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  drawerIcon: {
-    fontSize: 32,
-    height: 36,
-    color: 'green',
-  },
-});
