@@ -8,8 +8,8 @@ export class RideItemDetail extends React.Component {
     difficulty = ride.difficulty ? ride.difficulty : '0';
 
     return <View style={styles.detail}>
-      <View style={styles.lowerRowItem}>
-        <DifficultyIcon d={difficulty} />
+      <View style={{ paddingLeft: 5, ...styles.lowerRowItem}}>
+        <DifficultyIcon size={36} d={difficulty} />
       </View>
       <View style={styles.lowerRowItem}>
         <Text>Riders: {ride.members.length}, Pace, ...</Text>

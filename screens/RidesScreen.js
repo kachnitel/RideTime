@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableHighlight } from 'react-native';
 
 
-export default class HomeScreen extends React.Component {
+export default class RidesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       // https://reactnavigation.org/docs/en/stack-navigator.html#navigationoptions-for-screens-inside-of-the-navigator
@@ -46,7 +46,7 @@ export default class HomeScreen extends React.Component {
         },
         {
           name: 'Quest Shuttle there',
-          difficulty: 3,
+          difficulty: 2,
           locationGps: [49.775666, -123.123307],
           members: [1,2]
         }
