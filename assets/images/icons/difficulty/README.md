@@ -1,0 +1,1 @@
+react-native currently doesn't support SVG directly, may be used in the future
