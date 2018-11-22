@@ -18,15 +18,19 @@ export class ListItem extends React.Component {
 const styles = StyleSheet.create({
   name: {
     padding: 3,
-    fontSize: 16,
-    height: 26,
+    fontSize: 20,
+    height: 32,
+    fontWeight: 'bold'
   },
   listItem: {
-    height: 64,
+    height: 90,
     backgroundColor: 'white',
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#d6d7da',
     padding: 0
+  },
+  detailRow: {
+    padding: 5
   }
 })

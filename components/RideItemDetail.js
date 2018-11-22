@@ -5,16 +5,16 @@ import DifficultyIcon from './icons/DifficultyIcon';
 export class RideItemDetail extends React.Component {
   render() {
     const ride = this.props.ride;
-    difficulty = ride.difficulty ? ride.difficulty : '0';
+    difficulty = ride.difficulty;
 
     return <View style={styles.detail}>
-      <View style={{ paddingLeft: 5, ...styles.lowerRowItem}}>
+      <View style={styles.lowerRowIcon}>
         <DifficultyIcon size={36} d={difficulty} />
       </View>
-      <View style={styles.lowerRowItem}>
+      <View style={styles.lowerRowIcon}>
         <Text>Riders: {ride.members.length}, Pace, ...</Text>
       </View>
-      <View style={styles.lowerRowItem}>
+      <View style={styles.lowerRowIcon}>
         <Text>11:30</Text>
       </View>
     </View>;
@@ -24,11 +24,16 @@ export class RideItemDetail extends React.Component {
 const styles = StyleSheet.create({
     detail: {
       flex: 1,
-      flexDirection: 'row'
+      flexDirection: 'row',
+      // alignItems: "center",
     },
-    lowerRowItem: {
-      flex: 1,
-      borderRightWidth: 1,
-      borderRightColor: '#101010'
+    lowerRowIcon: {
+      // flex: 1,
+      width: 50,
+      height: 50,
+      // margin: 5,
+      backgroundColor: '#FFCCCC',
+      justifyContent: 'space-evenly',
+      alignItems: 'center'
     }
 })

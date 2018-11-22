@@ -8,8 +8,10 @@ const ProfileStack = createStackNavigator(
   },
   {
     initialRouteName: 'Profile',
+    // FIXME duplicated from HomeNavigator
     navigationOptions: ({navigation}) => ({
-      headerStyle: {backgroundColor: '#0C9E14'}
+      headerStyle: {backgroundColor: '#ffffff'},
+      headerTintColor: '#0C5E14'
     })
   }
 );

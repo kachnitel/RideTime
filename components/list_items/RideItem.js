@@ -10,7 +10,7 @@ class RideItem extends ListItem {
       <TouchableHighlight onPress={() => this.props.navigation.navigate('RideDetail', this.props.ride)}>
         <View style={this.getStyles().listItem}>
           <Text style={this.getStyles().name}>{this.props.ride.name}</Text>
-          <RideItemDetail ride={this.props.ride} />
+          <RideItemDetail ride={this.props.ride} style={this.getStyles().detailRow}/>
         </View>
       </TouchableHighlight>
     );
