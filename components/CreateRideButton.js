@@ -5,7 +5,7 @@ import ActionButton from 'react-native-action-button';
 
 export class CreateRideButton extends React.Component {
   render() {
-    return <ActionButton buttonColor="rgba(231,76,60,1)">
+    return <ActionButton buttonColor="rgba(134, 194, 50, 1)" size={64} buttonTextStyle={{ fontSize: 40 }}>
       <ActionButton.Item buttonColor='#9b59b6' title="Road ride" onPress={() => console.log("notes tapped!")}>
         <Icon name="md-stopwatch" style={styles.actionButtonIcon} />
       </ActionButton.Item>
@@ -21,8 +21,8 @@ export class CreateRideButton extends React.Component {
 
 const styles = StyleSheet.create({
   actionButtonIcon: {
-    fontSize: 20,
-    height: 22,
+    fontSize: 30,
+    height: 30,
     color: 'white',
   },
 });
