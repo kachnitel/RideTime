@@ -12,7 +12,8 @@ class RideItem extends ListItem {
           this.getStyles().listItem,
           this.props.index % 2 == 0 ? this.getStyles().listItemWhite : this.getStyles().listItemBlack
         ]}>
-          {/* Not a fan of 2 selectors here, but Text can't inherit from View */}
+          {/* Not a fan of 2 selectors here, but Text can't inherit from View 
+          wrap in parent Text?*/}
           <Text style={[
             this.getStyles().name,
             this.props.index % 2 == 0 ? this.getStyles().listItemWhite : this.getStyles().listItemBlack
