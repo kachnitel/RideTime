@@ -5,7 +5,7 @@ import { mapboxToken } from '../secrets';
 
 
 /* 
- * TODO replace with MapView?
+ * TODO replace with MapView? & remove react-native-webview-leaflet from package.json
  * docs: https://docs.expo.io/versions/latest/sdk/map-view
  * docs: https://github.com/react-community/react-native-maps
  * location: https://docs.expo.io/versions/latest/sdk/location.html
