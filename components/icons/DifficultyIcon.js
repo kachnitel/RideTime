@@ -4,6 +4,11 @@ import { Font } from 'expo';
 // TODO remove from npm if I use SVG directly
 import { AllHtmlEntities } from 'html-entities';
 
+/**
+ * TODO 
+ * load in App.json and then pass the state down to icon component
+ * can I watch the 'global' state from deeply nested component?
+ */
 export default class DifficultyIcon extends React.Component {
   state = {
     fontLoaded: false,
@@ -30,7 +35,7 @@ export default class DifficultyIcon extends React.Component {
 
     iconColor = 'black';
     switch(this.props.d) {
-      case '0':
+      case 0:
         iconColor = 'green';
         break;
       case 1: 

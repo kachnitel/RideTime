@@ -9,9 +9,10 @@ export class RidesList extends Component {
         <Text>Rides nearby</Text>
         <FlatList
           data={this.props.rides}
-          renderItem={({item}) => 
+          renderItem={({item, index}) => 
             <RideItem 
               ride={item} 
+              index={index}
             />
           }
           keyExtractor={(item, index) => "index_" + index.toString()}

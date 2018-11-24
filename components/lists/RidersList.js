@@ -16,9 +16,10 @@ export class RidersList extends Component {
         <Text>Riders</Text>
         <FlatList
           data={riders}
-          renderItem={({item}) => 
+          renderItem={({item, index}) => 
             <RiderItem 
-              rider={item} 
+              rider={item}
+              index={index}
             />
           }
           keyExtractor={(item, index) => "index_" + index.toString()}

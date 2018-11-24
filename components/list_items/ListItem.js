@@ -25,10 +25,19 @@ const styles = StyleSheet.create({
   listItem: {
     height: 90,
     backgroundColor: 'white',
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#d6d7da',
-    padding: 0
+    // borderRadius: 4,
+    // borderWidth: 1,
+    // borderColor: '#d6d7da',
+    padding: 0,
+    // color: '#000'
+  },
+  listItemWhite: {
+    backgroundColor: '#fff',
+    color: '#000'
+  },
+  listItemBlack: {
+    backgroundColor: '#000',
+    color: '#fff'
   },
   detailRow: {
     padding: 5

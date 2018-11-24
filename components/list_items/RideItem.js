@@ -8,8 +8,17 @@ class RideItem extends ListItem {
   render() {
     return (
       <TouchableHighlight onPress={() => this.props.navigation.navigate('RideDetail', this.props.ride)}>
-        <View style={this.getStyles().listItem}>
-          <Text style={this.getStyles().name}>{this.props.ride.name}</Text>
+        <View style={[
+          this.getStyles().listItem,
+          this.props.index % 2 == 0 ? this.getStyles().listItemWhite : this.getStyles().listItemBlack
+        ]}>
+          {/* Not a fan of 2 selectors here, but Text can't inherit from View */}
+          <Text style={[
+            this.getStyles().name,
+            this.props.index % 2 == 0 ? this.getStyles().listItemWhite : this.getStyles().listItemBlack
+          ]}>
+            {this.props.ride.name}
+          </Text>
           <RideItemDetail ride={this.props.ride} style={this.getStyles().detailRow}/>
         </View>
       </TouchableHighlight>
