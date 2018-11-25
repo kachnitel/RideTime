@@ -2,20 +2,21 @@ import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import DifficultyIcon from './icons/DifficultyIcon';
 import TerrainIcon from './icons/TerrainIcon';
+import RiderCount from './RiderCount';
 
 export class RideItemDetail extends React.Component {
   render() {
     const ride = this.props.ride;
 
     return <View style={styles.detail}>
-    <View style={styles.lowerRowIcon}>
-      <DifficultyIcon size={36} d={ride.difficulty} />
-    </View>
+      <View style={styles.lowerRowIcon}>
+        <DifficultyIcon size={36} d={ride.difficulty} />
+      </View>
       <View style={styles.lowerRowIcon}>
         <TerrainIcon size={30} terrain={ride.terrain} />
       </View>
       <View style={styles.lowerRowIcon}>
-        <Text style={this.props.style}>Riders: {ride.members.length}, Pace, ...</Text>
+        <RiderCount count={ride.members.length} />
       </View>
       <View style={styles.lowerRowIcon}>
         <Text style={this.props.style}>11:30</Text>

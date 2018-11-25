@@ -3,6 +3,11 @@ import { Text, View } from 'react-native';
 import { AllHtmlEntities } from 'html-entities';
 import Colors from '../../constants/Colors';
 
+/**
+ * props:
+ *  size: number
+ *  terrain: [trail, road]
+ */
 export default class TerrainIcon extends React.Component {
   render() {
     entities = new AllHtmlEntities();
