@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   listItem: {
-    height: 90,
+    height: 100,
     // backgroundColor: 'white',
     // borderRadius: 4,
     // borderWidth: 1,

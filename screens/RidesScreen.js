@@ -47,7 +47,7 @@ export default class RidesScreen extends React.Component {
         },
         {
           name: 'Quest Shuttle there',
-          difficulty: 2,
+          difficulty: 3,
           locationGps: [49.775666, -123.123307],
           members: [1,2],
           terrain: 'downhill'

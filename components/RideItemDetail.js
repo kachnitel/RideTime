@@ -18,8 +18,20 @@ export class RideItemDetail extends React.Component {
       <View style={styles.lowerRowIcon}>
         <RiderCount count={ride.members.length} />
       </View>
+      <View style={[
+        styles.lowerRowIcon, 
+        { 
+          justifyContent: 'center', 
+          borderRadius: 6, 
+          backgroundColor: '#E1E1E1', 
+          height: 24,
+          marginTop: 24
+        }
+      ]}>
+        <Text>2h</Text>
+      </View>
       <View style={styles.lowerRowIcon}>
-        <Text style={this.props.style}>11:30</Text>
+        <Text style={[this.props.style, {fontWeight: 'bold', fontSize: 24, width: 80, justifyContent: 'flex-end'}]}>11:30</Text>
       </View>
     </View>;
   }
@@ -29,15 +41,16 @@ const styles = StyleSheet.create({
     detail: {
       flex: 1,
       flexDirection: 'row',
+      justifyContent: 'space-between'
       // alignItems: "center",
     },
     lowerRowIcon: {
-      // flex: 1,
+      flex: 1,
       width: 50,
       height: 50,
-      // margin: 5,
-      // backgroundColor: '#FFCCCC',
-      justifyContent: 'space-evenly',
-      alignItems: 'center'
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      margin: 8
     }
 })

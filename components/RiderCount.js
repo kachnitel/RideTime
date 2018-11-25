@@ -10,6 +10,7 @@ export default class RiderCount extends React.Component {
           styles.countIcon, 
           {
             fontSize: 24,
+            fontWeight: 'bold',
             paddingRight: 3
           }
         ]}>
