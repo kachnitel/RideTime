@@ -15,10 +15,10 @@ export class RideItemDetail extends React.Component {
         <TerrainIcon size={30} terrain={ride.terrain} />
       </View>
       <View style={styles.lowerRowIcon}>
-        <Text>Riders: {ride.members.length}, Pace, ...</Text>
+        <Text style={this.props.style}>Riders: {ride.members.length}, Pace, ...</Text>
       </View>
       <View style={styles.lowerRowIcon}>
-        <Text>11:30</Text>
+        <Text style={this.props.style}>11:30</Text>
       </View>
     </View>;
   }

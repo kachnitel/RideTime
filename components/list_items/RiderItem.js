@@ -9,10 +9,13 @@ class RiderItem extends ListItem {
       <TouchableHighlight onPress={() => this.props.navigation.navigate('PublicProfile', this.props.rider)}>
       {/* <TouchableHighlight> */}
         <View style={[
-          this.getStyles().listItem, 
-          this.props.index % 2 == 0 ? this.getStyles().listItemWhite : this.getStyles().listItemBlack
+          this.getStyles().listItem,
+          this.props.style
         ]}>
-          {<Text style={this.getStyles().name}>{this.props.rider.name}</Text>}
+          {<Text style={[
+            this.getStyles().name,
+            this.props.style
+          ]}>{this.props.rider.name}</Text>}
           {/* Rider should contain his details fetched in list */}
           {/* <RiderItemDetail ride={this.props.rider} /> */}
         </View>

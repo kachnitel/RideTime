@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { AllHtmlEntities } from 'html-entities';
+import Colors from '../../constants/Colors';
 
 export default class TerrainIcon extends React.Component {
   render() {
@@ -10,7 +11,7 @@ export default class TerrainIcon extends React.Component {
      * &#xe911 = bike_road
      * ...downhill, other
      */
-    iconColor = '#85c131';
+    // iconColor = '#85c131';
     switch(this.props.terrain) {
       case 'trail':
         iconCode = '&#xe910'
@@ -31,7 +32,7 @@ export default class TerrainIcon extends React.Component {
           style={{ 
             fontFamily: 'ride-time-icons', 
             fontSize: (this.props.size ? this.props.size : 36), 
-            color: iconColor 
+            color: Colors.iconColor 
           }}
         >
           {symbol}

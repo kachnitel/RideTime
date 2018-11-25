@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { ReactPropTypes } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 // TODO remove from npm if I use SVG directly
 import { AllHtmlEntities } from 'html-entities';
+import Colors from '../../constants/Colors';
 
 export default class DifficultyIcon extends React.Component {
   render() {
@@ -31,11 +32,11 @@ export default class DifficultyIcon extends React.Component {
     return(
       <View {...this.props}>
         <Text 
-          style={{ 
+          style={[{ 
             fontFamily: 'trail-difficulty-icons', 
             fontSize: (this.props.size ? this.props.size : 36), 
             color: iconColor 
-          }}
+          }, styles.shadowIcon]}
         >
           {symbol}
         </Text>
@@ -43,3 +44,12 @@ export default class DifficultyIcon extends React.Component {
     );
   }
 }
+
+// TODO create a Colors.iconColor outline when on black background only
+styles = StyleSheet.create({
+  shadowIcon: {
+    textShadowColor: Colors.iconColor, 
+    textShadowOffset: {width: 1, height: 0},
+    textShadowRadius: 1
+  }
+})

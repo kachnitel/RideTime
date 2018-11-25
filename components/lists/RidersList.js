@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import RiderItem from '../list_items/RiderItem';
 import RidersProvider from '../../providers/RidersProvider';
+import { AlternatingStyleList } from './AlternatingStyleList';
 
-export class RidersList extends Component {
+export class RidersList extends AlternatingStyleList {
   render() {
     // pull rider details here and pass further down
     // -> list -> user profile
@@ -12,14 +13,14 @@ export class RidersList extends Component {
     });
 
     return (
-      <View style={styles.container}>
+      <View style={this.getStyles().container}>
         <Text>Riders</Text>
         <FlatList
           data={riders}
           renderItem={({item, index}) => 
             <RiderItem 
               rider={item}
-              index={index}
+              style={index % 2 == 0 ? this.getStyles().listItemWhite : this.getStyles().listItemBlack}
             />
           }
           keyExtractor={(item, index) => "index_" + index.toString()}
@@ -28,11 +29,3 @@ export class RidersList extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 2,
-    padding: 3
-  }
-})
