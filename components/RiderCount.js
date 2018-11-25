@@ -10,7 +10,6 @@ export default class RiderCount extends React.Component {
           styles.countIcon, 
           {
             fontSize: 24,
-            // paddingLeft: 5
             paddingRight: 3
           }
         ]}>
@@ -25,7 +24,5 @@ export default class RiderCount extends React.Component {
 styles = StyleSheet.create({
   countIcon: {
     color: '#878787', //should be #656565 for black, 878787 white
-    // padding: 5,
-    // paddingLeft: 0
   }
 })
