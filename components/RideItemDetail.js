@@ -25,13 +25,14 @@ export class RideItemDetail extends React.Component {
           borderRadius: 6, 
           backgroundColor: '#E1E1E1', 
           height: 24,
-          marginTop: 24
+          marginTop: 24,
+          marginLeft: 'auto'
         }
       ]}>
         <Text>2h</Text>
       </View>
-      <View style={styles.lowerRowIcon}>
-        <Text style={[this.props.style, {fontWeight: 'bold', fontSize: 24, width: 80, justifyContent: 'flex-end'}]}>11:30</Text>
+      <View style={[styles.lowerRowIcon, {width: 'auto'}]}>
+        <Text style={[this.props.style, {fontWeight: 'bold', fontSize: 24}]}>11:30</Text>
       </View>
     </View>;
   }
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
       // alignItems: "center",
     },
     lowerRowIcon: {
-      flex: 1,
+      // flex: 1,
       width: 50,
       height: 50,
       flexDirection: 'row',
