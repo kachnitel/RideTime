@@ -16,7 +16,6 @@ export default class TerrainIcon extends React.Component {
      * &#xe911 = bike_road
      * ...downhill, other
      */
-    // iconColor = '#85c131';
     switch(this.props.terrain) {
       case 'trail':
         iconCode = '&#xe910'

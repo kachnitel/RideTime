@@ -16,7 +16,7 @@ class RideItem extends ListItem {
           </Text>
           <RideItemDetail 
             ride={this.props.ride} 
-            style={[this.props.style, this.getStyles().detailRow]}
+            style={this.props.style}
           />
         </View>
       </TouchableHighlight>

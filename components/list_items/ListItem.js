@@ -30,8 +30,5 @@ const styles = StyleSheet.create({
     // borderColor: '#d6d7da',
     padding: 0,
     // color: '#000'
-  },
-  detailRow: {
-    padding: 5
   }
 })

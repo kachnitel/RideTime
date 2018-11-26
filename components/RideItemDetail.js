@@ -16,23 +16,16 @@ export class RideItemDetail extends React.Component {
         <TerrainIcon size={30} terrain={ride.terrain} />
       </View>
       <View style={styles.lowerRowIcon}>
-        <RiderCount count={ride.members.length} />
+        <RiderCount size={30} count={ride.members.length} />
       </View>
       <View style={[
         styles.lowerRowIcon, 
-        { 
-          justifyContent: 'center', 
-          borderRadius: 6, 
-          backgroundColor: '#E1E1E1', 
-          height: 24,
-          marginTop: 24,
-          marginLeft: 'auto'
-        }
+        styles.duration
       ]}>
         <Text>2h</Text>
       </View>
       <View style={[styles.lowerRowIcon, {width: 'auto'}]}>
-        <Text style={[this.props.style, {fontWeight: 'bold', fontSize: 24}]}>11:30</Text>
+        <Text style={[this.props.style, styles.startTime]}>11:30</Text>
       </View>
     </View>;
   }
@@ -48,10 +41,26 @@ const styles = StyleSheet.create({
     lowerRowIcon: {
       // flex: 1,
       width: 50,
-      height: 50,
+      // height: 50,
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'center',
       margin: 8
+    },
+    // detailRow: {
+      // padding: 5
+    // }
+    startTime: {
+      fontWeight: 'bold', 
+      fontSize: 24
+    },
+    duration: {
+      justifyContent: 'center', 
+      borderRadius: 6, 
+      backgroundColor: '#E1E1E1', 
+      height: 22,
+      width: 60,
+      marginTop: 24,
+      marginLeft: 'auto'
     }
 })
