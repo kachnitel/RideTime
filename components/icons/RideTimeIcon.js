@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { AllHtmlEntities } from 'html-entities';
-// import Colors from '../../constants/Colors';
 
 export default class RideTimeIcon extends React.Component {
   render() {
