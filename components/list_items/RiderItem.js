@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
+import { Text, View, TouchableHighlight, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { ListItem } from './ListItem';
 
@@ -9,13 +9,13 @@ class RiderItem extends ListItem {
       <TouchableHighlight onPress={() => this.props.navigation.navigate('PublicProfile', this.props.rider)}>
       {/* <TouchableHighlight> */}
         <View style={[
-          this.getStyles().listItem,
-          this.props.style
+          styles.listItem
         ]}>
           {<Text style={[
-            this.getStyles().name,
-            this.props.style
-          ]}>{this.props.rider.name}</Text>}
+            styles.name
+          ]}>
+            {this.props.rider.name}
+          </Text>}
           {/* Rider should contain his details fetched in list */}
           {/* <RiderItemDetail ride={this.props.rider} /> */}
         </View>
@@ -25,3 +25,14 @@ class RiderItem extends ListItem {
 }
 
 export default withNavigation(RiderItem);
+
+const styles = StyleSheet.create({
+  listItem: {
+    width: 100
+  },
+  name: {
+    color: '#fff',
+    textAlign: 'center'
+  },
+
+});
