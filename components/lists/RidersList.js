@@ -17,10 +17,12 @@ export class RidersList extends AlternatingStyleList {
         <Text>Riders</Text>
         <FlatList
           data={riders}
+          horizontal={true}
           renderItem={({item, index}) => 
             <RiderItem 
               rider={item}
-              style={index % 2 == 0 ? this.getStyles().listItemWhite : this.getStyles().listItemBlack}
+              // style={index % 2 == 0 ? this.getStyles().listItemWhite : this.getStyles().listItemBlack}
+              
             />
           }
           keyExtractor={(item, index) => "index_" + index.toString()}
