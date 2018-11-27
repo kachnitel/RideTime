@@ -34,7 +34,7 @@ export default class TerrainIcon extends React.Component {
     symbol = entities.decode(iconCode);
 
     return(
-      <View {...this.props}>
+      <View>
         <Text 
           style={{ 
             fontFamily: 'ride-time-icons', 

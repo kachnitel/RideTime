@@ -30,7 +30,7 @@ export default class DifficultyIcon extends React.Component {
     }
 
     return(
-      <View {...this.props}>
+      <View>
         <Text style={[
           { 
             fontFamily: 'trail-difficulty-icons', 
