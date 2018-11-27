@@ -22,7 +22,7 @@ export default class RiderCount extends React.Component {
   }
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   countIcon: {
     color: '#878787' //should be #656565 for black, 878787 white
   }

@@ -47,7 +47,7 @@ export default class DifficultyIcon extends React.Component {
 }
 
 // TODO create a Colors.iconColor outline when on black background only
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   shadowIcon: {
     textShadowColor: Colors.iconColor, 
     textShadowOffset: {width: 1, height: 0},
