@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import { RidersList } from '../components/lists/RidersList';
 import { AreaMap } from './AreaMap';
 import RideItem from './list_items/RideItem';
+import Colors from '../constants/Colors'
 
 export class RideDetail extends Component {
   render() {
@@ -14,7 +15,7 @@ export class RideDetail extends Component {
         <View>
           <RideItem ride={this.props.ride} />
         </View>
-        <View style={{backgroundColor: '#222629', flex: 1}}>
+        <View style={{backgroundColor: Colors.darkBackground, flex: 1}}>
           {/* <Text>Difficulty: </Text> */}
           {/* <DifficultyIcon d={this.props.ride.difficulty} /> */}
           <RidersList riderIds={this.props.ride.members} />

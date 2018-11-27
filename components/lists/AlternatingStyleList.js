@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import Colors from '../../constants/Colors';
 
 export class AlternatingStyleList extends Component {
   getStyles() {
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   listItemBlack: {
-    backgroundColor: '#222629',
+    backgroundColor: Colors.darkBackground,
     color: '#fff'
   }
 })
