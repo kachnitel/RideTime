@@ -5,7 +5,7 @@ import RideTimeIcon from './icons/RideTimeIcon';
 export default class RiderCount extends React.Component {
   render() {
     return(
-      <View {...this.props} style={[this.props.style, {flex: 1, flexDirection: 'row'}]}>
+      <View style={{flex: 1, flexDirection: 'row'}}>
         <Text style={[
           styles.countIcon, 
           {
@@ -16,7 +16,7 @@ export default class RiderCount extends React.Component {
         ]}>
           {this.props.count ? this.props.count : 0}
         </Text>
-        <RideTimeIcon icon='person' {...this.props} style={styles.countIcon} />
+        <RideTimeIcon icon='person' size={this.props.size} style={styles.countIcon} />
       </View>
     );
   }
