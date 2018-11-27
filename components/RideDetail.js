@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { RidersList } from '../components/lists/RidersList';
-import DifficultyIcon from './icons/DifficultyIcon';
 import { AreaMap } from './AreaMap';
 import RideItem from './list_items/RideItem';
 
