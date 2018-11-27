@@ -20,6 +20,9 @@ export default class TerrainIcon extends React.Component {
       case 'trail':
         iconCode = '&#xe910'
         break;
+      case 'downhill': 
+        iconCode = `&#xe912`;
+        break;
       case 'road': 
         iconCode = '&#xe911';
         break;

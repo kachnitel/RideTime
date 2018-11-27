@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   listItemBlack: {
-    backgroundColor: '#000',
+    backgroundColor: '#222629',
     color: '#fff'
   }
 })
