@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, Text, View, StyleSheet } from 'react-native';
 import RiderItem from '../list_items/RiderItem';
 import RidersProvider from '../../providers/RidersProvider';
 
@@ -13,7 +13,7 @@ export class RidersList extends Component {
 
     return (
       <View>
-        <Text>Riders</Text>
+        <Text style={styles.title}>Riders</Text>
         <FlatList
           data={riders}
           horizontal={true}
@@ -28,3 +28,13 @@ export class RidersList extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    color: '#fff',
+    paddingTop: 15,
+    paddingLeft: 15,
+    fontWeight: 'bold'
+  }
+});
