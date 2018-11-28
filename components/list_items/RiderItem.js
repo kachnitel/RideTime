@@ -1,10 +1,9 @@
 import React from 'react';
 import { Text, View, TouchableHighlight, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { ListItem } from './ListItem';
 import ProfilePicture from '../ProfilePicture';
 
-class RiderItem extends ListItem {
+class RiderItem extends React.Component {
   render() {
     return (
       // Rider should contain his details fetched in list
