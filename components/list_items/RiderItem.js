@@ -25,11 +25,11 @@ export default withNavigation(RiderItem);
 
 const styles = StyleSheet.create({
   listItem: {
-    width: 80,
-    height: 120,
+    width: 90,
+    height: 90,
     justifyContent: 'center',
-    alignItems: 'center'
-    
+    alignItems: 'center',
+    marginTop: 15
   },
   name: {
     color: '#fff',
