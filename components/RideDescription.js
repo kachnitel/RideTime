@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-import { FlatList, Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 
-export class MeetingPoint extends Component {
-  
+export class RideDescription extends Component {
   render() {
-    locationText = JSON.stringify(this.props.location);
-  
-    console.log(locationText);
     return (
       <View>
-        <Text style={styles.title}>Meeting Point</Text>
-        {/* TODO click to show confirmation to navigate */}
-        <Text style={styles.location}>{locationText}</Text>
+        <Text style={styles.title}>{this.props.title}</Text>
+        <Text style={styles.location}>{this.props.text}</Text>
       </View>
     );
   }

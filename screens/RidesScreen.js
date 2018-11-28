@@ -43,14 +43,16 @@ export default class RidesScreen extends React.Component {
           location: 'Alice Lake',
           locationGps: [49.775666, -123.123307],
           members: [1],
-          terrain: 'trail' // trail, downhill, road, other (DJ, street, jam)
+          terrain: 'trail', // trail, downhill, road, other (DJ, street, jam)
+          plannedRoute: 'Mashiter, Shades, Entrails to Boney elbows, Gouranga and down to 7up'
         },
         {
           name: 'Quest Shuttle there',
           difficulty: 3,
           locationGps: [49.775666, -123.123307],
           members: [1,2],
-          terrain: 'downhill'
+          terrain: 'downhill',
+          description: 'brutal trails DOWN the hill'
         },
         {
           name: 'Paul\'s street jam',
