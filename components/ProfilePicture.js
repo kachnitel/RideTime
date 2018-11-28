@@ -10,10 +10,19 @@ export default class ProfilePicture extends React.Component {
     riderId =  this.props.rider.id;
     imgPath = 'https://s3.ca-central-1.amazonaws.com/ride-time/profile-images/' + riderId + '.png';
 
+    size = this.props.size ? this.props.size : 50;
+
     return (
       <Image 
         source={{uri: imgPath}}
-        style={styles.image}
+        style={[
+          styles.image,
+          {
+            width: size,
+            height: size,
+            borderRadius: size / 2
+          }
+        ]}
       />
     );
   }
@@ -21,9 +30,6 @@ export default class ProfilePicture extends React.Component {
 
 const styles = StyleSheet.create({
   image: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
     backgroundColor: 'rgba(12, 94, 20, 0.5);'
   }
 });

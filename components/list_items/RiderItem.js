@@ -11,7 +11,7 @@ class RiderItem extends ListItem {
       // To render eg. little exp. icon in corner of image
       <TouchableHighlight onPress={() => this.props.navigation.navigate('PublicProfile', this.props.rider)}>
         <View style={styles.listItem}>
-          <ProfilePicture rider={this.props.rider} />
+          <ProfilePicture rider={this.props.rider} size={65} />
           <Text style={styles.name}>
             {this.props.rider.name}
           </Text>
@@ -35,6 +35,5 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     paddingTop: 5
-  },
-
+  }
 });
