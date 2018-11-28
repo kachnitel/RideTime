@@ -25,7 +25,10 @@ export class RideItemDetail extends React.Component {
       ]}>
         <Text>2h</Text>
       </View>
-      <View style={[styles.lowerRowIcon, {width: 'auto'}]}>
+      <View style={[
+        styles.lowerRowIcon, 
+        { width: 'auto' }
+      ]}>
         <Text style={[this.props.style, styles.startTime]}>11:30</Text>
       </View>
     </View>;
@@ -36,21 +39,13 @@ const styles = StyleSheet.create({
     detail: {
       flex: 1,
       flexDirection: 'row',
-      justifyContent: 'space-between'
-      // alignItems: "center",
+      justifyContent: 'flex-start',
     },
     lowerRowIcon: {
-      // flex: 1,
       width: 50,
-      // height: 50,
       flexDirection: 'row',
-      justifyContent: 'flex-start',
       alignItems: 'center',
-      margin: 8
     },
-    // detailRow: {
-      // padding: 5
-    // }
     startTime: {
       fontWeight: 'bold', 
       fontSize: 24
@@ -61,7 +56,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#E1E1E1', 
       height: 22,
       width: 60,
-      marginTop: 24,
-      marginLeft: 'auto'
+      marginLeft: 'auto',
+      marginRight: 10,
+      alignSelf: 'center'
     }
 })
