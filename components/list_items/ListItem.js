@@ -23,12 +23,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   listItem: {
-    height: 100,
-    // backgroundColor: 'white',
-    // borderRadius: 4,
-    // borderWidth: 1,
-    // borderColor: '#d6d7da',
-    padding: 0,
-    // color: '#000'
+    height: 120,
+    padding: 15
   }
 })
