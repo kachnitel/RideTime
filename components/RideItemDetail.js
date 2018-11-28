@@ -18,6 +18,7 @@ export class RideItemDetail extends React.Component {
       <View style={styles.lowerRowIcon}>
         <RiderCount size={30} count={ride.members.length} />
       </View>
+      {/* TODO shuttle/chairlift icon */}
       <View style={[
         styles.lowerRowIcon, 
         styles.duration
