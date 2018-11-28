@@ -21,10 +21,9 @@ export default class ProfilePicture extends React.Component {
 
 const styles = StyleSheet.create({
   image: {
-    width: 80,
-    height: 80,
-    borderRadius: 50,
-    backgroundColor: 'rgba(12, 94, 20, 0.5);',
-    margin: 10
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: 'rgba(12, 94, 20, 0.5);'
   }
 });
