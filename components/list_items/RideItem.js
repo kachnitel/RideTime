@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   listItem: {
-    height: 100,
+    height: 110,
     padding: 10
   }
 })
