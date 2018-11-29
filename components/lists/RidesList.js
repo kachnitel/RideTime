@@ -7,7 +7,7 @@ export class RidesList extends AlternatingStyleList {
   render() {
     return (
       <View style={this.getStyles().container}>
-        <Text>Rides nearby</Text>
+        <Text style={styles.title}>Rides nearby</Text>
         <FlatList
           data={this.props.rides}
           renderItem={({item, index}) => 
@@ -23,3 +23,10 @@ export class RidesList extends AlternatingStyleList {
   }
 }
 
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    color: '#000',
+    fontWeight: 'bold'
+  }
+});
