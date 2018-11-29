@@ -31,14 +31,12 @@ export default class DifficultyIcon extends React.Component {
 
     return(
       <View>
-        <Text style={[
-          { 
+        <Text style={{ 
             fontFamily: 'trail-difficulty-icons', 
             fontSize: (this.props.size ? this.props.size : 36), 
-            color: iconColor 
-          }, 
-          styles.shadowIcon
-        ]}>
+            color: iconColor,
+            ...styles.shadowIcon
+        }}>
           {symbol}
         </Text>
       </View>

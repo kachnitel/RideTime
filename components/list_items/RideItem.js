@@ -7,8 +7,8 @@ class RideItem extends React.Component {
   render() {
     return (
       <TouchableHighlight onPress={() => this.props.navigation.navigate('RideDetail', this.props.ride)}>
-        <View style={[styles.listItem, this.props.style]}>
-          <Text style={[styles.name, this.props.style]}>
+        <View style={{...styles.listItem, ...this.props.style}}>
+          <Text style={{...styles.name, ...this.props.style}}>
             {this.props.ride.name}
           </Text>
           <RideItemDetail 

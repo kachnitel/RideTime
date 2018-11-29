@@ -6,14 +6,12 @@ export default class RiderCount extends React.Component {
   render() {
     return(
       <View style={{flex: 1, flexDirection: 'row'}}>
-        <Text style={[
-          {
+        <Text style={{
             fontSize: this.props.fontSize ? this.props.fontSize : 24,
             fontWeight: 'bold',
-            paddingRight: 3
-          },
-          styles.countIcon
-        ]}>
+            paddingRight: 3,
+            ...styles.countIcon
+        }}>
           {this.props.count ? this.props.count : 0}
         </Text>
         <RideTimeIcon icon='person' size={this.props.size} style={styles.countIcon} />

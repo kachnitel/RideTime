@@ -15,14 +15,12 @@ export default class ProfilePicture extends React.Component {
     return (
       <Image 
         source={{uri: imgPath}}
-        style={[
-          styles.image,
-          {
+        style={{
+            ...styles.image,
             width: size,
             height: size,
             borderRadius: size / 2
-          }
-        ]}
+        }}
       />
     );
   }

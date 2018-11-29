@@ -22,13 +22,11 @@ export default class RideTimeIcon extends React.Component {
     return(
       <View {...this.props}>
         <Text 
-          style={[
-            { 
+          style={{ 
               fontFamily: 'ride-time-icons', 
-              fontSize: (this.props.size ? this.props.size : 30)
-            },
-            this.props.style
-          ]}
+              fontSize: (this.props.size ? this.props.size : 30),
+              ...this.props.style
+          }}
         >
           {symbol}
         </Text>

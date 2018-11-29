@@ -18,7 +18,7 @@ export class RideDetail extends Component {
         <View style={styles.map} >
           <AreaMap currentLocation={this.props.ride.locationGps} />
         </View>
-        <View style={[styles.detailListItem, styles.rideItem]} >
+        <View style={{...styles.detailListItem, ...styles.rideItem}} >
           <RideItem ride={this.props.ride}/>
         </View>
         <View style={styles.detailListItem} >

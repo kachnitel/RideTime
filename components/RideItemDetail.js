@@ -19,16 +19,16 @@ export class RideItemDetail extends React.Component {
         <RiderCount size={28} fontSize={22} count={ride.members.length} />
       </View>
       {/* TODO shuttle/chairlift icon */}
-      <View style={[
-        styles.lowerRowIcon, 
-        styles.duration
-      ]}>
+      <View style={{
+        ...styles.lowerRowIcon, 
+        ...styles.duration
+      }}>
         <Text>2h</Text>
       </View>
-      <View style={[
-        styles.lowerRowIcon, 
-        { width: 'auto' }
-      ]}>
+      <View style={{
+        ...styles.lowerRowIcon, 
+        ...styles.startTimeView
+      }}>
         <Text style={{...this.props.style, ...styles.startTime}}>11:30</Text>
       </View>
     </View>;
@@ -48,6 +48,9 @@ const styles = StyleSheet.create({
     },
     startTime: {
       fontSize: 24
+    },
+    startTimeView: {
+      width: 'auto'
     },
     duration: {
       justifyContent: 'center', 
