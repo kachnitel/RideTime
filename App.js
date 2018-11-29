@@ -1,7 +1,15 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { AppLoading, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+
+let oldRender = Text.render;
+Text.render = function (...args) {
+    let origin = oldRender.call(this, ...args);
+    return React.cloneElement(origin, {
+        style: [{fontFamily: 'Roboto'}, origin.props.style]
+    });
+};
 
 export default class App extends React.Component {
   state = {
