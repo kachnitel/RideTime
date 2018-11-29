@@ -1,11 +1,13 @@
 [
   {
     "id": 1,
-    "name": "Duck"
+    "name": "Duck",
+    "city": "Squamish, BC"
   },
   {
     "id": 2,
-    "name": "Not a duck"
+    "name": "Not a duck",
+    "city": "Whistler, BC"
   },
   {
     "id": 3,

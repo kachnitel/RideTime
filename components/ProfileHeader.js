@@ -7,7 +7,7 @@ import Colors from '../constants/Colors';
 
 export default class ProfileHeader extends React.Component {
   render() {
-    // console.log(this.props.user.name);
+    console.log(this.props.user);
     return(
       <View style={{flex: 1}}>
         <CoverPicture 
@@ -19,6 +19,7 @@ export default class ProfileHeader extends React.Component {
             <ProfilePicture rider={this.props.user} size={120} />
           </View>
           <Text style={styles.name}>{this.props.user.name}</Text>
+          <Text style={styles.city}>{this.props.user.city}</Text>
         </View>
       </View>
     );
@@ -47,6 +48,11 @@ const styles=StyleSheet.create({
   name: {
     color: '#fff',
     fontSize: 24,
-    padding: 15
+    padding: 15,
+    paddingBottom: 5
+  },
+  city: {
+    color: '#fff',
+    fontSize: 16,
   }
 });
