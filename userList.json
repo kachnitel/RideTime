@@ -1,16 +1,16 @@
-[
-  {
+{
+  "1": {
     "id": 1,
     "name": "Duck",
     "city": "Squamish, BC"
   },
-  {
+  "2": {
     "id": 2,
     "name": "Not a duck",
     "city": "Whistler, BC"
   },
-  {
+  "3": {
     "id": 3,
     "name": "Stranger"
   }
-]
+}
