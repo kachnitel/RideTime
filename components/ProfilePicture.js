@@ -2,10 +2,6 @@ import React from 'react';
 import { Image, View, StyleSheet } from 'react-native';
 
 export default class ProfilePicture extends React.Component {
-  loadImageAsync(riderId) {
-
-  }
-
   render() {
     riderId =  this.props.rider.id;
     imgPath = 'https://s3.ca-central-1.amazonaws.com/ride-time/profile-images/' + riderId + '.png';
