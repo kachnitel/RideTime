@@ -27,8 +27,7 @@ const styles = StyleSheet.create({
   name: {
     padding: 3,
     fontSize: 20,
-    height: 32,
-    fontWeight: 'bold'
+    height: 32
   },
   listItem: {
     height: 110,

@@ -29,7 +29,7 @@ export class RideItemDetail extends React.Component {
         styles.lowerRowIcon, 
         { width: 'auto' }
       ]}>
-        <Text style={[this.props.style, styles.startTime]}>11:30</Text>
+        <Text style={{...this.props.style, ...styles.startTime}}>11:30</Text>
       </View>
     </View>;
   }
@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     startTime: {
-      fontWeight: 'bold', 
       fontSize: 24
     },
     duration: {

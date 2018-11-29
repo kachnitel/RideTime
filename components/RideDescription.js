@@ -16,7 +16,7 @@ export class RideDescription extends Component {
 // (style in constants or ind. file?)
 const styles = StyleSheet.create({
   title: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#fff',
     fontWeight: 'bold'
   },
