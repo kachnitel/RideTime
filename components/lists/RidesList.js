@@ -7,7 +7,6 @@ export class RidesList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Rides nearby</Text>
         <FlatList
           data={this.props.rides}
           renderItem={({item, index}) => 
@@ -25,14 +24,6 @@ export class RidesList extends Component {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    paddingLeft: 10,
-    paddingVertical: 5,
-    borderBottomColor: Colors.darkBackground,
-    borderBottomWidth: 1
-  },
   container: {
     flex: 1,
     paddingTop: 2
