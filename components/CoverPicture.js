@@ -9,11 +9,7 @@ export default class CoverPicture extends React.Component {
     return (
       <Image 
         source={{uri: imgPath}}
-        style={{
-            width: this.props.width,
-            height: this.props.height,
-            ...this.props.style
-        }}
+        {...this.props}
       />
     );
   }
