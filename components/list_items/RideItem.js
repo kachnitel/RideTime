@@ -8,8 +8,6 @@ class RideItem extends React.Component {
     return (
       <TouchableHighlight onPress={() => this.props.navigation.navigate('RideDetail', this.props.ride)}>
         <View style={[styles.listItem, this.props.style]}>
-          {/* Not a fan of 2 selectors here, but Text can't inherit from View 
-          wrap in parent Text?*/}
           <Text style={[styles.name, this.props.style]}>
             {this.props.ride.name}
           </Text>
@@ -33,7 +31,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   listItem: {
-    height: 120,
-    padding: 15
+    height: 100,
+    // padding: 15
   }
 })
