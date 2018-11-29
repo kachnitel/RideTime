@@ -3,11 +3,11 @@ import { Text, View, StyleSheet } from 'react-native';
 import CoverPicture from './CoverPicture';
 import Dimensions from '../constants/Layout'
 import ProfilePicture from './ProfilePicture';
+import ProfileSummary from './ProfileSummary';
 import Colors from '../constants/Colors';
 
 export default class ProfileHeader extends React.Component {
   render() {
-    console.log(this.props.user);
     return(
       <View style={{flex: 1}}>
         <CoverPicture 
@@ -20,6 +20,7 @@ export default class ProfileHeader extends React.Component {
           </View>
           <Text style={styles.name}>{this.props.user.name}</Text>
           <Text style={styles.city}>{this.props.user.city}</Text>
+          <ProfileSummary user={this.props.user} />
         </View>
       </View>
     );
