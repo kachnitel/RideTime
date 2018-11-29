@@ -46,7 +46,8 @@ styles = StyleSheet.create({
     height: 200
   },
   rideItem: {
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    padding: 0
   },
   detailListItem: {
     padding: 15
