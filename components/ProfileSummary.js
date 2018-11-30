@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import DifficultyIcon from './icons/DifficultyIcon';
+import RideCount from './profile-summary/RideCount';
+import RiderLevel from './profile-summary/RiderLevel';
+import PreferredStyle from './profile-summary/PreferredStyle';
 
 export default class ProfileSummary extends Component {
   render() {
     return(
       <View style={styles.summary}>
-
+        <RideCount count={10} />
+        <RiderLevel level={1} />
+        <PreferredStyle terrain='trail' />
       </View>
     );
   }
@@ -13,11 +19,12 @@ export default class ProfileSummary extends Component {
 
 const styles = StyleSheet.create({
   summary: {
-    borderColor: 'pink',
-    borderWidth: 1,
-    height: 50,
+    height: 60,
     width: 180,
-    bottom: 30,
-    position: 'absolute'
+    bottom: 25,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
   }
 });
