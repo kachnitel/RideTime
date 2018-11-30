@@ -42,7 +42,6 @@ export default class DifficultyIcon extends React.Component {
             fontFamily: 'trail-difficulty-icons', 
             fontSize: (this.props.size ? this.props.size : 36), 
             color: iconColor,
-            ...styles.shadowIcon,
             ...this.props.style
         }}>
           {symbol}
@@ -51,12 +50,3 @@ export default class DifficultyIcon extends React.Component {
     );
   }
 }
-
-// TODO create a Colors.iconColor outline when on black background only
-const styles = StyleSheet.create({
-  shadowIcon: {
-    textShadowColor: Colors.iconColor, 
-    textShadowOffset: {width: 1, height: 0},
-    textShadowRadius: 2
-  }
-})
