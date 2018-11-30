@@ -23,8 +23,6 @@ const styles = StyleSheet.create({
     width: 180,
     bottom: 25,
     position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
     flexDirection: 'row'
   }
 });

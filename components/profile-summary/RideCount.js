@@ -9,7 +9,7 @@ export default class RideCount extends Component {
     return(
       <View style={styles.summaryItem}>
         <Title style={styles.title}>Rides</Title>
-        <Text style={{...styles.content, ...styles.count}}>{this.props.count}</Text>
+        <Text style={{...styles.count, ...styles.content}}>{this.props.count}</Text>
       </View>
     );
   }
@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
   ...sharedStyles,
   count: {
     color: Colors.iconColor,
-    fontSize: 26
+    fontSize: 22
   }
 });

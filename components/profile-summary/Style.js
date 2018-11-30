@@ -2,9 +2,9 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   summaryItem: {
-    // flex: 1,
     alignItems: 'center',
-    width: 60
+    width: 60,
+    justifyContent: 'center'
   },
   title: {
     color: '#fff',
@@ -13,6 +13,7 @@ export default StyleSheet.create({
   },
   content: {
     height: 40,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    textAlignVertical: 'center'
   }
 });
