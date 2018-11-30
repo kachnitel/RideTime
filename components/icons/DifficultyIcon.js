@@ -4,6 +4,13 @@ import { Text, View, StyleSheet } from 'react-native';
 import { AllHtmlEntities } from 'html-entities';
 import Colors from '../../constants/Colors';
 
+/**
+ *
+ *
+ * @export
+ * @class DifficultyIcon
+ * @extends {React.Component}
+ */
 export default class DifficultyIcon extends React.Component {
   render() {
     entities = new AllHtmlEntities();
@@ -35,7 +42,8 @@ export default class DifficultyIcon extends React.Component {
             fontFamily: 'trail-difficulty-icons', 
             fontSize: (this.props.size ? this.props.size : 36), 
             color: iconColor,
-            ...styles.shadowIcon
+            ...styles.shadowIcon,
+            ...this.props.style
         }}>
           {symbol}
         </Text>
