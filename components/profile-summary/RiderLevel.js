@@ -11,7 +11,8 @@ export default class RiderLevel extends Component {
       <View style={styles.summaryItem}>
         <Title style={styles.title}>Level</Title>
         <View style={styles.content}>
-          <DifficultyIcon d={this.props.level} size={24} style={styles.icon} /> 
+          <DifficultyIcon d={this.props.level} size={28} style={{...styles.icon, ...styles.iconBg}} />
+          <DifficultyIcon d={this.props.level} size={24} style={styles.icon} />
         </View>
       </View>
     );
@@ -21,9 +22,12 @@ export default class RiderLevel extends Component {
 const styles = StyleSheet.create({
   ...sharedStyles,
   icon: {
-    textShadowColor: Colors.iconColor, 
-    textShadowOffset: {width: 1, height: 1},
-    textShadowRadius: 2,
-    color: Colors.darkBackground
+    color: Colors.darkBackground,
+    position: 'absolute',
+    alignSelf: "center",
+    justifyContent: 'center'
+  },
+  iconBg: {
+    color: Colors.iconColor
   }
 });

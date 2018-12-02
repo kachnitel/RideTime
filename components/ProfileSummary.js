@@ -10,7 +10,7 @@ export default class ProfileSummary extends Component {
     return(
       <View style={styles.summary}>
         <RideCount count={10} />
-        <RiderLevel level={1} />
+        <RiderLevel level={2} />
         <PreferredStyle terrain='trail' />
       </View>
     );
