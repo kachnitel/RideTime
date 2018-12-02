@@ -9,7 +9,7 @@ import Colors from '../../constants/Colors';
 export default class ProfileHeader extends React.Component {
   render() {
     return(
-      <View style={{flex: 1}}>
+      <View>
         <CoverPicture 
           user={this.props.user} 
           style={styles.coverPicture}

@@ -17,7 +17,7 @@ export class RidersList extends Component {
         <FlatList
           data={riders}
           horizontal={true}
-          renderItem={({item, index}) => 
+          renderItem={({item}) => 
             <RiderItem 
               rider={item}
             />

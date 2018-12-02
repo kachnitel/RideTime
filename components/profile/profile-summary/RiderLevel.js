@@ -19,7 +19,7 @@ export default class RiderLevel extends Component {
           <Title style={styles.title}>Level</Title>
           <View style={styles.content}>
             <DifficultyIcon d={this.props.level} size={26} style={{...styles.icon, ...styles.iconBg}} />
-            <DifficultyIcon d={this.props.level} size={21} style={styles.icon} />
+            <DifficultyIcon d={this.props.level} size={22} style={styles.icon} />
           </View>
         </View>
       : null
