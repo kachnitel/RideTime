@@ -14,15 +14,13 @@ import Colors from '../../../constants/Colors';
 export default class RiderLevel extends Component {
   render() {
     return(
-      this.props.level !== undefined ?
-        <View style={styles.summaryItem}>
-          <Title style={styles.title}>Level</Title>
-          <View style={styles.content}>
-            <DifficultyIcon d={this.props.level} size={26} style={{...styles.icon, ...styles.iconBg}} />
-            <DifficultyIcon d={this.props.level} size={22} style={styles.icon} />
-          </View>
+      <View style={styles.summaryItem}>
+        <Title style={styles.title}>Level</Title>
+        <View style={styles.content}>
+          <DifficultyIcon d={this.props.level} size={26} style={{...styles.icon, ...styles.iconBg}} />
+          <DifficultyIcon d={this.props.level} size={22} style={styles.icon} />
         </View>
-      : null
+      </View>
     );
   }
 }

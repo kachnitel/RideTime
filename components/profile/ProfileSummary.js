@@ -9,8 +9,8 @@ export default class ProfileSummary extends Component {
     return(
       <View style={styles.summary}>
         <RideCount count={10} />
-        <RiderLevel level={this.props.user.level} />
-        <PreferredStyle terrain='trail' />
+        { this.props.user.level !== undefined && <RiderLevel level={this.props.user.level} /> }
+        { this.props.user.preferred !== undefined && <PreferredStyle terrain={this.props.user.preferred} />}
       </View>
     );
   }

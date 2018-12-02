@@ -3,16 +3,19 @@
     "id": 1,
     "name": "Duck",
     "city": "Squamish, BC",
-    "level": 0
+    "level": 0,
+    "preferred": "downhill"
   },
   "2": {
     "id": 2,
     "name": "Not a duck",
     "city": "Whistler, BC",
-    "level": 2
+    "level": 2,
+    "preferred": "downhill"
   },
   "3": {
     "id": 3,
-    "name": "Stranger"
+    "name": "Stranger",
+    "preferred": "trail"
   }
 }
