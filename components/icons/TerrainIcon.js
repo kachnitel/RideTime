@@ -34,17 +34,15 @@ export default class TerrainIcon extends React.Component {
     symbol = entities.decode(iconCode);
 
     return(
-      <View>
-        <Text 
-          style={{ 
-            fontFamily: 'ride-time-icons', 
-            fontSize: (this.props.size ? this.props.size : 36), 
-            color: Colors.iconColor 
-          }}
-        >
-          {symbol}
-        </Text>
-      </View>
+      <Text 
+        style={{ 
+          fontFamily: 'ride-time-icons', 
+          fontSize: (this.props.size ? this.props.size : 36), 
+          color: Colors.iconColor 
+        }}
+      >
+        {symbol}
+      </Text>
     );
   }
 }
