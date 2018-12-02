@@ -10,7 +10,15 @@ export class RideItemDetail extends React.Component {
 
     return <View style={styles.detail}>
       <View style={styles.lowerRowIcon}>
-        <DifficultyIcon size={36} d={ride.difficulty} />
+        {
+          ride.difficulty == 2 || ride.difficulty == 3 &&
+          <DifficultyIcon 
+            size={38}
+            d={ride.difficulty} 
+            style={{...styles.icon, ...styles.diffIconBg}} 
+          /> 
+        }
+        <DifficultyIcon size={36} d={ride.difficulty} style={styles.diffIcon} />
       </View>
       <View style={styles.lowerRowIcon}>
         <TerrainIcon size={30} terrain={ride.terrain} />
@@ -42,9 +50,10 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
     },
     lowerRowIcon: {
-      width: 50,
+      width: 46,
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center'
     },
     startTime: {
       fontSize: 24
@@ -61,5 +70,13 @@ const styles = StyleSheet.create({
       marginLeft: 'auto',
       marginRight: 10,
       alignSelf: 'center'
+    },
+    diffIcon: {
+      position: 'absolute',
+      alignSelf: "center",
+      justifyContent: 'center'
+    },
+    diffIconBg: {
+      color: 'white'
     }
 })
