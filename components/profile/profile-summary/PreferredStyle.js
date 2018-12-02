@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import sharedStyles from './Style';
 import Title from './Title';
-import TerrainIcon from '../icons/TerrainIcon'
+import TerrainIcon from '../../icons/TerrainIcon'
 
 export default class PreferredStyle extends Component {
   render() {

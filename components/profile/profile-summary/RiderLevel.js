@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import DifficultyIcon from '../icons/DifficultyIcon';
+import DifficultyIcon from '../../icons/DifficultyIcon';
 import sharedStyles from './Style';
 import Title from './Title';
-import Colors from '../../constants/Colors';
+import Colors from '../../../constants/Colors';
 
 /**
  * TODO: Need to discuss design options

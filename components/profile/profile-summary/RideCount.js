@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Colors from '../../constants/Colors';
+import Colors from '../../../constants/Colors';
 import sharedStyles from './Style';
 import Title from './Title';
 

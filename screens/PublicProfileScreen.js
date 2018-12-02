@@ -1,5 +1,5 @@
 import React from 'react';
-import Profile from '../components/Profile';
+import Profile from '../components/profile/Profile';
 
 // TODO OwnProfileScreen, title just Profile or My Profile
 // w/ little name under in sidebar eventually 

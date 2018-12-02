@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableHighlight, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import ProfilePicture from '../ProfilePicture';
+import ProfilePicture from '../profile/ProfilePicture';
 
 class RiderItem extends React.Component {
   render() {

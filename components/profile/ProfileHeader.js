@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import CoverPicture from './CoverPicture';
-import Dimensions from '../constants/Layout'
+import Dimensions from '../../constants/Layout'
 import ProfilePicture from './ProfilePicture';
 import ProfileSummary from './ProfileSummary';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 
 export default class ProfileHeader extends React.Component {
   render() {
