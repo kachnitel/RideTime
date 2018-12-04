@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import Header from './Header';
 
 export class RideDescription extends Component {
   render() {
     return (
       <View>
-        <Text style={styles.title}>{this.props.title}</Text>
+        <Header style={styles.title}>{this.props.title}</Header>
         <Text style={styles.location}>{this.props.text}</Text>
       </View>
     );
@@ -16,9 +17,7 @@ export class RideDescription extends Component {
 // (style in constants or ind. file?)
 const styles = StyleSheet.create({
   title: {
-    fontSize: 18,
-    color: '#fff',
-    fontWeight: 'bold'
+    color: '#fff'
   },
   location: {
     paddingTop: 8,
