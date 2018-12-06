@@ -7,6 +7,7 @@ export class RidesList extends Component {
   render() {
     return (
       <View style={styles.container}>
+        {this.props.title !== undefined && this.props.title}
         <FlatList
           data={this.props.rides}
           renderItem={({item, index}) => 
@@ -29,8 +30,7 @@ const styles = StyleSheet.create({
     paddingTop: 2
   },
   listItemWhite: {
-    backgroundColor: '#fff',
-    color: '#000'
+    backgroundColor: '#fff'
   },
   listItemBlack: {
     backgroundColor: Colors.darkBackground,

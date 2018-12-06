@@ -6,8 +6,6 @@ import Header from '../Header';
 
 export class RidersList extends Component {
   render() {
-    // pull rider details here and pass further down
-    // -> list -> user profile
     riders = this.props.riderIds.map((userId) => {
       return RidersProvider.getUser(userId);
     });

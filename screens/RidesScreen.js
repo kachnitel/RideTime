@@ -7,6 +7,7 @@ import { AreaMap } from '../components/AreaMap';
 import { CreateRideButton } from '../components/CreateRideButton';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableHighlight } from 'react-native';
+import RidesProvider from '../providers/RidesProvider';
 
 
 export default class RidesScreen extends React.Component {
@@ -36,39 +37,7 @@ export default class RidesScreen extends React.Component {
       // use last known position
       currentLocation: location,
       locations: LocationsProvider.getLocations(location),
-      rides: [
-        {
-          name: 'Joey\'s Alice lake lap',
-          difficulty: 1,
-          location: 'Alice Lake',
-          locationGps: [49.775666, -123.123307],
-          members: [1],
-          terrain: 'trail', // trail, downhill, road, other (DJ, street, jam)
-          plannedRoute: 'Mashiter, Shades, Entrails to Boney elbows, Gouranga and down to 7up'
-        },
-        {
-          name: 'Quest Shuttle there',
-          difficulty: 3,
-          locationGps: [49.775666, -123.123307],
-          members: [1,2],
-          terrain: 'downhill',
-          description: 'brutal trails DOWN the hill'
-        },
-        {
-          name: 'Paul\'s street jam',
-          difficulty: 4,
-          locationGps: [49.697779, -123.153214],
-          members: [1,3],
-          terrain: 'other'
-        },
-        {
-          name: 'Potato',
-          difficulty: 0,
-          locationGps: [49.687779, -123.153214],
-          members: [1,2,3],
-          terrain: 'trail'
-        }
-      ]
+      rides: RidesProvider.getRides()
     }
   }
 
