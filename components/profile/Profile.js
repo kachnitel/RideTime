@@ -8,9 +8,15 @@ export default class Profile extends React.Component {
     return(
       <View>
         <ProfileHeader user={this.props.user} />
-        {/* <FriendList userIds={[1,2,3]} /> */}
+        <FriendList userIds={[1,2,3]} style={styles.friendList} />
       </View>
     );
   }
 }
 
+const styles = StyleSheet.create({
+  friendList: {
+    paddingTop: 10,
+    color: '#000'
+  }
+})

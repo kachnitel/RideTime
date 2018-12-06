@@ -11,7 +11,7 @@ class RiderItem extends React.Component {
       <TouchableHighlight onPress={() => this.props.navigation.navigate('PublicProfile', this.props.rider)}>
         <View style={styles.listItem}>
           <ProfilePicture rider={this.props.rider} size={65} />
-          <Text style={styles.name} numberOfLines={1} >
+          <Text style={{...styles.name, ...this.props.style}} numberOfLines={1} >
             {this.props.rider.name}
           </Text>
         </View>

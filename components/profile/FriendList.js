@@ -14,14 +14,14 @@ export class FriendList extends Component {
     });
 
     return (
-      <View>
-        <Header>Friends</Header>
+      <View {...this.props}>
+        <Header style={styles.header}>Friends</Header>
         <FlatList
           data={riders}
           horizontal={true}
           renderItem={({item}) => 
             <RiderItem 
-              rider={item}
+              rider={item} style={this.props.style}
             />
           }
           keyExtractor={(item, index) => "index_" + index.toString()}
@@ -30,3 +30,9 @@ export class FriendList extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  header: {
+    paddingLeft: 15
+  }
+});

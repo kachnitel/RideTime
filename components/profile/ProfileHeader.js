@@ -42,6 +42,7 @@ const styles=StyleSheet.create({
     top: coverPictureHeight - 120,
     alignSelf: 'center',
     alignItems: 'center',
+    marginBottom: coverPictureHeight - 120
   },
   profilePicture: {
     marginTop: -60
