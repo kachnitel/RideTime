@@ -28,10 +28,9 @@ const styles = StyleSheet.create({
     height: 90,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 15
+    marginTop: 10
   },
   name: {
-    color: '#fff',
     textAlign: 'center',
     paddingTop: 5,
     flex: 1

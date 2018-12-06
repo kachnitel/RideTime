@@ -20,7 +20,7 @@ export class RidersList extends Component {
           horizontal={true}
           renderItem={({item}) => 
             <RiderItem 
-              rider={item}
+              rider={item} style={styles.item}
             />
           }
           keyExtractor={(item, index) => "index_" + index.toString()}
@@ -32,6 +32,9 @@ export class RidersList extends Component {
 
 const styles = StyleSheet.create({
   title: {
+    color: '#fff'
+  },
+  item: {
     color: '#fff'
   }
 });

@@ -21,7 +21,7 @@ export class FriendList extends Component {
           horizontal={true}
           renderItem={({item}) => 
             <RiderItem 
-              rider={item} style={this.props.style}
+              rider={item}
             />
           }
           keyExtractor={(item, index) => "index_" + index.toString()}
