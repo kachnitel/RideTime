@@ -6,6 +6,7 @@ import CountHeader from '../CountHeader';
 import RideItem from '../list_items/RideItem';
 import { FriendList } from './FriendList';
 import ProfileHeader from './ProfileHeader';
+import { Favourites } from './Favourites';
 
 export default class Profile extends React.Component {
   render() {
@@ -19,6 +20,7 @@ export default class Profile extends React.Component {
         <View style={styles.rideItemContainer}>
           <RideItem ride={upcomingRides[0]} style={styles.rideItem}  />
         </View>
+        <Favourites text={this.props.user.favourites} style={styles.title} />
       </ScrollView>
     );
   }

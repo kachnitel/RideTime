@@ -4,7 +4,8 @@
     "name": "Duck",
     "city": "Squamish, BC",
     "level": 0,
-    "preferred": "downhill"
+    "preferred": "downhill",
+    "favourites": "Pleasure!"
   },
   "2": {
     "id": 2,
@@ -16,6 +17,7 @@
   "3": {
     "id": 3,
     "name": "Stranger",
-    "preferred": "trail"
+    "preferred": "trail",
+    "favourites": "All the street"
   }
 }
