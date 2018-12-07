@@ -11,7 +11,7 @@ export class RideItemDetail extends React.Component {
     return <View style={styles.detail}>
       <View style={styles.lowerRowIcon}>
         {
-          ride.difficulty == 2 || ride.difficulty == 3 &&
+          (ride.difficulty == 2 || ride.difficulty == 3) &&
           <DifficultyIcon 
             size={38}
             d={ride.difficulty} 
