@@ -3,23 +3,25 @@ import { Text, View, StyleSheet } from 'react-native';
 import DifficultyIcon from './icons/DifficultyIcon';
 import TerrainIcon from './icons/TerrainIcon';
 import RiderCount from './RiderCount';
+import { OutlineIcon } from './icons/OutlineIcon';
 
 export class RideItemDetail extends React.Component {
   render() {
     const ride = this.props.ride;
+    difficultyIcon = <DifficultyIcon size={36} d={ride.difficulty} style={styles.diffIcon} />;
 
     return <View style={styles.detail}>
-      <View style={styles.lowerRowIcon}>
-        {
-          (ride.difficulty == 2 || ride.difficulty == 3) &&
-          <DifficultyIcon 
-            size={38}
-            d={ride.difficulty} 
-            style={{...styles.icon, ...styles.diffIconBg}} 
-          /> 
-        }
-        <DifficultyIcon size={36} d={ride.difficulty} style={styles.diffIcon} />
-      </View>
+      {
+        (ride.difficulty == 2 || ride.difficulty == 3)
+        ?
+        <OutlineIcon style={styles.lowerRowIcon} outlineStyle={styles.diffIconBg}>
+          {difficultyIcon}
+        </OutlineIcon>
+        :
+        <View style={styles.lowerRowIcon}>
+          {difficultyIcon}
+        </View>
+      }
       <View style={styles.lowerRowIcon}>
         <TerrainIcon size={30} terrain={ride.terrain} />
       </View>
@@ -28,13 +30,13 @@ export class RideItemDetail extends React.Component {
       </View>
       {/* TODO shuttle/chairlift icon */}
       <View style={{
-        ...styles.lowerRowIcon, 
+        ...styles.lowerRowIcon,
         ...styles.duration
       }}>
         <Text>2h</Text>
       </View>
       <View style={{
-        ...styles.lowerRowIcon, 
+        ...styles.lowerRowIcon,
         ...styles.startTimeView
       }}>
         <Text style={{...this.props.style, ...styles.startTime}}>11:30</Text>
@@ -62,9 +64,9 @@ const styles = StyleSheet.create({
       width: 'auto'
     },
     duration: {
-      justifyContent: 'center', 
-      borderRadius: 6, 
-      backgroundColor: '#E1E1E1', 
+      justifyContent: 'center',
+      borderRadius: 6,
+      backgroundColor: '#E1E1E1',
       height: 22,
       width: 60,
       marginLeft: 'auto',
