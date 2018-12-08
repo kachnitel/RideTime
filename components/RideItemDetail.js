@@ -4,11 +4,12 @@ import DifficultyIcon from './icons/DifficultyIcon';
 import TerrainIcon from './icons/TerrainIcon';
 import RiderCount from './RiderCount';
 import { OutlineIcon } from './icons/OutlineIcon';
+import Layout from '../constants/Layout';
 
 export class RideItemDetail extends React.Component {
   render() {
     const ride = this.props.ride;
-    difficultyIcon = <DifficultyIcon size={36} d={ride.difficulty} style={styles.diffIcon} />;
+    difficultyIcon = <DifficultyIcon size={Layout.window.hp(4)} d={ride.difficulty} style={styles.diffIcon} />;
 
     return <View style={styles.detail}>
       {
@@ -23,10 +24,10 @@ export class RideItemDetail extends React.Component {
         </View>
       }
       <View style={styles.lowerRowIcon}>
-        <TerrainIcon size={30} terrain={ride.terrain} />
+        <TerrainIcon size={Layout.window.hp(4)} terrain={ride.terrain} />
       </View>
       <View style={styles.lowerRowIcon}>
-        <RiderCount size={28} fontSize={22} count={ride.members.length} />
+        <RiderCount size={Layout.window.hp(4)} fontSize={Layout.window.hp(3)} count={ride.members.length} />
       </View>
       {/* TODO shuttle/chairlift icon */}
       <View style={{
@@ -52,13 +53,13 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
     },
     lowerRowIcon: {
-      width: 46,
+      width: Layout.window.wp(12),
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center'
     },
     startTime: {
-      fontSize: 24
+      fontSize: Layout.window.hp(3.5)
     },
     startTimeView: {
       width: 'auto'
@@ -67,8 +68,8 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       borderRadius: 6,
       backgroundColor: '#E1E1E1',
-      height: 22,
-      width: 60,
+      height: Layout.window.hp(3),
+      width: Layout.window.wp(15),
       marginLeft: 'auto',
       marginRight: 10,
       alignSelf: 'center'
