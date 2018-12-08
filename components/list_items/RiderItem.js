@@ -5,6 +5,7 @@ import ProfilePicture from '../profile/ProfilePicture';
 
 class RiderItem extends React.Component {
   render() {
+    // console.log(this.props.rider)
     return (
       // Rider should contain his details fetched in list
       // To render eg. little exp. icon in corner of image

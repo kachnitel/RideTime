@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, TouchableHighlight, StyleSheet } from 'react-native';
 import { RideItemDetail } from '../RideItemDetail';
 import { withNavigation } from 'react-navigation';
+import Layout from '../../constants/Layout';
 
 class RideItem extends React.Component {
   render() {
@@ -11,26 +12,25 @@ class RideItem extends React.Component {
           <Text style={{...styles.name, ...this.props.style}}>
             {this.props.ride.name}
           </Text>
-          <RideItemDetail 
-            ride={this.props.ride} 
+          <RideItemDetail
+            ride={this.props.ride}
             style={this.props.style}
           />
         </View>
       </TouchableHighlight>
     );
-  }  
+  }
 }
 
 export default withNavigation(RideItem);
 
 const styles = StyleSheet.create({
   name: {
-    padding: 3,
-    fontSize: 20,
-    height: 32
+    fontSize: Layout.window.hp(2.75),
   },
   listItem: {
-    height: 110,
-    padding: 10
+    height: Layout.window.hp(15),
+    paddingVertical: Layout.window.hp(1.5),
+    paddingHorizontal: Layout.window.wp(4)
   }
 })

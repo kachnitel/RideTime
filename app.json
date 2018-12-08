@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "RideTime",
-    "description": "A very interesting project.",
+    "description": "An app to get mountain bikers together and out on the trails!",
     "slug": "RideTime",
     "privacy": "public",
     "sdkVersion": "31.0.0",
