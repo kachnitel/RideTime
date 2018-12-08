@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Colors from '../../../constants/Colors';
 import sharedStyles from './Style';
 import Title from './Title';
+import Layout from '../../../constants/Layout';
 
 export default class RideCount extends Component {
   render() {
@@ -19,6 +20,6 @@ const styles = StyleSheet.create({
   ...sharedStyles,
   count: {
     color: Colors.iconColor,
-    fontSize: 22
+    fontSize: Layout.window.hp(3)
   }
 });

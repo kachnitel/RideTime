@@ -7,6 +7,7 @@ import RideItem from '../list_items/RideItem';
 import { FriendList } from './FriendList';
 import ProfileHeader from './ProfileHeader';
 import { Favourites } from './Favourites';
+import Layout from '../../constants/Layout';
 
 export default class Profile extends React.Component {
   render() {
@@ -28,12 +29,12 @@ export default class Profile extends React.Component {
 
 const styles = StyleSheet.create({
   friendList: {
-    paddingTop: 10,
+    paddingTop: Layout.window.hp(2),
     color: '#000'
   },
   title: {
-    paddingLeft: 15,
-    paddingVertical: 10
+    paddingHorizontal: Layout.window.wp(4),
+    paddingVertical: Layout.window.hp(2)
   },
   rideItemContainer: {
     borderColor: Colors.iconColor,

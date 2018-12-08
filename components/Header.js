@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
+import Layout from '../constants/Layout';
 
 export default class Header extends Component {
   render() {
@@ -11,7 +12,7 @@ export default class Header extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    fontSize: 18,
+    fontSize: Layout.window.hp(2.5),
     fontWeight: 'bold'
   }
 })

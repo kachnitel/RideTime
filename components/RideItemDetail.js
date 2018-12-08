@@ -8,7 +8,7 @@ import Layout from '../constants/Layout';
 
 export class RideItemDetail extends React.Component {
   render() {
-    const ride = this.props.ride;
+    ride = this.props.ride;
     difficultyIcon = <DifficultyIcon size={Layout.window.hp(4)} d={ride.difficulty} style={styles.diffIcon} />;
 
     return <View style={styles.detail}>

@@ -3,6 +3,7 @@ import { FlatList, Text, View, StyleSheet } from 'react-native';
 import RiderItem from '../list_items/RiderItem';
 import RidersProvider from '../../providers/RidersProvider';
 import Header from '../Header';
+import Layout from '../../constants/Layout';
 
 export class FriendList extends Component {
   render() {
@@ -16,8 +17,8 @@ export class FriendList extends Component {
         <FlatList
           data={riders}
           horizontal={true}
-          renderItem={({item}) => 
-            <RiderItem 
+          renderItem={({item}) =>
+            <RiderItem
               rider={item}
             />
           }
@@ -30,6 +31,6 @@ export class FriendList extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    paddingLeft: 15
+    paddingLeft: Layout.window.wp(4)
   }
 });

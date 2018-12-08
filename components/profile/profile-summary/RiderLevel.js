@@ -4,6 +4,8 @@ import DifficultyIcon from '../../icons/DifficultyIcon';
 import sharedStyles from './Style';
 import Title from './Title';
 import Colors from '../../../constants/Colors';
+import { OutlineIcon } from '../../icons/OutlineIcon';
+import Layout from '../../../constants/Layout';
 
 /**
  * TODO: Need to discuss design options
@@ -16,10 +18,9 @@ export default class RiderLevel extends Component {
     return(
       <View style={styles.summaryItem}>
         <Title style={styles.title}>Level</Title>
-        <View style={styles.content}>
-          <DifficultyIcon d={this.props.level} size={26} style={{...styles.icon, ...styles.iconBg}} />
-          <DifficultyIcon d={this.props.level} size={22} style={styles.icon} />
-        </View>
+        <OutlineIcon outlineStyle={styles.iconBg} style={styles.content}>
+          <DifficultyIcon d={this.props.level} size={Layout.window.hp(3)} style={styles.icon} />
+        </OutlineIcon>
       </View>
     );
   }

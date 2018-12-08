@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, TouchableHighlight, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import ProfilePicture from '../profile/ProfilePicture';
+import Layout from '../../constants/Layout';
 
 class RiderItem extends React.Component {
   render() {
@@ -11,29 +12,30 @@ class RiderItem extends React.Component {
       // To render eg. little exp. icon in corner of image
       <TouchableHighlight onPress={() => this.props.navigation.navigate('PublicProfile', this.props.rider)}>
         <View style={styles.listItem}>
-          <ProfilePicture rider={this.props.rider} size={65} />
+          <ProfilePicture rider={this.props.rider} size={Layout.window.hp(7)} />
           <Text style={{...styles.name, ...this.props.style}} numberOfLines={1} >
             {this.props.rider.name}
           </Text>
         </View>
       </TouchableHighlight>
     );
-  }  
+  }
 }
 
 export default withNavigation(RiderItem);
 
 const styles = StyleSheet.create({
   listItem: {
-    width: 90,
-    height: 90,
+    width: Layout.window.hp(11),
+    height: Layout.window.hp(12.5),
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10
+    paddingTop: Layout.window.hp(2)
   },
   name: {
     textAlign: 'center',
-    paddingTop: 5,
-    flex: 1
+    paddingTop: Layout.window.hp(1),
+    flex: 1,
+    fontSize: Layout.window.hp(1.85)
   }
 });

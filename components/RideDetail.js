@@ -5,6 +5,7 @@ import { AreaMap } from './AreaMap';
 import RideItem from './list_items/RideItem';
 import Colors from '../constants/Colors';
 import { RideDescription } from './RideDescription';
+import Layout from '../constants/Layout';
 
 /**
  * Ride Detail screen content
@@ -18,7 +19,7 @@ export class RideDetail extends Component {
         <View style={styles.map} >
           <AreaMap currentLocation={this.props.ride.locationGps} />
         </View>
-        <View style={{...styles.detailListItem, ...styles.rideItem}} >
+        <View style={styles.rideItem} >
           <RideItem ride={this.props.ride}/>
         </View>
         <View style={styles.detailListItem} >
@@ -43,13 +44,14 @@ export class RideDetail extends Component {
 
 styles = StyleSheet.create({
   map: {
-    height: 200
+    height: Layout.window.hp(30)
   },
   rideItem: {
     backgroundColor: '#fff',
     padding: 0
   },
   detailListItem: {
-    padding: 15
+    paddingVertical: Layout.window.hp(1.5),
+    paddingHorizontal: Layout.window.wp(4)
   }
 });

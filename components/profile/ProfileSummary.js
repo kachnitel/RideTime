@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import PreferredStyle from './profile-summary/PreferredStyle';
 import RideCount from './profile-summary/RideCount';
 import RiderLevel from './profile-summary/RiderLevel';
+import Layout from '../../constants/Layout';
 
 export default class ProfileSummary extends Component {
   render() {
@@ -18,9 +19,7 @@ export default class ProfileSummary extends Component {
 
 const styles = StyleSheet.create({
   summary: {
-    height: 60,
-    width: 180,
-    bottom: 25,
+    bottom: Layout.window.hp(2),
     position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'center'
