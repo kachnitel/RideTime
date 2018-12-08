@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
   ...sharedStyles,
   count: {
     color: Colors.iconColor,
-    fontSize: Layout.window.hp(3)
+    fontSize: Layout.window.hp(3.5)
   }
 });

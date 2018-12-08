@@ -12,9 +12,10 @@ export class OutlineIcon extends Component {
       throw "OutlineIcon only accepts one child."
     }
 
+    thickness = this.props.thickness ? this.props.thickness : 1.05;
     icon = React.Children.only(this.props.children);
     outline = React.cloneElement(icon, {
-      size: icon.props.size*1.05,
+      size: icon.props.size*thickness,
       style: {...icon.props.style, ...this.props.outlineStyle}
     });
 

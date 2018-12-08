@@ -11,7 +11,7 @@ export default class PreferredStyle extends Component {
       <View style={styles.summaryItem}>
         <Title style={styles.title}>Style</Title>
         <View style={styles.content}>
-          <TerrainIcon terrain={this.props.terrain} size={Layout.window.hp(3)} />
+          <TerrainIcon terrain={this.props.terrain} size={Layout.window.hp(3.5)} />
         </View>
       </View>
     );

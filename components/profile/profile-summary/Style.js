@@ -4,7 +4,7 @@ import Layout from '../../../constants/Layout';
 export default StyleSheet.create({
   summaryItem: {
     alignItems: 'center',
-    width: Layout.window.wp(10),
+    width: Layout.window.wp(15),
     justifyContent: 'center'
   },
   title: {
@@ -13,7 +13,7 @@ export default StyleSheet.create({
     fontSize: Layout.window.hp(1.5)
   },
   content: {
-    height: Layout.window.hp(4),
+    height: Layout.window.hp(5),
     justifyContent: 'center',
     textAlignVertical: 'center'
   }

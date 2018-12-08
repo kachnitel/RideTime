@@ -19,7 +19,7 @@ export default class ProfileSummary extends Component {
 
 const styles = StyleSheet.create({
   summary: {
-    bottom: Layout.window.hp(2),
+    bottom: Layout.window.hp(3.5),
     position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'center'

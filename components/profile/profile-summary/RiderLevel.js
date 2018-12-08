@@ -18,8 +18,8 @@ export default class RiderLevel extends Component {
     return(
       <View style={styles.summaryItem}>
         <Title style={styles.title}>Level</Title>
-        <OutlineIcon outlineStyle={styles.iconBg} style={styles.content}>
-          <DifficultyIcon d={this.props.level} size={Layout.window.hp(3)} style={styles.icon} />
+        <OutlineIcon outlineStyle={styles.iconBg} style={styles.content} thickness={1.15}>
+          <DifficultyIcon d={this.props.level} size={Layout.window.hp(3.5)} style={styles.icon} />
         </OutlineIcon>
       </View>
     );
