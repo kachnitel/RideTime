@@ -10,7 +10,11 @@ class RiderItem extends React.Component {
     return (
       // Rider should contain his details fetched in list
       // To render eg. little exp. icon in corner of image
-      <TouchableHighlight onPress={() => this.props.navigation.navigate('PublicProfile', this.props.rider)}>
+      <TouchableHighlight onPress={() => this.props.navigation.navigate({
+        key: Math.random () * 10000,
+        routeName: 'PublicProfile',
+        params: this.props.rider
+      })}>
         <View style={styles.listItem}>
           <ProfilePicture rider={this.props.rider} size={Layout.window.hp(7)} />
           <Text style={{...styles.name, ...this.props.style}} numberOfLines={1} >
