@@ -40,6 +40,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingTop: Layout.window.hp(1),
     flex: 1,
-    fontSize: Layout.window.hp(1.85)
   }
 });
