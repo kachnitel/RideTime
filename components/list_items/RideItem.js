@@ -7,7 +7,11 @@ import Layout from '../../constants/Layout';
 class RideItem extends React.Component {
   render() {
     return (
-      <TouchableHighlight onPress={() => this.props.navigation.navigate('RideDetail', this.props.ride)}>
+      <TouchableHighlight onPress={() => this.props.navigation.navigate({
+        key: Math.random () * 10000,
+        routeName: 'RideDetail',
+        params: this.props.ride
+      })}>
         <View style={{...styles.listItem, ...this.props.style}}>
           <Text style={{...styles.name, ...this.props.style}}>
             {this.props.ride.name}
