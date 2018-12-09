@@ -8,7 +8,7 @@ let oldRender = Text.render;
 Text.render = function (...args) {
     let origin = oldRender.call(this, ...args);
     return React.cloneElement(origin, {
-        style: [{fontFamily: 'Roboto', fontSize: Layout.window.hp(5)}, origin.props.style]
+        style: [{fontFamily: 'Roboto', fontSize: Layout.window.hp(2)}, origin.props.style]
     });
 };
 
