@@ -2,12 +2,13 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { AppLoading, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import Layout from './constants/Layout';
 
 let oldRender = Text.render;
 Text.render = function (...args) {
     let origin = oldRender.call(this, ...args);
     return React.cloneElement(origin, {
-        style: [{fontFamily: 'Roboto'}, origin.props.style]
+        style: [{fontFamily: 'Roboto', fontSize: Layout.window.hp(5)}, origin.props.style]
     });
 };
 

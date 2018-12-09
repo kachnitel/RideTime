@@ -32,9 +32,9 @@ export class RideItemDetail extends React.Component {
       {/* TODO shuttle/chairlift icon */}
       <View style={{
         ...styles.lowerRowIcon,
-        ...styles.duration
+        ...styles.durationContainer
       }}>
-        <Text>2h</Text>
+        <Text style={styles.duration}>2h</Text>
       </View>
       <View style={{
         ...styles.lowerRowIcon,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     startTimeView: {
       width: 'auto'
     },
-    duration: {
+    durationContainer: {
       justifyContent: 'center',
       borderRadius: 6,
       backgroundColor: '#E1E1E1',
@@ -72,7 +72,10 @@ const styles = StyleSheet.create({
       width: Layout.window.wp(15),
       marginLeft: 'auto',
       marginRight: 10,
-      alignSelf: 'center'
+      alignSelf: 'center',
+    },
+    duration: {
+      fontSize: Layout.window.hp(2)
     },
     diffIcon: {
       position: 'absolute',
