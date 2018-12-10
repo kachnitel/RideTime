@@ -50,7 +50,7 @@ export class AreaMap extends React.Component {
     spots = this.props.locations;
 
     // not working, FIXME
-    if(spots !== null && spots.length !== 0 && JSON.stringify(prevState.markers) !== JSON.stringify(spots)) {
+    if(spots !== null && spots !== [] && JSON.stringify(prevState.markers) !== JSON.stringify(spots)) {
       console.log("SEND MARKERS");
       this.setState({markers: spots});
 
