@@ -4,7 +4,7 @@ import mapLayers from '../mockMapLayers';
 import { mapboxToken } from '../secrets';
 
 
-/* 
+/*
  * TODO replace with MapView? & remove react-native-webview-leaflet from package.json
  * docs: https://docs.expo.io/versions/latest/sdk/map-view
  * docs: https://github.com/react-community/react-native-maps
@@ -25,7 +25,7 @@ export class AreaMap extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       // use last known position
       currentLocation: props.currentLocation, //array
       markers: props.locations
@@ -35,7 +35,7 @@ export class AreaMap extends React.Component {
   componentDidMount() {
     this.webViewLeaflet.sendMessage({
       centerPosition: [...this.state.currentLocation]
-      // TODO center once location is established 
+      // TODO center once location is established
       // and then make available to parent once moved on map?
       // Use inverse data flow to update parent so the list
       // of rides can reflect what the map shows
@@ -50,7 +50,7 @@ export class AreaMap extends React.Component {
     spots = this.props.locations;
 
     // not working, FIXME
-    if(spots !== null && spots !== [] && JSON.stringify(prevState.markers) !== JSON.stringify(spots)) {
+    if(spots !== null && spots.length !== 0 && JSON.stringify(prevState.markers) !== JSON.stringify(spots)) {
       console.log("SEND MARKERS");
       this.setState({markers: spots});
 
@@ -60,14 +60,14 @@ export class AreaMap extends React.Component {
     }
 
     if(prevProps.currentLocation !== this.props.currentLocation) {
-      this.state.currentLocation = this.props.currentLocation;
+      this.setState({currentLocation: this.props.currentLocation});
     }
   }
 
   onLoad = (event) => {
     // log a message showing the map has been loaded
     // console.log('onLoad received : ', event);
-  
+
     // optionally set state
     this.setState(
       {
@@ -88,7 +88,7 @@ export class AreaMap extends React.Component {
       ref={component => (this.webViewLeaflet = component)}
       onLoad={this.onLoad}
       eventReceiver={this} // the component that will receive map events
-      
+
       // the center of the displayed map
       centerPosition={this.state.mapCenterPosition}
 
