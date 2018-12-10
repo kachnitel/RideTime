@@ -6,11 +6,8 @@ import Profile from '../components/profile/Profile';
 export default class PublicProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      // title: 'Profile: ' + navigation.getParam('name', 'NAMELESS RIDER'),
       headerStyle: {backgroundColor: 'rgba(255,255,255,0.66);', width: 55, height: 50, borderBottomRightRadius: 5},
-      // header: null,
-      headerTransparent: true,
-      // headerTintColor: '#FFF'
+      headerTransparent: true
     };
   };
 
