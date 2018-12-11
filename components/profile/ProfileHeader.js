@@ -31,7 +31,7 @@ coverPictureHeight = Layout.window.wp(60);
 businessCardHeight = Layout.window.hp(33);
 businessCardOffset = coverPictureHeight - businessCardHeight/2;
 
-const styles=StyleSheet.create({
+const styles = StyleSheet.create({
   coverPicture: {
     width: Layout.window.width,
     height: coverPictureHeight,

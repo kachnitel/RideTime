@@ -75,7 +75,7 @@ export default class RidesScreen extends React.Component {
   }
 }
 
-styles = StyleSheet.create(
+const styles = StyleSheet.create(
   {
     headerMenuIconContainer: {
       justifyContent: 'center'

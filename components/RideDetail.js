@@ -42,7 +42,7 @@ export class RideDetail extends Component {
   }
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   map: {
     height: Layout.window.hp(30)
   },
