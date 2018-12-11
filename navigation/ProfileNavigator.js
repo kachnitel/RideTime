@@ -11,12 +11,7 @@ const ProfileStack = createStackNavigator(
     RideDetail: {screen: RideDetailScreen}
   },
   {
-    initialRouteName: 'Profile',
-    // FIXME duplicated from HomeNavigator
-    navigationOptions: ({navigation}) => ({
-      headerStyle: {backgroundColor: '#ffffff'},
-      headerTintColor: '#0C5E14'
-    })
+    initialRouteName: 'Profile'
   }
 );
 

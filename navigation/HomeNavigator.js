@@ -11,13 +11,7 @@ const HomeStack = createStackNavigator(
   },
   {
     initialRouteName: 'Rides',
-    cardStyle: { backgroundColor: '#FFFFFF' },
-    navigationOptions: ({navigation}) => ({
-      headerStyle: {
-        backgroundColor: '#ffffff'
-      },
-      headerTintColor: '#0C5E14'
-    })
+    cardStyle: { backgroundColor: '#FFFFFF' }
   }
 );
 
