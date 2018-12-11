@@ -8,7 +8,7 @@ import Layout from '../../constants/Layout';
 export default class ProfileSummary extends Component {
   render() {
     return(
-      <View style={styles.summary}>
+      <View {...this.props}>
         <RideCount count={10} />
         { this.props.user.level !== undefined && <RiderLevel level={this.props.user.level} /> }
         { this.props.user.preferred !== undefined && <PreferredStyle terrain={this.props.user.preferred} /> }
@@ -16,12 +16,3 @@ export default class ProfileSummary extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  summary: {
-    bottom: Layout.window.hp(3.5),
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'center'
-  }
-});
