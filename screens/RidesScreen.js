@@ -19,8 +19,8 @@ export default class RidesScreen extends React.Component {
       headerLeft: (
         <TouchableHighlight
           onPress={() => navigation.toggleDrawer()}>
-          <View>
-            <Icon name='menu' />
+          <View style={styles.headerMenuIconContainer}>
+            <Icon style={styles.headerMenuIcon} name='menu' />
           </View>
         </TouchableHighlight>
       ),
@@ -33,7 +33,7 @@ export default class RidesScreen extends React.Component {
     // get from cache
     location = [49.355813, -123.036993];
     this.mapRef = createRef();
-    this.state = { 
+    this.state = {
       // use last known position
       currentLocation: location,
       locations: LocationsProvider.getLocations(location),
@@ -74,3 +74,16 @@ export default class RidesScreen extends React.Component {
     );
   }
 }
+
+styles = StyleSheet.create(
+  {
+    headerMenuIconContainer: {
+      justifyContent: 'center'
+    },
+    headerMenuIcon: {
+      fontSize: 24,
+      paddingLeft: 15,
+      color: '#0C5E14'
+    }
+  }
+)
