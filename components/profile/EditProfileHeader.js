@@ -9,6 +9,14 @@ import Layout from '../../constants/Layout';
 import Colors from '../../constants/Colors';
 
 export default class EditProfileHeader extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: this.props.user
+    };
+  }
+
   render() {
     return(
       <View>
@@ -32,8 +40,32 @@ export default class EditProfileHeader extends React.Component {
               }}
             />
           </View>
-          <TextInput style={styles.name} underlineColorAndroid='white' value={this.props.user.name} />
-          <TextInput style={styles.city} underlineColorAndroid='white' value={this.props.user.city} />
+          <TextInput
+            style={styles.name}
+            underlineColorAndroid='white'
+            textAlign={'center'}
+            value={this.state.user.name}
+            onChangeText={
+              (name) => this.setState(
+                (prevState) => ({user: {...prevState.user, name: name}})
+              )
+            }
+            placeholder='Your name'
+            placeholderTextColor='gray'
+          />
+          <TextInput
+            style={styles.city}
+            underlineColorAndroid='white'
+            textAlign={'center'}
+            value={this.state.user.city}
+            onChangeText={
+              (city) => this.setState(
+                (prevState) => ({user: {...prevState.user, city: city}})
+              )
+            }
+            placeholder='Hometown, BC'
+            placeholderTextColor='gray'
+          />
           <ProfileSummary style={styles.profileSummary} user={this.props.user} />
         </View>
       </View>
