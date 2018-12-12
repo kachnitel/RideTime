@@ -16,10 +16,21 @@ export default class EditProfileHeader extends React.Component {
           user={this.props.user}
           style={styles.coverPicture}
         />
+        <Icon
+          name='edit'
+          style={{
+            ...editStyles.editIcon, ...editStyles.editIconCoverPicture
+          }}
+        />
         <View style={styles.businessCard}>
           <View style={styles.profilePicture} >
             <ProfilePicture rider={this.props.user} size={profilePictureSize} />
-            <Icon style={{color: 'white', fontSize: Layout.window.hp(4), position: 'absolute', bottom: 0, right: 0, borderColor: 'white', borderWidth: 1}} name='edit' />
+            <Icon
+              name='edit'
+              style={{
+                ...editStyles.editIcon, ...editStyles.editIconProfilePicture
+              }}
+            />
           </View>
           <TextInput style={styles.name} underlineColorAndroid='white' value={this.props.user.name} />
           <TextInput style={styles.city} underlineColorAndroid='white' value={this.props.user.city} />
@@ -30,3 +41,24 @@ export default class EditProfileHeader extends React.Component {
   }
 }
 
+const editStyles = StyleSheet.create({
+  editIcon: {
+    fontSize: Layout.window.hp(5),
+    position: 'absolute',
+    borderColor: 'rgb(133, 193, 49)',
+    borderWidth: 1,
+    borderRadius: Layout.window.hp(.75),
+    textShadowColor: 'rgba(0,0,0, 0.75)',
+    textShadowOffset: {width: 2, height: 2},
+    textShadowRadius: 5,
+    color: 'rgb(133, 193, 49)',
+    backgroundColor: 'rgba(255,255,255,0.75);',
+    right: 5
+  },
+  editIconProfilePicture: {
+    bottom: 5
+  },
+  editIconCoverPicture: {
+    top: 5
+  }
+})
