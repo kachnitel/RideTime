@@ -14,11 +14,29 @@ export default class OwnProfileScreen extends React.Component {
   };
 
   _editProfile = () => {
+    if(this.state.editing) {
+      this.saveProfile();
+    }
     this.setState((prevState, props) => ({editing: !prevState.editing}));
   };
 
+  saveProfile = () => {
+    alert('Saved!');
+  }
+
   componentDidMount() {
-    this.props.navigation.setParams({ editProfile: this._editProfile });
+    this.props.navigation.setParams({
+      editProfile: this._editProfile,
+      editing: this.state.editing
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.editing !== this.state.editing) {
+      this.props.navigation.setParams({
+        editing: this.state.editing
+      })
+    }
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -28,7 +46,7 @@ export default class OwnProfileScreen extends React.Component {
       headerRight: (
         <View style={styles.button}>
           <Button
-            title='Edit'
+            title={navigation.getParam('editing') ? 'Save' : 'Edit'}
             onPress={navigation.getParam('editProfile')}
             color={Colors.tintColor}
           />
