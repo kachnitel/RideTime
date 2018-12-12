@@ -2,6 +2,7 @@ import { createStackNavigator } from 'react-navigation'; // Version can be speci
 import RidesScreen from '../screens/RidesScreen';
 import RideDetailScreen from '../screens/RideDetailScreen';
 import PublicProfileScreen from '../screens/PublicProfileScreen';
+import Colors from '../constants/Colors';
 
 const HomeStack = createStackNavigator(
   {
@@ -11,7 +12,13 @@ const HomeStack = createStackNavigator(
   },
   {
     initialRouteName: 'Rides',
-    cardStyle: { backgroundColor: '#FFFFFF' }
+    cardStyle: { backgroundColor: '#FFFFFF' },
+    navigationOptions: ({navigation}) => ({
+      headerStyle: {
+        backgroundColor: '#ffffff'
+      },
+      headerTintColor: Colors.tintColor
+    })
   }
 );
 

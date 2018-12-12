@@ -2,6 +2,7 @@ import { createStackNavigator } from 'react-navigation'; // Version can be speci
 import OwnProfileScreen from '../screens/OwnProfileScreen';
 import PublicProfileScreen from '../screens/PublicProfileScreen';
 import RideDetailScreen from '../screens/RideDetailScreen';
+import Colors from '../constants/Colors';
 
 const ProfileStack = createStackNavigator(
   {
@@ -11,7 +12,13 @@ const ProfileStack = createStackNavigator(
     RideDetail: {screen: RideDetailScreen}
   },
   {
-    initialRouteName: 'Profile'
+    initialRouteName: 'Profile',
+    navigationOptions: ({navigation}) => ({
+      headerStyle: {
+        backgroundColor: '#ffffff'
+      },
+      headerTintColor: Colors.tintColor
+    })
   }
 );
 

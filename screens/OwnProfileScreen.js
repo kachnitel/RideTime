@@ -1,15 +1,24 @@
 import React from 'react';
 import { Button, StyleSheet, View } from 'react-native';
-import Profile from '../components/profile/Profile';
 import RidersProvider from '../providers/RidersProvider';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableHighlight } from 'react-native';
+import EditProfileHeader from '../components/profile/EditProfileHeader';
+import ProfileHeader from '../components/profile/ProfileHeader';
 
 export default class OwnProfileScreen extends React.Component {
-  static editProfile() {
-    alert('Let\'s edit this ma');
+  state = {
+    editing: false
+  };
+
+  _editProfile = () => {
+    this.setState((prevState, props) => ({editing: !prevState.editing}));
+  };
+
+  componentDidMount() {
+    this.props.navigation.setParams({ editProfile: this._editProfile });
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -18,11 +27,11 @@ export default class OwnProfileScreen extends React.Component {
       title: 'My Profile',
       headerRight: (
         <View style={styles.button}>
-        <Button
-          title='Edit'
-          onPress={OwnProfileScreen.editProfile}
-          color={Colors.tintColor}
-        />
+          <Button
+            title='Edit'
+            onPress={navigation.getParam('editProfile')}
+            color={Colors.tintColor}
+          />
         </View>
       ),
       headerLeft: (
@@ -39,9 +48,9 @@ export default class OwnProfileScreen extends React.Component {
   render() {
     user = RidersProvider.getUser(1);
     return (
-      <Profile user={user} />
+      this.state.editing ? <EditProfileHeader user={user} /> : <ProfileHeader user={user} />
     );
-  }
+  };
 }
 
 const styles = StyleSheet.create({
