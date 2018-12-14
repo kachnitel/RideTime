@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import PreferredStyle from './profile-summary/PreferredStyle';
 import RideCount from './profile-summary/RideCount';
 import RiderLevel from './profile-summary/RiderLevel';
-import Layout from '../../constants/Layout';
 
 export default class ProfileSummary extends Component {
   render() {

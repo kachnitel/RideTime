@@ -1,8 +1,7 @@
-import React, { ReactPropTypes } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
 // TODO remove from npm if I use SVG directly
 import { AllHtmlEntities } from 'html-entities';
-import Colors from '../../constants/Colors';
+import React from 'react';
+import { Text } from 'react-native';
 
 /**
  *
@@ -28,18 +27,18 @@ export default class DifficultyIcon extends React.Component {
       case 0:
         iconColor = 'green';
         break;
-      case 1: 
+      case 1:
         iconColor = 'blue';
         break;
-      case 4: 
+      case 4:
         iconColor = 'orange';
         break;
     }
 
     return(
-      <Text style={{ 
-          fontFamily: 'trail-difficulty-icons', 
-          fontSize: (this.props.size ? this.props.size : 36), 
+      <Text style={{
+          fontFamily: 'trail-difficulty-icons',
+          fontSize: (this.props.size ? this.props.size : 36),
           color: iconColor,
           ...this.props.style
       }}>

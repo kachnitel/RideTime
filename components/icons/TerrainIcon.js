@@ -1,6 +1,6 @@
-import React from 'react';
-import { Text, View } from 'react-native';
 import { AllHtmlEntities } from 'html-entities';
+import React from 'react';
+import { Text } from 'react-native';
 import Colors from '../../constants/Colors';
 
 /**
@@ -20,13 +20,13 @@ export default class TerrainIcon extends React.Component {
       case 'trail':
         iconCode = '&#xe910'
         break;
-      case 'downhill': 
+      case 'downhill':
         iconCode = `&#xe912`;
         break;
-      case 'road': 
+      case 'road':
         iconCode = '&#xe911';
         break;
-      default: 
+      default:
         iconCode = ''
         break;
     }
@@ -34,11 +34,11 @@ export default class TerrainIcon extends React.Component {
     symbol = entities.decode(iconCode);
 
     return(
-      <Text 
-        style={{ 
-          fontFamily: 'ride-time-icons', 
-          fontSize: (this.props.size ? this.props.size : 36), 
-          color: Colors.iconColor 
+      <Text
+        style={{
+          fontFamily: 'ride-time-icons',
+          fontSize: (this.props.size ? this.props.size : 36),
+          color: Colors.iconColor
         }}
       >
         {symbol}

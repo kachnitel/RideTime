@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { FlatList, Text, View, StyleSheet } from 'react-native';
-import RiderItem from '../list_items/RiderItem';
+import { FlatList, StyleSheet, View } from 'react-native';
 import RidersProvider from '../../providers/RidersProvider';
 import Header from '../Header';
+import RiderItem from '../list_items/RiderItem';
 
 export class RidersList extends Component {
   render() {
@@ -16,8 +16,8 @@ export class RidersList extends Component {
         <FlatList
           data={riders}
           horizontal={true}
-          renderItem={({item}) => 
-            <RiderItem 
+          renderItem={({item}) =>
+            <RiderItem
               rider={item} style={styles.item}
             />
           }

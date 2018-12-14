@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { LocationItem } from '../LocationItem';
 
 export default class LocationsList extends Component {
@@ -21,7 +21,7 @@ export default class LocationsList extends Component {
         <Text>Locations</Text>
         <FlatList
           data={this.props.locations}
-          renderItem={({item}) => 
+          renderItem={({item}) =>
             <LocationItem location={item}/>}
         />
       </View>

@@ -1,7 +1,6 @@
 import React from 'react';
 import WebViewLeaflet from 'react-native-webview-leaflet';
 import mapLayers from '../mockMapLayers';
-import { mapboxToken } from '../secrets';
 
 
 /*

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View } from 'react-native';
 import CoverPicture from './CoverPicture';
+import styles, { profilePictureSize } from './ProfileHeaderStyle';
 import ProfilePicture from './ProfilePicture';
 import ProfileSummary from './ProfileSummary';
-import styles, { profilePictureSize } from './ProfileHeaderStyle';
 
 export default class ProfileHeader extends React.Component {
   render() {

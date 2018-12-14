@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View, StyleSheet } from 'react-native';
+import { Image } from 'react-native';
 
 export default class CoverPicture extends React.Component {
   render() {
@@ -7,7 +7,7 @@ export default class CoverPicture extends React.Component {
     imgPath = 'https://s3.ca-central-1.amazonaws.com/ride-time/cover-images/' + riderId + '.png';
 
     return (
-      <Image 
+      <Image
         source={{uri: imgPath}}
         {...this.props}
       />
