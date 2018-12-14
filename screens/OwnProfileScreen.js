@@ -79,7 +79,9 @@ export default class OwnProfileScreen extends React.Component {
 
   render() {
     return (
-      this.state.editing ? <EditProfileHeader user={this.state.user} updateCallback={this.updateUser} /> : <ProfileHeader user={this.state.user} />
+      this.state.editing
+        ? <EditProfileHeader user={this.state.user} updateCallback={this.updateUser} />
+        : <ProfileHeader user={this.state.user} />
     );
   };
 }
