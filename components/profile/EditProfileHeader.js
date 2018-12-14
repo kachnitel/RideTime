@@ -6,7 +6,6 @@ import ProfileSummary from './ProfileSummary';
 import styles, { profilePictureSize } from './ProfileHeaderStyle';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Layout from '../../constants/Layout';
-import Colors from '../../constants/Colors';
 
 export default class EditProfileHeader extends React.Component {
   constructor(props) {
@@ -15,6 +14,21 @@ export default class EditProfileHeader extends React.Component {
     this.state = {
       user: this.props.user
     };
+  }
+
+  handleUpdateName = (val) => {
+    this.handleUpdate(val, 'name');
+  }
+
+  handleUpdateCity = (val) => {
+    this.handleUpdate(val, 'city');
+  }
+
+  handleUpdate = async (val, key) => {
+    await this.setState(
+      (prevState) => ({user: {...prevState.user, [key]: val}})
+    )
+    this.props.updateCallback(this.state.user);
   }
 
   render() {
@@ -45,11 +59,7 @@ export default class EditProfileHeader extends React.Component {
             underlineColorAndroid='white'
             textAlign={'center'}
             value={this.state.user.name}
-            onChangeText={
-              (name) => this.setState(
-                (prevState) => ({user: {...prevState.user, name: name}})
-              )
-            }
+            onChangeText={this.handleUpdateName}
             placeholder='Your name'
             placeholderTextColor='gray'
           />
@@ -58,11 +68,7 @@ export default class EditProfileHeader extends React.Component {
             underlineColorAndroid='white'
             textAlign={'center'}
             value={this.state.user.city}
-            onChangeText={
-              (city) => this.setState(
-                (prevState) => ({user: {...prevState.user, city: city}})
-              )
-            }
+            onChangeText={this.handleUpdateCity}
             placeholder='Hometown, BC'
             placeholderTextColor='gray'
           />
@@ -77,13 +83,13 @@ const editStyles = StyleSheet.create({
   editIcon: {
     fontSize: Layout.window.hp(5),
     position: 'absolute',
-    borderColor: 'rgb(133, 193, 49)',
+    borderColor: 'white',
     borderWidth: 1,
     borderRadius: Layout.window.hp(.75),
     textShadowColor: 'rgba(0,0,0, 0.75)',
     textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 5,
-    color: 'rgb(133, 193, 49)',
+    color: 'white',
     backgroundColor: 'rgba(255,255,255,0.75);',
     right: 5
   },
