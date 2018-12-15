@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { RidersList } from '../components/lists/RidersList';
+import Colors from '../constants/Colors';
+import Layout from '../constants/Layout';
 import { AreaMap } from './AreaMap';
 import RideItem from './list_items/RideItem';
-import Colors from '../constants/Colors';
 import { RideDescription } from './RideDescription';
-import Layout from '../constants/Layout';
 
 /**
  * Ride Detail screen content
@@ -15,7 +15,7 @@ export class RideDetail extends Component {
 
   render() {
     return (
-      <ScrollView style={{flex: 1, backgroundColor: Colors.darkBackground}}>
+      <ScrollView style={styles.container}>
         <View style={styles.map} >
           <AreaMap currentLocation={this.props.ride.locationGps} />
         </View>
@@ -43,6 +43,9 @@ export class RideDetail extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    // flex: 1
+  },
   map: {
     height: Layout.window.hp(30)
   },
@@ -52,6 +55,7 @@ const styles = StyleSheet.create({
   },
   detailListItem: {
     paddingVertical: Layout.window.hp(1.5),
-    paddingHorizontal: Layout.window.wp(4)
+    paddingHorizontal: Layout.window.wp(4),
+    backgroundColor: Colors.darkBackground
   }
 });

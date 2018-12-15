@@ -1,12 +1,11 @@
 // TODO move map to own Component ASAP
-import React, {createRef} from 'react';
-import { View, StyleSheet } from 'react-native';
-import LocationsProvider from '../providers/LocationsProvider';
-import { RidesList } from '../components/lists/RidesList';
+import React, { createRef } from 'react';
+import { StyleSheet, TouchableHighlight, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { AreaMap } from '../components/AreaMap';
 import { CreateRideButton } from '../components/CreateRideButton';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { TouchableHighlight } from 'react-native';
+import { RidesList } from '../components/lists/RidesList';
+import LocationsProvider from '../providers/LocationsProvider';
 import RidesProvider from '../providers/RidesProvider';
 
 

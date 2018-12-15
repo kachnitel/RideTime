@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View, StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 
 export default class ProfilePicture extends React.Component {
   render() {
@@ -9,7 +9,7 @@ export default class ProfilePicture extends React.Component {
     size = this.props.size ? this.props.size : 50;
 
     return (
-      <Image 
+      <Image
         source={{uri: imgPath}}
         style={{
             ...styles.image,
