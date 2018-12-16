@@ -30,7 +30,7 @@ export class AreaMap extends React.Component {
 
     this.state = {
       currentLocation: location,
-      markers: props.locations
+      locations: props.locations
     }
   }
 
@@ -60,34 +60,29 @@ export class AreaMap extends React.Component {
 
   componentDidMount() {
     this.updateLocation();
-
-    if(this.props.locations) {
-       this.webViewLeaflet.sendMessage({locations: [...this.props.locations]});
-    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    markers = this.props.locations;
+    locations = this.props.locations;
 
-    if(markers !== null
-      && markers !== undefined
-      && markers.length > 0
-      && prevState.markers !== markers
+    if(locations !== null
+      && locations !== undefined
+      && locations.length > 0
+      && prevState.locations !== locations
     ) {
-      console.log("Map send markers");
-      this.setState({markers: markers});
+      console.log("Map update locations");
+      this.setState({locations: locations});
 
-      // console.log(sendobject);
-      // sendobject = {locations: [...markers]};
+      // sendobject = {locations: [...locations]};
       // this.webViewLeaflet.sendMessage(sendobject);
     }
 
     if(prevProps.currentLocation !== this.props.currentLocation) {
-      this.setState({currentLocation: this.props.currentLocation});
+      this.updateLocation();
     }
   }
 
-  onLoad = (event) => {
+  onLoad = () => {
     console.log('ONLOAD')
     this.setState(
       {mapState: { ...this.state.mapState, mapLoaded: true }},
@@ -108,16 +103,13 @@ export class AreaMap extends React.Component {
       centerPosition={this.state.currentLocation}
 
       // a list of markers that will be displayed on the map
-      markers={this.state.markers}
+      markers={this.state.locations}
 
       // Optional: display a marker to be at a given location
       ownPositionMarker={{
         coords: this.state.currentLocation,
         icon: '◉', // {<Icon... />} or something
-        size: [16, 16],
-        // style: {
-        //   color: '#FF0000'
-        // },
+        size: [32, 32],
         animation: {
           name: "pulse",
           duration: "1",
@@ -126,9 +118,13 @@ export class AreaMap extends React.Component {
         }
       }}
 
+      zoom={8}
+
       // Optional: display a button that centers the map on the coordinates of ownPostionMarker. Requires that "ownPositionMarker" prop be set
       centerButton={true}
       showZoomControl={true}
+      showAttributionControl={true}
+      // useMarkerClustering={true} // FIXME breaks map
     />;
   }
 }

@@ -24,12 +24,10 @@ export default class LocationsProvider {
                     name: location.name,
                     coords: [
                       parseFloat(location.lat.replace(",", ".")),
-                      parseFloat(location.lon.replace(",", ".")),
-                    //   location.lat,
-                    //   location.lon
+                      parseFloat(location.lon.replace(",", "."))
                     ],
                     icon: '⃤',
-                    size: [18, 18]
+                    size: [10, 10]
                 }
             })
         );
