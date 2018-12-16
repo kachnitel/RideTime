@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "fontSize": 33.5,
+        "fontWeight": "bold",
+      }
+    }
+  >
+    Snapshot test!
+  </Text>
+  <Text
+    style={
+      Object {
+        "color": "#b8b8b8",
+        "fontSize": 33.5,
+        "fontWeight": "bold",
+        "paddingLeft": 10,
+      }
+    }
+  >
+    0
+  </Text>
+</View>
+`;
+
+exports[`renders correctly with number 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "fontSize": 33.5,
+        "fontWeight": "bold",
+      }
+    }
+  >
+    Snapshot test!
+  </Text>
+  <Text
+    style={
+      Object {
+        "color": "#b8b8b8",
+        "fontSize": 33.5,
+        "fontWeight": "bold",
+        "paddingLeft": 10,
+      }
+    }
+  >
+    123
+  </Text>
+</View>
+`;

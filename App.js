@@ -1,9 +1,12 @@
-import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { AppLoading, Font, Icon } from 'expo';
-import AppNavigator from './navigation/AppNavigator';
+import React from 'react';
+import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
 import Layout from './constants/Layout';
+import AppNavigator from './navigation/AppNavigator';
 
+/**
+ * Set default Text style
+ */
 let oldRender = Text.render;
 Text.render = function (...args) {
     let origin = oldRender.call(this, ...args);
