@@ -24,37 +24,61 @@ export class AreaMap extends React.Component {
   constructor(props) {
     super(props);
 
+    // use last known position
+    // get from cache
+    location = [49.355813, -123.036993];
+
     this.state = {
-      // use last known position
-      currentLocation: props.currentLocation, //array
+      currentLocation: location,
       markers: props.locations
     }
   }
 
-  componentDidMount() {
+  updateLocation = async () => {
+    // TODO Async!!
+    // https://github.com/reggie3/react-native-webview-leaflet/blob/8e5830fc23d121db19f51d7dea872d553c253ba5/App.js#L54
+    await navigator.geolocation.getCurrentPosition(
+      (loc) => {
+        this.setState({currentLocation: [loc.coords.latitude, loc.coords.longitude]})
+      },
+      (error) => {
+        console.log(error);
+        console.log("LOCATION ERROR LOGGED");
+      },
+      {maximumAge: 5000}
+    );
+
     this.webViewLeaflet.sendMessage({
       centerPosition: [...this.state.currentLocation]
       // TODO center once location is established
-      // and then make available to parent once moved on map?
+      // and then make available to parent once moved on map
       // Use inverse data flow to update parent so the list
       // of rides can reflect what the map shows
       // https://reactjs.org/docs/thinking-in-react.html#step-5-add-inverse-data-flow
     });
   }
 
+  componentDidMount() {
+    this.updateLocation();
+
+    if(this.props.locations) {
+       this.webViewLeaflet.sendMessage({locations: [...this.props.locations]});
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    console.log("update");
-    // console.log(prevState.markers);
+    markers = this.props.locations;
 
-    spots = this.props.locations;
+    if(markers !== null
+      && markers !== undefined
+      && markers.length > 0
+      && prevState.markers !== markers
+    ) {
+      console.log("Map send markers");
+      this.setState({markers: markers});
 
-    // not working, FIXME
-    if(spots !== null && spots !== [] && JSON.stringify(prevState.markers) !== JSON.stringify(spots)) {
-      console.log("SEND MARKERS");
-      this.setState({markers: spots});
-
-      sendobject = {locations: [...spots]};
-      console.log(sendobject);
+      // console.log(sendobject);
+      // sendobject = {locations: [...markers]};
       // this.webViewLeaflet.sendMessage(sendobject);
     }
 
@@ -64,20 +88,12 @@ export class AreaMap extends React.Component {
   }
 
   onLoad = (event) => {
-    // log a message showing the map has been loaded
-    // console.log('onLoad received : ', event);
-
-    // optionally set state
+    console.log('ONLOAD')
     this.setState(
-      {
-        ...this.state,
-        mapState: { ...this.state.mapState, mapLoaded: true }
-      },
+      {mapState: { ...this.state.mapState, mapLoaded: true }},
       () => {
         // send an array of map layer information to the map
-        this.webViewLeaflet.sendMessage({
-          mapLayers
-        });
+        this.webViewLeaflet.sendMessage({mapLayers});
       }
     );
   }
@@ -89,7 +105,7 @@ export class AreaMap extends React.Component {
       eventReceiver={this} // the component that will receive map events
 
       // the center of the displayed map
-      centerPosition={this.state.mapCenterPosition}
+      centerPosition={this.state.currentLocation}
 
       // a list of markers that will be displayed on the map
       markers={this.state.markers}

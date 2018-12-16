@@ -2,13 +2,13 @@
 import locations from '../locationsList.json';
 
 export default class LocationsProvider {
-    /* 
+    /*
      * Define ranges of lat/lon if map provides corners
      * otherwise let server figure it out
-     * @param latMin 
+     * @param latMin
      * @param latMax
      * @param lonMin
-     * @param lonMax 
+     * @param lonMax
      *
      */
     static getLocations() { //only static until we're actually pulling data
@@ -23,7 +23,7 @@ export default class LocationsProvider {
                     key: location.nid,
                     name: location.name,
                     coords: [location.lat, location.lon],
-                    icon: '⛰AA',
+                    icon: 'A',
                     size: [24, 24]
                 }
             })
