@@ -1,13 +1,18 @@
 import React from 'react';
-import { Button, StyleSheet, View, ToastAndroid } from 'react-native';
-import RidersProvider from '../providers/RidersProvider';
-import Layout from '../constants/Layout';
-import Colors from '../constants/Colors';
+import { Button, StyleSheet, ToastAndroid, TouchableHighlight, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { TouchableHighlight } from 'react-native';
 import EditProfileHeader from '../components/profile/EditProfileHeader';
 import ProfileHeader from '../components/profile/ProfileHeader';
+import Colors from '../constants/Colors';
+import Layout from '../constants/Layout';
+import RidersProvider from '../providers/RidersProvider';
 
+/**
+ * TODO:
+ * Display Profile w/ cached data and a loading icon,
+ * replace update state once loaded and hide icon.
+ * Disable edit while offline/loading? (w/ Toast onPress)
+ */
 export default class OwnProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -19,6 +24,7 @@ export default class OwnProfileScreen extends React.Component {
             title={navigation.getParam('editing') ? 'Save' : 'Edit'}
             onPress={navigation.getParam('editProfile')}
             color={Colors.tintColor}
+            // disabled={navigation.getParam('loading', false)} // NYI
           />
         </View>
       ),
@@ -44,7 +50,8 @@ export default class OwnProfileScreen extends React.Component {
   }
 
   _editProfile = () => {
-    if(this.state.editing) {
+    // Done editing and user changed
+    if(this.state.editing && this.state.updatedUser) {
       // TODO this will need to be changed once I add cancel
       this.saveProfile(this.state.updatedUser);
     }
