@@ -22,9 +22,14 @@ export default class LocationsProvider {
                     id: location.nid,
                     key: location.nid,
                     name: location.name,
-                    coords: [location.lat, location.lon],
-                    icon: 'A',
-                    size: [24, 24]
+                    coords: [
+                      parseFloat(location.lat.replace(",", ".")),
+                      parseFloat(location.lon.replace(",", ".")),
+                    //   location.lat,
+                    //   location.lon
+                    ],
+                    icon: '⃤',
+                    size: [18, 18]
                 }
             })
         );
