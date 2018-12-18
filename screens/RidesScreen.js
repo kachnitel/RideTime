@@ -45,7 +45,7 @@ export default class RidesScreen extends React.Component {
           <RidesList rides={this.state.rides}/>
         </View>
 
-        <CreateRideButton />
+        <CreateRideButton navigation={this.props.navigation} />
       </View>
     );
   }

@@ -1,7 +1,7 @@
 import { createSwitchNavigator } from 'react-navigation';
-
 // import HomeNavigator from './HomeNavigator';
 import DrawerNavigator from './DrawerNavigator';
+
 
 export default createSwitchNavigator({
   // You could add another route here for authentication.
