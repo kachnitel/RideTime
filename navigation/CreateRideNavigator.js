@@ -10,9 +10,7 @@ const CreateRideStack = createStackNavigator(
   {
     initialRouteName: 'CreateRide',
     cardStyle: { backgroundColor: '#FFFFFF' },
-    navigationOptions: ({navigation}) => ({
-      header: null
-    })
+    headerMode: 'none'
   }
 );
 

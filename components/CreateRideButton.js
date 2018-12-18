@@ -11,7 +11,7 @@ export class CreateRideButton extends React.Component {
   render() {
     return <ActionButton
       buttonColor="rgba(134, 194, 50, 1)"
-      size={Layout.window.wp(20)}
+      size={Layout.window.wp(18)}
       buttonTextStyle={styles.actionButtonIcon}
       onPress={() => { this.navigateToCreateRide() }}
     />;
@@ -20,6 +20,6 @@ export class CreateRideButton extends React.Component {
 
 const styles = StyleSheet.create({
   actionButtonIcon: {
-    fontSize: Layout.window.wp(15)
+    fontSize: Layout.window.wp(12)
   }
 });
