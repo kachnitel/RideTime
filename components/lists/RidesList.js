@@ -4,7 +4,7 @@ import Colors from '../../constants/Colors';
 import RideItem from '../list_items/RideItem';
 
 export class RidesList extends Component {
-  rideItem = ({item, index}) => { return(
+  rideItemTouchable = ({item, index}) => (
     <TouchableHighlight onPress={() => this.props.navigation.push(
       'RideDetail',
       item
@@ -16,7 +16,7 @@ export class RidesList extends Component {
         />
       </View>
     </TouchableHighlight>
-  )}
+  )
 
   render() {
     return (
@@ -24,7 +24,7 @@ export class RidesList extends Component {
         {this.props.title !== undefined && this.props.title}
         <FlatList
           data={this.props.rides}
-          renderItem={this.rideItem}
+          renderItem={this.rideItemTouchable}
           ListEmptyComponent={<Text>No rides nearby, start one!</Text>}
           keyExtractor={(item, index) => "index_" + index.toString()}
         />

@@ -83,7 +83,6 @@ export class AreaMap extends React.Component {
   }
 
   onLoad = () => {
-    console.log('ONLOAD')
     this.setState(
       {mapState: { ...this.state.mapState, mapLoaded: true }},
       () => {
