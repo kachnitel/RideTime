@@ -15,6 +15,7 @@ export default class LocationPicker extends Component {
         />
         <MapButton size={Layout.window.hp(15)}/>
       </View>
+      {/* TODO filter locations by TextInput above */}
       <LocationList locations={LocationsProvider.getLocations()} />
     </View>
   }
