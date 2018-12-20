@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { LocationItem } from '../LocationItem';
+import LocationItem from '../list_items/LocationItem';
 
-export default class LocationsList extends Component {
+export default class LocationList extends Component {
 /*   constructor(props) {
     super(props);
 
@@ -22,7 +22,7 @@ export default class LocationsList extends Component {
         <FlatList
           data={this.props.locations}
           renderItem={({item}) =>
-            <LocationItem location={item}/>}
+            <LocationItem location={item} />}
         />
       </View>
     );

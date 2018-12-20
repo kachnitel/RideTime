@@ -11,7 +11,7 @@ export default class ProfilePicture extends React.Component {
     return (
       <Image
         source={{uri: imgPath}}
-        style={{
+        style={{ // FIXME https://github.com/kachnitel/RideTime/commit/f4caf5f95245d182ec86d21bd5faf721197d3ef5#diff-61a4930816190520f9babe8250ecacd8
             ...styles.image,
             width: size,
             height: size,

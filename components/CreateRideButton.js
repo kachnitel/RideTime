@@ -5,7 +5,7 @@ import Layout from "../constants/Layout";
 
 export class CreateRideButton extends React.Component {
   navigateToCreateRide = () => {
-    this.props.navigation.navigate('CreateRide')
+    this.props.navigation.push('CreateRide')
   }
 
   render() {

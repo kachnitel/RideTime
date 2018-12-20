@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import Colors from '../../constants/Colors';
 import RideItem from '../list_items/RideItem';
-import Colors from '../../constants/Colors'
 
 export class RidesList extends Component {
+  rideItem = ({item, index}) => { return(
+    <TouchableHighlight onPress={() => this.props.navigation.push(
+      'RideDetail',
+      item
+    )}>
+      <RideItem
+        ride={item}
+        style={index % 2 == 0 ? styles.listItemWhite : styles.listItemBlack}
+      />
+    </TouchableHighlight>
+  )}
+
   render() {
     return (
       <View style={styles.container}>
         {this.props.title !== undefined && this.props.title}
         <FlatList
           data={this.props.rides}
-          renderItem={({item, index}) => 
-            <RideItem 
-              ride={item} 
-              style={index % 2 == 0 ? styles.listItemWhite : styles.listItemBlack}
-            />
-          }
+          renderItem={this.rideItem}
           ListEmptyComponent={<Text>No rides nearby, start one!</Text>}
           keyExtractor={(item, index) => "index_" + index.toString()}
         />

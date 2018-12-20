@@ -1,0 +1,363 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "height": 200,
+      "paddingHorizontal": 30,
+      "paddingVertical": 20,
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "fontSize": 36.5,
+      }
+    }
+  >
+    Joey's Alice lake lap
+  </Text>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "flex-start",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": 90,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "alignSelf": "center",
+            "color": "blue",
+            "fontFamily": "trail-difficulty-icons",
+            "fontSize": 53.5,
+            "justifyContent": "center",
+            "position": "absolute",
+          }
+        }
+      >
+        
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": 90,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#85c131",
+            "fontFamily": "ride-time-icons",
+            "fontSize": 53.5,
+          }
+        }
+      >
+        
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": 90,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#878787",
+              "fontSize": 40,
+              "fontWeight": "bold",
+              "paddingRight": 3,
+            }
+          }
+        >
+          1
+        </Text>
+        <View
+          icon="person"
+          size={53.5}
+          style={
+            Object {
+              "color": "#878787",
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#878787",
+                "fontFamily": "ride-time-icons",
+                "fontSize": 53.5,
+              }
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "backgroundColor": "#E1E1E1",
+          "borderRadius": 6,
+          "flexDirection": "row",
+          "height": 40,
+          "justifyContent": "center",
+          "marginLeft": "auto",
+          "marginRight": 10,
+          "width": 112.5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontSize": 26.5,
+          }
+        }
+      >
+        2h
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": "auto",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontSize": 46.5,
+          }
+        }
+      >
+        11:30
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`renders correctly with style 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "black",
+      "color": "#fff",
+      "height": 200,
+      "paddingHorizontal": 30,
+      "paddingVertical": 20,
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "backgroundColor": "black",
+        "color": "#fff",
+        "fontSize": 36.5,
+      }
+    }
+  >
+    Joey's Alice lake lap
+  </Text>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "flex-start",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": 90,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "alignSelf": "center",
+            "color": "blue",
+            "fontFamily": "trail-difficulty-icons",
+            "fontSize": 53.5,
+            "justifyContent": "center",
+            "position": "absolute",
+          }
+        }
+      >
+        
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": 90,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#85c131",
+            "fontFamily": "ride-time-icons",
+            "fontSize": 53.5,
+          }
+        }
+      >
+        
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": 90,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#878787",
+              "fontSize": 40,
+              "fontWeight": "bold",
+              "paddingRight": 3,
+            }
+          }
+        >
+          1
+        </Text>
+        <View
+          icon="person"
+          size={53.5}
+          style={
+            Object {
+              "color": "#878787",
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#878787",
+                "fontFamily": "ride-time-icons",
+                "fontSize": 53.5,
+              }
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "backgroundColor": "#E1E1E1",
+          "borderRadius": 6,
+          "flexDirection": "row",
+          "height": 40,
+          "justifyContent": "center",
+          "marginLeft": "auto",
+          "marginRight": 10,
+          "width": 112.5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontSize": 26.5,
+          }
+        }
+      >
+        2h
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": "auto",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "backgroundColor": "black",
+            "color": "#fff",
+            "fontSize": 46.5,
+          }
+        }
+      >
+        11:30
+      </Text>
+    </View>
+  </View>
+</View>
+`;

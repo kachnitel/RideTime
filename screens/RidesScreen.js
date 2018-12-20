@@ -42,7 +42,7 @@ export default class RidesScreen extends React.Component {
         </View>
 
         <View style={{flex: 65}}>
-          <RidesList rides={this.state.rides}/>
+          <RidesList rides={this.state.rides} navigation={this.props.navigation}/>
         </View>
 
         <CreateRideButton navigation={this.props.navigation} />

@@ -1,31 +1,23 @@
 import React from 'react';
-import { Text, View, TouchableHighlight, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { RideItemDetail } from '../RideItemDetail';
-import { withNavigation } from 'react-navigation';
 import Layout from '../../constants/Layout';
 
-class RideItem extends React.Component {
+export default class RideItem extends React.Component {
   render() {
     return (
-      <TouchableHighlight onPress={() => this.props.navigation.push(
-        'RideDetail',
-        this.props.ride
-      )}>
-        <View style={{...styles.listItem, ...this.props.style}}>
-          <Text style={{...styles.name, ...this.props.style}}>
-            {this.props.ride.name}
-          </Text>
-          <RideItemDetail
-            ride={this.props.ride}
-            style={this.props.style}
-          />
-        </View>
-      </TouchableHighlight>
+      <View style={{...styles.listItem, ...this.props.style}}>
+        <Text style={{...styles.name, ...this.props.style}}>
+          {this.props.ride.name}
+        </Text>
+        <RideItemDetail
+          ride={this.props.ride}
+          style={this.props.style}
+        />
+      </View>
     );
   }
 }
-
-export default withNavigation(RideItem);
 
 const styles = StyleSheet.create({
   name: {
