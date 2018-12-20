@@ -23,7 +23,8 @@ export default class SelectLocationScreen extends React.Component {
     return (
       <View style={styles.container}>
         {/* Select location here */}
-        <LocationPicker />
+        <LocationPicker style={styles.locationPicker}/>
+        {/* Next button? */}
       </View>
     );
   }
@@ -34,5 +35,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     // paddingTop: Constants.statusBarHeight // TODO enable once header is disabled
+  },
+  locationPicker: {
+    flex: 1
   }
 });
