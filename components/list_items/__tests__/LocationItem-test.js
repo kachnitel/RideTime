@@ -7,7 +7,8 @@ it('renders correctly', () => {
   testLocation = {
    name: 'Place'
   }
-    const tree = renderer.create(<LocationItem location={testLocation}/>).toJSON();
+
+  const tree = renderer.create(<LocationItem location={testLocation}/>).toJSON();
 
   expect(tree).toMatchSnapshot();
 });
