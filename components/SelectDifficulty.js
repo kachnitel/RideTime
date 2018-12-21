@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
     padding: Layout.window.wp(1),
-    // backgroundColor: 'red'
+    alignItems: 'center'
   },
   outlineStyle: {
     color: '#fff'

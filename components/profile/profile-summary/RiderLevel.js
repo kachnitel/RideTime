@@ -30,9 +30,6 @@ const styles = StyleSheet.create({
   ...sharedStyles,
   icon: {
     color: Colors.darkBackground,
-    position: 'absolute',
-    alignSelf: "center",
-    justifyContent: 'center'
   },
   iconBg: {
     color: Colors.iconColor

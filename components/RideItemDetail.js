@@ -12,17 +12,17 @@ export class RideItemDetail extends React.Component {
     difficultyIcon = <DifficultyIcon size={Layout.window.hp(4)} d={ride.difficulty} style={styles.diffIcon} />;
 
     return <View style={styles.detail}>
+      <View style={styles.lowerRowIcon}>
       {
         (ride.difficulty == 2 || ride.difficulty == 3)
         ?
-        <OutlineIcon style={styles.lowerRowIcon} outlineStyle={styles.diffIconBg}>
-          {difficultyIcon}
-        </OutlineIcon>
+          <OutlineIcon outlineStyle={styles.diffIconBg}>
+            {difficultyIcon}
+          </OutlineIcon>
         :
-        <View style={styles.lowerRowIcon}>
-          {difficultyIcon}
-        </View>
+          difficultyIcon
       }
+      </View>
       <View style={styles.lowerRowIcon}>
         <TerrainIcon size={Layout.window.hp(4)} terrain={ride.terrain} />
       </View>
