@@ -3,13 +3,20 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import Layout from '../../constants/Layout';
 import RidersProvider from '../../providers/RidersProvider';
 import Header from '../Header';
-import RiderItem from '../list_items/RiderItem';
+import TouchableRiderItem from '../list_items/TouchableRiderItem';
 
+/**
+ * fixme Pretty well duplicated from RidersList
+ *
+ * @export
+ * @class FriendList
+ * @extends {Component}
+ */
 export class FriendList extends Component {
   render() {
-    riders = this.props.userIds.map((userId) => {
+    riders = this.props.userIds ? this.props.userIds.map((userId) => {
       return RidersProvider.getUser(userId);
-    });
+    }) : [];
 
     return (
       <View {...this.props}>
@@ -18,7 +25,7 @@ export class FriendList extends Component {
           data={riders}
           horizontal={true}
           renderItem={({item}) =>
-            <RiderItem
+            <TouchableRiderItem
               rider={item}
             />
           }
