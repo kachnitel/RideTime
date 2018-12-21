@@ -20,7 +20,7 @@ exports[`renders correctly 1`] = `
     Place
   </Text>
   <Text>
-    Hello
+    Location Details
   </Text>
 </View>
 `;

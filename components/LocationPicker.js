@@ -6,6 +6,13 @@ import LocationList from './lists/LocationList';
 import MapButton from './MapButton';
 
 export default class LocationPicker extends Component {
+  goToRideConfig = (location) => {
+    this.props.navigation.push(
+      'ConfigureRide',
+      location
+    )
+  }
+
   render() {
     return <View {...this.props}>
       <View style={styles.inputRow}>
@@ -16,7 +23,9 @@ export default class LocationPicker extends Component {
         <MapButton size={Layout.window.hp(15)}/>
       </View>
       {/* TODO filter locations by TextInput above */}
-      <LocationList locations={LocationsProvider.getLocations()} />
+      <LocationList
+        locations={LocationsProvider.getLocations()}
+        onLocationPress={this.goToRideConfig} />
     </View>
   }
 }

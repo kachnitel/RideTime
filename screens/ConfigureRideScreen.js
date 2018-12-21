@@ -9,7 +9,7 @@ export default class ConfigureRideScreen extends React.Component {
   };
 
   render() {
-console.log(this.props.navigation);
+// console.log(this.props.navigation);
 
     return (
       <View style={styles.container}>

@@ -6,10 +6,10 @@ import TouchableRiderItem from '../list_items/TouchableRiderItem';
 
 export class RidersList extends Component {
   riderItemTouchable = ({item}) => (
-        <TouchableRiderItem
-          rider={item}
-          style={styles.item}
-        />
+    <TouchableRiderItem
+      rider={item}
+      style={styles.item}
+    />
   )
 
   render() {

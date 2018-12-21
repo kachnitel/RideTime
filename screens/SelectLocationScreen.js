@@ -23,7 +23,7 @@ export default class SelectLocationScreen extends React.Component {
     return (
       <View style={styles.container}>
         {/* Select location here */}
-        <LocationPicker style={styles.locationPicker}/>
+        <LocationPicker style={styles.locationPicker} navigation={this.props.navigation} />
         {/* Next button? */}
       </View>
     );

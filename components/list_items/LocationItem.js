@@ -9,7 +9,7 @@ export default class LocationItem extends React.Component {
         <Text style={{...styles.name, ...this.props.style}}>
           {this.props.location.name}
         </Text>
-        <Text>Hello</Text>
+        <Text>Location Details</Text>
       </View>
     );
   }
