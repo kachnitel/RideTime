@@ -7,7 +7,7 @@ export default class CountHeader extends Component {
     return(
       <View style={{...styles.upcomingRidesTitleContainer, ...this.props.style}}>
         <Header>{this.props.children}</Header>
-        <Header style={styles.upcomingRidesCount}>{this.props.number ? this.props.number : '0'}</Header>
+        <Header style={styles.upcomingRidesCount}>{this.props.number || '0'}</Header>
       </View>
     );
   }

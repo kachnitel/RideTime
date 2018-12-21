@@ -38,7 +38,7 @@ export default class DifficultyIcon extends React.Component {
     return(
       <Text style={{
           fontFamily: 'trail-difficulty-icons',
-          fontSize: (this.props.size ? this.props.size : 36),
+          fontSize: (this.props.size || 36),
           color: iconColor,
           ...this.props.style
       }}>

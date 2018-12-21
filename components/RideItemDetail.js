@@ -27,7 +27,11 @@ export class RideItemDetail extends React.Component {
         <TerrainIcon size={Layout.window.hp(4)} terrain={ride.terrain} />
       </View>
       <View style={styles.lowerRowIcon}>
-        <RiderCount size={Layout.window.hp(4)} fontSize={Layout.window.hp(3)} count={ride.members.length} />
+        <RiderCount
+          size={Layout.window.hp(4)}
+          fontSize={Layout.window.hp(3)}
+          count={ride.members ? ride.members.length : 0}
+        />
       </View>
       {/* TODO shuttle/chairlift icon */}
       <View style={{

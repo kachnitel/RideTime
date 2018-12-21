@@ -20,7 +20,6 @@
     "name": "Paul's street jam",
     "difficulty": 4,
     "locationGps": [49.697779, -123.153214],
-    "members": [1,3],
     "terrain": "other"
   },
   {

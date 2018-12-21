@@ -37,7 +37,7 @@ export default class TerrainIcon extends React.Component {
       <Text
         style={{
           fontFamily: 'ride-time-icons',
-          fontSize: (this.props.size ? this.props.size : 36),
+          fontSize: (this.props.size || 36),
           color: Colors.iconColor
         }}
       >

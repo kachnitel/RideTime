@@ -8,23 +8,23 @@ export default class RideTimeIcon extends React.Component {
      * &#xe920 = person
      */
     switch(this.props.icon) {
-      case 'person': 
+      case 'person':
         iconCode = '&#xe920';
         break;
-      default: 
+      default:
       iconCode = '✘';
       break;
     }
-    
+
     entities = new AllHtmlEntities();
     symbol = entities.decode(iconCode);
 
     return(
       <View {...this.props}>
-        <Text 
-          style={{ 
-              fontFamily: 'ride-time-icons', 
-              fontSize: (this.props.size ? this.props.size : 30),
+        <Text
+          style={{
+              fontFamily: 'ride-time-icons',
+              fontSize: (this.props.size || 30),
               ...this.props.style
           }}
         >

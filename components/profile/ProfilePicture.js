@@ -6,7 +6,7 @@ export default class ProfilePicture extends React.Component {
     riderId =  this.props.rider.id;
     imgPath = 'https://s3.ca-central-1.amazonaws.com/ride-time/profile-images/' + riderId + '.png';
 
-    size = this.props.size ? this.props.size : 50;
+    size = this.props.size || 50;
 
     return (
       <Image

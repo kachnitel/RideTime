@@ -6,9 +6,9 @@ import RiderItem from '../list_items/RiderItem';
 
 export class RidersList extends Component {
   render() {
-    riders = this.props.riderIds.map((userId) => {
+    riders = this.props.riderIds ? this.props.riderIds.map((userId) => {
       return RidersProvider.getUser(userId);
-    });
+    }) : [];
 
     return (
       <View>
