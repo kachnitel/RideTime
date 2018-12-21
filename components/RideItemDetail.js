@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import DifficultyIcon from './icons/DifficultyIcon';
 import TerrainIcon from './icons/TerrainIcon';
 import RiderCount from './RiderCount';
-import { OutlineIcon } from './icons/OutlineIcon';
+import OutlineIcon from './icons/OutlineIcon';
 import Layout from '../constants/Layout';
 
 export class RideItemDetail extends React.Component {
@@ -50,6 +50,8 @@ export class RideItemDetail extends React.Component {
   }
 }
 
+
+// FIXME needs major cleanup of alignments
 const styles = StyleSheet.create({
     detail: {
       flex: 1,

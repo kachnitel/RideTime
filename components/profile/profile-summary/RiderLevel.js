@@ -4,7 +4,7 @@ import DifficultyIcon from '../../icons/DifficultyIcon';
 import sharedStyles from './Style';
 import Title from './Title';
 import Colors from '../../../constants/Colors';
-import { OutlineIcon } from '../../icons/OutlineIcon';
+import OutlineIcon from '../../icons/OutlineIcon';
 import Layout from '../../../constants/Layout';
 
 /**

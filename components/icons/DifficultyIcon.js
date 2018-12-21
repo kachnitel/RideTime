@@ -4,7 +4,7 @@ import React from 'react';
 import { Text } from 'react-native';
 
 /**
- *
+ * @property d int 0-4
  *
  * @export
  * @class DifficultyIcon
