@@ -22,7 +22,8 @@ export default class OwnProfileScreen extends React.Component {
         <View style={styles.button}>
           <Button
             title={navigation.getParam('editing') ? 'Save' : 'Edit'}
-            onPress={navigation.getParam('editProfile')}
+            // default value suppresses warning thrown before param is obtained
+            onPress={navigation.getParam('editProfile', () => {})}
             color={Colors.tintColor}
             // disabled={navigation.getParam('loading', false)} // NYI
           />
