@@ -3,14 +3,14 @@ import Colors from '../constants/Colors';
 import PublicProfileScreen from '../screens/PublicProfileScreen';
 import RideDetailScreen from '../screens/RideDetailScreen';
 import RidesScreen from '../screens/RidesScreen';
-import CreateRideNavigator from './CreateRideNavigator';
+import NewRideNavigator from './NewRideNavigator';
 
 const HomeStack = createStackNavigator(
   {
     Rides: {screen: RidesScreen},
     RideDetail: {screen: RideDetailScreen},
     PublicProfile: {screen: PublicProfileScreen},
-    CreateRide: CreateRideNavigator
+    NewRide: NewRideNavigator
   },
   {
     initialRouteName: 'Rides',

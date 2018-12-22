@@ -1,20 +1,20 @@
 import { createStackNavigator } from 'react-navigation'; // Version can be specified in package.json
 import RideDetailScreen from '../screens/RideDetailScreen';
 import SelectLocationScreen from '../screens/SelectLocationScreen';
-import ConfigureRideScreen from '../screens/ConfigureRideScreen';
+import CreateRideScreen from '../screens/CreateRideScreen';
 
-const CreateRideStack = createStackNavigator(
+const NewRideStack = createStackNavigator(
   {
-    CreateRide: {screen: SelectLocationScreen},
-    ConfigureRide: {screen: ConfigureRideScreen},
+    SelectLocation: {screen: SelectLocationScreen},
+    CreateRide: {screen: CreateRideScreen},
     RideDetail: {screen: RideDetailScreen},
   },
   {
-    initialRouteName: 'CreateRide',
+    initialRouteName: 'SelectLocation',
     cardStyle: { backgroundColor: '#FFFFFF' },
     headerMode: 'none'
   }
 );
 
 
-export default CreateRideStack;
+export default NewRideStack;

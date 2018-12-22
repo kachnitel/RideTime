@@ -8,7 +8,7 @@ import MapButton from './MapButton';
 export default class LocationPicker extends Component {
   goToRideConfig = (location) => {
     this.props.navigation.push(
-      'ConfigureRide',
+      'CreateRide',
       location
     )
   }

@@ -4,8 +4,8 @@ import ActionButton from 'react-native-action-button';
 import Layout from "../constants/Layout";
 
 export class CreateRideButton extends React.Component {
-  navigateToCreateRide = () => {
-    this.props.navigation.push('CreateRide')
+  navigateToNewRide = () => {
+    this.props.navigation.push('NewRide')
   }
 
   render() {
@@ -13,7 +13,7 @@ export class CreateRideButton extends React.Component {
       buttonColor="rgba(134, 194, 50, 1)"
       size={Layout.window.wp(18)}
       buttonTextStyle={styles.actionButtonIcon}
-      onPress={() => { this.navigateToCreateRide() }}
+      onPress={() => { this.navigateToNewRide() }}
     />;
   }
 }
