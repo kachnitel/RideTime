@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
-import SelectDifficulty from '../components/SelectDifficulty';
+import SelectDifficulty from '../components/new_ride/SelectDifficulty';
 
 export default class CreateRideScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {

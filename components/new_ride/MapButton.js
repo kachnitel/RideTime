@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableHighlight } from 'react-native';
-import Layout from '../constants/Layout';
+import Layout from '../../constants/Layout';
 
 export default class MapButton extends React.Component {
   render() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import LocationPicker from '../components/LocationPicker';
+import LocationPicker from '../components/new_ride/LocationPicker';
 import LocationsProvider from '../providers/LocationsProvider';
 
 
