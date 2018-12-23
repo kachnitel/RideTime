@@ -12,7 +12,6 @@ export default class OutlineIcon extends Component {
       throw "OutlineIcon only accepts one child."
     }
 
-
     thickness = this.props.thickness || 1.075;
     icon = React.Children.only(this.props.children);
     styles = stylesWProps(icon.props, thickness);

@@ -42,9 +42,6 @@ export default class App extends React.Component {
   _loadResourcesAsync = async () => {
     return Promise.all([
       Font.loadAsync({
-        // This is the font that we are using for our tab bar
-        ...Icon.Ionicons.font,
-        'trail-difficulty-icons': require('./assets/fonts/trail-difficulty-icons.ttf'),
         'ride-time-icons': require('./assets/fonts/ride-time-icons.ttf'),
         'Roboto': require('./assets/fonts/roboto/Roboto-Regular.ttf')
       }),
