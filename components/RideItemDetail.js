@@ -9,7 +9,7 @@ import Layout from '../constants/Layout';
 export class RideItemDetail extends React.Component {
   render() {
     ride = this.props.ride;
-    difficultyIcon = <DifficultyIcon size={Layout.window.hp(4)} d={ride.difficulty} style={styles.diffIcon} />;
+    difficultyIcon = <DifficultyIcon size={Layout.window.hp(4)} d={ride.difficulty} />;
 
     return <View style={styles.detail}>
       <View style={styles.lowerRowIconContainer}>
@@ -38,6 +38,8 @@ export class RideItemDetail extends React.Component {
         ...styles.lowerRowIconContainer,
         ...styles.durationContainer
       }}>
+        {/* TODO once it's optional, the startTime has to be marginLeft: auto
+        with this attached to it? */}
         <Text style={styles.duration}>2h</Text>
       </View>
       <View style={{
@@ -55,22 +57,15 @@ export class RideItemDetail extends React.Component {
   }
 }
 
-
-// FIXME needs major cleanup of alignments
 const styles = StyleSheet.create({
     detail: {
       flex: 1,
       flexDirection: 'row',
-      justifyContent: 'flex-start',
       alignItems: 'center',
     },
     lowerRowIconContainer: {
       width: Layout.window.wp(12),
-      // justifyContent: 'center',
-      // flexDirection: 'row', // FIXME shouldn't be needed here
       alignItems: 'center',
-      // borderColor: 'red',
-      // borderWidth: 1,
     },
     startTime: {
       fontSize: Layout.window.hp(3.5)
@@ -79,7 +74,6 @@ const styles = StyleSheet.create({
       width: 'auto'
     },
     durationContainer: {
-      justifyContent: 'center',
       borderRadius: 6,
       backgroundColor: '#E1E1E1',
       height: Layout.window.hp(3),
@@ -89,13 +83,6 @@ const styles = StyleSheet.create({
     },
     duration: {
       fontSize: Layout.window.hp(2)
-    },
-    diffIcon: {
-      // position: 'absolute',
-      // alignSelf: "center",
-      // justifyContent: 'center',
-      // borderColor: 'red',
-      // borderWidth: 1,
     },
     diffIconBg: {
       color: 'white'

@@ -13,7 +13,7 @@ export default class OutlineIcon extends Component {
     }
 
 
-    thickness = this.props.thickness || 1.05;
+    thickness = this.props.thickness || 1.075;
     icon = React.Children.only(this.props.children);
     styles = stylesWProps(icon.props, thickness);
     outline = React.cloneElement(icon, {

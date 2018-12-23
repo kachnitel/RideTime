@@ -45,8 +45,12 @@ export default class DifficultyIcon extends React.Component {
       throw 'Difficulty Icon ' + this.props.d + ' is not defined'
     }
 
+    size = this.props.size;
+    // current DifficultyIcons are based on 600px
+    scale = 1 / 600 * size;
+
     return(
-      <Icon {...this.props} scale={0.05} width={30} height={30} style={{color: iconColor, ...this.props.style}}/>
+      <Icon {...this.props} scale={scale} width={size} height={size} style={{color: iconColor, ...this.props.style}}/>
     );
   }
 }
