@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+// TODO remove from npm if I use SVG directly
 import { AllHtmlEntities } from 'html-entities';
 
 export default class RideTimeIcon extends React.Component {

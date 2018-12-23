@@ -24,7 +24,7 @@
   },
   {
     "name": "Potato",
-    "difficulty": 0,
+    "difficulty": 3,
     "locationGps": [49.687779, -123.153214],
     "members": [1,2,3],
     "terrain": "trail"

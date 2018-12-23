@@ -1,7 +1,9 @@
-// TODO remove from npm if I use SVG directly
-import { AllHtmlEntities } from 'html-entities';
 import React from 'react';
-import { Text } from 'react-native';
+import SvgSkiTrailRatingSymbolBlueSquare from './difficulty_icons/SkiTrailRatingSymbolBlueSquare';
+import SvgSkiTrailRatingSymbolGreenCircle from './difficulty_icons/SkiTrailRatingSymbolGreenCircle';
+import SvgSkiTrailRatingSymbolBlackDiamond from './difficulty_icons/SkiTrailRatingSymbolBlackDiamond';
+import SvgSkiTrailRatingSymbolDoubleBlackDiamond from './difficulty_icons/SkiTrailRatingSymbolDoubleBlackDiamond';
+import SvgSkiTrailRatingSymbolTerrainPark from './difficulty_icons/SkiTrailRatingSymbolTerrainPark';
 
 /**
  * @property d int 0-4
@@ -11,39 +13,40 @@ import { Text } from 'react-native';
  * @extends {React.Component}
  */
 export default class DifficultyIcon extends React.Component {
-  render() {
-    entities = new AllHtmlEntities();
-    /**
-     * &#xe900 = circle
-     * &#xe901 = square
-     * &#xe902 = diamond
-     * &#xe903 = double diamond
-     * &#xe904 = rectangle (misc)
-     */
-    symbol = entities.decode('&#xe90' + this.props.d);
+  blue = '#069';
+  green = '#393';
+  orange = '#f90';
+  black = 'black';
 
-    iconColor = 'black';
+  icons = {
+    0: SvgSkiTrailRatingSymbolGreenCircle,
+    1: SvgSkiTrailRatingSymbolBlueSquare,
+    2: SvgSkiTrailRatingSymbolBlackDiamond,
+    3: SvgSkiTrailRatingSymbolDoubleBlackDiamond,
+    4: SvgSkiTrailRatingSymbolTerrainPark
+  };
+
+  render() {
+    iconColor = this.black;
     switch(this.props.d) {
       case 0:
-        iconColor = 'green';
+        iconColor = this.green;
         break;
       case 1:
-        iconColor = 'blue';
+        iconColor = this.blue;
         break;
       case 4:
-        iconColor = 'orange';
+        iconColor = this.orange;
         break;
     }
 
+    Icon = this.icons[this.props.d];
+    if(Icon == undefined) {
+      throw 'Difficulty Icon ' + this.props.d + ' is not defined'
+    }
+
     return(
-      <Text style={{
-          fontFamily: 'trail-difficulty-icons',
-          fontSize: (this.props.size || 36),
-          color: iconColor,
-          ...this.props.style
-      }}>
-        {symbol}
-      </Text>
+      <Icon {...this.props} scale={0.05} width={30} height={30} style={{color: iconColor, ...this.props.style}}/>
     );
   }
 }

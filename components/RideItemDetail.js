@@ -12,7 +12,7 @@ export class RideItemDetail extends React.Component {
     difficultyIcon = <DifficultyIcon size={Layout.window.hp(4)} d={ride.difficulty} style={styles.diffIcon} />;
 
     return <View style={styles.detail}>
-      <View style={styles.lowerRowIcon}>
+      <View style={styles.lowerRowIconContainer}>
       {
         (ride.difficulty == 2 || ride.difficulty == 3)
         ?
@@ -23,10 +23,10 @@ export class RideItemDetail extends React.Component {
           difficultyIcon
       }
       </View>
-      <View style={styles.lowerRowIcon}>
+      <View style={styles.lowerRowIconContainer}>
         <TerrainIcon size={Layout.window.hp(4)} terrain={ride.terrain} />
       </View>
-      <View style={styles.lowerRowIcon}>
+      <View style={styles.lowerRowIconContainer}>
         <RiderCount
           size={Layout.window.hp(4)}
           fontSize={Layout.window.hp(3)}
@@ -35,16 +35,21 @@ export class RideItemDetail extends React.Component {
       </View>
       {/* TODO shuttle/chairlift icon */}
       <View style={{
-        ...styles.lowerRowIcon,
+        ...styles.lowerRowIconContainer,
         ...styles.durationContainer
       }}>
         <Text style={styles.duration}>2h</Text>
       </View>
       <View style={{
-        ...styles.lowerRowIcon,
-        ...styles.startTimeView
+        ...styles.lowerRowIconContainer,
+        ...styles.startTimeContainer
       }}>
-        <Text style={{...this.props.style, ...styles.startTime}}>11:30</Text>
+        <Text style={{
+          ...this.props.style,
+          ...styles.startTime
+        }}>
+          11:30
+        </Text>
       </View>
     </View>;
   }
@@ -57,17 +62,20 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'flex-start',
-    },
-    lowerRowIcon: {
-      width: Layout.window.wp(12),
-      flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'center'
+    },
+    lowerRowIconContainer: {
+      width: Layout.window.wp(12),
+      // justifyContent: 'center',
+      // flexDirection: 'row', // FIXME shouldn't be needed here
+      alignItems: 'center',
+      // borderColor: 'red',
+      // borderWidth: 1,
     },
     startTime: {
       fontSize: Layout.window.hp(3.5)
     },
-    startTimeView: {
+    startTimeContainer: {
       width: 'auto'
     },
     durationContainer: {
@@ -78,15 +86,16 @@ const styles = StyleSheet.create({
       width: Layout.window.wp(15),
       marginLeft: 'auto',
       marginRight: 10,
-      alignSelf: 'center',
     },
     duration: {
       fontSize: Layout.window.hp(2)
     },
     diffIcon: {
-      position: 'absolute',
-      alignSelf: "center",
-      justifyContent: 'center'
+      // position: 'absolute',
+      // alignSelf: "center",
+      // justifyContent: 'center',
+      // borderColor: 'red',
+      // borderWidth: 1,
     },
     diffIconBg: {
       color: 'white'

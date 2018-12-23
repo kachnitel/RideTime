@@ -1,3 +1,4 @@
+// TODO remove from npm if I use SVG directly
 import { AllHtmlEntities } from 'html-entities';
 import React from 'react';
 import { Text } from 'react-native';
