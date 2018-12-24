@@ -9,7 +9,7 @@ export default class SelectDifficulty extends Component {
   render() {
     return(
       <View style={styles.container}>
-        {[0,1,2,3,4].map((i) => //difficulties should be pulled from DifficultIcon TODO
+        {Object.keys(DifficultyIcon.icons).map((i) => //difficulties should be pulled from DifficultIcon TODO
           <View style={styles.iconContainer} key={i}>
             <OutlineIcon outlineStyle={styles.outlineStyle}>
               <DifficultyIcon d={i} size={Layout.window.wp(10)}/>

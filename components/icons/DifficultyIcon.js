@@ -19,7 +19,7 @@ export default class DifficultyIcon extends RideTimeIcon {
   orange = '#f90';
   black = 'black';
 
-  icons = {
+  static icons = {
     0: SvgSkiTrailRatingSymbolGreenCircle,
     1: SvgSkiTrailRatingSymbolBlueSquare,
     2: SvgSkiTrailRatingSymbolBlackDiamond,
@@ -28,8 +28,10 @@ export default class DifficultyIcon extends RideTimeIcon {
   };
 
   render() {
+    difficultyLevel = Number(this.props.d);
+
     iconColor = this.black;
-    switch(this.props.d) {
+    switch(difficultyLevel) {
       case 0:
         iconColor = this.green;
         break;
@@ -41,7 +43,7 @@ export default class DifficultyIcon extends RideTimeIcon {
         break;
     }
 
-    Icon = this.icons[this.props.d];
+    Icon = DifficultyIcon.icons[difficultyLevel];
     if(Icon == undefined) {
       throw 'Difficulty Icon ' + this.props.d + ' is not defined'
     }
