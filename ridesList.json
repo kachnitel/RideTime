@@ -19,8 +19,7 @@
   {
     "name": "Paul's street jam",
     "difficulty": 4,
-    "locationGps": [49.697779, -123.153214],
-    "terrain": "other"
+    "locationGps": [49.697779, -123.153214]
   },
   {
     "name": "Potato",

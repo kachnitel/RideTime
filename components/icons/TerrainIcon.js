@@ -1,8 +1,8 @@
-// TODO remove from npm if I use SVG directly
-import { AllHtmlEntities } from 'html-entities';
 import React from 'react';
-import { Text } from 'react-native';
 import Colors from '../../constants/Colors';
+import SvgBikeMountain from './bike_icons/BikeMountain';
+import SvgBikeDownhill from './bike_icons/BikeDownhill';
+import SvgBikeRoad from './bike_icons/BikeRoad';
 
 /**
  * props:
@@ -10,40 +10,34 @@ import Colors from '../../constants/Colors';
  *  terrain: [trail, road]
  */
 export default class TerrainIcon extends React.Component {
+  bikes = {
+    trail: SvgBikeMountain,
+    downhill: SvgBikeDownhill,
+    road: SvgBikeRoad
+  };
+
+  defaultBike = 'road';
+
+  iconColor = '#85c131';
+
   render() {
-    entities = new AllHtmlEntities();
-    /**
-     * &#xe910 = bike_mountain
-     * &#xe911 = bike_road
-     * ...downhill, other
-     */
-    switch(this.props.terrain) {
-      case 'trail':
-        iconCode = '&#xe910'
-        break;
-      case 'downhill':
-        iconCode = `&#xe912`;
-        break;
-      case 'road':
-        iconCode = '&#xe911';
-        break;
-      default:
-        iconCode = ''
-        break;
+    Icon = this.props.terrain ? this.bikes[this.props.terrain] : this.bikes[this.defaultBike];
+    if(Icon == undefined) {
+      throw 'Terrain Icon ' + this.props.terrain + ' is not defined'
     }
 
-    symbol = entities.decode(iconCode);
+    // FIXME duplicated from DifficultyIcon
+    size = this.props.size;
+    // current TerrainIcons are based on 600px
 
     return(
-      <Text
-        style={{
-          fontFamily: 'ride-time-icons',
-          fontSize: (this.props.size || 36),
-          color: Colors.iconColor
-        }}
-      >
-        {symbol}
-      </Text>
+      <Icon
+        {...this.props}
+        viewBox="0 0 600 600"
+        width={size}
+        height={size}
+        style={{color: this.iconColor, ...this.props.style}}
+      />
     );
   }
 }

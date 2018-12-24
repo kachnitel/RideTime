@@ -1,1 +1,71 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264.61 235.58"><defs><style>.cls-1{fill:#86c232;}.cls-2{fill:none;stroke:#86c232;stroke-linecap:round;stroke-miterlimit:10;stroke-width:11px;}</style></defs><title>bike_downhill</title><path class="cls-1" d="M241.86,110.14a49.09,49.09,0,0,0-5.23-2.89l12.29-42.08a8,8,0,0,0,2-14.4L223.11,33a8,8,0,0,0-8.61,13.48l17.61,11.25-14.44,6.83a7.07,7.07,0,0,0-.93-.68L156,26.31a8,8,0,0,0,3.32-14.68L143.05,1.26a8,8,0,0,0-8.61,13.48l1.21.77a8,8,0,0,0-.37,2.23l-.14,6.19-16.89,10a49.31,49.31,0,1,0-3.11,66.62L136.55,116l.38.26a8,8,0,0,0,7.72.49L228.8,77l-7.52,25.75a49.3,49.3,0,1,0,20.58,7.39ZM134.71,42.76,133.56,94.1l-9-6.54a49.32,49.32,0,0,0,1.83-39.86ZM52.34,47.6a33.28,33.28,0,0,1,51.84-5.39L76.34,58.64A8,8,0,0,0,75.73,72l26.2,19A33.31,33.31,0,0,1,52.34,47.6ZM95,66.21,112.3,56a33.3,33.3,0,0,1-1,22Zm54.5,30.57,1.23-54.88L200.5,72.68Zm47.88,83a33.3,33.3,0,0,1,19.31-61.34l-9.06,31A8,8,0,0,0,223,153.94l9.06-31c.4.23.8.47,1.19.72a33.31,33.31,0,0,1-35.86,56.14Zm0,0"/><line class="cls-2" x1="5.5" y1="93.88" x2="219.08" y2="230.08"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Layer_1"
+   data-name="Layer 1"
+   viewBox="0 0 600.00003 600"
+   version="1.1"
+   sodipodi:docname="bike_downhill.svg"
+   width="600"
+   height="600"
+   inkscape:version="0.92.3 (unknown)">
+  <metadata
+     id="metadata15">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>bike_downhill</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1023"
+     id="namedview13"
+     showgrid="false"
+     inkscape:zoom="1.0017828"
+     inkscape:cx="371.87788"
+     inkscape:cy="317.43407"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:#86c232;}.cls-2{fill:none;stroke:#86c232;stroke-linecap:round;stroke-miterlimit:10;stroke-width:11px;}</style>
+  </defs>
+  <title
+     id="title6">bike_downhill</title>
+  <path
+     class="cls-1"
+     d="m 527.70051,290.33123 a 102.02701,102.02701 0 0 0 -10.86985,-6.00647 l 25.54312,-87.45766 a 16.626931,16.626931 0 0 0 4.15673,-29.92848 l -57.79937,-36.93257 a 16.626931,16.626931 0 0 0 -17.89473,28.01638 l 36.60003,23.38163 -30.01161,14.19523 A 14.69405,14.69405 0 0 0 475.49195,194.186 L 349.25198,116.10178 a 16.626931,16.626931 0 0 0 6.90018,-30.510414 L 322.33713,64.038707 A 16.626931,16.626931 0 0 0 304.4424,92.055085 l 2.51483,1.600344 a 16.626931,16.626931 0 0 0 -0.76901,4.634751 l -0.29096,12.8651 -35.10362,20.78365 a 102.48424,102.48424 0 1 0 -6.46371,138.46077 l 44.49782,32.11076 0.78978,0.54037 a 16.626931,16.626931 0 0 0 16.04499,1.01841 l 174.89453,-82.61506 -15.62932,53.51792 a 102.46346,102.46346 0 1 0 42.77278,15.35913 z M 305.00356,150.29091 302.61344,256.99424 283.90813,243.40172 a 102.50502,102.50502 0 0 0 3.80342,-82.84368 z M 133.80852,160.3502 a 69.168033,69.168033 0 0 1 107.74252,-11.2024 l -57.86173,34.14756 a 16.626931,16.626931 0 0 0 -1.2678,27.76698 l 54.4532,39.48896 A 69.230384,69.230384 0 0 1 133.80852,160.3502 Z m 88.66311,38.67839 35.95574,-21.22011 a 69.209599,69.209599 0 0 1 -2.07837,45.72406 z m 113.27097,63.53566 2.55638,-114.06074 103.4403,63.97212 z m 99.51217,172.50442 a 69.209599,69.209599 0 0 1 40.13326,-127.487 l -18.83,64.42936 a 16.64274,16.64274 0 0 0 31.9445,9.35265 l 18.82999,-64.42936 c 0.83135,0.47803 1.6627,0.97684 2.47326,1.49643 a 69.230384,69.230384 0 0 1 -74.53022,116.67949 z m 0,0"
+     id="path8"
+     inkscape:connector-curvature="0"
+     style="fill:#86c232;stroke-width:2.07836628" />
+  <line
+     class="cls-2"
+     x1="36.45784"
+     y1="256.53696"
+     x2="480.35532"
+     y2="539.61053"
+     id="line10"
+     style="fill:none;stroke:#86c232;stroke-width:22.86203003px;stroke-linecap:round;stroke-miterlimit:10" />
+</svg>

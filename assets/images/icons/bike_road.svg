@@ -8,13 +8,13 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.0"
-   width="1600"
-   height="1200"
-   viewBox="0 0 16000 12000"
+   width="600"
+   height="600"
+   viewBox="0 0 600 600"
    preserveAspectRatio="xMidYMid meet"
    id="svg20"
    sodipodi:docname="bike_road.svg"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+   inkscape:version="0.92.3 (unknown)">
   <metadata
      id="metadata26">
     <rdf:RDF>
@@ -42,9 +42,9 @@
      inkscape:window-height="1023"
      id="namedview22"
      showgrid="false"
-     inkscape:zoom="0.52325902"
-     inkscape:cx="883.74615"
-     inkscape:cy="620.53172"
+     inkscape:zoom="1.046518"
+     inkscape:cx="365.24508"
+     inkscape:cy="311.93707"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -56,7 +56,7 @@
   <g
      id="layer101"
      style="fill:#85c131;stroke:none"
-     transform="matrix(1.1869436,0,0,1.1869436,-1414.2136,-2.9478942)">
+     transform="matrix(0.04163713,0,0,0.04163713,-25.102316,89.486142)">
     <path
        d="m 625,10103 c -80,-11 -271,-57 -368,-89 -60,-19 -141,-38 -180,-42 L 5,9965 2,9694 0,9422 63,9411 c 35,-6 112,-30 173,-52 196,-74 129,-71 1569,-76 1313,-4 1591,1 1710,32 204,53 327,178 355,362 12,78 3,159 -24,212 -26,50 -92,97 -189,134 -127,49 -194,64 -322,77 -105,10 -2641,13 -2710,3 z"
        id="path11"
