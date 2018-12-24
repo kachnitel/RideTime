@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { FlatList, Text, TouchableHighlight, View } from 'react-native';
 import LocationItem from '../list_items/LocationItem';
 
 export default class LocationList extends Component {

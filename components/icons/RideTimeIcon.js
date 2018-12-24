@@ -1,5 +1,4 @@
 import React from 'react';
-// TODO remove from npm if I use SVG directly
 import SvgPersonIcon from './PersonIcon';
 
 export default class RideTimeIcon extends React.Component {

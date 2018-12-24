@@ -4,15 +4,16 @@ import SvgSkiTrailRatingSymbolGreenCircle from './difficulty_icons/SkiTrailRatin
 import SvgSkiTrailRatingSymbolBlackDiamond from './difficulty_icons/SkiTrailRatingSymbolBlackDiamond';
 import SvgSkiTrailRatingSymbolDoubleBlackDiamond from './difficulty_icons/SkiTrailRatingSymbolDoubleBlackDiamond';
 import SvgSkiTrailRatingSymbolTerrainPark from './difficulty_icons/SkiTrailRatingSymbolTerrainPark';
+import RideTimeIcon from './RideTimeIcon';
 
 /**
  * @property d int 0-4
  *
  * @export
  * @class DifficultyIcon
- * @extends {React.Component}
+ * @extends {RideTimeIcon}
  */
-export default class DifficultyIcon extends React.Component {
+export default class DifficultyIcon extends RideTimeIcon {
   blue = '#069';
   green = '#393';
   orange = '#f90';
