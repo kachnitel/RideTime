@@ -46,15 +46,9 @@ export default class DifficultyIcon extends RideTimeIcon {
       throw 'Difficulty Icon ' + this.props.d + ' is not defined'
     }
 
-    size = this.props.size;
-    // current DifficultyIcons are based on 600px
-
     return(
       <Icon
-        {...this.props}
-        viewBox="0 0 600 600"
-        width={size}
-        height={size}
+        {...this._getIconProps()}
         style={{color: iconColor, ...this.props.style}}
       />
     );
