@@ -24,12 +24,12 @@ export class RideItemDetail extends React.Component {
       }
       </View>
       <View style={styles.lowerRowIconContainer}>
-        <TerrainIcon size={Layout.window.hp(4)} terrain={ride.terrain} />
+        <TerrainIcon size={Layout.window.hp(5)} terrain={ride.terrain} />
       </View>
       <View style={styles.lowerRowIconContainer}>
         <RiderCount
           size={Layout.window.hp(4)}
-          fontSize={Layout.window.hp(3)}
+          fontStyle={styles.riderCountStyle}
           count={ride.members ? ride.members.length : 0}
         />
       </View>
@@ -86,5 +86,8 @@ const styles = StyleSheet.create({
     },
     diffIconBg: {
       color: 'white'
+    },
+    riderCountStyle: {
+      fontSize: Layout.window.hp(3)
     }
 })

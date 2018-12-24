@@ -1,37 +1,30 @@
 import React from 'react';
-import { Text, View } from 'react-native';
 // TODO remove from npm if I use SVG directly
-import { AllHtmlEntities } from 'html-entities';
+import SvgPersonIcon from './PersonIcon';
 
 export default class RideTimeIcon extends React.Component {
-  render() {
-    /**
-     * &#xe920 = person
-     */
-    switch(this.props.icon) {
-      case 'person':
-        iconCode = '&#xe920';
-        break;
-      default:
-      iconCode = '✘';
-      break;
-    }
+  icons = {
+    person: SvgPersonIcon
+  }
 
-    entities = new AllHtmlEntities();
-    symbol = entities.decode(iconCode);
+  render() {
+    if(this.icons[this.props.icon] == undefined) {
+      throw 'Icon "' + this.props.icon + '" is not defined'
+    }
+    Icon = this.icons[this.props.icon];
+
+    // FIXME duplicated from DifficultyIcon
+    size = this.props.size;
+    // current TerrainIcons are based on 600px
 
     return(
-      <View {...this.props}>
-        <Text
-          style={{
-              fontFamily: 'ride-time-icons',
-              fontSize: (this.props.size || 30),
-              ...this.props.style
-          }}
-        >
-          {symbol}
-        </Text>
-      </View>
+      <Icon
+        {...this.props}
+        viewBox="0 0 600 600"
+        width={size}
+        height={size}
+        style={{color: iconColor, ...this.props.style}}
+      />
     );
   }
 }
