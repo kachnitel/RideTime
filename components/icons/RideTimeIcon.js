@@ -1,16 +1,16 @@
-import React from 'react';
-import SvgPersonIcon from './PersonIcon';
+import React from 'react'
+import SvgPersonIcon from './PersonIcon'
 
 export default class RideTimeIcon extends React.Component {
   icons = {
     person: SvgPersonIcon
   }
 
-  _getIconProps() {
-    size = this.props.size;
+  _getIconProps () {
+    let size = this.props.size
     // current Icons are based on 600px viewBox
 
-    return({
+    return ({
       viewBox: '0 0 600 600',
       width: size,
       height: size,
@@ -18,17 +18,17 @@ export default class RideTimeIcon extends React.Component {
     })
   }
 
-  render() {
-    if(this.icons[this.props.icon] == undefined) {
-      throw 'Icon "' + this.props.icon + '" is not defined'
+  render () {
+    if (this.icons[this.props.icon] === undefined) {
+      throw new Error('Icon "' + this.props.icon + '" is not defined')
     }
-    Icon = this.icons[this.props.icon];
+    let Icon = this.icons[this.props.icon]
 
-    return(
+    return (
       <Icon
         {...this._getIconProps()}
         style={this.props.style}
       />
-    );
+    )
   }
 }

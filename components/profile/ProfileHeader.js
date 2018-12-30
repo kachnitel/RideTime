@@ -1,13 +1,13 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-import CoverPicture from './CoverPicture';
-import styles, { profilePictureSize } from './ProfileHeaderStyle';
-import ProfilePicture from './ProfilePicture';
-import ProfileSummary from './ProfileSummary';
+import React from 'react'
+import { Text, View } from 'react-native'
+import CoverPicture from './CoverPicture'
+import styles, { profilePictureSize } from './ProfileHeaderStyle'
+import ProfilePicture from './ProfilePicture'
+import ProfileSummary from './ProfileSummary'
 
 export default class ProfileHeader extends React.Component {
-  render() {
-    return(
+  render () {
+    return (
       <View>
         <CoverPicture
           user={this.props.user}
@@ -22,7 +22,6 @@ export default class ProfileHeader extends React.Component {
           <ProfileSummary style={styles.profileSummary} user={this.props.user} />
         </View>
       </View>
-    );
+    )
   }
 }
-

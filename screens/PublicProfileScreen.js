@@ -1,5 +1,5 @@
-import React from 'react';
-import Profile from '../components/profile/Profile';
+import React from 'react'
+import Profile from '../components/profile/Profile'
 
 // TODO OwnProfileScreen, title just Profile or My Profile
 // w/ little name under in sidebar eventually
@@ -15,12 +15,12 @@ export default class PublicProfileScreen extends React.Component {
         borderBottomRightRadius: 5
       },
       headerTransparent: true
-    };
+    }
   };
 
-  render() {
+  render () {
     return (
       <Profile user={this.props.navigation.state.params} />
-    );
+    )
   }
 }

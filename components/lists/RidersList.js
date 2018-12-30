@@ -1,33 +1,33 @@
-import React, { Component } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
-import RidersProvider from '../../providers/RidersProvider';
-import Header from '../Header';
-import TouchableRiderItem from '../list_items/TouchableRiderItem';
+import React, { Component } from 'react'
+import { FlatList, StyleSheet, View } from 'react-native'
+import RidersProvider from '../../providers/RidersProvider'
+import Header from '../Header'
+import TouchableRiderItem from '../list_items/TouchableRiderItem'
 
 export class RidersList extends Component {
-  riderItemTouchable = ({item}) => (
+  riderItemTouchable = ({ item }) => (
     <TouchableRiderItem
       rider={item}
       style={styles.item}
     />
   )
 
-  render() {
-    riders = this.props.riderIds ? this.props.riderIds.map((userId) => {
-      return RidersProvider.getUser(userId);
-    }) : [];
+  render () {
+    let riders = this.props.riderIds ? this.props.riderIds.map((userId) => {
+      return RidersProvider.getUser(userId)
+    }) : []
 
     return (
       <View>
         <Header style={styles.title}>Riders</Header>
         <FlatList
           data={riders}
-          horizontal={true}
+          horizontal
           renderItem={this.riderItemTouchable}
-          keyExtractor={(item, index) => "index_" + index.toString()}
+          keyExtractor={(item, index) => 'index_' + index.toString()}
         />
       </View>
-    );
+    )
   }
 }
 
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   item: {
     color: '#fff'
   }
-});
+})

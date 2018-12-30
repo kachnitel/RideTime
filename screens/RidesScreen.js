@@ -1,18 +1,17 @@
-import React from 'react';
-import { StyleSheet, TouchableHighlight, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { AreaMap } from '../components/AreaMap';
-import { CreateRideButton } from '../components/CreateRideButton';
-import { RidesList } from '../components/lists/RidesList';
-import LocationsProvider from '../providers/LocationsProvider';
-import RidesProvider from '../providers/RidesProvider';
-
+import React from 'react'
+import { StyleSheet, TouchableHighlight, View } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import { AreaMap } from '../components/AreaMap'
+import { CreateRideButton } from '../components/CreateRideButton'
+import { RidesList } from '../components/lists/RidesList'
+import LocationsProvider from '../providers/LocationsProvider'
+import RidesProvider from '../providers/RidesProvider'
 
 export default class RidesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       // https://reactnavigation.org/docs/en/stack-navigator.html#navigationoptions-for-screens-inside-of-the-navigator
-      title: "RideTime",
+      title: 'RideTime',
       drawerLabel: 'Home',
       headerLeft: (
         <TouchableHighlight
@@ -21,12 +20,12 @@ export default class RidesScreen extends React.Component {
             <Icon style={styles.headerMenuIcon} name='menu' />
           </View>
         </TouchableHighlight>
-      ),
-    };
+      )
+    }
   };
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
       locations: LocationsProvider.getLocations(),
@@ -34,14 +33,14 @@ export default class RidesScreen extends React.Component {
     }
   }
 
-  render() {
+  render () {
     return (
-      <View style={{flex: 1, flexDirection: 'column'}}>
-        <View style={{flex: 35}}>
-          <AreaMap locations={this.state.locations}/>
+      <View style={{ flex: 1, flexDirection: 'column' }}>
+        <View style={{ flex: 35 }}>
+          <AreaMap locations={this.state.locations} />
         </View>
 
-        <View style={{flex: 65}}>
+        <View style={{ flex: 65 }}>
           <RidesList
             rides={this.state.rides}
             navigation={this.props.navigation}
@@ -50,7 +49,7 @@ export default class RidesScreen extends React.Component {
 
         <CreateRideButton navigation={this.props.navigation} />
       </View>
-    );
+    )
   }
 }
 

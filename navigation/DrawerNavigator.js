@@ -1,7 +1,7 @@
-import { createDrawerNavigator } from 'react-navigation';
-import ProfileStack from './ProfileNavigator';
-import HomeStack from './HomeNavigator';
-import Colors from '../constants/Colors';
+import { createDrawerNavigator } from 'react-navigation'
+import ProfileStack from './ProfileNavigator'
+import HomeStack from './HomeNavigator'
+import Colors from '../constants/Colors'
 
 const DrawerStack = createDrawerNavigator(
   {
@@ -12,14 +12,13 @@ const DrawerStack = createDrawerNavigator(
     initialRouteName: 'Home',
     cardStyle: { backgroundColor: '#FFFFFF' },
     headerMode: 'screen',
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       headerStyle: {
         backgroundColor: '#ffffff'
       },
       headerTintColor: Colors.tintColor
     })
   }
-);
+)
 
-
-export default DrawerStack;
+export default DrawerStack

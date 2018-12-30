@@ -1,38 +1,38 @@
-import React from 'react';
-import { TextInput, View, StyleSheet } from 'react-native';
-import CoverPicture from './CoverPicture';
-import ProfilePicture from './ProfilePicture';
-import ProfileSummary from './ProfileSummary';
-import styles, { profilePictureSize } from './ProfileHeaderStyle';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Layout from '../../constants/Layout';
+import React from 'react'
+import { TextInput, View, StyleSheet } from 'react-native'
+import CoverPicture from './CoverPicture'
+import ProfilePicture from './ProfilePicture'
+import ProfileSummary from './ProfileSummary'
+import styles, { profilePictureSize } from './ProfileHeaderStyle'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import Layout from '../../constants/Layout'
 
 export default class EditProfileHeader extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
       user: this.props.user
-    };
+    }
   }
 
   handleUpdateName = (val) => {
-    this.handleUpdate(val, 'name');
+    this.handleUpdate(val, 'name')
   }
 
   handleUpdateCity = (val) => {
-    this.handleUpdate(val, 'city');
+    this.handleUpdate(val, 'city')
   }
 
   handleUpdate = async (val, key) => {
     await this.setState(
-      (prevState) => ({user: {...prevState.user, [key]: val}})
+      (prevState) => ({ user: { ...prevState.user, [key]: val } })
     )
-    this.props.updateCallback(this.state.user);
+    this.props.updateCallback(this.state.user)
   }
 
-  render() {
-    return(
+  render () {
+    return (
       <View>
         <CoverPicture
           user={this.props.user}
@@ -75,7 +75,7 @@ export default class EditProfileHeader extends React.Component {
           <ProfileSummary style={styles.profileSummary} user={this.props.user} />
         </View>
       </View>
-    );
+    )
   }
 }
 
@@ -85,9 +85,9 @@ const editStyles = StyleSheet.create({
     position: 'absolute',
     borderColor: 'white',
     borderWidth: 1,
-    borderRadius: Layout.window.hp(.75),
+    borderRadius: Layout.window.hp(0.75),
     textShadowColor: 'rgba(0,0,0, 0.75)',
-    textShadowOffset: {width: 2, height: 2},
+    textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
     color: 'white',
     backgroundColor: 'rgba(255,255,255,0.75);',

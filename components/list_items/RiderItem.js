@@ -1,20 +1,20 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Layout from '../../constants/Layout';
-import ProfilePicture from '../profile/ProfilePicture';
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import Layout from '../../constants/Layout'
+import ProfilePicture from '../profile/ProfilePicture'
 
 export default class RiderItem extends React.Component {
-  render() {
+  render () {
     return (
       // Rider should contain his details fetched in list
       // To render eg. little exp. icon in corner of image
       <View style={styles.listItem}>
         <ProfilePicture rider={this.props.rider} size={Layout.window.hp(7)} />
-        <Text style={{...styles.name, ...this.props.style}} numberOfLines={1} >
+        <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
           {this.props.rider.name}
         </Text>
       </View>
-    );
+    )
   }
 }
 
@@ -29,6 +29,6 @@ const styles = StyleSheet.create({
   name: {
     textAlign: 'center',
     paddingTop: Layout.window.hp(1),
-    flex: 1,
+    flex: 1
   }
-});
+})

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { RidersList } from '../components/lists/RidersList';
-import Colors from '../constants/Colors';
-import Layout from '../constants/Layout';
-import { AreaMap } from './AreaMap';
-import RideItem from './list_items/RideItem';
-import { RideDescription } from './RideDescription';
+import React, { Component } from 'react'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { RidersList } from '../components/lists/RidersList'
+import Colors from '../constants/Colors'
+import Layout from '../constants/Layout'
+import { AreaMap } from './AreaMap'
+import RideItem from './list_items/RideItem'
+import { RideDescription } from './RideDescription'
 
 /**
  * Ride Detail screen content
@@ -13,14 +13,14 @@ import { RideDescription } from './RideDescription';
 export class RideDetail extends Component {
   locationText = JSON.stringify(this.props.ride.locationGps);
 
-  render() {
+  render () {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.map} >
           <AreaMap currentLocation={this.props.ride.locationGps} />
         </View>
         <View style={styles.rideItem} >
-          <RideItem ride={this.props.ride}/>
+          <RideItem ride={this.props.ride} />
         </View>
         <View style={styles.detailListItem} >
           <RidersList riderIds={this.props.ride.members} navigation={this.props.navigation} />
@@ -38,7 +38,7 @@ export class RideDetail extends Component {
           <RideDescription title='Description' text={this.props.ride.description} />
         </View>
       </ScrollView>
-    );
+    )
   }
 }
 
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: Layout.window.wp(4),
     backgroundColor: Colors.darkBackground
   }
-});
+})

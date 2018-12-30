@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { TouchableHighlight, View } from 'react-native';
-import { withNavigation } from 'react-navigation';
-import RiderItem from './RiderItem';
+import React, { Component } from 'react'
+import { TouchableHighlight, View } from 'react-native'
+import { withNavigation } from 'react-navigation'
+import RiderItem from './RiderItem'
 
 class TouchableRiderItem extends Component {
-  render() {
-    return(
+  render () {
+    return (
       <TouchableHighlight onPress={() => this.props.navigation.push(
         this.props.route || 'PublicProfile',
         this.props.rider
@@ -21,4 +21,4 @@ class TouchableRiderItem extends Component {
   }
 }
 
-export default withNavigation(TouchableRiderItem);
+export default withNavigation(TouchableRiderItem)

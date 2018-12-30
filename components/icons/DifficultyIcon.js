@@ -1,10 +1,10 @@
-import React from 'react';
-import SvgSkiTrailRatingSymbolBlueSquare from './difficulty_icons/SkiTrailRatingSymbolBlueSquare';
-import SvgSkiTrailRatingSymbolGreenCircle from './difficulty_icons/SkiTrailRatingSymbolGreenCircle';
-import SvgSkiTrailRatingSymbolBlackDiamond from './difficulty_icons/SkiTrailRatingSymbolBlackDiamond';
-import SvgSkiTrailRatingSymbolDoubleBlackDiamond from './difficulty_icons/SkiTrailRatingSymbolDoubleBlackDiamond';
-import SvgSkiTrailRatingSymbolTerrainPark from './difficulty_icons/SkiTrailRatingSymbolTerrainPark';
-import RideTimeIcon from './RideTimeIcon';
+import React from 'react'
+import SvgSkiTrailRatingSymbolBlueSquare from './difficulty_icons/SkiTrailRatingSymbolBlueSquare'
+import SvgSkiTrailRatingSymbolGreenCircle from './difficulty_icons/SkiTrailRatingSymbolGreenCircle'
+import SvgSkiTrailRatingSymbolBlackDiamond from './difficulty_icons/SkiTrailRatingSymbolBlackDiamond'
+import SvgSkiTrailRatingSymbolDoubleBlackDiamond from './difficulty_icons/SkiTrailRatingSymbolDoubleBlackDiamond'
+import SvgSkiTrailRatingSymbolTerrainPark from './difficulty_icons/SkiTrailRatingSymbolTerrainPark'
+import RideTimeIcon from './RideTimeIcon'
 
 /**
  * @property d int 0-4
@@ -27,32 +27,32 @@ export default class DifficultyIcon extends RideTimeIcon {
     4: SvgSkiTrailRatingSymbolTerrainPark
   };
 
-  render() {
-    difficultyLevel = Number(this.props.d);
+  render () {
+    let difficultyLevel = Number(this.props.d)
 
-    iconColor = this.black;
-    switch(difficultyLevel) {
+    let iconColor = this.black
+    switch (difficultyLevel) {
       case 0:
-        iconColor = this.green;
-        break;
+        iconColor = this.green
+        break
       case 1:
-        iconColor = this.blue;
-        break;
+        iconColor = this.blue
+        break
       case 4:
-        iconColor = this.orange;
-        break;
+        iconColor = this.orange
+        break
     }
 
-    Icon = DifficultyIcon.icons[difficultyLevel];
-    if(Icon == undefined) {
-      throw 'Difficulty Icon ' + this.props.d + ' is not defined'
+    let Icon = DifficultyIcon.icons[difficultyLevel]
+    if (Icon === undefined) {
+      throw new Error('Difficulty Icon ' + this.props.d + ' is not defined')
     }
 
-    return(
+    return (
       <Icon
         {...this._getIconProps()}
-        style={{color: iconColor, ...this.props.style}}
+        style={{ color: iconColor, ...this.props.style }}
       />
-    );
+    )
   }
 }

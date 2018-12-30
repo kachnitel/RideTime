@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import Layout from '../../../constants/Layout';
+import { StyleSheet } from 'react-native'
+import Layout from '../../../constants/Layout'
 
 export default StyleSheet.create({
   summaryItem: {
@@ -17,4 +17,4 @@ export default StyleSheet.create({
     justifyContent: 'center',
     textAlignVertical: 'center'
   }
-});
+})

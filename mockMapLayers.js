@@ -1,5 +1,5 @@
 const mapLayers = [
-   {
+  {
     name: 'OpenStreetMap',
     checked: 'true',
     type: 'TileLayer',
@@ -8,6 +8,6 @@ const mapLayers = [
     attribution:
       '&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
   }
-];
+]
 
-export default mapLayers;
+export default mapLayers

@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { FlatList, Text, TouchableHighlight, View } from 'react-native';
-import LocationItem from '../list_items/LocationItem';
+import React, { Component } from 'react'
+import { FlatList, Text, TouchableHighlight, View } from 'react-native'
+import LocationItem from '../list_items/LocationItem'
 
 export default class LocationList extends Component {
-  locationItemTouchable = ({item}) => (
+  locationItemTouchable = ({ item }) => (
     <TouchableHighlight onPress={() => this.props.onLocationPress(item)}>
       <LocationItem location={item} />
     </TouchableHighlight>
   )
 
-  render() {
-    return(
+  render () {
+    return (
       <View {...this.props}>
         <Text>Locations</Text>
         <FlatList
@@ -18,6 +18,6 @@ export default class LocationList extends Component {
           renderItem={this.locationItemTouchable}
         />
       </View>
-    );
+    )
   }
 }

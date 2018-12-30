@@ -1,7 +1,6 @@
-import React from 'react';
-import WebViewLeaflet from 'react-native-webview-leaflet';
-import mapLayers from '../mockMapLayers';
-
+import React from 'react'
+import WebViewLeaflet from 'react-native-webview-leaflet'
+import mapLayers from '../mockMapLayers'
 
 /*
  * TODO replace with MapView? & remove react-native-webview-leaflet from package.json
@@ -21,12 +20,12 @@ initialRegion={{
 /> */
 
 export class AreaMap extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     // use last known position
     // get from cache
-    location = [49.355813, -123.036993];
+    let location = [49.355813, -123.036993]
 
     this.state = {
       currentLocation: location,
@@ -39,14 +38,14 @@ export class AreaMap extends React.Component {
     // https://github.com/reggie3/react-native-webview-leaflet/blob/8e5830fc23d121db19f51d7dea872d553c253ba5/App.js#L54
     await navigator.geolocation.getCurrentPosition(
       (loc) => {
-        this.setState({currentLocation: [loc.coords.latitude, loc.coords.longitude]})
+        this.setState({ currentLocation: [loc.coords.latitude, loc.coords.longitude] })
       },
       (error) => {
-        console.log(error);
-        console.log("LOCATION ERROR LOGGED");
+        console.log(error)
+        console.log('LOCATION ERROR LOGGED')
       },
-      {maximumAge: 5000}
-    );
+      { maximumAge: 5000 }
+    )
 
     this.webViewLeaflet.sendMessage({
       centerPosition: [...this.state.currentLocation]
@@ -55,44 +54,44 @@ export class AreaMap extends React.Component {
       // Use inverse data flow to update parent so the list
       // of rides can reflect what the map shows
       // https://reactjs.org/docs/thinking-in-react.html#step-5-add-inverse-data-flow
-    });
+    })
   }
 
-  componentDidMount() {
-    this.updateLocation();
+  componentDidMount () {
+    this.updateLocation()
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    locations = this.props.locations;
+  componentDidUpdate (prevProps, prevState) {
+    let locations = this.props.locations
 
-    if(locations !== null
-      && locations !== undefined
-      && locations.length > 0
-      && prevState.locations !== locations
+    if (locations !== null &&
+      locations !== undefined &&
+      locations.length > 0 &&
+      prevState.locations !== locations
     ) {
-      console.log("Map update locations");
-      this.setState({locations: locations});
+      console.log('Map update locations')
+      this.setState({ locations: locations })
 
       // sendobject = {locations: [...locations]};
       // this.webViewLeaflet.sendMessage(sendobject);
     }
 
-    if(prevProps.currentLocation !== this.props.currentLocation) {
-      this.updateLocation();
+    if (prevProps.currentLocation !== this.props.currentLocation) {
+      this.updateLocation()
     }
   }
 
   onLoad = () => {
     this.setState(
-      {mapState: { ...this.state.mapState, mapLoaded: true }},
+      { mapState: { ...this.state.mapState, mapLoaded: true } },
       () => {
         // send an array of map layer information to the map
-        this.webViewLeaflet.sendMessage({mapLayers});
+        this.webViewLeaflet.sendMessage({ mapLayers })
       }
-    );
+    )
   }
 
-  render() {
+  render () {
     return <WebViewLeaflet
       ref={component => (this.webViewLeaflet = component)}
       onLoad={this.onLoad}
@@ -110,20 +109,20 @@ export class AreaMap extends React.Component {
         icon: '◉', // {<Icon... />} or something
         size: [32, 32],
         animation: {
-          name: "pulse",
-          duration: "1",
+          name: 'pulse',
+          duration: '1',
           delay: 0,
-          interationCount: "2"
+          interationCount: '2'
         }
       }}
 
       zoom={8}
 
       // Optional: display a button that centers the map on the coordinates of ownPostionMarker. Requires that "ownPositionMarker" prop be set
-      centerButton={true}
-      showZoomControl={true}
-      showAttributionControl={true}
+      centerButton
+      showZoomControl
+      showAttributionControl
       // useMarkerClustering={true} // FIXME breaks map
-    />;
+    />
   }
 }

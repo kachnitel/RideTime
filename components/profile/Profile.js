@@ -1,29 +1,29 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import Colors from '../../constants/Colors';
-import RidesProvider from '../../providers/RidesProvider';
-import CountHeader from '../CountHeader';
-import RideItem from '../list_items/RideItem';
-import { FriendList } from './FriendList';
-import ProfileHeader from './ProfileHeader';
-import { Favourites } from './Favourites';
-import Layout from '../../constants/Layout';
+import React from 'react'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import Colors from '../../constants/Colors'
+import RidesProvider from '../../providers/RidesProvider'
+import CountHeader from '../CountHeader'
+import RideItem from '../list_items/RideItem'
+import { FriendList } from './FriendList'
+import ProfileHeader from './ProfileHeader'
+import { Favourites } from './Favourites'
+import Layout from '../../constants/Layout'
 
 export default class Profile extends React.Component {
-  render() {
-    upcomingRides = RidesProvider.getRides();
+  render () {
+    let upcomingRides = RidesProvider.getRides()
 
-    return(
+    return (
       <ScrollView>
         <ProfileHeader user={this.props.user} />
-        <FriendList userIds={[1,2,3]} style={styles.friendList} />
+        <FriendList userIds={[1, 2, 3]} style={styles.friendList} />
         <CountHeader number={upcomingRides.length} style={styles.title}>Upcoming Rides</CountHeader>
         <View style={styles.rideItemContainer}>
-          <RideItem ride={upcomingRides[0]} style={styles.rideItem}  />
+          <RideItem ride={upcomingRides[0]} style={styles.rideItem} />
         </View>
         <Favourites text={this.props.user.favourites} style={styles.title} />
       </ScrollView>
-    );
+    )
   }
 }
 

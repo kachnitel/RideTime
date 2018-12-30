@@ -1,11 +1,11 @@
-import { Dimensions } from 'react-native';
+import { Dimensions } from 'react-native'
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+  heightPercentageToDP as hp
+} from 'react-native-responsive-screen'
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width
+const height = Dimensions.get('window').height
 
 export default {
   window: {
@@ -14,5 +14,5 @@ export default {
     wp,
     hp
   },
-  isSmallDevice: width < 375,
-};
+  isSmallDevice: width < 375
+}
