@@ -7,10 +7,17 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "node_modules/.bin/jest"
+    "test": "node_modules/.bin/jest",
+    "test:coverage": "npm test -- --coverage",
+    "test:badges": "npm run test:coverage  && jest-coverage-badges"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "text-summary"
+    ]
   },
   "dependencies": {
     "expo": "^31.0.2",
@@ -23,6 +30,7 @@
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
+    "jest-coverage-badges": "^1.1.2",
     "jest-expo": "^31.0.0"
   }
 }
