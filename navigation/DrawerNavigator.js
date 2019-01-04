@@ -10,9 +10,8 @@ const DrawerStack = createDrawerNavigator(
   },
   {
     initialRouteName: 'Home',
-    cardStyle: { backgroundColor: '#FFFFFF' },
     headerMode: 'screen',
-    navigationOptions: ({ navigation }) => ({
+    defaultNavigationOptions: ({ navigation }) => ({
       headerStyle: {
         backgroundColor: '#ffffff'
       },

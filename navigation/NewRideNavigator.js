@@ -11,7 +11,6 @@ const NewRideStack = createStackNavigator(
   },
   {
     initialRouteName: 'SelectLocation',
-    cardStyle: { backgroundColor: '#FFFFFF' },
     headerMode: 'none'
   }
 )

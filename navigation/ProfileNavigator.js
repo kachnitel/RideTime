@@ -13,7 +13,7 @@ const ProfileStack = createStackNavigator(
   },
   {
     initialRouteName: 'Profile',
-    navigationOptions: ({ navigation }) => ({
+    defaultNavigationOptions: ({ navigation }) => ({
       headerStyle: {
         backgroundColor: '#ffffff'
       },

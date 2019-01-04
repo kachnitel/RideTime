@@ -2,7 +2,7 @@ import { AppLoading, Font } from 'expo'
 import React from 'react'
 import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
 import Layout from './constants/Layout'
-import AppNavigator from './navigation/AppNavigator'
+import AppContainer from './navigation/AppNavigator'
 
 /**
  * Set default Text style
@@ -33,7 +33,7 @@ export default class App extends React.Component {
       return (
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
-          <AppNavigator />
+          <AppContainer />
         </View>
       )
     }
