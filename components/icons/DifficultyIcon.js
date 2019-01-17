@@ -5,6 +5,7 @@ import SvgSkiTrailRatingSymbolBlackDiamond from './difficulty_icons/SkiTrailRati
 import SvgSkiTrailRatingSymbolDoubleBlackDiamond from './difficulty_icons/SkiTrailRatingSymbolDoubleBlackDiamond'
 import SvgSkiTrailRatingSymbolTerrainPark from './difficulty_icons/SkiTrailRatingSymbolTerrainPark'
 import RideTimeIcon from './RideTimeIcon'
+import PropTypes from 'prop-types'
 
 /**
  * @property d int 0-4
@@ -55,4 +56,9 @@ export default class DifficultyIcon extends RideTimeIcon {
       />
     )
   }
+}
+
+DifficultyIcon.propTypes = {
+  d: PropTypes.oneOf([0, 1, 2, 3, 4]).isRequired,
+  style: PropTypes.any
 }

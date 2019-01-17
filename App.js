@@ -3,6 +3,7 @@ import React from 'react'
 import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
 import Layout from './constants/Layout'
 import AppContainer from './navigation/AppNavigator'
+import PropTypes from 'prop-types'
 
 /**
  * Set default Text style
@@ -56,6 +57,10 @@ export default class App extends React.Component {
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true })
   };
+}
+
+App.propTypes = {
+  skipLoadingScreen: PropTypes.bool
 }
 
 const styles = StyleSheet.create({
