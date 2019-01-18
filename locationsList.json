@@ -10,7 +10,8 @@
             "type": "region",
             "icon": "region",
             "zoom_min": 4,
-            "zoom_max": 17
+            "zoom_max": 17,
+            "difficulties": [0,1,2,3]
         },
         {
             "marker_size": 1,
@@ -22,7 +23,8 @@
             "type": "region",
             "icon": "region",
             "zoom_min": 4,
-            "zoom_max": 17
+            "zoom_max": 17,
+            "difficulties": [0,1,3]
         },
         {
             "marker_size": 1,
@@ -34,7 +36,8 @@
             "type": "region",
             "icon": "region",
             "zoom_min": 4,
-            "zoom_max": 17
+            "zoom_max": 17,
+            "difficulties": [2,3]
         },
         {
             "marker_size": 2,
@@ -46,7 +49,8 @@
             "type": "region",
             "icon": "region",
             "zoom_min": 4,
-            "zoom_max": 17
+            "zoom_max": 17,
+            "difficulties": [0,1,4]
         },
         {
             "marker_size": 1,

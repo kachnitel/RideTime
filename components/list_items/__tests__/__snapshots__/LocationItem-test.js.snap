@@ -10,15 +10,32 @@ exports[`renders correctly 1`] = `
     }
   }
 >
-  <Text
+  <View
     style={
       Object {
-        "fontSize": 36.5,
+        "flexDirection": "row",
+        "justifyContent": "space-between",
       }
     }
   >
-    Place
-  </Text>
+    <Text
+      style={
+        Object {
+          "fontSize": 36.5,
+        }
+      }
+    >
+      Place
+    </Text>
+    <LocationDifficulties
+      difficulties={
+        Array [
+          1,
+          2,
+        ]
+      }
+    />
+  </View>
   <Text>
     Location Details
   </Text>

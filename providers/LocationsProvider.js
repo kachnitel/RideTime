@@ -27,7 +27,8 @@ export default class LocationsProvider {
             parseFloat(location.lon.replace(',', '.'))
           ],
           icon: '⃤',
-          size: [10, 10]
+          size: [10, 10],
+          difficulties: location.difficulties
         }
       })
     )
