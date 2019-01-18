@@ -3,9 +3,8 @@ import React from 'react'
 import 'react-native'
 import renderer from 'react-test-renderer'
 import LocationItem from '../LocationItem'
-// import { View } from 'react-native'
 
-jest.mock('../../location/LocationDifficulties', function () { return 'LocationDifficulties' })
+jest.mock('../../location/LocationDifficulties', () => 'LocationDifficulties')
 
 it('renders correctly', () => {
   let testLocation = {

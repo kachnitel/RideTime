@@ -6,7 +6,7 @@ import RiderCount from './RiderCount'
 import OutlineIcon from './icons/OutlineIcon'
 import Layout from '../constants/Layout'
 
-export class RideItemDetail extends React.Component {
+export default class RideItemDetail extends React.Component {
   render () {
     let ride = this.props.ride
     let difficultyIcon = <DifficultyIcon size={Layout.window.hp(4)} d={ride.difficulty} />

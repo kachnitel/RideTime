@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
-import { RideItemDetail } from '../RideItemDetail'
+import RideItemDetail from '../RideItemDetail'
 import Layout from '../../constants/Layout'
 
 export default class RideItem extends React.Component {

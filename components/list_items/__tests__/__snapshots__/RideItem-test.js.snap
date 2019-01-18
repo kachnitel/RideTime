@@ -19,6 +19,24 @@ exports[`renders correctly 1`] = `
   >
     Joey's Alice lake lap
   </Text>
+  <RideItemDetail
+    ride={
+      Object {
+        "difficulty": 1,
+        "location": "Alice Lake",
+        "locationGps": Array [
+          49.775666,
+          -123.123307,
+        ],
+        "members": Array [
+          1,
+        ],
+        "name": "Joey's Alice lake lap",
+        "plannedRoute": "Some trails",
+        "terrain": "trail",
+      }
+    }
+  />
 </View>
 `;
 
@@ -45,5 +63,29 @@ exports[`renders correctly with style 1`] = `
   >
     Joey's Alice lake lap
   </Text>
+  <RideItemDetail
+    ride={
+      Object {
+        "difficulty": 1,
+        "location": "Alice Lake",
+        "locationGps": Array [
+          49.775666,
+          -123.123307,
+        ],
+        "members": Array [
+          1,
+        ],
+        "name": "Joey's Alice lake lap",
+        "plannedRoute": "Some trails",
+        "terrain": "trail",
+      }
+    }
+    style={
+      Object {
+        "backgroundColor": "black",
+        "color": "#fff",
+      }
+    }
+  />
 </View>
 `;

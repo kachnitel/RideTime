@@ -4,7 +4,7 @@ import 'react-native'
 import renderer from 'react-test-renderer'
 import RideItem from '../RideItem'
 
-jest.mock('../../RideItemDetail')
+jest.mock('../../RideItemDetail', () => 'RideItemDetail')
 
 let testRide = {
   'name': "Joey's Alice lake lap",
