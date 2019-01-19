@@ -1,29 +1,26 @@
 import React, { Component } from 'react'
-import { FlatList, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
-import Colors from '../../constants/Colors'
+import { StyleSheet, Text, View } from 'react-native'
 import RideItem from '../list_items/RideItem'
+import AlternatingStyleList from './AlternatingStyleList';
 
 export default class RidesList extends Component {
-  rideItemTouchable = ({ item, index }) => (
-    <TouchableHighlight onPress={() => this.props.navigation.push(
-      'RideDetail',
-      item
-    )}>
-      <RideItem
-        ride={item}
-        style={index % 2 === 0 ? styles.listItemWhite : styles.listItemBlack}
-      />
-    </TouchableHighlight>
+  itemComponent = function (item, style) {
+    return <RideItem ride={item} style={style} />
+  }
+
+  onItemPress = (item) => this.props.navigation.push(
+    'RideDetail',
+    item
   )
 
   render () {
     return (
       <View style={styles.container}>
-        <FlatList
-          data={this.props.rides}
-          renderItem={this.rideItemTouchable}
-          ListEmptyComponent={<Text>No rides nearby, start one!</Text>}
-          keyExtractor={(item, index) => 'index_' + index.toString()}
+        <AlternatingStyleList
+          items={this.props.rides}
+          itemComponent={this.itemComponent}
+          emptyComponent={<Text>No rides nearby, start one!</Text>}
+          onItemPress={this.onItemPress}
         />
       </View>
     )
@@ -34,12 +31,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 2
-  },
-  listItemWhite: {
-    backgroundColor: '#fff'
-  },
-  listItemBlack: {
-    backgroundColor: Colors.darkBackground,
-    color: '#fff'
   }
 })
