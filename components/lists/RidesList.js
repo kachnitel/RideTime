@@ -9,12 +9,10 @@ export default class RidesList extends Component {
       'RideDetail',
       item
     )}>
-      <View>
-        <RideItem
-          ride={item}
-          style={index % 2 === 0 ? styles.listItemWhite : styles.listItemBlack}
-        />
-      </View>
+      <RideItem
+        ride={item}
+        style={index % 2 === 0 ? styles.listItemWhite : styles.listItemBlack}
+      />
     </TouchableHighlight>
   )
 
