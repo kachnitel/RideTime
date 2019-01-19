@@ -3,7 +3,7 @@ import { StyleSheet, TouchableHighlight, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { AreaMap } from '../components/AreaMap'
 import { CreateRideButton } from '../components/CreateRideButton'
-import { RidesList } from '../components/lists/RidesList'
+import RidesList from '../components/lists/RidesList'
 import LocationsProvider from '../providers/LocationsProvider'
 import RidesProvider from '../providers/RidesProvider'
 

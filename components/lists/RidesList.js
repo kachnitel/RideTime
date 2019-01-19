@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, TouchableHighlight, View } from 'react-nati
 import Colors from '../../constants/Colors'
 import RideItem from '../list_items/RideItem'
 
-export class RidesList extends Component {
+export default class RidesList extends Component {
   rideItemTouchable = ({ item, index }) => (
     <TouchableHighlight onPress={() => this.props.navigation.push(
       'RideDetail',
@@ -21,7 +21,6 @@ export class RidesList extends Component {
   render () {
     return (
       <View style={styles.container}>
-        {this.props.title !== undefined && this.props.title}
         <FlatList
           data={this.props.rides}
           renderItem={this.rideItemTouchable}
