@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import RiderCount from './RiderCount'
 import Layout from '../constants/Layout'
 
@@ -12,18 +12,22 @@ import Layout from '../constants/Layout'
  */
 export default class LocationItemDetail extends React.Component {
   render () {
-    return <View style={styles.detail}>
-      <RiderCount count={7} size={Layout.window.hp(5)} fontStyle={styles.riderCountFont} />
+    return <View style={styles.container}>
+      <RiderCount
+        count={Math.floor((Math.random() * 10) + 1)}
+        size={Layout.window.hp(4)}
+        fontStyle={styles.riderCountFont} />
     </View>
   }
 }
 
 const styles = StyleSheet.create({
-  detail: {
+  container: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   },
   riderCountFont: {
-    fontSize: Layout.window.hp(4)
+    fontSize: Layout.window.hp(3)
   }
 })

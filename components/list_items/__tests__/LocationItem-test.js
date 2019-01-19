@@ -7,6 +7,10 @@ import LocationItem from '../LocationItem'
 jest.mock('../../location/LocationDifficulties', () => 'LocationDifficulties')
 jest.mock('../../RiderCount', () => 'RiderCount')
 
+const mockMath = Object.create(global.Math)
+mockMath.random = () => 0.5
+global.Math = mockMath
+
 it('renders correctly', () => {
   let testLocation = {
     name: 'Place',

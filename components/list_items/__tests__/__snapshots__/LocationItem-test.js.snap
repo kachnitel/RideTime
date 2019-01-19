@@ -41,17 +41,18 @@ exports[`renders correctly 1`] = `
       Object {
         "flex": 1,
         "flexDirection": "row",
+        "justifyContent": "flex-end",
       }
     }
   >
     <RiderCount
-      count={7}
+      count={6}
       fontStyle={
         Object {
-          "fontSize": 53.5,
+          "fontSize": 40,
         }
       }
-      size={66.5}
+      size={53.5}
     />
   </View>
 </View>
