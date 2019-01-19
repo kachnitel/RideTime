@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Layout from '../../constants/Layout'
-import LocationDifficulties from '../location/LocationDifficulties'
 import LocationItemDetail from '../LocationItemDetail'
 import PropTypes from 'prop-types'
 
@@ -12,10 +11,7 @@ export default class LocationItem extends React.Component {
         <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
           {this.props.location.name}
         </Text>
-        <View style={styles.lowerRow}>
-          <LocationDifficulties difficulties={this.props.location.difficulties} />
-          <LocationItemDetail location={this.props.location} />
-        </View>
+        <LocationItemDetail location={this.props.location} />
       </View>
     )
   }
@@ -36,9 +32,5 @@ const styles = StyleSheet.create({
     height: Layout.window.hp(15),
     paddingVertical: Layout.window.hp(1.5),
     paddingHorizontal: Layout.window.wp(4)
-  },
-  lowerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
   }
 })

@@ -25,6 +25,8 @@ exports[`renders correctly 1`] = `
   <View
     style={
       Object {
+        "alignItems": "center",
+        "flex": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
       }
@@ -37,26 +39,25 @@ exports[`renders correctly 1`] = `
           2,
         ]
       }
-    />
-    <View
+      iconSize={53.5}
       style={
         Object {
-          "flex": 1,
+          "backgroundColor": "rgba(220, 220, 220, .5);",
+          "borderRadius": 11.5,
           "flexDirection": "row",
-          "justifyContent": "flex-end",
+          "padding": 7.5,
         }
       }
-    >
-      <RiderCount
-        count={6}
-        fontStyle={
-          Object {
-            "fontSize": 40,
-          }
+    />
+    <RiderCount
+      count={6}
+      fontStyle={
+        Object {
+          "fontSize": 40,
         }
-        size={53.5}
-      />
-    </View>
+      }
+      size={53.5}
+    />
   </View>
 </View>
 `;
