@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native'
 import DifficultyIcon from '../icons/DifficultyIcon'
 import OutlineIcon from '../icons/OutlineIcon'
 import Layout from '../../constants/Layout'
-import Colors from '../../constants/Colors'
 
 /**
  * TODO:
@@ -16,7 +15,7 @@ import Colors from '../../constants/Colors'
 export default class SelectDifficulty extends Component {
   render () {
     return (
-      <View style={styles.container}>
+      <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
         {Object.keys(DifficultyIcon.icons).map(Number).map((i) =>
           <View style={styles.iconContainer} key={i}>
             <OutlineIcon outlineStyle={styles.outlineStyle}>
@@ -33,9 +32,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-around',
     alignItems: 'center',
-    flexDirection: 'row',
-    height: Layout.window.wp(20),
-    backgroundColor: Colors.darkBackground
+    flexDirection: 'row'
   },
   iconContainer: {
     flex: 1,
