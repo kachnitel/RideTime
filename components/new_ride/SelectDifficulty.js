@@ -5,11 +5,19 @@ import OutlineIcon from '../icons/OutlineIcon'
 import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
 
+/**
+ * TODO:
+ * - prop localDifficulties could allow greying out difficulties not in area
+ *
+ * @export
+ * @class SelectDifficulty
+ * @extends {Component}
+ */
 export default class SelectDifficulty extends Component {
   render () {
     return (
       <View style={styles.container}>
-        {Object.keys(DifficultyIcon.icons).map((i) => // difficulties should be pulled from DifficultIcon TODO
+        {Object.keys(DifficultyIcon.icons).map(Number).map((i) =>
           <View style={styles.iconContainer} key={i}>
             <OutlineIcon outlineStyle={styles.outlineStyle}>
               <DifficultyIcon d={i} size={Layout.window.wp(10)} />

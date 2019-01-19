@@ -29,7 +29,7 @@ export default class DifficultyIcon extends RideTimeIcon {
   };
 
   render () {
-    let difficultyLevel = Number(this.props.d)
+    let difficultyLevel = this.props.d
 
     let iconColor = this.black
     switch (difficultyLevel) {
