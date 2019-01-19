@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import Layout from '../../constants/Layout'
 import LocationDifficulties from '../location/LocationDifficulties'
 import LocationItemDetail from '../LocationItemDetail'
+import PropTypes from 'prop-types'
 
 export default class LocationItem extends React.Component {
   render () {
@@ -18,6 +19,11 @@ export default class LocationItem extends React.Component {
       </View>
     )
   }
+}
+
+LocationItem.propTypes = {
+  location: PropTypes.object,
+  style: PropTypes.any
 }
 
 const styles = StyleSheet.create({
