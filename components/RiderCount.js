@@ -1,31 +1,44 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import RideTimeIcon from './icons/RideTimeIcon'
+import PropTypes from 'prop-types'
+import CountIcon from './icons/CountIcon';
 
 export default class RiderCount extends React.Component {
   render () {
     return (
-      <View style={{ ...styles.container, ...this.props.style }} {...this.props}>
-        <Text style={{
-          ...styles.countIcon,
-          ...this.props.fontStyle
-        }}>
-          {this.props.count || 0}
-        </Text>
-        <RideTimeIcon icon='person' size={this.props.size} style={styles.countIcon} />
-      </View>
+      <CountIcon
+        {...this.props}
+        fontStyle={{ ...styles.fontStyle, ...this.props.fontStyle }}
+      >
+        <RideTimeIcon
+          icon='person'
+          size={this.props.size}
+          style={styles.countIcon}
+        />
+      </CountIcon>
     )
   }
+}
+
+RiderCount.propTypes = {
+  count: PropTypes.number,
+  fontStyle: Text.propTypes.style,
+  size: PropTypes.number,
+  style: PropTypes.any
+}
+
+RiderCount.defaultProps = {
+  size: 20
 }
 
 const styles = StyleSheet.create({
   countIcon: {
     fontWeight: 'bold',
     paddingRight: 2,
-    color: '#878787', // should be #656565 for black, 878787 white
-    fontSize: 24
+    color: '#878787' // should be #656565 for black, 878787 white background (from parent)
   },
-  container: {
-    flexDirection: 'row'
+  fontStyle: {
+    color: '#878787'
   }
 })

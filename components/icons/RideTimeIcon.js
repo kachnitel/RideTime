@@ -1,5 +1,6 @@
 import React from 'react'
 import SvgPersonIcon from './PersonIcon'
+import PropTypes from 'prop-types'
 
 export default class RideTimeIcon extends React.Component {
   icons = {
@@ -31,4 +32,10 @@ export default class RideTimeIcon extends React.Component {
       />
     )
   }
+}
+
+RideTimeIcon.propTypes = {
+  icon: PropTypes.any,
+  size: PropTypes.number,
+  style: PropTypes.any
 }

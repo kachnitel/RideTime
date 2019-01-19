@@ -5,6 +5,7 @@ import renderer from 'react-test-renderer'
 import LocationItem from '../LocationItem'
 
 jest.mock('../../location/LocationDifficulties', () => 'LocationDifficulties')
+jest.mock('../../RiderCount', () => 'RiderCount')
 
 it('renders correctly', () => {
   let testLocation = {

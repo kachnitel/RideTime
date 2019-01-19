@@ -44,9 +44,15 @@ exports[`renders correctly 1`] = `
       }
     }
   >
-    <Text>
-      Rides: 4 | Riders: 7
-    </Text>
+    <RiderCount
+      count={7}
+      fontStyle={
+        Object {
+          "fontSize": 53.5,
+        }
+      }
+      size={66.5}
+    />
   </View>
 </View>
 `;
