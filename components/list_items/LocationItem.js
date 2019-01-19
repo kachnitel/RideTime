@@ -8,13 +8,13 @@ export default class LocationItem extends React.Component {
   render () {
     return (
       <View style={{ ...styles.listItem, ...this.props.style }}>
-        <View style={styles.titleRow}>
-          <Text style={{ ...styles.name, ...this.props.style }}>
-            {this.props.location.name}
-          </Text>
+        <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
+          {this.props.location.name}
+        </Text>
+        <View style={styles.lowerRow}>
           <LocationDifficulties difficulties={this.props.location.difficulties} />
+          <LocationItemDetail location={this.props.location} />
         </View>
-        <LocationItemDetail location={this.props.location} />
       </View>
     )
   }
@@ -22,14 +22,16 @@ export default class LocationItem extends React.Component {
 
 const styles = StyleSheet.create({
   name: {
-    fontSize: Layout.window.hp(2.75)
+    fontSize: Layout.window.hp(2.75),
+    fontWeight: 'bold',
+    flex: 1
   },
   listItem: {
     height: Layout.window.hp(15),
     paddingVertical: Layout.window.hp(1.5),
     paddingHorizontal: Layout.window.wp(4)
   },
-  titleRow: {
+  lowerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between'
   }

@@ -10,6 +10,18 @@ exports[`renders correctly 1`] = `
     }
   }
 >
+  <Text
+    numberOfLines={1}
+    style={
+      Object {
+        "flex": 1,
+        "fontSize": 36.5,
+        "fontWeight": "bold",
+      }
+    }
+  >
+    Place
+  </Text>
   <View
     style={
       Object {
@@ -18,15 +30,6 @@ exports[`renders correctly 1`] = `
       }
     }
   >
-    <Text
-      style={
-        Object {
-          "fontSize": 36.5,
-        }
-      }
-    >
-      Place
-    </Text>
     <LocationDifficulties
       difficulties={
         Array [
@@ -35,25 +38,25 @@ exports[`renders correctly 1`] = `
         ]
       }
     />
-  </View>
-  <View
-    style={
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-        "justifyContent": "flex-end",
-      }
-    }
-  >
-    <RiderCount
-      count={6}
-      fontStyle={
+    <View
+      style={
         Object {
-          "fontSize": 40,
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
         }
       }
-      size={53.5}
-    />
+    >
+      <RiderCount
+        count={6}
+        fontStyle={
+          Object {
+            "fontSize": 40,
+          }
+        }
+        size={53.5}
+      />
+    </View>
   </View>
 </View>
 `;
