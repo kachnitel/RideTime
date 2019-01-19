@@ -16,7 +16,6 @@ exports[`renders correctly 1`] = `
       Object {
         "flex": 1,
         "fontSize": 36.5,
-        "fontWeight": "bold",
       }
     }
   >
