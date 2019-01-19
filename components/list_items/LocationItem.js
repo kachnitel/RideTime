@@ -1,7 +1,8 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Layout from '../../constants/Layout'
-import LocationDifficulties from '../location/LocationDifficulties';
+import LocationDifficulties from '../location/LocationDifficulties'
+import LocationItemDetail from '../LocationItemDetail'
 
 export default class LocationItem extends React.Component {
   render () {
@@ -13,7 +14,7 @@ export default class LocationItem extends React.Component {
           </Text>
           <LocationDifficulties difficulties={this.props.location.difficulties} />
         </View>
-        <Text>Location Details</Text>
+        <LocationItemDetail location={this.props.location} />
       </View>
     )
   }

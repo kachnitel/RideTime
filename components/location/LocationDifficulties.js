@@ -22,7 +22,7 @@ export default class LocationDifficulties extends React.Component {
 }
 
 LocationDifficulties.propTypes = {
-  difficulties: PropTypes.array
+  difficulties: PropTypes.arrayOf(PropTypes.number)
 }
 
 LocationDifficulties.defaultProps = {

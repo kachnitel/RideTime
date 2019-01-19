@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { FlatList, Text, TouchableHighlight, View } from 'react-native'
 import LocationItem from '../list_items/LocationItem'
+import PropTypes from 'prop-types'
 
 export default class LocationList extends Component {
   locationItemTouchable = ({ item }) => (
@@ -20,4 +21,9 @@ export default class LocationList extends Component {
       </View>
     )
   }
+}
+
+LocationList.propTypes = {
+  locations: PropTypes.array,
+  onLocationPress: PropTypes.func
 }

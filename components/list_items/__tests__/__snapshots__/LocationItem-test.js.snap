@@ -36,8 +36,17 @@ exports[`renders correctly 1`] = `
       }
     />
   </View>
-  <Text>
-    Location Details
-  </Text>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text>
+      Rides: 4 | Riders: 7
+    </Text>
+  </View>
 </View>
 `;
