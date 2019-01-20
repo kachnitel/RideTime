@@ -3,11 +3,11 @@ import { StyleSheet, View, TextInput, Text, Button } from 'react-native'
 import SelectDifficulty from '../components/new_ride/SelectDifficulty'
 import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
+import EditDescription from '../components/new_ride/EditDescription';
 
 /**
  * Setup ride here - difficulty, trails, friends, ...
  *
- * TODO: Done button
  * TODO: Add a little "edit" icon at TextInput end
  *
  * @export
@@ -31,14 +31,16 @@ export default class CreateRideScreen extends React.Component {
             value={this.props.navigation.getParam('name') + ' ride'}
           />
           <SelectDifficulty onSelect={this.setDifficulty} style={styles.selectDifficulty} />
-          <View style={styles.textItemContainer}>
-            <Text style={styles.textItemTitle}>Description</Text>
-            <TextInput style={styles.textInput} placeholder='Ride description' multiline />
-          </View>
-          <View style={styles.textItemContainer}>
-            <Text style={styles.textItemTitle}>Trails planned</Text>
-            <TextInput style={styles.textInput} placeholder='Mashiter, 50 more shades, Rupert' multiline />
-          </View>
+          <EditDescription
+            title='Description'
+            placeholder='Ride description'
+            style={styles.textItemContainer}
+          />
+          <EditDescription
+            title='Trails planned'
+            placeholder='Mashiter, 50 more shades, Rupert'
+            style={styles.textItemContainer}
+          />
         </View>
         <Button
           title='Create ride'
@@ -68,18 +70,6 @@ const styles = StyleSheet.create({
   textItemContainer: {
     backgroundColor: Colors.darkBackground,
     padding: Layout.window.hp(1.5)
-  },
-  textItemTitle: {
-    color: '#fff',
-    fontSize: Layout.window.hp(3),
-    paddingBottom: Layout.window.hp(1)
-  },
-  textInput: {
-    backgroundColor: '#fff',
-    borderColor: Colors.darkBackground,
-    borderWidth: 1,
-    padding: Layout.window.hp(1),
-    borderRadius: Layout.window.hp(1)
   },
   screen: {
     flex: 1
