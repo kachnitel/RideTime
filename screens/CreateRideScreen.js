@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, TextInput, Text, Button } from 'react-native'
+import { StyleSheet, View, TextInput, Button } from 'react-native'
 import SelectDifficulty from '../components/new_ride/SelectDifficulty'
 import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
@@ -45,7 +45,8 @@ export default class CreateRideScreen extends React.Component {
         <Button
           title='Create ride'
           onPress={() => console.log('save')}
-          color={Colors.tintColor} />
+          color={Colors.tintColor}
+        />
       </View>
     )
   }
