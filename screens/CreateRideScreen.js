@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, TextInput, Text } from 'react-native'
+import { StyleSheet, View, TextInput, Text, Button } from 'react-native'
 import SelectDifficulty from '../components/new_ride/SelectDifficulty'
 import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
@@ -23,21 +23,27 @@ export default class CreateRideScreen extends React.Component {
 
   render () {
     return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.rideNameInput}
-          placeholder='Ride name'
-          value={this.props.navigation.getParam('name') + ' ride'}
-        />
-        <SelectDifficulty onSelect={this.setDifficulty} style={styles.selectDifficulty} />
-        <View style={styles.textItemContainer}>
-          <Text style={styles.textItemTitle}>Description</Text>
-          <TextInput style={styles.textInput} placeholder='Ride description' multiline />
+      <View style={styles.screen}>
+        <View style={styles.container}>
+          <TextInput
+            style={styles.rideNameInput}
+            placeholder='Ride name'
+            value={this.props.navigation.getParam('name') + ' ride'}
+          />
+          <SelectDifficulty onSelect={this.setDifficulty} style={styles.selectDifficulty} />
+          <View style={styles.textItemContainer}>
+            <Text style={styles.textItemTitle}>Description</Text>
+            <TextInput style={styles.textInput} placeholder='Ride description' multiline />
+          </View>
+          <View style={styles.textItemContainer}>
+            <Text style={styles.textItemTitle}>Trails planned</Text>
+            <TextInput style={styles.textInput} placeholder='Mashiter, 50 more shades, Rupert' multiline />
+          </View>
         </View>
-        <View style={styles.textItemContainer}>
-          <Text style={styles.textItemTitle}>Trails planned</Text>
-          <TextInput style={styles.textInput} placeholder='Mashiter, 50 more shades, Rupert' multiline />
-        </View>
+        <Button
+          title='Create ride'
+          onPress={() => console.log('save')}
+          color={Colors.tintColor} />
       </View>
     )
   }
@@ -72,6 +78,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderColor: Colors.darkBackground,
     borderWidth: 1,
-    padding: Layout.window.hp(1)
+    padding: Layout.window.hp(1),
+    borderRadius: Layout.window.hp(1)
+  },
+  screen: {
+    flex: 1
   }
 })
