@@ -5,8 +5,17 @@ import { AreaMap } from '../components/AreaMap'
 import { CreateRideButton } from '../components/CreateRideButton'
 import RidesList from '../components/lists/RidesList'
 import LocationsProvider from '../providers/LocationsProvider'
-import RidesProvider from '../providers/RidesProvider'
+import { getRides } from '../providers/RidesProvider'
 
+/**
+ * TODO:
+ * get rides for user - public + friends/groups allowed
+ * filter by location (when a location is selected)
+ *
+ * @export
+ * @class RidesScreen
+ * @extends {React.Component}
+ */
 export default class RidesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -29,8 +38,15 @@ export default class RidesScreen extends React.Component {
 
     this.state = {
       locations: LocationsProvider.getLocations(),
-      rides: RidesProvider.getRides()
+      rides: []
     }
+  }
+
+  componentDidMount () {
+    getRides()
+      .then((result) => {
+        this.setState({ rides: result })
+      })
   }
 
   render () {
