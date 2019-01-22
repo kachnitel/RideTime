@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 import RideTimeIcon from './icons/RideTimeIcon'
 import PropTypes from 'prop-types'
-import CountIcon from './icons/CountIcon';
+import CountIcon from './icons/CountIcon'
 
 export default class RiderCount extends React.Component {
   render () {

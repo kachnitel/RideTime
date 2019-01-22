@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Button } from 'react-native'
 import Colors from '../constants/Colors'
-import CreateRide from '../components/new_ride/CreateRide';
+import CreateRide from '../components/new_ride/CreateRide'
 
 /**
  * Setup ride here - difficulty, trails, friends, ...

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import RideItem from '../list_items/RideItem'
-import AlternatingStyleList from './AlternatingStyleList';
+import AlternatingStyleList from './AlternatingStyleList'
 
 export default class RidesList extends Component {
   itemComponent = function (item, style) {

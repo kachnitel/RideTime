@@ -43,6 +43,8 @@ export default class RidesScreen extends React.Component {
   }
 
   componentDidMount () {
+    // TODO: Is the screen the best place to load data?
+    // rides/locations/... should be available to AreaMap as well as RidesList
     getRides()
       .then((result) => {
         this.setState({ rides: result })
