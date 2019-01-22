@@ -5,76 +5,121 @@ HOST: http://polls.apiblueprint.org/
 
 Polls is a simple API allowing consumers to view polls and vote in them.
 
-## Questions Collection [/questions]
+# Group Rides
 
-### List All Questions [GET]
+## Ride [/rides/{id}]
+A ride contains information about start time, location, members etc..
+
++ Parameters
+    + id (string)
+
+        The ID of the desired ride.
+
++ Attributes (Ride Base)
+    + id: 250FF (string, required)
+    + created: 1415203908 (number) - Time stamp
+    + riders: [ 165, 266, 6554 ] (array[number]) - List of rider IDs
+    + location (Location Base) - Location detail
+    
+### Ride detail [GET]
 
 + Response 200 (application/json)
+    + Attributes (Ride)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+## Rides [/rides{?limit}]
 
-### Create a New Question [POST]
+### List Rides [GET]
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 100 items.
+
+        + Default: `10`
+
++ Response 200 (application/json)
+    + Attributes (array[Ride])
+
+### Create a New Ride [POST]
 
 + Request (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
+    + Attributes (Ride Base)
+        + location_id: 3 (number)
 
 + Response 201 (application/json)
+    + Attributes (Ride)
 
     + Headers
 
-            Location: /questions/2
+            Location: /rides/2
+        
+# Group Locations 
 
-    + Body
+## Locations [/locations{?limit}]
 
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
+### List all Locations [GET]
+Returns a list of nearby locations.
+
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 100 items.
+
+        + Default: `10`
+
++ Response 200 (application/json)
+    + Attributes (array[Location])
+
+
+## Location [/locations/{id}{?difficulties}{?activity}]
+Location describes its name and gps, difficulties in area (optional?), optionally with activity information in the location
+
++ Attributes (Location Base)
+    + difficulties: [1,3] (array[number])
+        + Members
+            + 0 - easy/green
+            + 1 - intermediate/blue
+            + 2 - difficult/black
+            + 3 - expert/double black 
+            + 4 - other
+    
+
+### Location detail [GET]
+
++ Parameters
+    + id (string)
+
+        The ID of the desired location.
+        
+    + difficulties (boolean)
+    
+        Whether to include difficulties in list
+        
+    + activity (boolean)
+    
+        Return what's going on in location
+            
++ Response 200 (application/json)
+    + Attributes (Location)
+    
+# Data Structures
+
+## Ride Base (object)
++ start_time: 1548143726 (number)
++ name: Alice lake ride (string)
++ description: Some sentence (string)
++ route: From here to there (string)
++ difficulty: 2 (enum[number])
+    + Members
+        + 0 - easy/green
+        + 1 - intermediate/blue
+        + 2 - difficult/black
+        + 3 - expert/double black 
+        + 4 - other
+        
+## Location Base (object)
++ id: 1 (number, required)
++ name: Alice lake (string)
++ gps: [49.775666, -123.123307] (array[number])
