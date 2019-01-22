@@ -3,6 +3,21 @@ HOST: http://polls.apiblueprint.org/
 
 # RideTime
 
+# Group Riders
+
+## Rider detail [/riders/{id}]
+
++ Parameters
+    + id (string)
+
+        The ID of the rider.
+    
+### Rider detail [GET]
+
++ Response 200 (application/json)
+    + Attributes (Rider)
+        + rides (array[Ride])
+
 # Group Rides
 
 ## Ride [/rides/{id}]
@@ -122,3 +137,13 @@ Location describes its name and gps, difficulties in area (optional?), optionall
 ## Location GPS (array)
 - 49.775666 (number)
 - `-123.123307` (number)
+
+## Rider (object)
++ id (number, required)
++ name (string, required)
++ email (string, required)
++ phone (number)
++ friends (array[number])
++ profile_pic (string)
++ cover_pic (string)
++ home_locations (array[Location Base]) - location IDs
