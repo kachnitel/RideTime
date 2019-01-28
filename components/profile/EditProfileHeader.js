@@ -16,6 +16,7 @@ export default class EditProfileHeader extends React.Component {
     }
   }
 
+  // FIXME: the TextInput should be a component
   handleUpdateName = (val) => {
     this.handleUpdate(val, 'name')
   }
