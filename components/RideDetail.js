@@ -32,7 +32,7 @@ export class RideDetail extends Component {
         <View style={styles.detailListItem} >
           {/* Could be a list with difficulty icons/colors if we obtain a trail database
           or user could insert trail name and difficulty for each */}
-          <RideDescription title='Planned Route' text={this.props.ride.plannedRoute} />
+          <RideDescription title='Planned Route' text={this.props.ride.route} />
         </View>
         <View style={styles.detailListItem} >
           <RideDescription title='Description' text={this.props.ride.description} />

@@ -32,7 +32,7 @@ exports[`renders correctly 1`] = `
           1,
         ],
         "name": "Joey's Alice lake lap",
-        "plannedRoute": "Some trails",
+        "route": "Some trails",
         "terrain": "trail",
       }
     }
@@ -76,7 +76,7 @@ exports[`renders correctly with style 1`] = `
           1,
         ],
         "name": "Joey's Alice lake lap",
-        "plannedRoute": "Some trails",
+        "route": "Some trails",
         "terrain": "trail",
       }
     }

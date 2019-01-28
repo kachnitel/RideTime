@@ -13,7 +13,7 @@ let testRide = {
   'locationGps': [49.775666, -123.123307],
   'members': [1],
   'terrain': 'trail',
-  'plannedRoute': 'Some trails'
+  'route': 'Some trails'
 }
 
 it('renders correctly', () => {
