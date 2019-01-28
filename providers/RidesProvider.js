@@ -8,7 +8,7 @@ const api = (typeof manifest.packagerOpts === `object`) && manifest.packagerOpts
   : `api.example.com`
 
 export const getRides = () => {
-  let url = 'http://' + api + '/ridetime/app.php'
+  let url = 'http://' + api + '/ridetime/?q=rides'
   console.log('Getting rides', url)
   return fetch(url)
     .then((res) => {
