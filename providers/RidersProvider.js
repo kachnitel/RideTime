@@ -1,14 +1,12 @@
-// TODO fetch from DB
-// Probably change it to ProfileProvider
-// as it gets used in different places
-import users from '../userList.json'
+import { get } from './Connection'
 
 export default class RidersProvider {
-  static getUsers () { // only static until we're actually pulling data
-    return (users)
-  }
+  // TODO: Needs to accept parameter w/ ID list
+  // getUsers = () => {
+  //   return get('users')
+  // }
 
-  static getUser (id) {
-    return (RidersProvider.getUsers()[id])
+  getUser = (id) => {
+    return get('users/' + id)
   }
 }

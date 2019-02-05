@@ -13,9 +13,15 @@ import TouchableRiderItem from '../list_items/TouchableRiderItem'
  * @extends {Component}
  */
 export class FriendList extends Component {
+  constructor () {
+    super()
+    this.state = { riders: [] }
+    this.ridersProvider = new RidersProvider()
+  }
+
   render () {
     let riders = this.props.userIds ? this.props.userIds.map((userId) => {
-      return RidersProvider.getUser(userId)
+      return this.ridersProvider.getUser(userId)
     }) : []
 
     return (

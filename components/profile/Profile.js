@@ -10,17 +10,34 @@ import { Favourites } from './Favourites'
 import Layout from '../../constants/Layout'
 
 export default class Profile extends React.Component {
-  render () {
-    let upcomingRides = RidesProvider.getRides()
+  constructor () {
+    super()
+    this.state = {
+      upcomingRides: [],
+      loadingRides: true
+    }
+    this.ridesProvider = new RidesProvider()
+  }
 
+  async componentDidMount () {
+    let upcomingRides = await this.ridesProvider.getRides()
+    this.setState({
+      upcomingRides: upcomingRides,
+      loadingRides: false
+    })
+  }
+
+  render () {
     return (
       <ScrollView>
         <ProfileHeader user={this.props.user} />
         <FriendList userIds={[1, 2, 3]} style={styles.friendList} />
-        <CountHeader number={upcomingRides.length} style={styles.title}>Upcoming Rides</CountHeader>
+        <CountHeader number={this.state.upcomingRides.length} style={styles.title}>Upcoming Rides</CountHeader>
+        { !this.state.loadingRides &&
         <View style={styles.rideItemContainer}>
-          <RideItem ride={upcomingRides[0]} style={styles.rideItem} />
+          <RideItem ride={this.state.upcomingRides[0]} style={styles.rideItem} />
         </View>
+        }
         <Favourites text={this.props.user.favourites} style={styles.title} />
       </ScrollView>
     )

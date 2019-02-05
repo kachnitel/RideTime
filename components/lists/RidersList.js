@@ -5,6 +5,12 @@ import Header from '../Header'
 import TouchableRiderItem from '../list_items/TouchableRiderItem'
 
 export class RidersList extends Component {
+  constructor () {
+    super()
+    this.state = { riders: [] }
+    this.ridersProvider = new RidersProvider()
+  }
+
   riderItemTouchable = ({ item }) => (
     <TouchableRiderItem
       rider={item}
@@ -13,8 +19,8 @@ export class RidersList extends Component {
   )
 
   render () {
-    let riders = this.props.riderIds ? this.props.riderIds.map((userId) => {
-      return RidersProvider.getUser(userId)
+    let riders = this.props.riderIds ? this.props.riderIds.map((user) => {
+      return this.ridersProvider.getUser(user.id)
     }) : []
 
     return (

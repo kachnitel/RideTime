@@ -5,7 +5,7 @@ import { AreaMap } from '../components/AreaMap'
 import { CreateRideButton } from '../components/CreateRideButton'
 import RidesList from '../components/lists/RidesList'
 import LocationsProvider from '../providers/LocationsProvider'
-import { getRides } from '../providers/RidesProvider'
+import RidesProvider from '../providers/RidesProvider'
 
 /**
  * TODO:
@@ -45,7 +45,8 @@ export default class RidesScreen extends React.Component {
   componentDidMount () {
     // TODO: Is the screen the best place to load data?
     // rides/locations/... should be available to AreaMap as well as RidesList
-    getRides()
+    let provider = new RidesProvider()
+    provider.getRides()
       .then((result) => {
         this.setState({ rides: result })
       })
