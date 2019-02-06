@@ -12,7 +12,10 @@ export const get = (path) => {
   console.log('GET ', url)
   return fetch(url)
     .then((res) => {
-      return res.json()
+      if (res.ok) {
+        return res.json()
+      }
+      throw new Error('Network response was not ok.')
     })
     .catch((error) => {
       Alert.alert('Network error')
