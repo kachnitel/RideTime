@@ -19,13 +19,33 @@ export default class CreateRideScreen extends React.Component {
     }
   };
 
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      ride: null
+    }
+  }
+
+  updateRide = (val) => {
+    this.setState({ ride: val })
+  }
+
+  saveRide = () => {
+    console.log('Save:', this.state.ride)
+  }
+
   render () {
     return (
       <View style={styles.screen}>
-        <CreateRide navigation={this.props.navigation} style={styles.container} />
+        <CreateRide
+          navigation={this.props.navigation}
+          style={styles.container}
+          updateCallback={this.updateRide}
+        />
         <Button
           title='Create ride'
-          onPress={() => console.log('save')}
+          onPress={this.saveRide}
           color={Colors.tintColor}
         />
       </View>

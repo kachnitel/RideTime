@@ -9,7 +9,7 @@ export default class EditDescription extends React.Component {
     return (
       <View {...this.props}>
         <Text style={styles.textItemTitle}>{this.props.title}</Text>
-        <TextInput style={styles.textInput} placeholder={this.props.placeholder} multiline />
+        <TextInput {...this.props} style={styles.textInput} placeholder={this.props.placeholder} multiline />
       </View>
     )
   }

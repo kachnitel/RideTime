@@ -10,22 +10,31 @@ export default class CreateRide extends React.Component {
     super(props)
 
     this.state = {
-      rideName: this.props.navigation.getParam('name') + ' ride',
-      rideDescription: '',
-      rideRoute: ''
+      ride: {
+        name: this.props.navigation.getParam('name') + ' ride',
+        description: '',
+        route: ''
+      }
     }
   }
 
-  onChangeName (rideName) {
-    this.setState({ rideName })
+  handleUpdateName = (rideName) => {
+    this.handleUpdate(rideName, 'name')
   }
 
-  onChangeDescription (rideDescription) {
-    this.setState({ rideDescription })
+  handleUpdateDescription = (rideDescription) => {
+    this.handleUpdate(rideDescription, 'description')
   }
 
-  onChangeRoute (rideRoute) {
-    this.setState({ rideRoute })
+  handleUpdateRoute = (rideRoute) => {
+    this.handleUpdate(rideRoute, 'route')
+  }
+
+  handleUpdate = async (val, key) => {
+    await this.setState(
+      (prevState) => ({ ride: { ...prevState.ride, [key]: val } })
+    )
+    this.props.updateCallback(this.state.ride)
   }
 
   render () {
@@ -34,21 +43,23 @@ export default class CreateRide extends React.Component {
         <TextInput
           style={styles.rideNameInput}
           placeholder='Ride name'
-          value={this.state.rideName}
-          onChangeText={value => this.onChangeName(value)}
+          value={this.state.ride.name}
+          onChangeText={this.handleUpdateName}
         />
         <SelectDifficulty onSelect={this.setDifficulty} style={styles.selectDifficulty} />
         <EditDescription
           title='Description'
           placeholder='Ride description'
+          value={this.state.ride.description}
           style={styles.textItemContainer}
-          onChangeText={value => this.onChangeDescription(value)}
+          onChangeText={this.handleUpdateDescription}
         />
         <EditDescription
-          title='Trails planned'
+          title='Planned route'
           placeholder='Mashiter, 50 more shades, Rupert'
+          value={this.state.ride.route}
           style={styles.textItemContainer}
-          onChangeText={value => this.onChangeRoute(value)}
+          onChangeText={this.handleUpdateRoute}
         />
       </View>
     )
