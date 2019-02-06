@@ -10,7 +10,10 @@ export default class RidesList extends Component {
 
   onItemPress = (item) => this.props.navigation.push(
     'RideDetail',
-    item
+    {
+      id: item.id,
+      title: item.name
+    }
   )
 
   render () {

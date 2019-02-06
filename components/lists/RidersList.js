@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
-// import RidersProvider from '../../providers/RidersProvider'
 import Header from '../Header'
 import TouchableRiderItem from '../list_items/TouchableRiderItem'
 

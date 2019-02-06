@@ -1,10 +1,11 @@
 import React from 'react'
 import Profile from '../components/profile/Profile'
+import RidersProvider from '../providers/RidersProvider'
 
-// TODO OwnProfileScreen, title just Profile or My Profile
-// w/ little name under in sidebar eventually
-// TODO Configure back button behavior to go back to ride
-// Can use 'key' to go to the right card in stack
+// TODO: OwnProfileScreen, title just Profile or My Profile
+// w/ little name under in drawer eventually
+// TODO: Configure back button behavior to go back to ride
+// Can use 'key' to go to the right card in stack if set
 export default class PublicProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -18,9 +19,26 @@ export default class PublicProfileScreen extends React.Component {
     }
   };
 
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      user: null
+    }
+  }
+
+  componentDidMount () {
+    let provider = new RidersProvider()
+    let userId = this.props.navigation.getParam('id')
+    provider.getUser(userId)
+      .then((result) => {
+        this.setState({ user: result })
+      })
+  }
+
   render () {
     return (
-      <Profile user={this.props.navigation.state.params} />
+      this.state.user && <Profile user={this.state.user} />
     )
   }
 }

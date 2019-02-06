@@ -4,4 +4,8 @@ export default class RidesProvider {
   getRides = () => {
     return get('events')
   }
+
+  getRide = (id) => {
+    return get('events/' + id)
+  }
 }

@@ -1,19 +1,35 @@
 import React from 'react'
 import { RideDetail } from '../components/RideDetail'
+import RidesProvider from '../providers/RidesProvider'
 
 export default class RideDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam('name', 'NO NAME RIDE')
+      title: navigation.getParam('title', 'NO NAME RIDE')
     }
   };
 
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      ride: null
+    }
+  }
+
+  componentDidMount () {
+    let provider = new RidesProvider()
+    let rideId = this.props.navigation.getParam('id')
+    provider.getRide(rideId)
+      .then((result) => {
+        this.setState({ ride: result })
+      })
+  }
+
   render () {
     return (
-      // Not sure if I like using state.props rather than getParam
-      // but getParam can't get me the whole 'ride' object,
-      // if I pass the object wrapped then I can't get it for nav.title
-      <RideDetail ride={this.props.navigation.state.params} navigation={this.props.navigation} />
+      // FIXME: loading?
+      this.state.ride && <RideDetail ride={this.state.ride} navigation={this.props.navigation} />
     )
   }
 }
