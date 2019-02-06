@@ -23,7 +23,7 @@ export class RideDetail extends Component {
           <RideItem ride={this.props.ride} />
         </View>
         <View style={styles.detailListItem} >
-          <RidersList riderIds={this.props.ride.members} navigation={this.props.navigation} />
+          <RidersList riders={this.props.ride.members} navigation={this.props.navigation} />
         </View>
         <View style={styles.detailListItem} >
           {/* TODO click to show confirmation to navigate */}
