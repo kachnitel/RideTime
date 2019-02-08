@@ -1,4 +1,4 @@
-import { get } from './Connection'
+import { get, post } from './Connection'
 
 export default class RidesProvider {
   getRides = () => {
@@ -7,5 +7,9 @@ export default class RidesProvider {
 
   getRide = (id) => {
     return get('events/' + id)
+  }
+
+  addRide = (data) => {
+    return post('events', data)
   }
 }
