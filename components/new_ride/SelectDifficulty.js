@@ -57,6 +57,10 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
   selectedOutlineStyle: {
-    color: Colors.iconColor
+    color: Colors.iconColor,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    borderRadius: Layout.window.hp(1),
+    borderColor: 'rgba(255,255,255,0.5)',
+    borderWidth: 1
   }
 })
