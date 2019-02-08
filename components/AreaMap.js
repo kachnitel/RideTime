@@ -23,13 +23,13 @@ export class AreaMap extends React.Component {
   constructor (props) {
     super(props)
 
-    // use last known position
+    // TODO: use last known position
     // get from cache
     let location = [49.355813, -123.036993]
 
     this.state = {
       currentLocation: location,
-      locations: props.locations
+      locations: []
     }
   }
 
@@ -66,16 +66,25 @@ export class AreaMap extends React.Component {
 
     if (locations !== null &&
       locations !== undefined &&
-      locations.length > 0 &&
-      prevState.locations !== locations
+      locations.length > 0
     ) {
       console.log('Map update locations')
-      this.setState({ locations: locations })
+      let locationMarkers = locations.map((location) => {
+        return {
+          ...location,
+          icon: '⃤',
+          size: [10, 10]
+        }
+      })
 
+      if (JSON.stringify(prevState.locations) !== JSON.stringify(locationMarkers)) {
+        this.setState({ locations: locationMarkers })
+      }
       // sendobject = {locations: [...locations]};
       // this.webViewLeaflet.sendMessage(sendobject);
     }
 
+    // FIXME: prevState? There's no props.currentLocation
     if (prevProps.currentLocation !== this.props.currentLocation) {
       this.updateLocation()
     }

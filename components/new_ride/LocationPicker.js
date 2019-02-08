@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
 import Layout from '../../constants/Layout'
-import LocationsProvider from '../../providers/LocationsProvider'
 import LocationList from '../lists/LocationList'
 import MapButton from './MapButton'
 
@@ -24,7 +23,7 @@ export default class LocationPicker extends Component {
       </View>
       {/* TODO filter locations by TextInput above */}
       <LocationList
-        locations={LocationsProvider.getLocations()}
+        locations={this.props.locations}
         onLocationPress={this.goToRideConfig} />
     </View>
   }

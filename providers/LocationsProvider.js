@@ -1,9 +1,9 @@
-// TODO fetch from DB, filter by visible frame https://github.com/reggie3/react-native-webview-leaflet/blob/8e5830fc23d121db19f51d7dea872d553c253ba5/web/mapComponent.js#L307
-import locations from '../locationsList.json'
+// TODO: filter by visible frame https://github.com/reggie3/react-native-webview-leaflet/blob/8e5830fc23d121db19f51d7dea872d553c253ba5/web/mapComponent.js#L307
+import { get } from './Connection'
 
 export default class LocationsProvider {
   /*
-     * Define ranges of lat/lon if map provides corners
+     * TODO: Define ranges of lat/lon if map provides corners
      * otherwise let server figure it out
      * @param latMin
      * @param latMax
@@ -11,26 +11,7 @@ export default class LocationsProvider {
      * @param lonMax
      *
      */
-  static getLocations () { // only static until we're actually pulling data
-    return (LocationsProvider.convertFromList(locations.markers))
-  }
-
-  static convertFromList (locations) {
-    return (
-      locations.map((location) => {
-        return {
-          id: location.nid,
-          key: location.nid,
-          name: location.name,
-          coords: [
-            parseFloat(location.lat.replace(',', '.')),
-            parseFloat(location.lon.replace(',', '.'))
-          ],
-          icon: '⃤',
-          size: [10, 10],
-          difficulties: location.difficulties
-        }
-      })
-    )
+  getLocations = () => {
+    return get('locations')
   }
 }

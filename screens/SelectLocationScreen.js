@@ -14,15 +14,27 @@ export default class SelectLocationScreen extends React.Component {
     super(props)
 
     this.state = {
-      locations: LocationsProvider.getLocations()
+      locations: []
     }
+  }
+
+  componentDidMount () {
+    let locationsProvider = new LocationsProvider()
+    locationsProvider.getLocations()
+      .then((result) => {
+        this.setState({ locations: result })
+      })
   }
 
   render () {
     return (
       <View style={styles.container}>
         {/* Select location here */}
-        <LocationPicker style={styles.locationPicker} navigation={this.props.navigation} />
+        <LocationPicker
+          style={styles.locationPicker}
+          navigation={this.props.navigation}
+          locations={this.state.locations}
+        />
         {/* Next button? */}
       </View>
     )
