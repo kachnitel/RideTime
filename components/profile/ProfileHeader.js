@@ -18,7 +18,7 @@ export default class ProfileHeader extends React.Component {
             <ProfilePicture rider={this.props.user} size={profilePictureSize} />
           </View>
           <Text style={styles.name}>{this.props.user.name}</Text>
-          <Text style={styles.city}>{this.props.user.city}</Text>
+          <Text style={styles.hometown}>{this.props.user.hometown}</Text>
           <ProfileSummary style={styles.profileSummary} user={this.props.user} />
         </View>
       </View>

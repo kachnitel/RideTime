@@ -22,7 +22,7 @@ export default class EditProfileHeader extends React.Component {
   }
 
   handleUpdateCity = (val) => {
-    this.handleUpdate(val, 'city')
+    this.handleUpdate(val, 'hometown')
   }
 
   handleUpdate = async (val, key) => {
@@ -65,10 +65,10 @@ export default class EditProfileHeader extends React.Component {
             placeholderTextColor='gray'
           />
           <TextInput
-            style={styles.city}
+            style={styles.hometown}
             underlineColorAndroid='white'
             textAlign={'center'}
-            value={this.state.user.city}
+            value={this.state.user.hometown}
             onChangeText={this.handleUpdateCity}
             placeholder='Hometown, BC'
             placeholderTextColor='gray'

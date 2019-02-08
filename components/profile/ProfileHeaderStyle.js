@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     padding: Layout.window.hp(2),
     paddingBottom: Layout.window.hp(0.5)
   },
-  city: {
+  hometown: {
     color: '#fff',
     fontSize: Layout.window.hp(2.5)
   },
