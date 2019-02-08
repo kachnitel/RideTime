@@ -28,8 +28,8 @@ export default class CreateRideScreen extends React.Component {
         description: '',
         route: '',
         locationId: this.props.navigation.getParam('id'),
-        difficulty: null
-        // datetime
+        difficulty: null,
+        datetime: null
         // terrain
         // TODO: createdBy will be added from logged in user
       }

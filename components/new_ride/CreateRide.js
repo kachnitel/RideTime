@@ -4,6 +4,8 @@ import SelectDifficulty from './SelectDifficulty'
 import EditDescription from './EditDescription'
 import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
+import EditDateTime from './EditDateTime'
+import Moment from 'moment'
 
 export default class CreateRide extends React.Component {
   constructor (props) {
@@ -24,6 +26,10 @@ export default class CreateRide extends React.Component {
 
   handleUpdateRoute = (rideRoute) => {
     this.handleUpdate(rideRoute, 'route')
+  }
+
+  handleUpdateDateTime = (datetime) => {
+    this.handleUpdate((new Moment(datetime)), 'datetime')
   }
 
   setDifficulty = (d) => {
@@ -48,22 +54,30 @@ export default class CreateRide extends React.Component {
         />
         <SelectDifficulty
           onSelect={this.setDifficulty}
-          style={styles.selectDifficulty}
+          style={{ ...styles.itemContainer, ...styles.selectDifficulty }}
           selected={this.state.ride.difficulty}
+          title='Tap to select difficulty'
         />
         <EditDescription
           title='Description'
           placeholder='Ride description'
           value={this.state.ride.description}
-          style={styles.textItemContainer}
+          containerStyle={styles.itemContainer}
           onChangeText={this.handleUpdateDescription}
         />
         <EditDescription
           title='Planned route'
           placeholder='Mashiter, 50 more shades, Rupert'
           value={this.state.ride.route}
-          style={styles.textItemContainer}
+          containerStyle={styles.itemContainer}
           onChangeText={this.handleUpdateRoute}
+        />
+        <EditDateTime
+          value={this.state.ride.datetime && this.state.ride.datetime.format('llll')}
+          onSelect={this.handleUpdateDateTime}
+          title='Select date and time'
+          containerStyle={styles.itemContainer}
+          placeholder='Tap to select'
         />
       </View>
     )
@@ -72,8 +86,7 @@ export default class CreateRide extends React.Component {
 
 const styles = StyleSheet.create({
   selectDifficulty: {
-    height: Layout.window.wp(17),
-    backgroundColor: Colors.darkBackground
+    height: Layout.window.wp(23)
   },
   rideNameInput: {
     alignSelf: 'stretch',
@@ -82,7 +95,7 @@ const styles = StyleSheet.create({
     padding: Layout.window.hp(1.5),
     width: 'auto'
   },
-  textItemContainer: {
+  itemContainer: {
     backgroundColor: Colors.darkBackground,
     padding: Layout.window.hp(1.5)
   }

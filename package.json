@@ -27,10 +27,12 @@
   },
   "dependencies": {
     "expo": "^31.0.2",
+    "moment": "^2.24.0",
     "prop-types": "^15.6.2",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-action-button": "^2.8.5",
+    "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-responsive-screen": "^1.2.0",
     "react-native-webview-leaflet": "^4.1.22",
     "react-navigation": "^3.0.9"
