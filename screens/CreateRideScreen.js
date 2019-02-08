@@ -23,7 +23,12 @@ export default class CreateRideScreen extends React.Component {
     super(props)
 
     this.state = {
-      ride: null
+      ride: {
+        name: this.props.navigation.getParam('name') + ' ride',
+        description: '',
+        route: '',
+        locationId: this.props.navigation.getParam('id')
+      }
     }
   }
 
@@ -32,6 +37,7 @@ export default class CreateRideScreen extends React.Component {
   }
 
   saveRide = () => {
+    // TODO: Validate, post
     console.log('Save:', this.state.ride)
   }
 
@@ -39,7 +45,7 @@ export default class CreateRideScreen extends React.Component {
     return (
       <View style={styles.screen}>
         <CreateRide
-          navigation={this.props.navigation}
+          ride={this.state.ride}
           style={styles.container}
           updateCallback={this.updateRide}
         />

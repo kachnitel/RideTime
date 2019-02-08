@@ -10,11 +10,7 @@ export default class CreateRide extends React.Component {
     super(props)
 
     this.state = {
-      ride: {
-        name: this.props.navigation.getParam('name') + ' ride',
-        description: '',
-        route: ''
-      }
+      ride: this.props.ride
     }
   }
 
