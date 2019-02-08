@@ -26,6 +26,10 @@ export default class CreateRide extends React.Component {
     this.handleUpdate(rideRoute, 'route')
   }
 
+  setDifficulty = (d) => {
+    this.handleUpdate(d, 'difficulty')
+  }
+
   handleUpdate = async (val, key) => {
     await this.setState(
       (prevState) => ({ ride: { ...prevState.ride, [key]: val } })
@@ -42,7 +46,11 @@ export default class CreateRide extends React.Component {
           value={this.state.ride.name}
           onChangeText={this.handleUpdateName}
         />
-        <SelectDifficulty onSelect={this.setDifficulty} style={styles.selectDifficulty} />
+        <SelectDifficulty
+          onSelect={this.setDifficulty}
+          style={styles.selectDifficulty}
+          selected={this.state.ride.difficulty}
+        />
         <EditDescription
           title='Description'
           placeholder='Ride description'

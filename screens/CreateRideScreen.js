@@ -27,7 +27,8 @@ export default class CreateRideScreen extends React.Component {
         name: this.props.navigation.getParam('name') + ' ride',
         description: '',
         route: '',
-        locationId: this.props.navigation.getParam('id')
+        locationId: this.props.navigation.getParam('id'),
+        difficulty: null
       }
     }
   }

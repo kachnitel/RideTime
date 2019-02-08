@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, TouchableNativeFeedback } from 'react-native'
 import DifficultyIcon from '../icons/DifficultyIcon'
 import OutlineIcon from '../icons/OutlineIcon'
 import Layout from '../../constants/Layout'
+import Colors from '../../constants/Colors'
 
 /**
  * TODO:
@@ -13,16 +14,29 @@ import Layout from '../../constants/Layout'
  * @extends {Component}
  */
 export default class SelectDifficulty extends Component {
+  setDifficulty (d) {
+    this.props.onSelect(d)
+  }
+
   render () {
     return (
       <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
-        {Object.keys(DifficultyIcon.icons).map(Number).map((i) =>
-          <View style={styles.iconContainer} key={i}>
-            <OutlineIcon outlineStyle={styles.outlineStyle}>
-              <DifficultyIcon d={i} size={Layout.window.wp(10)} />
+        {Object.keys(DifficultyIcon.icons).map(Number).map((d) => {
+          let isSelected = d === this.props.selected
+
+          return <TouchableNativeFeedback
+            style={styles.iconContainer}
+            key={d}
+            onPress={() => this.setDifficulty(d)}
+          >
+            <OutlineIcon
+              outlineStyle={isSelected ? styles.selectedOutlineStyle : styles.outlineStyle}
+              thickness={isSelected ? 1.1 : 1.075} // FIXME: style doesn't change w/o this
+            >
+              <DifficultyIcon d={d} size={Layout.window.wp(10)} />
             </OutlineIcon>
-          </View>
-        )}
+          </TouchableNativeFeedback>
+        })}
       </View>
     )
   }
@@ -41,5 +55,8 @@ const styles = StyleSheet.create({
   },
   outlineStyle: {
     color: '#fff'
+  },
+  selectedOutlineStyle: {
+    color: Colors.iconColor
   }
 })
