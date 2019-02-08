@@ -20,11 +20,13 @@ export default class Profile extends React.Component {
   }
 
   async componentDidMount () {
-    let upcomingRide = await this.ridesProvider.getRide(this.props.user.events[0].id)
-    this.setState({
-      upcomingRide: upcomingRide,
-      loadingRide: false
-    })
+    if (this.props.user.events.length > 0) {
+      let upcomingRide = await this.ridesProvider.getRide(this.props.user.events[0].id)
+      this.setState({
+        upcomingRide: upcomingRide,
+        loadingRide: false
+      })
+    }
   }
 
   render () {
