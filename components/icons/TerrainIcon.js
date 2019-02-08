@@ -31,7 +31,9 @@ export default class TerrainIcon extends RideTimeIcon {
   iconColor = Colors.iconColor;
 
   render () {
-    let Icon = this.props.terrain ? TerrainIcon.icons[this.props.terrain].icon : TerrainIcon.icons[this.defaultTerrain].icon
+    let Icon = this.props.terrain && TerrainIcon.icons[this.props.terrain] !== undefined
+      ? TerrainIcon.icons[this.props.terrain].icon
+      : TerrainIcon.icons[this.defaultTerrain].icon
     if (Icon === undefined) {
       throw new Error('Terrain Icon ' + this.props.terrain + ' is not defined')
     }

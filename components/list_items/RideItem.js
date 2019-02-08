@@ -7,8 +7,8 @@ export default class RideItem extends React.Component {
   render () {
     return (
       <View style={{ ...styles.listItem, ...this.props.style }}>
-        <Text style={{ ...styles.name, ...this.props.style }}>
-          {this.props.ride.name}
+        <Text style={{ ...styles.title, ...this.props.style }}>
+          {this.props.ride.title}
         </Text>
         <RideItemDetail
           ride={this.props.ride}
@@ -20,7 +20,7 @@ export default class RideItem extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  name: {
+  title: {
     fontSize: Layout.window.hp(2.75)
   },
   listItem: {

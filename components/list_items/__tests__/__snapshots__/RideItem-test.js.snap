@@ -31,9 +31,9 @@ exports[`renders correctly 1`] = `
         "members": Array [
           1,
         ],
-        "name": "Joey's Alice lake lap",
         "route": "Some trails",
         "terrain": "trail",
+        "title": "Joey's Alice lake lap",
       }
     }
   />
@@ -75,9 +75,9 @@ exports[`renders correctly with style 1`] = `
         "members": Array [
           1,
         ],
-        "name": "Joey's Alice lake lap",
         "route": "Some trails",
         "terrain": "trail",
+        "title": "Joey's Alice lake lap",
       }
     }
     style={

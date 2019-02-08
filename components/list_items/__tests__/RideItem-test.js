@@ -7,7 +7,7 @@ import RideItem from '../RideItem'
 jest.mock('../../RideItemDetail', () => 'RideItemDetail')
 
 let testRide = {
-  'name': "Joey's Alice lake lap",
+  'title': "Joey's Alice lake lap",
   'difficulty': 1,
   'location': 'Alice Lake',
   'locationGps': [49.775666, -123.123307],

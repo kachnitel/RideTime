@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, ScrollView, Button, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, ScrollView, Button, KeyboardAvoidingView, ToastAndroid } from 'react-native'
 import Colors from '../constants/Colors'
 import CreateRide from '../components/new_ride/CreateRide'
 import { Header } from 'react-navigation'
+import RidesProvider from '../providers/RidesProvider'
 
 /**
  * Setup ride here - difficulty, trails, friends, ...
@@ -25,13 +26,14 @@ export default class CreateRideScreen extends React.Component {
 
     this.state = {
       ride: {
-        name: this.props.navigation.getParam('name') + ' ride',
+        title: this.props.navigation.getParam('name') + ' ride',
         description: '',
         route: '',
         locationId: this.props.navigation.getParam('id'),
         difficulty: null,
         datetime: null,
-        terrain: null
+        terrain: null,
+        createdBy: 1
         // TODO: createdBy will be added from logged in user
       }
     }
@@ -42,8 +44,17 @@ export default class CreateRideScreen extends React.Component {
   }
 
   saveRide = () => {
-    // TODO: Validate, post
-    console.log('Save:', this.state.ride)
+    // TODO: Validate
+    let ridesProvider = new RidesProvider()
+    ridesProvider.addRide(this.state.ride)
+      .then((result) => {
+        ToastAndroid.show('Ride created.', ToastAndroid.SHORT)
+
+        this.props.navigation.navigate(
+          'RideDetail',
+          { id: result.id }
+        )
+      })
   }
 
   render () {

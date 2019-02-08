@@ -17,8 +17,8 @@ export default class CreateRide extends React.Component {
     }
   }
 
-  handleUpdateName = (rideName) => {
-    this.handleUpdate(rideName, 'name')
+  handleUpdateName = (rideTitle) => {
+    this.handleUpdate(rideTitle, 'title')
   }
 
   handleUpdateDescription = (rideDescription) => {
@@ -52,9 +52,9 @@ export default class CreateRide extends React.Component {
     return (
       <View {...this.props}>
         <TextInput
-          style={styles.rideNameInput}
+          style={styles.rideTitleInput}
           placeholder='Ride name'
-          value={this.state.ride.name}
+          value={this.state.ride.title}
           onChangeText={this.handleUpdateName}
         />
         <SelectDifficulty
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   selectTerrain: {
     height: Layout.window.wp(28)
   },
-  rideNameInput: {
+  rideTitleInput: {
     alignSelf: 'stretch',
     fontWeight: 'bold',
     fontSize: Layout.window.hp(3.5),
