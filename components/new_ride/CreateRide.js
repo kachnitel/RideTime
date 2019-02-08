@@ -58,6 +58,13 @@ export default class CreateRide extends React.Component {
           selected={this.state.ride.difficulty}
           title='Tap to select difficulty'
         />
+        <EditDateTime
+          value={this.state.ride.datetime && this.state.ride.datetime.format('llll')}
+          onSelect={this.handleUpdateDateTime}
+          title='Select date and time'
+          containerStyle={styles.itemContainer}
+          placeholder='Tap to select'
+        />
         <EditDescription
           title='Description'
           placeholder='Ride description'
@@ -71,13 +78,6 @@ export default class CreateRide extends React.Component {
           value={this.state.ride.route}
           containerStyle={styles.itemContainer}
           onChangeText={this.handleUpdateRoute}
-        />
-        <EditDateTime
-          value={this.state.ride.datetime && this.state.ride.datetime.format('llll')}
-          onSelect={this.handleUpdateDateTime}
-          title='Select date and time'
-          containerStyle={styles.itemContainer}
-          placeholder='Tap to select'
         />
       </View>
     )
