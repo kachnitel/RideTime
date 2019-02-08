@@ -1,7 +1,8 @@
 import React from 'react'
-import { StyleSheet, View, Button } from 'react-native'
+import { StyleSheet, ScrollView, Button, KeyboardAvoidingView } from 'react-native'
 import Colors from '../constants/Colors'
 import CreateRide from '../components/new_ride/CreateRide'
+import { Header } from 'react-navigation'
 
 /**
  * Setup ride here - difficulty, trails, friends, ...
@@ -47,18 +48,24 @@ export default class CreateRideScreen extends React.Component {
 
   render () {
     return (
-      <View style={styles.screen}>
-        <CreateRide
-          ride={this.state.ride}
-          style={styles.container}
-          updateCallback={this.updateRide}
-        />
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={Header.HEIGHT + 24}
+        style={styles.screen}
+        behavior='padding'
+      >
+        <ScrollView style={styles.container}>
+          <CreateRide
+            ride={this.state.ride}
+            style={styles.rideContainer}
+            updateCallback={this.updateRide}
+          />
+        </ScrollView>
         <Button
           title='Create ride'
           onPress={this.saveRide}
           color={Colors.tintColor}
         />
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -67,6 +74,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
     // paddingTop: Constants.statusBarHeight // TODO enable once header is disabled
+  },
+  rideContainer: {
+    flex: 1
   },
   screen: {
     flex: 1

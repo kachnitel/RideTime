@@ -6,7 +6,7 @@ import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
 import EditDateTime from './EditDateTime'
 import Moment from 'moment'
-import SelectTerrain from './SelectTerrain';
+import SelectTerrain from './SelectTerrain'
 
 export default class CreateRide extends React.Component {
   constructor (props) {
