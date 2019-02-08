@@ -11,7 +11,7 @@ export default class Title extends React.Component {
 const styles = StyleSheet.create({
   textItemTitle: {
     color: '#fff',
-    fontSize: Layout.window.hp(3),
+    fontSize: Layout.window.hp(2.5),
     paddingBottom: Layout.window.hp(1)
   }
 })

@@ -11,18 +11,27 @@ import RideTimeIcon from './RideTimeIcon'
  *  terrain: [trail, road]
  */
 export default class TerrainIcon extends RideTimeIcon {
-  bikes = {
-    trail: SvgBikeMountain,
-    downhill: SvgBikeDownhill,
-    road: SvgBikeRoad
+  static icons = {
+    trail: {
+      name: 'Trail',
+      icon: SvgBikeMountain
+    },
+    downhill: {
+      name: 'Downhill',
+      icon: SvgBikeDownhill
+    },
+    road: {
+      name: 'Road',
+      icon: SvgBikeRoad
+    }
   };
 
-  defaultBike = 'road';
+  defaultTerrain = 'road';
 
   iconColor = Colors.iconColor;
 
   render () {
-    let Icon = this.props.terrain ? this.bikes[this.props.terrain] : this.bikes[this.defaultBike]
+    let Icon = this.props.terrain ? TerrainIcon.icons[this.props.terrain].icon : TerrainIcon.icons[this.defaultTerrain].icon
     if (Icon === undefined) {
       throw new Error('Terrain Icon ' + this.props.terrain + ' is not defined')
     }

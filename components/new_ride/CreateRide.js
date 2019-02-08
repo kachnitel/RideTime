@@ -6,6 +6,7 @@ import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
 import EditDateTime from './EditDateTime'
 import Moment from 'moment'
+import SelectTerrain from './SelectTerrain';
 
 export default class CreateRide extends React.Component {
   constructor (props) {
@@ -32,8 +33,12 @@ export default class CreateRide extends React.Component {
     this.handleUpdate((new Moment(datetime)), 'datetime')
   }
 
-  setDifficulty = (d) => {
+  handleUpdateDifficulty = (d) => {
     this.handleUpdate(d, 'difficulty')
+  }
+
+  handleUpdateTerrain = (t) => {
+    this.handleUpdate(t, 'terrain')
   }
 
   handleUpdate = async (val, key) => {
@@ -53,7 +58,7 @@ export default class CreateRide extends React.Component {
           onChangeText={this.handleUpdateName}
         />
         <SelectDifficulty
-          onSelect={this.setDifficulty}
+          onSelect={this.handleUpdateDifficulty}
           style={{ ...styles.itemContainer, ...styles.selectDifficulty }}
           selected={this.state.ride.difficulty}
           title='Tap to select difficulty'
@@ -64,6 +69,12 @@ export default class CreateRide extends React.Component {
           title='Select date and time'
           containerStyle={styles.itemContainer}
           placeholder='Tap to select'
+        />
+        <SelectTerrain
+          onSelect={this.handleUpdateTerrain}
+          style={{ ...styles.itemContainer, ...styles.selectTerrain }}
+          selected={this.state.ride.terrain}
+          title='What kind of a ride?'
         />
         <EditDescription
           title='Description'
@@ -88,6 +99,9 @@ const styles = StyleSheet.create({
   selectDifficulty: {
     height: Layout.window.wp(23)
   },
+  selectTerrain: {
+    height: Layout.window.wp(28)
+  },
   rideNameInput: {
     alignSelf: 'stretch',
     fontWeight: 'bold',
@@ -97,6 +111,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     backgroundColor: Colors.darkBackground,
-    padding: Layout.window.hp(1.5)
+    paddingVertical: Layout.window.hp(1),
+    paddingHorizontal: Layout.window.wp(3)
   }
 })
