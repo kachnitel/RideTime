@@ -13,6 +13,14 @@ import PropTypes from 'prop-types'
  * @extends {Component}
  */
 export default class AlternatingStyleList extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      refreshing: false
+    }
+  }
+
   touchableItem = ({ item, index }) => (
     <TouchableHighlight onPress={() => this.props.onItemPress(item)}>
       {/* View here isolates TouchableHighlight's style from itemComponent
@@ -34,6 +42,8 @@ export default class AlternatingStyleList extends Component {
           renderItem={this.touchableItem}
           ListEmptyComponent={this.props.emptyComponent}
           keyExtractor={(item, index) => 'index_' + index.toString()}
+          onRefresh={this.props.onRefresh}
+          refreshing={this.state.refreshing}
         />
       </View>
     )

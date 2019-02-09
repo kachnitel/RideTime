@@ -43,18 +43,24 @@ export default class RidesScreen extends React.Component {
   }
 
   componentDidMount () {
-    // TODO: Is the screen the best place to load data?
-    // rides/locations/... should be available to AreaMap as well as RidesList
-    let ridesProvider = new RidesProvider()
-    ridesProvider.getRides()
-      .then((result) => {
-        this.setState({ rides: result })
-      })
+    this.loadRides()
 
     let locationsProvider = new LocationsProvider()
     locationsProvider.getLocations()
       .then((result) => {
         this.setState({ locations: result })
+      })
+  }
+
+  onRidesRefresh = () => {
+    this.loadRides()
+  }
+
+  loadRides () {
+    let ridesProvider = new RidesProvider()
+    ridesProvider.getRides()
+      .then((result) => {
+        this.setState({ rides: result })
       })
   }
 
@@ -69,6 +75,7 @@ export default class RidesScreen extends React.Component {
           <RidesList
             rides={this.state.rides}
             navigation={this.props.navigation}
+            onRefresh={this.onRidesRefresh}
           />
         </View>
 

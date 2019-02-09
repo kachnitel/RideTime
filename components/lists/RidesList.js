@@ -24,6 +24,7 @@ export default class RidesList extends Component {
           itemComponent={this.itemComponent}
           emptyComponent={<Text>No rides nearby, start one!</Text>}
           onItemPress={this.onItemPress}
+          onRefresh={this.props.onRefresh}
         />
       </View>
     )
