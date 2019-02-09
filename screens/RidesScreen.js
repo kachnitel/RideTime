@@ -50,6 +50,14 @@ export default class RidesScreen extends React.Component {
       .then((result) => {
         this.setState({ locations: result })
       })
+
+    this.subs = [
+      this.props.navigation.addListener('didFocus', this.componentDidFocus)
+    ]
+  }
+
+  componentDidFocus = () => {
+    this.loadRides()
   }
 
   onRidesRefresh = () => {
