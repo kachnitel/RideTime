@@ -34,7 +34,8 @@ export class AreaMap extends React.Component {
   }
 
   updateLocation = async () => {
-    // TODO Async!!
+    // TODO: Async!!, follow
+    // FIXME: location should be passed in as a prop and the fn in own gps location class
     // https://github.com/reggie3/react-native-webview-leaflet/blob/8e5830fc23d121db19f51d7dea872d553c253ba5/App.js#L54
     await navigator.geolocation.getCurrentPosition(
       (loc) => {
@@ -51,6 +52,7 @@ export class AreaMap extends React.Component {
       centerPosition: [...this.state.currentLocation]
       // TODO center once location is established
       // and then make available to parent once moved on map
+      // SEE ABOVE
       // Use inverse data flow to update parent so the list
       // of rides can reflect what the map shows
       // https://reactjs.org/docs/thinking-in-react.html#step-5-add-inverse-data-flow
@@ -72,21 +74,13 @@ export class AreaMap extends React.Component {
       let locationMarkers = locations.map((location) => {
         return {
           ...location,
-          icon: '⃤',
-          size: [10, 10]
+          icon: '⬤'
         }
       })
 
       if (JSON.stringify(prevState.locations) !== JSON.stringify(locationMarkers)) {
         this.setState({ locations: locationMarkers })
       }
-      // sendobject = {locations: [...locations]};
-      // this.webViewLeaflet.sendMessage(sendobject);
-    }
-
-    // FIXME: prevState? There's no props.currentLocation
-    if (prevProps.currentLocation !== this.props.currentLocation) {
-      this.updateLocation()
     }
   }
 
