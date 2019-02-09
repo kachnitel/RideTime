@@ -17,30 +17,6 @@ export default class CreateRide extends React.Component {
     }
   }
 
-  handleUpdateName = (rideTitle) => {
-    this.handleUpdate(rideTitle, 'title')
-  }
-
-  handleUpdateDescription = (rideDescription) => {
-    this.handleUpdate(rideDescription, 'description')
-  }
-
-  handleUpdateRoute = (rideRoute) => {
-    this.handleUpdate(rideRoute, 'route')
-  }
-
-  handleUpdateDateTime = (datetime) => {
-    this.handleUpdate((new Moment(datetime)), 'datetime')
-  }
-
-  handleUpdateDifficulty = (d) => {
-    this.handleUpdate(d, 'difficulty')
-  }
-
-  handleUpdateTerrain = (t) => {
-    this.handleUpdate(t, 'terrain')
-  }
-
   handleUpdate = async (val, key) => {
     await this.setState(
       (prevState) => ({ ride: { ...prevState.ride, [key]: val } })
@@ -55,23 +31,23 @@ export default class CreateRide extends React.Component {
           style={styles.rideTitleInput}
           placeholder='Ride name'
           value={this.state.ride.title}
-          onChangeText={this.handleUpdateName}
+          onChangeText={(text) => this.handleUpdate(text, 'title')}
         />
         <SelectDifficulty
-          onSelect={this.handleUpdateDifficulty}
+          onSelect={(d) => this.handleUpdate(d, 'difficulty')}
           style={{ ...styles.itemContainer, ...styles.selectDifficulty }}
           selected={this.state.ride.difficulty}
           title='Tap to select difficulty'
         />
         <EditDateTime
           value={this.state.ride.datetime && this.state.ride.datetime.format('llll')}
-          onSelect={this.handleUpdateDateTime}
+          onSelect={(dt) => this.handleUpdate(new Moment(dt), 'datetime')}
           title='Select date and time'
           containerStyle={styles.itemContainer}
           placeholder='Tap to select'
         />
         <SelectTerrain
-          onSelect={this.handleUpdateTerrain}
+          onSelect={(t) => this.handleUpdate(t, 'terrain')}
           style={{ ...styles.itemContainer, ...styles.selectTerrain }}
           selected={this.state.ride.terrain}
           title='What kind of a ride?'
@@ -81,14 +57,14 @@ export default class CreateRide extends React.Component {
           placeholder='Ride description'
           value={this.state.ride.description}
           containerStyle={styles.itemContainer}
-          onChangeText={this.handleUpdateDescription}
+          onChangeText={(desc) => this.handleUpdate(desc, 'description')}
         />
         <EditDescription
           title='Planned route'
           placeholder='Mashiter, 50 more shades, Rupert'
           value={this.state.ride.route}
           containerStyle={styles.itemContainer}
-          onChangeText={this.handleUpdateRoute}
+          onChangeText={(route) => this.handleUpdate(route, 'route')}
         />
       </View>
     )
