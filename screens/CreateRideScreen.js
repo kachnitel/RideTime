@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, ScrollView, Button, KeyboardAvoidingView, ToastAndroid } from 'react-native'
 import Colors from '../constants/Colors'
 import CreateRide from '../components/new_ride/CreateRide'
-import { Header } from 'react-navigation'
+import { Header, StackActions, NavigationActions } from 'react-navigation'
 import RidesProvider from '../providers/RidesProvider'
 
 /**
@@ -50,10 +50,14 @@ export default class CreateRideScreen extends React.Component {
       .then((result) => {
         ToastAndroid.show('Ride created.', ToastAndroid.SHORT)
 
-        this.props.navigation.navigate(
-          'RideDetail',
-          { id: result.id }
-        )
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({
+            routeName: 'RideDetail',
+            params: { id: result.id }
+          })]
+        })
+        this.props.navigation.dispatch(resetAction)
       })
   }
 
