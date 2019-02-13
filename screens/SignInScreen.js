@@ -1,31 +1,27 @@
 /* global fetch */
-import { AuthSession } from 'expo'
+import { AuthSession, SecureStore } from 'expo'
 import React from 'react'
 import {
   Alert,
   Button,
   StyleSheet,
   Text,
-  View,
-  AsyncStorage
+  View
 } from 'react-native'
-import { auth0ClientId, auth0Domain } from '../secrets'
+import {
+  auth0ClientId,
+  auth0Domain,
+  auth0Audience,
+  auth0RedirectUri
+} from '../secrets'
 // import RidersProvider from '../providers/RidersProvider'
 // import jwtDecoder from 'jwt-decode'
 
 /*
-  You need to swap out the Auth0 client id and domain with
-  the one from your Auth0 client.
-
-  In your Auth0 clent, you need to also add a url to your authorized redirect urls.
-  For this application, I added https://auth.expo.io/@community/auth0-example because
-  I am signed in as the 'community' account on Expo and the slug for this app is 'auth0-example'.
-  You can open this app in the Expo client and check your logs for 'Redirect URL (add this to Auth0)'
-  to see what URL to add if the above is confusing.
-
+  TODO:
   If you use Facebook through Auth0, be sure to follow this guide: https://auth0.com/docs/connections/social/facebook
 */
-export default class App extends React.Component {
+export default class SignInScreen extends React.Component {
   state = {
     username: undefined
   }
@@ -40,22 +36,23 @@ export default class App extends React.Component {
       authUrl: `${auth0Domain}/authorize` + this.toQueryString({
         client_id: auth0ClientId,
         response_type: 'code',
-        scope: 'openid profile email offline_access', // email
+        scope: 'openid profile email offline_access',
         redirect_uri: redirectUrl,
         code_challenge_method: 'S256',
         code_verifier: codeVerifier,
-        state: oAuthState
+        state: oAuthState,
+        audience: auth0Audience
       })
     })
 
-    console.log('Result:', result)
+    console.log('Result /authorize:', result)
     if (result.type === 'success') {
       if (oAuthState !== result.params.state) {
         throw new Error('OAuth state mismatch')
       }
 
       let token = await this.getOAuthToken(codeVerifier, result.params.code)
-      this.handleParams(token)
+      // this.handleParams(token)
     } else {
       console.log('Result type: ', result.type)
     }
@@ -73,12 +70,12 @@ export default class App extends React.Component {
         client_id: auth0ClientId,
         code_verifier: codeVerifier,
         code: code,
-        redirect_uri: 'https://auth.expo.io/@kachnitel/RideTime'
+        redirect_uri: auth0RedirectUri
       })
     })
     const content = await rawResponse.json()
 
-    console.log('Token: ', content)
+    console.log('Result /oauth/token: ', content)
     return content
   }
 
@@ -95,16 +92,13 @@ export default class App extends React.Component {
       refresh_token: refreshToken
     } = responseObj
 
-    console.log(idToken)
+    SecureStore.setItemAsync('access_token', accessToken)
+    SecureStore.setItemAsync('refresh_token', refreshToken)
 
     // TODO:
-    // idToken stored in state
+    // idToken stored in "global" state
+    // fetch basic user info and store in RN AsyncStorage & "global" state
 
-    // const decodedToken = jwtDecoder(idToken)
-    // const username = decodedToken.name
-    // console.log('Decoded token:', decodedToken)
-    // this.setState({ username })
-    // await AsyncStorage.setItem('userToken', 'abc')
     // let provider = new RidersProvider(idToken)
     // // TODO:
     // provider.signIn()

@@ -15,7 +15,8 @@ export default class AuthLoadingScreen extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    // await AsyncStorage.clear()
+    // TODO: Refresh if refresh_token is stored,
+    // get new credentials and go to App
     let signedInUserId = await AsyncStorage.getItem('signedInUserId')
     let route = signedInUserId ? 'App' : 'Auth'
 
