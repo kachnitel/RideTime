@@ -7,12 +7,18 @@ const api = (typeof manifest.packagerOpts === `object`) && manifest.packagerOpts
   ? manifest.debuggerHost.split(`:`).shift().concat(`:80`)
   : `api.example.com`
 
-export const get = (path) => {
+export const get = (path, apiToken) => {
   let url = 'http://' + api + '/ridetime/' + path
 
   console.log('GET ', url)
 
-  return fetch(url)
+  return fetch(url, {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + apiToken
+    }
+  })
     .then((res) => {
       if (res.ok) {
         return res.json()
@@ -25,7 +31,7 @@ export const get = (path) => {
     })
 }
 
-export const post = (path, data) => {
+export const post = (path, apiToken, data) => {
   let url = 'http://' + api + '/ridetime/' + path
   let dataJson = JSON.stringify(data)
 
@@ -35,7 +41,8 @@ export const post = (path, data) => {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + apiToken
     },
     body: dataJson
   })

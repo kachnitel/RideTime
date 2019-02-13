@@ -12,6 +12,6 @@ export default class LocationsProvider {
      *
      */
   getLocations = () => {
-    return get('locations')
+    return get('api/locations')
   }
 }

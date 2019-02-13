@@ -2,14 +2,14 @@ import { get, post } from './Connection'
 
 export default class RidesProvider {
   getRides = () => {
-    return get('events')
+    return get('api/events')
   }
 
   getRide = (id) => {
-    return get('events/' + id)
+    return get('api/events/' + id)
   }
 
   addRide = (data) => {
-    return post('events', data)
+    return post('api/events', data)
   }
 }

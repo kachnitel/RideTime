@@ -44,7 +44,7 @@ export default class OwnProfileScreen extends React.Component {
     super(props)
 
     this.state = {
-      user: RidersProvider.getUser(1),
+      user: null,
       updatedUser: null,
       editing: false
     }
@@ -71,6 +71,13 @@ export default class OwnProfileScreen extends React.Component {
   }
 
   componentDidMount () {
+    let provider = new RidersProvider()
+    let userId = this.props.navigation.getParam('id')
+    provider.getUser(userId)
+      .then((result) => {
+        this.setState({ user: result })
+      })
+
     this.props.navigation.setParams({
       editProfile: this._editProfile,
       editing: this.state.editing
