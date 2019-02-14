@@ -66,7 +66,7 @@ export default class SignInScreen extends React.Component {
           // this.setState({ user: result })
         })
 
-      // fetch updated user from DB and store in RN AsyncStorage & "global" state
+      // fetch updated user (result above) from DB and store in RN AsyncStorage & "global" state
       // await AsyncStorage.setItem('signedInUserId', '1') // Use SecureStorage?
       // this.props.navigation.navigate('App')
     } else {
