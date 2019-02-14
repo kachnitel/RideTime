@@ -14,7 +14,7 @@ import {
   auth0Audience,
   auth0RedirectUri
 } from '../secrets'
-// import RidersProvider from '../providers/RidersProvider'
+import RidersProvider from '../providers/RidersProvider'
 // import jwtDecoder from 'jwt-decode'
 
 /*
@@ -45,16 +45,31 @@ export default class SignInScreen extends React.Component {
       })
     })
 
-    console.log('Result /authorize:', result)
+    // console.log('Result /authorize:', result)
     if (result.type === 'success') {
       if (oAuthState !== result.params.state) {
         throw new Error('OAuth state mismatch')
       }
 
       let token = await this.getOAuthToken(codeVerifier, result.params.code)
-      // this.handleParams(token)
+      this.handleParams(token)
+      let userInfo = await this.getUserInfo(token.access_token)
+
+      // console.log(token, userInfo)
+      // TODO:
+      // fetch user UPSERT to DB;
+      let provider = new RidersProvider(token.access_token)
+      provider.signIn(userInfo)
+        .then((result) => {
+          console.log('API signin result', result)
+          // this.setState({ user: result })
+        })
+
+      // fetch updated user from DB and store in RN AsyncStorage & "global" state
+      // await AsyncStorage.setItem('signedInUserId', '1') // Use SecureStorage?
+      // this.props.navigation.navigate('App')
     } else {
-      console.log('Result type: ', result.type)
+      console.log('Auth0 login Result type: ', result.type)
     }
   }
 
@@ -75,7 +90,7 @@ export default class SignInScreen extends React.Component {
     })
     const content = await rawResponse.json()
 
-    console.log('Result /oauth/token: ', content)
+    // console.log('Result /oauth/token: ', content)
     return content
   }
 
@@ -87,27 +102,26 @@ export default class SignInScreen extends React.Component {
     }
 
     const {
-      id_token: idToken,
+      // id_token: idToken,
       access_token: accessToken,
       refresh_token: refreshToken
     } = responseObj
 
     SecureStore.setItemAsync('access_token', accessToken)
     SecureStore.setItemAsync('refresh_token', refreshToken)
+  }
 
-    // TODO:
-    // idToken stored in "global" state
-    // fetch basic user info and store in RN AsyncStorage & "global" state
+  getUserInfo = async (apiToken) => {
+    let response = await fetch(`${auth0Domain}/userinfo`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + apiToken
+      }
+    })
+    let user = await response.json()
 
-    // let provider = new RidersProvider(idToken)
-    // // TODO:
-    // provider.signIn()
-    //   .then((result) => {
-    //     console.log('signin result', result)
-    //     // this.setState({ user: result })
-    //   })
-    // await AsyncStorage.setItem('signedInUserId', '1') // Use SecureStorage?
-    // this.props.navigation.navigate('App')
+    return user
   }
 
   /**

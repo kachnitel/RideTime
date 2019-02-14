@@ -1,4 +1,4 @@
-import { get } from './Connection'
+import { get, post } from './Connection'
 
 export default class RidersProvider {
   constructor (apiToken) {
@@ -9,7 +9,7 @@ export default class RidersProvider {
     return get('api/users/' + id, this.apiToken)
   }
 
-  signIn = () => {
-    return get('signin', this.apiToken)
+  signIn = (data) => {
+    return post('signin', this.apiToken, data)
   }
 }
