@@ -15,6 +15,7 @@ import {
   auth0RedirectUri
 } from '../secrets'
 import RidersProvider from '../providers/RidersProvider'
+import randomatic from 'randomatic'
 // import jwtDecoder from 'jwt-decode'
 
 /*
@@ -28,8 +29,8 @@ export default class SignInScreen extends React.Component {
 
   loginWithAuth0 = async () => {
     const redirectUrl = AuthSession.getRedirectUrl()
-    const oAuthState = Math.random().toString(36).substring(7)
-    const codeVerifier = '3puUjFaYWg3T1NDTDQtcW1ROUY5YXlwalNoc0hhakxifmZHag' // FIXME: random string 43+char
+    const oAuthState = randomatic('Aa0', 7)
+    const codeVerifier = randomatic('Aa0', 50)
 
     // console.log(`Redirect URL (add this to Auth0): ${redirectUrl}`)
     const result = await AuthSession.startAsync({
