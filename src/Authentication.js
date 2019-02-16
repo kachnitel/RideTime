@@ -44,13 +44,12 @@ export default class Authentication {
       this.handleParams(token)
       let userInfo = await this.getUserInfo(token.access_token)
 
-      // console.log(token, userInfo)
-      // TODO:
-      // fetch user UPSERT to DB;
       let provider = new RidersProvider(token.access_token)
       provider.signIn(userInfo)
         .then((result) => {
           console.log('API signin result', result)
+          // TODO:
+          // Save to global state
           // this.setState({ user: result })
         })
 
@@ -79,7 +78,7 @@ export default class Authentication {
     })
     const content = await rawResponse.json()
 
-    // console.log('Result /oauth/token: ', content)
+    console.log('Result /oauth/token: ', content)
     return content
   }
 
