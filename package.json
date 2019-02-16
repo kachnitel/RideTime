@@ -9,7 +9,7 @@
     "eject": "expo eject",
     "test": "node_modules/.bin/jest",
     "test:coverage": "npm test -- --coverage",
-    "test:badges": "npm run test:coverage  && jest-coverage-badges",
+    "test:badges": "npm run test:coverage && jest-coverage-badges",
     "standard": "standard",
     "standard:fix": "standard --fix",
     "lint": "standard || exit 0"
