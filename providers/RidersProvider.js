@@ -1,4 +1,4 @@
-import { get, post } from './Connection'
+import { get } from './Connection'
 
 export default class RidersProvider {
   /**
@@ -21,14 +21,4 @@ export default class RidersProvider {
   getUser = (id) => {
     return get('api/users/' + id)
   }
-
-  /**
-   * POST /signin
-   * @return Promise (getUser)
-   *
-   * @memberof RidersProvider
-   */
-  // signIn = (data) => {
-  //   return post('signin', data)
-  // }
 }

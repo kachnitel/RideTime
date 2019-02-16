@@ -1,6 +1,5 @@
 /* global fetch */
-import { AuthSession, SecureStore } from 'expo'
-import { Alert } from 'react-native'
+import { AuthSession } from 'expo'
 import {
   auth0ClientId,
   auth0Domain,
@@ -17,27 +16,13 @@ export default class Authentication {
   /**
    *
    * @return Promise
-   * [
-   *  {
-   *   "id": 71,
-   *   "name": "Ondřej Váňa",
-   *   "hometown": null,
-   *   "events": [],
-   *   "friends": [],
-   *   "level": null,
-   *   "preferred": null,
-   *   "favourites": null,
-   *   "picture": "https://lh5.googleusercontent.com/-txLCi973qWQ/AAAAAAAAAAI/AAAAAAAANuk/BpCrITncuGE/photo.jpg",
-   *   "email": "vana.ondrej@gmail.com"
-   *  },
-   *  {
+   * {
    *   "access_token":"eyJz93a...k4laUWw",
    *   "refresh_token":"GEbRxBN...edjnXbL",
    *   "id_token":"eyJ0XAi...4faeEoQ",
    *   "token_type":"Bearer",
    *   "expires_in":86400
-   *  }
-   * ]
+   * }
    *
    * @memberof Authentication
    */
@@ -102,26 +87,37 @@ export default class Authentication {
   }
 
   /**
-   * FIXME: unused
-   * Writes access & refresh tokens to SecureStorage
+   * Exchange refresh_token for access_token
+   *
+   * POST https://YOUR_AUTH0_DOMAIN/oauth/token
+   * @return Promise
+   * {
+   *   "access_token": "eyJ...MoQ",
+   *   "expires_in": 86400,
+   *   "scope": "openid offline_access",
+   *   "id_token": "eyJ...0NE",
+   *   "token_type": "Bearer"
+   * }
    *
    * @memberof Authentication
    */
-  handleParams = async (responseObj) => {
-    if (responseObj.error) {
-      Alert.alert('Error', responseObj.error_description ||
-      'something went wrong while logging in')
-      return
-    }
+  refreshToken = async (refreshToken) => {
+    const rawResponse = await fetch(`${auth0Domain}/oauth/token`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        grant_type: 'refresh_token',
+        client_id: auth0ClientId,
+        refresh_token: refreshToken
+      })
+    })
+    const content = await rawResponse.json()
 
-    const {
-      // id_token: idToken,
-      access_token: accessToken,
-      refresh_token: refreshToken
-    } = responseObj
-
-    SecureStore.setItemAsync('access_token', accessToken)
-    SecureStore.setItemAsync('refresh_token', refreshToken)
+    // console.log('Result(refresh) /oauth/token: ', content)
+    return content
   }
 
   /**

@@ -9,6 +9,7 @@ import {
 import Authentication from '../src/Authentication'
 import { observer, inject } from 'mobx-react'
 import { getHeaders, apiUrl } from '../providers/Connection'
+import { SecureStore } from 'expo'
 
 export default
 @inject('UserStore')
@@ -24,6 +25,9 @@ class SignInScreen extends React.Component {
     let userInfo = await auth.getUserInfo(token.access_token)
 
     let user = await this.getUser(token.access_token, userInfo)
+
+    // On successful login save tokens
+    SecureStore.setItemAsync('refreshToken', token.refresh_token)
 
     this.props.UserStore.updateAccessToken(token.access_token)
     this.props.UserStore.updateUserId(user.id)
