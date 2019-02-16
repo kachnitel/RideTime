@@ -4,6 +4,8 @@ import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
 import Layout from './constants/Layout'
 import AppContainer from './navigation/AppNavigator'
 import PropTypes from 'prop-types'
+import { Provider, observer } from 'mobx-react'
+import UserStore from './stores/UserStore.mobx'
 
 /**
  * Set default Text style
@@ -16,7 +18,9 @@ Text.render = function (...args) {
   })
 }
 
-export default class App extends React.Component {
+export default
+@observer
+class App extends React.Component {
   state = {
     isLoadingComplete: false
   };
@@ -34,7 +38,9 @@ export default class App extends React.Component {
       return (
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
-          <AppContainer />
+          <Provider UserStore={UserStore}>
+            <AppContainer />
+          </Provider>
         </View>
       )
     }

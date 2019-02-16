@@ -45,14 +45,16 @@ export default class Authentication {
       let userInfo = await this.getUserInfo(token.access_token)
 
       let provider = new RidersProvider(token.access_token)
-      provider.signIn(userInfo)
+      let user = await provider.signIn(userInfo)
         .then((result) => {
-          console.log('API signin result', result)
+          // console.log('API signin result', result)
           // TODO:
           // Save to global state
           // this.setState({ user: result })
+          return result
         })
 
+      return user
       // fetch updated user (result above) from DB and store in RN AsyncStorage & "global" state
       // await AsyncStorage.setItem('signedInUserId', '1') // Use SecureStorage?
       // this.props.navigation.navigate('App')

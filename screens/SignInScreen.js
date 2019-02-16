@@ -6,10 +6,19 @@ import {
   View
 } from 'react-native'
 import Authentication from '../src/Authentication'
+import { observer, inject } from 'mobx-react'
 
-export default class SignInScreen extends React.Component {
+export default
+@inject('UserStore')
+@observer
+class SignInScreen extends React.Component {
   state = {
     username: undefined
+  }
+
+  authenticate = async () => {
+    let user = await new Authentication().loginWithAuth0()
+    this.props.UserStore.updateUserId(user.id)
   }
 
   render () {
@@ -19,9 +28,10 @@ export default class SignInScreen extends React.Component {
           ? <Text style={styles.title}>Hi {this.state.username}!</Text>
           : <View>
             <Text style={styles.title}>Example: Auth0 login</Text>
-            <Button title='Login with Auth0' onPress={new Authentication().loginWithAuth0} />
+            <Button title='Login with Auth0' onPress={this.authenticate} />
           </View>
         }
+        <Text>User ID: {this.props.UserStore.userId}</Text>
       </View>
     )
   }
