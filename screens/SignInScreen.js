@@ -1,3 +1,4 @@
+/* global fetch */
 import React from 'react'
 import {
   Button,
@@ -7,6 +8,7 @@ import {
 } from 'react-native'
 import Authentication from '../src/Authentication'
 import { observer, inject } from 'mobx-react'
+import { getHeaders, apiUrl } from '../providers/Connection'
 
 export default
 @inject('UserStore')
@@ -17,8 +19,39 @@ class SignInScreen extends React.Component {
   }
 
   authenticate = async () => {
-    let user = await new Authentication().loginWithAuth0()
+    let auth = new Authentication()
+    let token = await auth.loginWithAuth0()
+    let userInfo = await auth.getUserInfo(token.access_token)
+
+    let user = await this.getUser(token.access_token, userInfo)
+
+    this.props.UserStore.updateAccessToken(token.access_token)
     this.props.UserStore.updateUserId(user.id)
+
+    this.props.navigation.navigate('App')
+  }
+
+  /**
+   * TODO: handle response code, navigate to SignUpScreen if 201
+   *
+   * @memberof SignInScreen
+   */
+  getUser = async (accessToken, userInfo) => {
+    let userResponse = await fetch('http://' + apiUrl + '/ridetime/signin', {
+      method: 'POST',
+      headers: getHeaders(accessToken),
+      body: JSON.stringify(userInfo)
+    }).catch((error) => {
+      console.log(error.constructor.name, error)
+      throw new Error(error)
+    })
+
+    if (await !userResponse.ok) {
+      console.log('User Response:', userResponse)
+      throw new Error('Network request failed (!userResponse.ok)')
+    }
+
+    return userResponse.json()
   }
 
   render () {

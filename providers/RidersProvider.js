@@ -1,15 +1,34 @@
 import { get, post } from './Connection'
 
 export default class RidersProvider {
-  constructor (apiToken) {
-    this.apiToken = apiToken
-  }
-
+  /**
+   * Return Promise
+   * {
+   *   "id": 71,
+   *   "name": "Ondřej Váňa",
+   *   "hometown": null,
+   *   "events": [],
+   *   "friends": [],
+   *   "level": null,
+   *   "preferred": null,
+   *   "favourites": null,
+   *   "picture": "https://lh5.googleusercontent.com/-txLCi973qWQ/AAAAAAAAAAI/AAAAAAAANuk/BpCrITncuGE/photo.jpg",
+   *   "email": "vana.ondrej@gmail.com"
+   * }
+   *
+   * @memberof RidersProvider
+   */
   getUser = (id) => {
-    return get('api/users/' + id, this.apiToken)
+    return get('api/users/' + id)
   }
 
-  signIn = (data) => {
-    return post('signin', this.apiToken, data)
-  }
+  /**
+   * POST /signin
+   * @return Promise (getUser)
+   *
+   * @memberof RidersProvider
+   */
+  // signIn = (data) => {
+  //   return post('signin', data)
+  // }
 }

@@ -1,23 +1,21 @@
 /* global fetch */
 import { Constants } from 'expo'
 import { Alert } from 'react-native'
+import UserStore from '../stores/UserStore.mobx'
 
 const { manifest } = Constants
-const api = (typeof manifest.packagerOpts === `object`) && manifest.packagerOpts.dev
+export const apiUrl = (typeof manifest.packagerOpts === `object`) && manifest.packagerOpts.dev
   ? manifest.debuggerHost.split(`:`).shift().concat(`:80`)
-  : `api.example.com`
+  : `apiUrl.example.com`
 
-export const get = (path, apiToken) => {
-  let url = 'http://' + api + '/ridetime/' + path
+export const get = (path) => {
+  // FIXME: move http:// and /ridetime/ to apiUrl
+  let url = 'http://' + apiUrl + '/ridetime/' + path
 
-  console.log('GET ', url)
+  console.log('GET ', url, UserStore.accessToken)
 
   return fetch(url, {
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + apiToken
-    }
+    headers: getHeaders(UserStore.accessToken)
   })
     .then((res) => {
       if (res.ok) {
@@ -26,24 +24,19 @@ export const get = (path, apiToken) => {
       throw new Error('Network response was not "ok".')
     })
     .catch((error) => {
-      Alert.alert('Network error')
-      console.warn(error)
+      throw new Error(error)
     })
 }
 
-export const post = (path, apiToken, data) => {
-  let url = 'http://' + api + '/ridetime/' + path
+export const post = (path, data) => {
+  let url = 'http://' + apiUrl + '/ridetime/' + path
   let dataJson = JSON.stringify(data)
 
-  console.log('POST ', url, dataJson)
+  console.log('POST ', url, UserStore.accessToken, dataJson)
 
   return fetch(url, {
     method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + apiToken
-    },
+    headers: getHeaders(UserStore.accessToken),
     body: dataJson
   })
     .then((res) => {
@@ -58,4 +51,12 @@ export const post = (path, apiToken, data) => {
       // console.log(error)
       console.warn(error)
     })
+}
+
+export const getHeaders = (authToken) => {
+  return {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + authToken
+  }
 }

@@ -7,7 +7,6 @@ import {
   auth0Audience,
   auth0RedirectUri
 } from '../secrets'
-import RidersProvider from '../providers/RidersProvider'
 import randomatic from 'randomatic'
 
 /*
@@ -15,6 +14,33 @@ import randomatic from 'randomatic'
   If you use Facebook through Auth0, be sure to follow this guide: https://auth0.com/docs/connections/social/facebook
 */
 export default class Authentication {
+  /**
+   *
+   * @return Promise
+   * [
+   *  {
+   *   "id": 71,
+   *   "name": "Ondřej Váňa",
+   *   "hometown": null,
+   *   "events": [],
+   *   "friends": [],
+   *   "level": null,
+   *   "preferred": null,
+   *   "favourites": null,
+   *   "picture": "https://lh5.googleusercontent.com/-txLCi973qWQ/AAAAAAAAAAI/AAAAAAAANuk/BpCrITncuGE/photo.jpg",
+   *   "email": "vana.ondrej@gmail.com"
+   *  },
+   *  {
+   *   "access_token":"eyJz93a...k4laUWw",
+   *   "refresh_token":"GEbRxBN...edjnXbL",
+   *   "id_token":"eyJ0XAi...4faeEoQ",
+   *   "token_type":"Bearer",
+   *   "expires_in":86400
+   *  }
+   * ]
+   *
+   * @memberof Authentication
+   */
   loginWithAuth0 = async () => {
     const redirectUrl = AuthSession.getRedirectUrl()
     const oAuthState = randomatic('Aa0', 7)
@@ -41,28 +67,19 @@ export default class Authentication {
       }
 
       let token = await this.getOAuthToken(codeVerifier, result.params.code)
-      this.handleParams(token)
-      let userInfo = await this.getUserInfo(token.access_token)
 
-      let provider = new RidersProvider(token.access_token)
-      let user = await provider.signIn(userInfo)
-        .then((result) => {
-          // console.log('API signin result', result)
-          // TODO:
-          // Save to global state
-          // this.setState({ user: result })
-          return result
-        })
-
-      return user
-      // fetch updated user (result above) from DB and store in RN AsyncStorage & "global" state
-      // await AsyncStorage.setItem('signedInUserId', '1') // Use SecureStorage?
-      // this.props.navigation.navigate('App')
-    } else {
-      console.log('Auth0 login Result type: ', result.type)
+      return token
+      // this.handleParams(token)
     }
   }
 
+  /**
+   * POST /oauth/token (JSON)
+   *
+   * @return Promise | token
+   *
+   * @memberof Authentication
+   */
   getOAuthToken = async (codeVerifier, code) => {
     const rawResponse = await fetch(`${auth0Domain}/oauth/token`, {
       method: 'POST',
@@ -80,10 +97,16 @@ export default class Authentication {
     })
     const content = await rawResponse.json()
 
-    console.log('Result /oauth/token: ', content)
+    // console.log('Result /oauth/token: ', content)
     return content
   }
 
+  /**
+   * FIXME: unused
+   * Writes access & refresh tokens to SecureStorage
+   *
+   * @memberof Authentication
+   */
   handleParams = async (responseObj) => {
     if (responseObj.error) {
       Alert.alert('Error', responseObj.error_description ||
@@ -101,6 +124,24 @@ export default class Authentication {
     SecureStore.setItemAsync('refresh_token', refreshToken)
   }
 
+  /**
+   * GET /userinfo (JSON)
+   *
+   * @return Promise | user object
+   * {
+   *   "email_verified": false,
+   *   "email": "test.account@userinfo.com",
+   *   "updated_at": "2016-12-05T15:15:40.545Z",
+   *   "name": "test.account@userinfo.com",
+   *   "picture": "https://s.gravatar.com/avatar/dummy.png",
+   *   "user_id": "auth0|58454...",
+   *   "nickname": "test.account",
+   *   "created_at": "2016-12-05T11:16:59.640Z",
+   *   "sub": "auth0|58454..."
+   * }
+   *
+   * @memberof Authentication
+   */
   getUserInfo = async (apiToken) => {
     let response = await fetch(`${auth0Domain}/userinfo`, {
       headers: {

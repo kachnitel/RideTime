@@ -1,13 +1,16 @@
 import React from 'react'
 import {
   ActivityIndicator,
-  AsyncStorage,
   StatusBar,
   StyleSheet,
   View
 } from 'react-native'
+import { observer, inject } from 'mobx-react'
 
-export default class AuthLoadingScreen extends React.Component {
+export default
+@inject('UserStore')
+@observer
+class AuthLoadingScreen extends React.Component {
   constructor (props) {
     super(props)
     this._bootstrapAsync()
@@ -16,8 +19,9 @@ export default class AuthLoadingScreen extends React.Component {
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
     // TODO: Refresh if refresh_token is stored,
-    // get new credentials and go to App
-    let signedInUserId = await AsyncStorage.getItem('signedInUserId')
+    // get new access_token, save to store and go to App
+    // this.props.UserStore.updateUserId(false) // reset
+    let signedInUserId = this.props.UserStore.userId
     let route = signedInUserId ? 'App' : 'Auth'
 
     // This will switch to the App screen or Auth screen and this loading

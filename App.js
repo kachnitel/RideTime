@@ -37,8 +37,10 @@ class App extends React.Component {
     } else {
       return (
         <View style={styles.container}>
+    {/* {UserStore.updateUserId(false)} */}
           {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
           <Provider UserStore={UserStore}>
+
             <AppContainer />
           </Provider>
         </View>
