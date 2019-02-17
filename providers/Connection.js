@@ -12,7 +12,7 @@ export const get = (path) => {
   // FIXME: move http:// and /ridetime/ to apiUrl
   let url = 'http://' + apiUrl + '/ridetime/' + path
 
-  console.log('GET ', url)
+  console.log('GET', url)
 
   return fetch(url, {
     headers: getHeaders(UserStore.accessToken)
@@ -32,7 +32,7 @@ export const post = (path, data) => {
   let url = 'http://' + apiUrl + '/ridetime/' + path
   let dataJson = JSON.stringify(data)
 
-  console.log('POST ', url, dataJson)
+  console.log('POST', url, dataJson)
 
   return fetch(url, {
     method: 'POST',
@@ -48,8 +48,7 @@ export const post = (path, data) => {
     })
     .catch((error) => {
       Alert.alert('Network error')
-      // console.log(error)
-      console.warn(error)
+      throw new Error(error)
     })
 }
 

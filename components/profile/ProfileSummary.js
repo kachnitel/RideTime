@@ -6,7 +6,6 @@ import RiderLevel from './profile-summary/RiderLevel'
 
 export default class ProfileSummary extends Component {
   render () {
-    console.log(this.props.user)
     return (
       <View {...this.props}>
         <RideCount count={10} />

@@ -75,7 +75,6 @@ class SignInScreen extends React.Component {
       headers: getHeaders(accessToken),
       body: JSON.stringify(userInfo)
     }).catch((error) => {
-      console.log(error.constructor.name, error)
       throw new Error(error)
     })
 
