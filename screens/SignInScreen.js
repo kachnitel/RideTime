@@ -16,12 +16,13 @@ export default
 @observer
 class SignInScreen extends React.Component {
   state = {
-    username: undefined
+    loading: false
   }
 
   authenticate = async () => {
     let auth = new Authentication()
     let token = await auth.loginWithAuth0()
+    this.setState({ loading: true })
     let userInfo = await auth.getUserInfo(token.access_token)
 
     let user = await this.signInToAPI(token.access_token, userInfo)
@@ -31,7 +32,10 @@ class SignInScreen extends React.Component {
 
     this.props.UserStore.updateAccessToken(token.access_token)
     this.props.UserStore.updateUserId(user.id)
+    this.props.UserStore.updateName(user.name)
+    this.props.UserStore.updateProfilePic(user.picture)
 
+    console.info(`User ${user.id} signed in`)
     this.props.navigation.navigate('App')
   }
 
@@ -86,14 +90,13 @@ class SignInScreen extends React.Component {
   render () {
     return (
       <View style={styles.container}>
-        {this.state.username !== undefined
-          ? <Text style={styles.title}>Hi {this.state.username}!</Text>
+        { this.state.loading
+          ? <Text style={styles.title}>Loading...</Text>
           : <View>
             <Text style={styles.title}>Example: Auth0 login</Text>
             <Button title='Login with Auth0' onPress={this.authenticate} />
           </View>
         }
-        <Text>User ID: {this.props.UserStore.userId}</Text>
       </View>
     )
   }
