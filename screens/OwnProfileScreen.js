@@ -25,6 +25,7 @@ class OwnProfileScreen extends React.Component {
       title: 'My Profile',
       headerRight: (
         <View style={styles.buttonContainer}>
+          {/* TODO: Button & SignOutButton (navigation as a prop, owns _signOut) components */}
           <View style={styles.button}>
             <Button
               title={navigation.getParam('editing') ? 'Save' : 'Edit'}
