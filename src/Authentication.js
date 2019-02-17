@@ -66,6 +66,7 @@ export default class Authentication {
    * @memberof Authentication
    */
   getOAuthToken = async (codeVerifier, code) => {
+    console.info('Getting OAuth token')
     const rawResponse = await fetch(`${auth0Domain}/oauth/token`, {
       method: 'POST',
       headers: {
@@ -102,6 +103,7 @@ export default class Authentication {
    * @memberof Authentication
    */
   refreshToken = async (refreshToken) => {
+    console.info('Refreshing token')
     const rawResponse = await fetch(`${auth0Domain}/oauth/token`, {
       method: 'POST',
       headers: {
@@ -139,6 +141,7 @@ export default class Authentication {
    * @memberof Authentication
    */
   getUserInfo = async (apiToken) => {
+    console.info('Getting user info')
     let response = await fetch(`${auth0Domain}/userinfo`, {
       headers: {
         'Accept': 'application/json',

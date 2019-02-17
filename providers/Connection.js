@@ -12,7 +12,7 @@ export const get = (path) => {
   // FIXME: move http:// and /ridetime/ to apiUrl
   let url = 'http://' + apiUrl + '/ridetime/' + path
 
-  console.log('GET ', url, UserStore.accessToken)
+  console.log('GET ', url)
 
   return fetch(url, {
     headers: getHeaders(UserStore.accessToken)
@@ -32,7 +32,7 @@ export const post = (path, data) => {
   let url = 'http://' + apiUrl + '/ridetime/' + path
   let dataJson = JSON.stringify(data)
 
-  console.log('POST ', url, UserStore.accessToken, dataJson)
+  console.log('POST ', url, dataJson)
 
   return fetch(url, {
     method: 'POST',
