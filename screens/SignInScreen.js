@@ -24,7 +24,7 @@ class SignInScreen extends React.Component {
     let token = await auth.loginWithAuth0()
     let userInfo = await auth.getUserInfo(token.access_token)
 
-    let user = await this.getUser(token.access_token, userInfo)
+    let user = await this.signInToAPI(token.access_token, userInfo)
 
     // On successful login save tokens
     SecureStore.setItemAsync('refreshToken', token.refresh_token)
@@ -38,9 +38,34 @@ class SignInScreen extends React.Component {
   /**
    * TODO: handle response code, navigate to SignUpScreen if 201
    *
+   * POST /signin
+   * @return Promise
+   * {
+   *   "id": 1,
+   *   "name": "Duck",
+   *   "hometown": "",
+   *   "events": [
+   *       {
+   *           "id": 22,
+   *           "datetime": "2019-02-08T23:25:00+00:00",
+   *           "title": "Alice Lake ride"
+   *       }
+   *   ],
+   *   "friends": [
+   *       {
+   *           "id": 1,
+   *           "name": "Duck"
+   *       }
+   *   ],
+   *   "level": 0,
+   *   "preferred": 0,
+   *   "favourites": "",
+   *   "picture": null,
+   *   "email": "kachnitel@gmail.com"
+   * }
    * @memberof SignInScreen
    */
-  getUser = async (accessToken, userInfo) => {
+  signInToAPI = async (accessToken, userInfo) => {
     let userResponse = await fetch('http://' + apiUrl + '/ridetime/signin', {
       method: 'POST',
       headers: getHeaders(accessToken),
