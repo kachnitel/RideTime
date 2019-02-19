@@ -7,9 +7,32 @@ import OutlineIcon from './icons/OutlineIcon'
 import Layout from '../constants/Layout'
 
 export default class RideItemDetail extends React.Component {
+  getStartTimeString = () => {
+    let startTimeObject = new Date(this.props.ride.datetime * 1000)
+    let today = new Date()
+    let daysOfWeek = [
+      'Mon',
+      'Tue',
+      'Wed',
+      'Thu',
+      'Fri',
+      'Sat',
+      'Sun'
+    ]
+    return startTimeObject.getTime() < (new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7))
+      ? daysOfWeek[startTimeObject.getDay()] + ' ' +
+        startTimeObject.getHours() + ':' +
+        startTimeObject.getMinutes() // within next 7 days
+      : startTimeObject.getDate() + '.' +
+        startTimeObject.getMonth() + ' ' +
+        startTimeObject.getHours() + ':' +
+        startTimeObject.getMinutes() // past next 7 days
+  }
+
   render () {
     let ride = this.props.ride
     let difficultyIcon = <DifficultyIcon size={Layout.window.hp(4)} d={ride.difficulty} />
+    let startTime = this.getStartTimeString()
 
     return <View style={styles.detail}>
       <View style={styles.lowerRowIconContainer}>
@@ -48,7 +71,7 @@ export default class RideItemDetail extends React.Component {
           ...this.props.style,
           ...styles.startTime
         }}>
-          11:30
+          { startTime }
         </Text>
       </View>
     </View>
