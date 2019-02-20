@@ -1,11 +1,13 @@
 import React from 'react'
-import { Button, StyleSheet, ToastAndroid, TouchableHighlight, View } from 'react-native'
+import { Button, StyleSheet, ToastAndroid, TouchableHighlight, View, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import EditProfileHeader from '../components/profile/EditProfileHeader'
 import ProfileHeader from '../components/profile/ProfileHeader'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 import RidersProvider from '../providers/RidersProvider'
+import { observer, inject } from 'mobx-react'
+import { SecureStore } from 'expo'
 
 /**
  * TODO:
@@ -13,20 +15,35 @@ import RidersProvider from '../providers/RidersProvider'
  * replace update state once loaded and hide icon.
  * Disable edit while offline/loading? (w/ Toast onPress)
  */
-export default class OwnProfileScreen extends React.Component {
+export default
+@inject('UserStore')
+@observer
+class OwnProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       // w/ little name under in drawer eventually
       title: 'My Profile',
       headerRight: (
-        <View style={styles.button}>
-          <Button
-            title={navigation.getParam('editing') ? 'Save' : 'Edit'}
-            // default value suppresses warning thrown before param is obtained
-            onPress={navigation.getParam('editProfile', () => {})}
-            color={Colors.tintColor}
-            // disabled={navigation.getParam('loading', false)} // NYI
-          />
+        <View style={styles.buttonContainer}>
+          {/* TODO: Button & SignOutButton (navigation as a prop, owns _signOut) components */}
+          <View style={styles.button}>
+            <Button
+              title={navigation.getParam('editing') ? 'Save' : 'Edit'}
+              // default value suppresses warning thrown before param is obtained
+              onPress={navigation.getParam('editProfile', () => {})}
+              color={Colors.tintColor}
+              disabled={navigation.getParam('loadingUser', true)}
+            />
+          </View>
+          <View style={styles.button}>
+            <Button
+              title='Sign out'
+              // default value suppresses warning thrown before param is obtained
+              onPress={navigation.getParam('signOut', () => {})}
+              color={Colors.tintColor}
+              style={styles.button}
+            />
+          </View>
         </View>
       ),
       headerLeft: (
@@ -59,10 +76,36 @@ export default class OwnProfileScreen extends React.Component {
     this.setState((prevState, props) => ({ editing: !prevState.editing }))
   };
 
-  saveProfile = (val) => {
-    console.log('TODO: User Save')
+  _signOut = () => {
+    console.info(`User ${this.props.UserStore.userId} signing out`)
+    Alert.alert(
+      'Sign out',
+      'Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.info('Sign out cancelled'),
+          style: 'cancel'
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            SecureStore.deleteItemAsync('refreshToken')
+            this.props.UserStore.reset()
+
+            this.props.navigation.navigate('Auth')
+          }
+        }
+      ],
+      { onDismiss: () => console.info('Sign out cancelled') }
+    )
+  }
+
+  saveProfile = async (val) => {
+    console.log('TODO: User Save DB & Store')
     console.log(val)
     this.setState({ user: val })
+    this.props.UserStore.updateName(val.name)
     ToastAndroid.show('User profile saved.', ToastAndroid.SHORT)
   }
 
@@ -70,18 +113,21 @@ export default class OwnProfileScreen extends React.Component {
     this.setState({ updatedUser: val })
   }
 
-  componentDidMount () {
+  async componentDidMount () {
+    this.props.navigation.setParams({
+      signOut: this._signOut,
+      editProfile: this._editProfile,
+      editing: this.state.editing,
+      loadingUser: true
+    })
+
+    let userId = this.props.UserStore.userId
     let provider = new RidersProvider()
-    let userId = this.props.navigation.getParam('id')
-    provider.getUser(userId)
+    await provider.getUser(userId)
       .then((result) => {
         this.setState({ user: result })
       })
-
-    this.props.navigation.setParams({
-      editProfile: this._editProfile,
-      editing: this.state.editing
-    })
+    this.props.navigation.setParams({ loadingUser: false })
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -96,14 +142,18 @@ export default class OwnProfileScreen extends React.Component {
     return (
       this.state.editing
         ? <EditProfileHeader user={this.state.user} updateCallback={this.updateUser} />
-        : <ProfileHeader user={this.state.user} />
+        : this.state.user && <ProfileHeader user={this.state.user} />
     )
   };
 }
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    paddingRight: Layout.window.wp(1),
+    flexDirection: 'row'
+  },
   button: {
-    paddingRight: Layout.window.wp(2)
+    margin: Layout.window.wp(1)
   },
   headerMenuIconContainer: {
     justifyContent: 'center'

@@ -1,13 +1,11 @@
 /* global fetch */
-import { AuthSession, SecureStore } from 'expo'
-import { Alert } from 'react-native'
+import { AuthSession } from 'expo'
 import {
   auth0ClientId,
   auth0Domain,
   auth0Audience,
   auth0RedirectUri
 } from '../secrets'
-import RidersProvider from '../providers/RidersProvider'
 import randomatic from 'randomatic'
 
 /*
@@ -15,6 +13,19 @@ import randomatic from 'randomatic'
   If you use Facebook through Auth0, be sure to follow this guide: https://auth0.com/docs/connections/social/facebook
 */
 export default class Authentication {
+  /**
+   *
+   * @return Promise
+   * {
+   *   "access_token":"eyJz93a...k4laUWw",
+   *   "refresh_token":"GEbRxBN...edjnXbL",
+   *   "id_token":"eyJ0XAi...4faeEoQ",
+   *   "token_type":"Bearer",
+   *   "expires_in":86400
+   * }
+   *
+   * @memberof Authentication
+   */
   loginWithAuth0 = async () => {
     const redirectUrl = AuthSession.getRedirectUrl()
     const oAuthState = randomatic('Aa0', 7)
@@ -41,27 +52,21 @@ export default class Authentication {
       }
 
       let token = await this.getOAuthToken(codeVerifier, result.params.code)
-      this.handleParams(token)
-      let userInfo = await this.getUserInfo(token.access_token)
 
-      let provider = new RidersProvider(token.access_token)
-      provider.signIn(userInfo)
-        .then((result) => {
-          console.log('API signin result', result)
-          // TODO:
-          // Save to global state
-          // this.setState({ user: result })
-        })
-
-      // fetch updated user (result above) from DB and store in RN AsyncStorage & "global" state
-      // await AsyncStorage.setItem('signedInUserId', '1') // Use SecureStorage?
-      // this.props.navigation.navigate('App')
-    } else {
-      console.log('Auth0 login Result type: ', result.type)
+      return token
+      // this.handleParams(token)
     }
   }
 
+  /**
+   * POST /oauth/token (JSON)
+   *
+   * @return Promise | token
+   *
+   * @memberof Authentication
+   */
   getOAuthToken = async (codeVerifier, code) => {
+    console.info('Getting OAuth token')
     const rawResponse = await fetch(`${auth0Domain}/oauth/token`, {
       method: 'POST',
       headers: {
@@ -78,28 +83,65 @@ export default class Authentication {
     })
     const content = await rawResponse.json()
 
-    console.log('Result /oauth/token: ', content)
+    // console.log('Result /oauth/token: ', content)
     return content
   }
 
-  handleParams = async (responseObj) => {
-    if (responseObj.error) {
-      Alert.alert('Error', responseObj.error_description ||
-      'something went wrong while logging in')
-      return
-    }
+  /**
+   * Exchange refresh_token for access_token
+   *
+   * POST https://YOUR_AUTH0_DOMAIN/oauth/token
+   * @return Promise
+   * {
+   *   "access_token": "eyJ...MoQ",
+   *   "expires_in": 86400,
+   *   "scope": "openid offline_access",
+   *   "id_token": "eyJ...0NE",
+   *   "token_type": "Bearer"
+   * }
+   *
+   * @memberof Authentication
+   */
+  refreshToken = async (refreshToken) => {
+    console.info('Refreshing token')
+    const rawResponse = await fetch(`${auth0Domain}/oauth/token`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        grant_type: 'refresh_token',
+        client_id: auth0ClientId,
+        refresh_token: refreshToken
+      })
+    })
+    const content = await rawResponse.json()
 
-    const {
-      // id_token: idToken,
-      access_token: accessToken,
-      refresh_token: refreshToken
-    } = responseObj
-
-    SecureStore.setItemAsync('access_token', accessToken)
-    SecureStore.setItemAsync('refresh_token', refreshToken)
+    // console.log('Result(refresh) /oauth/token: ', content)
+    return content
   }
 
+  /**
+   * GET /userinfo (JSON)
+   *
+   * @return Promise | user object
+   * {
+   *   "email_verified": false,
+   *   "email": "test.account@userinfo.com",
+   *   "updated_at": "2016-12-05T15:15:40.545Z",
+   *   "name": "test.account@userinfo.com",
+   *   "picture": "https://s.gravatar.com/avatar/dummy.png",
+   *   "user_id": "auth0|58454...",
+   *   "nickname": "test.account",
+   *   "created_at": "2016-12-05T11:16:59.640Z",
+   *   "sub": "auth0|58454..."
+   * }
+   *
+   * @memberof Authentication
+   */
   getUserInfo = async (apiToken) => {
+    console.info('Getting user info')
     let response = await fetch(`${auth0Domain}/userinfo`, {
       headers: {
         'Accept': 'application/json',

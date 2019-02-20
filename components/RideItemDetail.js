@@ -5,11 +5,29 @@ import TerrainIcon from './icons/TerrainIcon'
 import RiderCount from './RiderCount'
 import OutlineIcon from './icons/OutlineIcon'
 import Layout from '../constants/Layout'
+import moment from 'moment'
 
 export default class RideItemDetail extends React.Component {
+  /**
+   * @return string
+   * @memberof RideItemDetail
+   */
+  getStartTimeString = () => {
+    let startTime = moment(this.props.ride.datetime * 1000)
+
+    let format = startTime.isBefore(moment().endOf('day'))
+      ? 'H:mm'
+      : startTime.isBefore(moment().add(7, 'days').startOf('day'))
+        ? 'ddd H:mm'
+        : 'ddd D/M H:mm'
+
+    return startTime.format(format)
+  }
+
   render () {
     let ride = this.props.ride
     let difficultyIcon = <DifficultyIcon size={Layout.window.hp(4)} d={ride.difficulty} />
+    let startTime = this.getStartTimeString()
 
     return <View style={styles.detail}>
       <View style={styles.lowerRowIconContainer}>
@@ -48,7 +66,7 @@ export default class RideItemDetail extends React.Component {
           ...this.props.style,
           ...styles.startTime
         }}>
-          11:30
+          { startTime }
         </Text>
       </View>
     </View>
@@ -66,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   startTime: {
-    fontSize: Layout.window.hp(3.5)
+    fontSize: Layout.window.hp(3.25)
   },
   startTimeContainer: {
     width: 'auto'
