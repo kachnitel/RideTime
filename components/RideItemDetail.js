@@ -5,28 +5,23 @@ import TerrainIcon from './icons/TerrainIcon'
 import RiderCount from './RiderCount'
 import OutlineIcon from './icons/OutlineIcon'
 import Layout from '../constants/Layout'
+import moment from 'moment'
 
 export default class RideItemDetail extends React.Component {
+  /**
+   * @return string
+   * @memberof RideItemDetail
+   */
   getStartTimeString = () => {
-    let startTimeObject = new Date(this.props.ride.datetime * 1000)
-    let today = new Date()
-    let daysOfWeek = [
-      'Mon',
-      'Tue',
-      'Wed',
-      'Thu',
-      'Fri',
-      'Sat',
-      'Sun'
-    ]
-    return startTimeObject.getTime() < (new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7))
-      ? daysOfWeek[startTimeObject.getDay()] + ' ' +
-        startTimeObject.getHours() + ':' +
-        startTimeObject.getMinutes() // within next 7 days
-      : startTimeObject.getDate() + '.' +
-        startTimeObject.getMonth() + ' ' +
-        startTimeObject.getHours() + ':' +
-        startTimeObject.getMinutes() // past next 7 days
+    let startTime = moment(this.props.ride.datetime * 1000)
+
+    let format = startTime.isBefore(moment().endOf('day'))
+      ? 'H:mm'
+      : startTime.isBefore(moment().add(7, 'days').startOf('day'))
+        ? 'ddd H:mm'
+        : 'ddd D/M H:mm'
+
+    return startTime.format(format)
   }
 
   render () {
@@ -89,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   startTime: {
-    fontSize: Layout.window.hp(3.5)
+    fontSize: Layout.window.hp(3.25)
   },
   startTimeContainer: {
     width: 'auto'
