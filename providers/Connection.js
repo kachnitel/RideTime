@@ -1,16 +1,10 @@
 /* global fetch */
-import { Constants } from 'expo'
 import { Alert } from 'react-native'
 import UserStore from '../stores/UserStore.mobx'
-
-const { manifest } = Constants
-export const apiUrl = (typeof manifest.packagerOpts === `object`) && manifest.packagerOpts.dev
-  ? manifest.debuggerHost.split(`:`).shift().concat(`:80`)
-  : `apiUrl.example.com`
+import { apiUrl } from '../config'
 
 export const get = (path) => {
-  // FIXME: move http:// and /ridetime/ to apiUrl
-  let url = 'http://' + apiUrl + '/ridetime/' + path
+  let url = apiUrl + '/' + path
 
   console.log('GET', url)
 
@@ -29,7 +23,7 @@ export const get = (path) => {
 }
 
 export const post = (path, data) => {
-  let url = 'http://' + apiUrl + '/ridetime/' + path
+  let url = apiUrl + '/' + path
   let dataJson = JSON.stringify(data)
 
   console.log('POST', url, dataJson)

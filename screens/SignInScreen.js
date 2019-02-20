@@ -8,8 +8,9 @@ import {
 } from 'react-native'
 import Authentication from '../src/Authentication'
 import { observer, inject } from 'mobx-react'
-import { getHeaders, apiUrl } from '../providers/Connection'
+import { getHeaders } from '../providers/Connection'
 import { SecureStore } from 'expo'
+import { apiUrl } from '../config'
 
 export default
 @inject('UserStore')
@@ -70,7 +71,7 @@ class SignInScreen extends React.Component {
    * @memberof SignInScreen
    */
   signInToAPI = async (accessToken, userInfo) => {
-    let userResponse = await fetch('http://' + apiUrl + '/ridetime/signin', {
+    let userResponse = await fetch(apiUrl + '/signin', {
       method: 'POST',
       headers: getHeaders(accessToken),
       body: JSON.stringify(userInfo)
