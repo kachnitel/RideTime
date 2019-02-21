@@ -27,7 +27,6 @@ const env = {
 
 export const getEnvVars = () => {
   // __DEV__ = false when published or --no-dev
-  console.log(Constants.manifest)
   if (__DEV__ === true) {
     return env.dev
   } else {
