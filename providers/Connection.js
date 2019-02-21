@@ -1,10 +1,10 @@
 /* global fetch */
 import { Alert } from 'react-native'
 import UserStore from '../stores/UserStore.mobx'
-import { apiUrl } from '../config'
+import { getEnvVars } from '../constants/Env'
 
 export const get = (path) => {
-  let url = apiUrl + '/' + path
+  let url = getEnvVars().apiUrl + '/' + path
 
   console.log('GET', url)
 
@@ -23,7 +23,7 @@ export const get = (path) => {
 }
 
 export const post = (path, data) => {
-  let url = apiUrl + '/' + path
+  let url = getEnvVars().apiUrl + '/' + path
   let dataJson = JSON.stringify(data)
 
   console.log('POST', url, dataJson)
