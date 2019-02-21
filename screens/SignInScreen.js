@@ -10,7 +10,7 @@ import Authentication from '../src/Authentication'
 import { observer, inject } from 'mobx-react'
 import { getHeaders } from '../providers/Connection'
 import { SecureStore } from 'expo'
-import { apiUrl } from '../config'
+import { getEnvVars } from '../constants/Env'
 
 export default
 @inject('UserStore')
@@ -71,7 +71,8 @@ class SignInScreen extends React.Component {
    * @memberof SignInScreen
    */
   signInToAPI = async (accessToken, userInfo) => {
-    let userResponse = await fetch(apiUrl + '/signin', {
+    let url = getEnvVars().apiUrl + '/signin'
+    let userResponse = await fetch(url, {
       method: 'POST',
       headers: getHeaders(accessToken),
       body: JSON.stringify(userInfo)
