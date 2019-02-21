@@ -102,9 +102,18 @@ class OwnProfileScreen extends React.Component {
   }
 
   saveProfile = (updatedUser) => {
-    // TODO: Only send editable fields (name, town, picture,...)
+    // TODO: Only send updated fields (name, town, picture,...)
+    let update = {}
+    for (var key in updatedUser) {
+      // skip loop if the property is from prototype
+      if (!updatedUser.hasOwnProperty(key)) continue
+
+      if (updatedUser[key] !== this.state.user[key]) {
+        update[key] = updatedUser[key]
+      }
+    }
     let provider = new RidersProvider()
-    provider.updateUser(this.props.UserStore.userId, updatedUser)
+    provider.updateUser(this.props.UserStore.userId, update)
       .then((result) => {
         this.setState({ user: updatedUser })
         this.props.UserStore.updateName(updatedUser.name) // TODO: all that is stored in UserStore..
