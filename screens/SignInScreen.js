@@ -26,7 +26,8 @@ class SignInScreen extends React.Component {
     this.setState({ loading: true })
     let userInfo = await auth.getUserInfo(token.access_token)
 
-    let user = await this.signInToAPI(token.access_token, userInfo)
+    let signInResponse = await this.signInToAPI(token.access_token, userInfo)
+    let user = await signInResponse.json()
 
     // On successful login save tokens
     SecureStore.setItemAsync('refreshToken', token.refresh_token)
@@ -36,12 +37,13 @@ class SignInScreen extends React.Component {
     this.props.UserStore.updateName(user.name)
     this.props.UserStore.updateProfilePic(user.picture)
 
-    console.info(`User ${user.id} signed in`)
-    this.props.navigation.navigate('App')
+    // handle response code, navigate to SignUpScreen if 201
+    console.info(`User ${user.id} signed in (${signInResponse.status})`)
+    this.props.navigation.navigate(signInResponse.status === 201 ? 'SignUp' : 'App')
   }
 
   /**
-   * TODO: handle response code, navigate to SignUpScreen if 201
+   * FIXME: API connection needs to be in provider
    *
    * POST /signin
    * @return Promise
@@ -85,7 +87,7 @@ class SignInScreen extends React.Component {
       throw new Error('Network request failed (!userResponse.ok)')
     }
 
-    return userResponse.json()
+    return userResponse
   }
 
   render () {

@@ -102,7 +102,7 @@ class OwnProfileScreen extends React.Component {
   }
 
   saveProfile = (updatedUser) => {
-    // TODO: Only send updated fields (name, town, picture,...)
+    // Only send updated fields
     let update = {}
     for (var key in updatedUser) {
       // skip loop if the property is from prototype
@@ -112,6 +112,7 @@ class OwnProfileScreen extends React.Component {
         update[key] = updatedUser[key]
       }
     }
+
     let provider = new RidersProvider()
     provider.updateUser(this.props.UserStore.userId, update)
       .then((result) => {
