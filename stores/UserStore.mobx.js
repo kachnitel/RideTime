@@ -3,7 +3,8 @@ import { create, persist } from 'mobx-persist'
 import { AsyncStorage } from 'react-native'
 
 class UserStore {
-  // @persist('list') @observable _AnExampleArray = [] // TODO: Friends, Home Locations, ...
+  // TODO: Friends, Home Locations, ...if needed
+  // @persist('list') @observable _AnExampleArray = []
   @persist @observable _userId = false
   @persist @observable _name = ''
   @persist @observable _profilePic = ''

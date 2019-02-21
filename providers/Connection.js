@@ -3,6 +3,16 @@ import { Alert } from 'react-native'
 import UserStore from '../stores/UserStore.mobx'
 import { getEnvVars } from '../constants/Env'
 
+const handleErrorResponse = (res) => {
+  console.log('RES', res)
+  throw new Error('Network response was not "ok".')
+}
+
+const handleError = (error) => {
+  Alert.alert('Network error')
+  throw new Error(error)
+}
+
 export const get = (path) => {
   let url = getEnvVars().apiUrl + '/' + path
 
@@ -12,38 +22,49 @@ export const get = (path) => {
     headers: getHeaders(UserStore.accessToken)
   })
     .then((res) => {
-      if (res.ok) {
-        return res.json()
+      if (!res.ok) {
+        handleErrorResponse(res)
       }
-      throw new Error('Network response was not "ok".')
+      return res.json()
     })
     .catch((error) => {
-      throw new Error(error)
+      handleError(error)
     })
 }
 
-export const post = (path, data) => {
+/**
+ * @param {string} method POST|PUT
+ * @param {string} path
+ * @param {*} data JSON serializable data
+ */
+const submitData = (method, path, data) => {
   let url = getEnvVars().apiUrl + '/' + path
   let dataJson = JSON.stringify(data)
 
-  console.log('POST', url, dataJson)
+  console.log(method, url, dataJson)
 
   return fetch(url, {
-    method: 'POST',
+    method: method,
     headers: getHeaders(UserStore.accessToken),
     body: dataJson
   })
     .then((res) => {
-      if (res.ok) {
-        return res.json()
+      if (!res.ok) {
+        handleErrorResponse(res)
       }
-      console.log('RES', res)
-      throw new Error('Network response was not "ok".')
+      return res.json()
     })
     .catch((error) => {
-      Alert.alert('Network error')
-      throw new Error(error)
+      handleError(error)
     })
+}
+
+export const post = (path, data) => {
+  return submitData('POST', path, data)
+}
+
+export const put = (path, data) => {
+  return submitData('PUT', path, data)
 }
 
 export const getHeaders = (authToken) => {

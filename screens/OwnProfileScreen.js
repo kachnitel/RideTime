@@ -74,7 +74,7 @@ class OwnProfileScreen extends React.Component {
       this.saveProfile(this.state.updatedUser)
     }
     this.setState((prevState, props) => ({ editing: !prevState.editing }))
-  };
+  }
 
   _signOut = () => {
     console.info(`User ${this.props.UserStore.userId} signing out`)
@@ -101,12 +101,16 @@ class OwnProfileScreen extends React.Component {
     )
   }
 
-  saveProfile = async (val) => {
-    console.log('TODO: User Save DB & Store')
-    console.log(val)
-    this.setState({ user: val })
-    this.props.UserStore.updateName(val.name)
-    ToastAndroid.show('User profile saved.', ToastAndroid.SHORT)
+  saveProfile = (updatedUser) => {
+    // TODO: Only send editable fields (name, town, picture,...)
+    let provider = new RidersProvider()
+    provider.updateUser(this.props.UserStore.userId, updatedUser)
+      .then((result) => {
+        this.setState({ user: updatedUser })
+        this.props.UserStore.updateName(updatedUser.name) // TODO: all that is stored in UserStore..
+        this.props.UserStore.updateProfilePic(updatedUser.picture)
+        ToastAndroid.show('User profile saved.', ToastAndroid.SHORT)
+      })
   }
 
   updateUser = (val) => {

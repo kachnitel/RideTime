@@ -1,4 +1,4 @@
-import { get } from './Connection'
+import { get, put } from './Connection'
 
 export default class RidersProvider {
   /**
@@ -20,5 +20,9 @@ export default class RidersProvider {
    */
   getUser = (id) => {
     return get('api/users/' + id)
+  }
+
+  updateUser = (id, data) => {
+    return put('api/users/' + id, data)
   }
 }
