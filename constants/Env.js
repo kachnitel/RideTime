@@ -16,12 +16,12 @@ const env = {
     apiUrl: getLocalUrl()
   },
   staging: {
-    apiUrl: 'https://ridetime.tk'
+    apiUrl: 'https://ridebikes.today'
   }
   // TODO: Use `Constants.manifest.releaseChannel` and
   // `exp publish --release-channel prod`
   // prod: {
-  //   apiUrl: 'https://ridetime.tk'
+  //   apiUrl: 'https://ridebikes.today'
   // }
 }
 

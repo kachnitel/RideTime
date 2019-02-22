@@ -104,6 +104,7 @@ export default class Authentication {
    */
   refreshToken = async (refreshToken) => {
     console.info('Refreshing token')
+
     const rawResponse = await fetch(`${auth0Domain}/oauth/token`, {
       method: 'POST',
       headers: {
