@@ -118,7 +118,7 @@ class OwnProfileScreen extends React.Component {
       .then((result) => {
         this.setState({ user: updatedUser })
         this.props.UserStore.updateName(updatedUser.name) // TODO: all that is stored in UserStore..
-        this.props.UserStore.updateProfilePic(updatedUser.picture)
+        this.props.UserStore.updatePicture(updatedUser.picture)
         ToastAndroid.show('User profile saved.', ToastAndroid.SHORT)
       })
   }

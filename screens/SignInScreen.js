@@ -35,11 +35,18 @@ class SignInScreen extends React.Component {
     this.props.UserStore.updateAccessToken(token.access_token)
     this.props.UserStore.updateUserId(user.id)
     this.props.UserStore.updateName(user.name)
-    this.props.UserStore.updateProfilePic(user.picture)
+    this.props.UserStore.updatePicture(user.picture)
 
     // handle response code, navigate to SignUpScreen if 201
-    console.info(`User ${user.id} signed in (${signInResponse.status})`)
-    this.props.navigation.navigate(signInResponse.status === 201 ? 'SignUp' : 'App')
+    if (signInResponse.status === 201) {
+      // Must sign up
+      console.info(`Signing up user`, userInfo)
+      this.props.navigation.navigate('SignUp', { user: userInfo })
+    } else {
+      // Signed in
+      console.info(`User ${user.id} signed in`)
+      this.props.navigation.navigate('App')
+    }
   }
 
   /**

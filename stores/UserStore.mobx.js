@@ -7,7 +7,7 @@ class UserStore {
   // @persist('list') @observable _AnExampleArray = []
   @persist @observable _userId = false
   @persist @observable _name = ''
-  @persist @observable _profilePic = ''
+  @persist @observable _picture = ''
   // TODO: level, terrain, hometown, email, phone, ...
   @observable _accessToken = ''
 
@@ -17,8 +17,8 @@ class UserStore {
   @action updateName (newValue) { this._name = newValue }
   @computed get name () { return this._name }
 
-  @action updateProfilePic (newValue) { this._profilePic = newValue }
-  @computed get profilePic () { return this._profilePic }
+  @action updatePicture (newValue) { this._picture = newValue }
+  @computed get picture () { return this._picture }
 
   @action updateAccessToken (newValue) { this._accessToken = newValue }
   @computed get accessToken () { return this._accessToken }
@@ -28,7 +28,7 @@ class UserStore {
   @action reset () {
     this.updateUserId(UserStore.prototype._userId)
     this.updateName(UserStore.prototype._name)
-    this.updateProfilePic(UserStore.prototype._profilePic)
+    this.updatePicture(UserStore.prototype._picture)
     this.updateAccessToken(UserStore.prototype._accessToken)
   }
 }
