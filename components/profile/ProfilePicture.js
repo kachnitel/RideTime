@@ -3,9 +3,8 @@ import { Image, StyleSheet } from 'react-native'
 
 export default class ProfilePicture extends React.Component {
   render () {
-    let riderId = this.props.rider.id
-    // FIXME const in a config file should contain the URL
-    let imgPath = 'https://s3.ca-central-1.amazonaws.com/ride-time/profile-images/' + riderId + '.png'
+    // let riderId = this.props.rider.id
+    let imgPath = this.props.rider.picture
 
     let size = this.props.size || 50
 
