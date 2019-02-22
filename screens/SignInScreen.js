@@ -21,36 +21,51 @@ class SignInScreen extends React.Component {
   }
 
   authenticate = async () => {
+    this.setState({ loading: true })
+
     let auth = new Authentication()
     let token = await auth.loginWithAuth0()
-    this.setState({ loading: true })
     let userInfo = await auth.getUserInfo(token.access_token)
 
-    let signInResponse = await this.signInToAPI(token.access_token, userInfo)
-    let user = await signInResponse.json()
-
-    // On successful login save tokens
-    SecureStore.setItemAsync('refreshToken', token.refresh_token)
-
     this.props.UserStore.updateAccessToken(token.access_token)
-    this.props.UserStore.updateUserId(user.id)
-    this.props.UserStore.updateName(user.name)
-    this.props.UserStore.updatePicture(user.picture)
 
-    // handle response code, navigate to SignUpScreen if 201
-    if (signInResponse.status === 201) {
+    let signInResponse = await this.signInToAPI(token.access_token, userInfo)
+
+    // handle response code, navigate to SignUpScreen if User not found
+    if (signInResponse.status === 200) {
+      if (await !signInResponse.ok) {
+        console.log('User Response:', signInResponse)
+        throw new Error('Network request failed (!userResponse.ok)')
+      }
+
+      // On successful login save tokens
+      SecureStore.setItemAsync('refreshToken', token.refresh_token)
+
+      let user = await signInResponse.json()
+
+      this.props.UserStore.updateUserId(user.id)
+      this.props.UserStore.updateName(user.name)
+      this.props.UserStore.updatePicture(user.picture)
+
+      // Signed in
+      console.info(`User ${user.id} signed in`)
+      this.props.navigation.navigate('App')
+    } else if (signInResponse.status === 404) {
       // Must sign up
       console.info(`Signing up user`, userInfo)
       this.props.navigation.navigate('SignUp', { user: userInfo })
     } else {
-      // Signed in
-      console.info(`User ${user.id} signed in`)
-      this.props.navigation.navigate('App')
+      console.log('Authentication failed', {
+        signInResponse: signInResponse,
+        token: token
+      })
+      throw new Error('Error signing in')
     }
   }
 
   /**
    * FIXME: API connection needs to be in provider
+   * (AuthProvider.signIn(userInfo))
    *
    * POST /signin
    * @return Promise
@@ -81,7 +96,7 @@ class SignInScreen extends React.Component {
    */
   signInToAPI = async (accessToken, userInfo) => {
     let url = getEnvVars().apiUrl + '/signin'
-    let userResponse = await fetch(url, {
+    let response = await fetch(url, {
       method: 'POST',
       headers: getHeaders(accessToken),
       body: JSON.stringify(userInfo)
@@ -89,12 +104,7 @@ class SignInScreen extends React.Component {
       throw new Error(error)
     })
 
-    if (await !userResponse.ok) {
-      console.log('User Response:', userResponse)
-      throw new Error('Network request failed (!userResponse.ok)')
-    }
-
-    return userResponse
+    return response
   }
 
   render () {
