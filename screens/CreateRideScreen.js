@@ -4,6 +4,7 @@ import Colors from '../constants/Colors'
 import CreateRide from '../components/new_ride/CreateRide'
 import { Header, StackActions, NavigationActions } from 'react-navigation'
 import RidesProvider from '../providers/RidesProvider'
+import { observer, inject } from 'mobx-react'
 
 /**
  * Setup ride here - difficulty, trails, friends, ...
@@ -14,7 +15,10 @@ import RidesProvider from '../providers/RidesProvider'
  * @class CreateRideScreen
  * @extends {React.Component}
  */
-export default class CreateRideScreen extends React.Component {
+export default
+@inject('UserStore')
+@observer
+class CreateRideScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       header: null
@@ -33,8 +37,7 @@ export default class CreateRideScreen extends React.Component {
         difficulty: null,
         datetime: null,
         terrain: null,
-        createdBy: 1
-        // TODO: createdBy will be added from logged in user
+        createdBy: this.props.UserStore.userId
       }
     }
   }
