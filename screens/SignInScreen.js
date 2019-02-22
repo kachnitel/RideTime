@@ -4,13 +4,17 @@ import {
   Button,
   StyleSheet,
   Text,
-  View
+  View,
+  ActivityIndicator
 } from 'react-native'
 import Authentication from '../src/Authentication'
 import { observer, inject } from 'mobx-react'
 import { getHeaders } from '../providers/Connection'
 import { SecureStore } from 'expo'
 import { getEnvVars } from '../constants/Env'
+import BulletList from '../components/lists/BulletList'
+import TerrainIcon from '../components/icons/TerrainIcon'
+import Colors from '../constants/Colors'
 
 export default
 @inject('UserStore')
@@ -109,15 +113,23 @@ class SignInScreen extends React.Component {
 
   render () {
     return (
-      <View style={styles.container}>
-        { this.state.loading
-          ? <Text style={styles.title}>Loading...</Text>
-          : <View>
-            <Text style={styles.title}>Example: Auth0 login</Text>
-            <Button title='Login with Auth0' onPress={this.authenticate} />
+      this.state.loading
+        ? <View style={styles.container}>
+          <Text style={styles.title}>Loading...</Text>
+          <ActivityIndicator size='small' color={Colors.tintColor} />
+        </View>
+        : <View style={styles.container}>
+          <TerrainIcon terrain='trail' size={100} />
+          <View style={styles.introText} >
+            <BulletList data={[
+              { key: 'Mountain biking, social!' },
+              { key: 'Ride with your friends' },
+              { key: 'Meet new riders wherever you go' }
+            ]} />
           </View>
-        }
-      </View>
+          {/* <Text style={styles.title}>Example: Auth0 login</Text> */}
+          <Button title='Login / Sign Up' onPress={this.authenticate} color={Colors.tintColor} />
+        </View>
     )
   }
 }
@@ -133,5 +145,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     marginTop: 40
+  },
+  introText: {
+    height: 100
   }
 })

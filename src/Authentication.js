@@ -55,7 +55,7 @@ export default class Authentication {
 
       return token
       // this.handleParams(token)
-    }
+    } // FIXME: handle fail https://docs.expo.io/versions/latest/sdk/auth-session/#returns
   }
 
   /**

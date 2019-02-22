@@ -1,11 +1,11 @@
 import React from 'react'
 import { TextInput, View, StyleSheet } from 'react-native'
 import CoverPicture from './CoverPicture'
-import ProfilePicture from './ProfilePicture'
 import ProfileSummary from './ProfileSummary'
 import styles, { profilePictureSize } from './ProfileHeaderStyle'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Layout from '../../constants/Layout'
+import EditPicture from './EditPicture';
 
 export default class EditProfileHeader extends React.Component {
   constructor (props) {
@@ -39,6 +39,7 @@ export default class EditProfileHeader extends React.Component {
           user={this.props.user}
           style={styles.coverPicture}
         />
+        {/* TODO: Use EditPicture */}
         <Icon
           name='edit'
           style={{
@@ -46,15 +47,7 @@ export default class EditProfileHeader extends React.Component {
           }}
         />
         <View style={styles.businessCard}>
-          <View style={styles.profilePicture} >
-            <ProfilePicture rider={this.props.user} size={profilePictureSize} />
-            <Icon
-              name='edit'
-              style={{
-                ...editStyles.editIcon, ...editStyles.editIconProfilePicture
-              }}
-            />
-          </View>
+          <EditPicture rider={this.props.user} size={profilePictureSize} />
           <TextInput
             style={styles.name}
             underlineColorAndroid='white'

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, StyleSheet } from 'react-native'
 
@@ -20,6 +21,11 @@ export default class ProfilePicture extends React.Component {
       />
     )
   }
+}
+
+ProfilePicture.propTypes = {
+  rider: PropTypes.object,
+  size: PropTypes.number
 }
 
 const styles = StyleSheet.create({
