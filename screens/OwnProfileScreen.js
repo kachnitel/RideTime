@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, ToastAndroid, TouchableHighlight, View, Alert } from 'react-native'
+import { StyleSheet, ToastAndroid, TouchableHighlight, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import EditProfileHeader from '../components/profile/EditProfileHeader'
 import ProfileHeader from '../components/profile/ProfileHeader'
@@ -7,8 +7,8 @@ import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 import RidersProvider from '../providers/RidersProvider'
 import { observer, inject } from 'mobx-react'
-import { SecureStore } from 'expo'
 import Button from '../components/Button'
+import SignOutButton from '../components/SignOutButton'
 
 /**
  * TODO:
@@ -26,7 +26,6 @@ class OwnProfileScreen extends React.Component {
       title: 'My Profile',
       headerRight: (
         <View style={styles.buttonContainer}>
-          {/* TODO: Button & SignOutButton (navigation as a prop, owns _signOut) components */}
           <View style={styles.navBarButton}>
             <Button
               title={navigation.getParam('editing') ? 'Save' : 'Edit'}
@@ -36,11 +35,7 @@ class OwnProfileScreen extends React.Component {
             />
           </View>
           <View style={styles.navBarButton}>
-            <Button
-              title='Sign out'
-              // default value suppresses warning thrown before param is obtained
-              onPress={navigation.getParam('signOut', () => {})}
-            />
+            <SignOutButton navigation={navigation} />
           </View>
         </View>
       ),
@@ -74,31 +69,6 @@ class OwnProfileScreen extends React.Component {
     this.setState((prevState, props) => ({ editing: !prevState.editing }))
   }
 
-  _signOut = () => {
-    console.info(`User ${this.props.UserStore.userId} signing out`)
-    Alert.alert(
-      'Sign out',
-      'Are you sure?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.info('Sign out cancelled'),
-          style: 'cancel'
-        },
-        {
-          text: 'OK',
-          onPress: () => {
-            SecureStore.deleteItemAsync('refreshToken')
-            this.props.UserStore.reset()
-
-            this.props.navigation.navigate('Auth')
-          }
-        }
-      ],
-      { onDismiss: () => console.info('Sign out cancelled') }
-    )
-  }
-
   saveProfile = (updatedUser) => {
     // Only send updated fields
     let update = {}
@@ -127,7 +97,6 @@ class OwnProfileScreen extends React.Component {
 
   async componentDidMount () {
     this.props.navigation.setParams({
-      signOut: this._signOut,
       editProfile: this._editProfile,
       editing: this.state.editing,
       loadingUser: true

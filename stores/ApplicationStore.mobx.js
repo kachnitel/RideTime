@@ -3,7 +3,7 @@ import { observable, action, computed } from 'mobx'
 // import { AsyncStorage } from 'react-native'
 
 class ApplicationStore {
-  @observable _accessToken = ''
+  @observable _accessToken = null
 
   @action updateAccessToken (newValue) { this._accessToken = newValue }
   @computed get accessToken () { return this._accessToken }
