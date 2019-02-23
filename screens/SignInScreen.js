@@ -15,6 +15,7 @@ import { getEnvVars } from '../constants/Env'
 import BulletList from '../components/lists/BulletList'
 import TerrainIcon from '../components/icons/TerrainIcon'
 import Colors from '../constants/Colors'
+import Layout from '../constants/Layout';
 
 export default
 @inject('UserStore')
@@ -115,20 +116,22 @@ class SignInScreen extends React.Component {
     return (
       this.state.loading
         ? <View style={styles.container}>
-          <Text style={styles.title}>Loading...</Text>
+          <Text style={styles.loadingText}>Loading...</Text>
           <ActivityIndicator size='small' color={Colors.tintColor} />
         </View>
         : <View style={styles.container}>
           <TerrainIcon terrain='trail' size={100} />
           <View style={styles.introText} >
-            <BulletList data={[
-              { key: 'Mountain biking, social!' },
-              { key: 'Ride with your friends' },
-              { key: 'Meet new riders wherever you go' }
-            ]} />
+            <BulletList
+              data={[
+                { key: 'Mountain biking made social!' },
+                { key: 'Plan rides with your friends.' },
+                { key: 'Ride with locals wherever you go!' }
+              ]}
+              itemStyle={styles.bulletListItem}
+            />
           </View>
-          {/* <Text style={styles.title}>Example: Auth0 login</Text> */}
-          <Button title='Login / Sign Up' onPress={this.authenticate} color={Colors.tintColor} />
+          <Button title='Get started!' onPress={this.authenticate} color={Colors.tintColor} />
         </View>
     )
   }
@@ -141,12 +144,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  title: {
+  loadingText: {
     fontSize: 20,
     textAlign: 'center',
     marginTop: 40
   },
   introText: {
-    height: 100
+    height: Layout.window.hp(20),
+    alignItems: 'center'
+  },
+  bulletListItem: {
+    flex: 1,
+    alignSelf: 'center',
+    fontSize: Layout.window.hp(3),
+    color: Colors.tintColor
   }
 })
