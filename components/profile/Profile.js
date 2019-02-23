@@ -10,8 +10,8 @@ import { Favourites } from './Favourites'
 import Layout from '../../constants/Layout'
 
 export default class Profile extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       upcomingRide: null,
       loadingRide: true
