@@ -1,7 +1,6 @@
 /* global fetch */
 import React from 'react'
 import {
-  Button,
   StyleSheet,
   Text,
   View,
@@ -16,6 +15,7 @@ import BulletList from '../components/lists/BulletList'
 import TerrainIcon from '../components/icons/TerrainIcon'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
+import Button from '../components/Button'
 
 export default
 @inject('UserStore')
@@ -60,9 +60,6 @@ class SignInScreen extends React.Component {
     } else if (signInResponse.status === 404) {
       // Must sign up
       console.info(`Signing up user`, userInfo)
-
-      // Ensure UserStore is clear. Less than ideal solution
-      this.props.UserStore.reset()
 
       this.props.navigation.navigate('SignUp', { user: userInfo })
     } else {
@@ -137,7 +134,7 @@ class SignInScreen extends React.Component {
               itemStyle={styles.bulletListItem}
             />
           </View>
-          <Button title='Get started!' onPress={this.authenticate} color={Colors.tintColor} />
+          <Button title='Get started!' onPress={this.authenticate} />
         </View>
     )
   }
@@ -146,7 +143,7 @@ class SignInScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.darkBackground,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -163,6 +160,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'center',
     fontSize: Layout.window.hp(3),
-    color: Colors.tintColor
+    color: '#fff'
   }
 })
