@@ -19,6 +19,7 @@ import Layout from '../constants/Layout'
 
 export default
 @inject('UserStore')
+@inject('ApplicationStore')
 @observer
 class SignInScreen extends React.Component {
   state = {
@@ -32,7 +33,7 @@ class SignInScreen extends React.Component {
     let token = await auth.loginWithAuth0()
     let userInfo = await auth.getUserInfo(token.access_token)
 
-    this.props.UserStore.updateAccessToken(token.access_token)
+    this.props.ApplicationStore.updateAccessToken(token.access_token)
 
     let signInResponse = await this.signInToAPI(token.access_token, userInfo)
 
@@ -62,7 +63,6 @@ class SignInScreen extends React.Component {
 
       // Ensure UserStore is clear. Less than ideal solution
       this.props.UserStore.reset()
-      this.props.UserStore.updateAccessToken(token.access_token)
 
       this.props.navigation.navigate('SignUp', { user: userInfo })
     } else {

@@ -11,6 +11,7 @@ import Authentication from '../src/Authentication'
 
 export default
 @inject('UserStore')
+@inject('ApplicationStore')
 @observer
 class AuthLoadingScreen extends React.Component {
   constructor (props) {
@@ -28,7 +29,7 @@ class AuthLoadingScreen extends React.Component {
       let refreshToken = await SecureStore.getItemAsync('refreshToken')
       let auth = new Authentication()
       let token = await auth.refreshToken(refreshToken)
-      this.props.UserStore.updateAccessToken(token.access_token)
+      this.props.ApplicationStore.updateAccessToken(token.access_token)
     }
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.

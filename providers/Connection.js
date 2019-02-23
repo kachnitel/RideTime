@@ -1,6 +1,6 @@
 /* global fetch */
 import { Alert } from 'react-native'
-import UserStore from '../stores/UserStore.mobx'
+import ApplicationStore from '../stores/ApplicationStore.mobx'
 import { getEnvVars } from '../constants/Env'
 
 const handleErrorResponse = (res) => {
@@ -19,7 +19,7 @@ export const get = (path) => {
   console.log('GET', url)
 
   return fetch(url, {
-    headers: getHeaders(UserStore.accessToken)
+    headers: getHeaders(ApplicationStore.accessToken)
   })
     .then((res) => {
       if (!res.ok) {
@@ -45,7 +45,7 @@ const submitData = (method, path, data) => {
 
   return fetch(url, {
     method: method,
-    headers: getHeaders(UserStore.accessToken),
+    headers: getHeaders(ApplicationStore.accessToken),
     body: dataJson
   })
     .then((res) => {

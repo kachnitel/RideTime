@@ -11,7 +11,6 @@ class UserStore {
   @persist @observable _email = ''
   @persist @observable _hometown = ''
   // TODO: level, terrain, phone, ...
-  @observable _accessToken = ''
 
   // Picture that hasn't been uploaded yet
   @observable _tempPicture = null
@@ -31,9 +30,6 @@ class UserStore {
   @action updateHometown (newValue) { this._hometown = newValue }
   @computed get hometown () { return this._hometown }
 
-  @action updateAccessToken (newValue) { this._accessToken = newValue }
-  @computed get accessToken () { return this._accessToken }
-
   @action updateTempPicture (newValue) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }
 
@@ -44,14 +40,13 @@ class UserStore {
    *
    * @memberof UserStore
    */
-  @action reset (preserveToken = false) {
+  @action reset () {
     this.updateUserId(UserStore.prototype._userId)
     this.updateName(UserStore.prototype._name)
     this.updatePicture(UserStore.prototype._picture)
     this.updateEmail(UserStore.prototype._email)
     this.updateHometown(UserStore.prototype._hometown)
     this.updateTempPicture(UserStore.prototype._tempPicture)
-    !preserveToken && this.updateAccessToken(UserStore.prototype._accessToken)
   }
 }
 

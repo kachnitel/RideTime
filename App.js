@@ -6,6 +6,7 @@ import AppContainer from './navigation/AppNavigator'
 import PropTypes from 'prop-types'
 import { Provider, observer } from 'mobx-react'
 import UserStore from './stores/UserStore.mobx'
+import ApplicationStore from './stores/ApplicationStore.mobx'
 
 /**
  * Set default Text style
@@ -38,8 +39,10 @@ class App extends React.Component {
       return (
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
-          <Provider UserStore={UserStore}>
-
+          <Provider
+            UserStore={UserStore}
+            ApplicationStore={ApplicationStore}
+          >
             <AppContainer />
           </Provider>
         </View>
