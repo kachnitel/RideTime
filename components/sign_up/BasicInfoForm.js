@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, StyleSheet, Button } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import EditPicture from '../profile/EditPicture'
 import Layout from '../../constants/Layout'
 import FormTextInput from './FormTextInput'
 import { observer, inject } from 'mobx-react'
+import Button from '../Button'
 
 export default
 @inject('UserStore')
