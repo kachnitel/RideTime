@@ -1,10 +1,10 @@
 import React from 'react'
-import { StyleSheet, ScrollView, Button, KeyboardAvoidingView, ToastAndroid } from 'react-native'
-import Colors from '../constants/Colors'
+import { StyleSheet, ScrollView, KeyboardAvoidingView, ToastAndroid } from 'react-native'
 import CreateRide from '../components/new_ride/CreateRide'
 import { Header, StackActions, NavigationActions } from 'react-navigation'
 import RidesProvider from '../providers/RidesProvider'
 import { observer, inject } from 'mobx-react'
+import Button from '../components/Button'
 
 /**
  * Setup ride here - difficulty, trails, friends, ...
@@ -81,7 +81,6 @@ class CreateRideScreen extends React.Component {
         <Button
           title='Create ride'
           onPress={this.saveRide}
-          color={Colors.tintColor}
         />
       </KeyboardAvoidingView>
     )

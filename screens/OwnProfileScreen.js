@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, StyleSheet, ToastAndroid, TouchableHighlight, View, Alert } from 'react-native'
+import { StyleSheet, ToastAndroid, TouchableHighlight, View, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import EditProfileHeader from '../components/profile/EditProfileHeader'
 import ProfileHeader from '../components/profile/ProfileHeader'
@@ -8,6 +8,7 @@ import Layout from '../constants/Layout'
 import RidersProvider from '../providers/RidersProvider'
 import { observer, inject } from 'mobx-react'
 import { SecureStore } from 'expo'
+import Button from '../components/Button'
 
 /**
  * TODO:
@@ -26,22 +27,19 @@ class OwnProfileScreen extends React.Component {
       headerRight: (
         <View style={styles.buttonContainer}>
           {/* TODO: Button & SignOutButton (navigation as a prop, owns _signOut) components */}
-          <View style={styles.button}>
+          <View style={styles.navBarButton}>
             <Button
               title={navigation.getParam('editing') ? 'Save' : 'Edit'}
               // default value suppresses warning thrown before param is obtained
               onPress={navigation.getParam('editProfile', () => {})}
-              color={Colors.tintColor}
               disabled={navigation.getParam('loadingUser', true)}
             />
           </View>
-          <View style={styles.button}>
+          <View style={styles.navBarButton}>
             <Button
               title='Sign out'
               // default value suppresses warning thrown before param is obtained
               onPress={navigation.getParam('signOut', () => {})}
-              color={Colors.tintColor}
-              style={styles.button}
             />
           </View>
         </View>
@@ -166,7 +164,7 @@ const styles = StyleSheet.create({
     paddingRight: Layout.window.wp(1),
     flexDirection: 'row'
   },
-  button: {
+  navBarButton: {
     margin: Layout.window.wp(1)
   },
   headerMenuIconContainer: {
