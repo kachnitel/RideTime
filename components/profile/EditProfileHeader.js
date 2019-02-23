@@ -5,7 +5,7 @@ import ProfileSummary from './ProfileSummary'
 import styles, { profilePictureSize } from './ProfileHeaderStyle'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Layout from '../../constants/Layout'
-import EditPicture from './EditPicture';
+import EditPicture from './EditPicture'
 
 export default class EditProfileHeader extends React.Component {
   constructor (props) {
@@ -39,7 +39,7 @@ export default class EditProfileHeader extends React.Component {
           user={this.props.user}
           style={styles.coverPicture}
         />
-        {/* TODO: Use EditPicture */}
+        {/* TODO: Use EditPicture with repositioned icon (override icon style) */}
         <Icon
           name='edit'
           style={{
@@ -47,7 +47,7 @@ export default class EditProfileHeader extends React.Component {
           }}
         />
         <View style={styles.businessCard}>
-          <EditPicture rider={this.props.user} size={profilePictureSize} />
+          <EditPicture picture={this.props.user.picture} size={profilePictureSize} />
           <TextInput
             style={styles.name}
             underlineColorAndroid='white'
@@ -86,9 +86,6 @@ const editStyles = StyleSheet.create({
     color: 'white',
     backgroundColor: 'rgba(255,255,255,0.75);',
     right: 5
-  },
-  editIconProfilePicture: {
-    bottom: 5
   },
   editIconCoverPicture: {
     top: 5

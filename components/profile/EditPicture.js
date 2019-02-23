@@ -27,12 +27,11 @@ export default class EditPicture extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={this._selectPicture}>
         <View style={this.props.style} >
-          <ProfilePicture rider={this.props.rider} size={this.props.size} />
+          <ProfilePicture picture={this.props.picture} size={this.props.size} />
           <Icon
             name='edit'
             style={{
               ...styles.editIcon,
-              ...styles.editIconProfilePicture,
               fontSize: this.props.iconSize || this.props.size * 0.25
             }}
           />
@@ -54,12 +53,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
     color: 'white',
     backgroundColor: 'rgba(255,255,255,0.75);',
-    right: 5
-  },
-  editIconProfilePicture: {
+    right: 5,
     bottom: 5
-  },
-  editIconCoverPicture: {
-    top: 5
   }
 })

@@ -9,7 +9,7 @@ export default class RiderItem extends React.Component {
       // Rider should contain his details fetched in list
       // To render eg. little exp. icon in corner of image
       <View style={styles.listItem}>
-        <ProfilePicture rider={this.props.rider} size={Layout.window.hp(7)} />
+        <ProfilePicture picture={this.props.rider.picture} size={Layout.window.hp(7)} />
         <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
           {this.props.rider.name}
         </Text>
