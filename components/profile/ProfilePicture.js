@@ -21,7 +21,7 @@ export default class ProfilePicture extends React.Component {
 }
 
 ProfilePicture.propTypes = {
-  rider: PropTypes.object,
+  picture: PropTypes.string,
   size: PropTypes.number
 }
 
