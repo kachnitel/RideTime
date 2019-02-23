@@ -1,14 +1,19 @@
 import React from 'react'
-import { Text, TextInput, View, StyleSheet } from 'react-native'
+import { TextInput, View, StyleSheet } from 'react-native'
 import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
+import InputTitle from './InputTitle'
 
 export default class FormTextInput extends React.Component {
   render () {
     return (
       <View style={this.props.containerStyle}>
-        <Text style={styles.title}>{this.props.title}</Text>
-        <TextInput {...this.props} style={{ ...this.props.style, ...styles.input }} />
+        <InputTitle>{this.props.title}</InputTitle>
+        <TextInput
+          {...this.props}
+          style={{ ...this.props.style, ...styles.input }}
+          placeholderTextColor='#666'
+        />
       </View>
     )
   }

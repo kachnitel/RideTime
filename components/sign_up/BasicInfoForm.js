@@ -1,10 +1,10 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import EditPicture from '../profile/EditPicture'
 import Layout from '../../constants/Layout'
 import FormTextInput from './FormTextInput'
 import { observer, inject } from 'mobx-react'
-import Button from '../Button'
+import Form from './Form'
 
 export default
 @inject('UserStore')
@@ -16,7 +16,7 @@ class BasicInfoForm extends React.Component {
 
   render () {
     return (
-      <View style={styles.container}>
+      <Form>
         {/* TODO: cover picture */}
         <EditPicture
           picture={this.props.UserStore.tempPicture}
@@ -41,22 +41,14 @@ class BasicInfoForm extends React.Component {
           title='Your hometown'
           containerStyle={styles.inputContainer}
           onChangeText={(val) => this.props.UserStore.updateHometown(val)}
+          placeholder='Squamish, BC'
         />
-        <Button
-          title='Next'
-          onPress={() => { console.log(this.props.UserStore) }}
-        />
-      </View>
+      </Form>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   inputContainer: {
     padding: Layout.window.hp(3)
   }
