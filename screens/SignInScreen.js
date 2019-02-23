@@ -1,4 +1,3 @@
-/* global fetch */
 import React from 'react'
 import {
   StyleSheet,
@@ -8,14 +7,14 @@ import {
 } from 'react-native'
 import Authentication from '../src/Authentication'
 import { observer, inject } from 'mobx-react'
-import { getHeaders } from '../providers/Connection'
+import { post } from '../providers/Connection'
 import { SecureStore } from 'expo'
-import { getEnvVars } from '../constants/Env'
 import BulletList from '../components/lists/BulletList'
 import TerrainIcon from '../components/icons/TerrainIcon'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 import Button from '../components/Button'
+import NetworkError from '../src/NetworkError'
 
 export default
 @inject('UserStore')
@@ -35,19 +34,18 @@ class SignInScreen extends React.Component {
 
     this.props.ApplicationStore.updateAccessToken(token.access_token)
 
-    let signInResponse = await this.signInToAPI(token.access_token, userInfo)
+    post('signin', userInfo)
+      .then((responseBody) => this.handleSignIn(responseBody, token))
+      // navigate to SignUpScreen if User not found
+      .catch((error) => this.maybeSignUpOrError(error, userInfo, token))
+  }
 
-    // handle response code, navigate to SignUpScreen if User not found
-    if (signInResponse.status === 200) {
-      if (await !signInResponse.ok) {
-        console.log('User Response:', signInResponse)
-        throw new Error('Network request failed (!userResponse.ok)')
-      }
-
+  handleSignIn = (signInResponse, token) => {
+    if (Number.isInteger(signInResponse.id)) {
       // On successful login save tokens
       SecureStore.setItemAsync('refreshToken', token.refresh_token)
 
-      let user = await signInResponse.json()
+      let user = signInResponse
 
       this.props.UserStore.updateUserId(user.id)
       this.props.UserStore.updateName(user.name)
@@ -57,62 +55,43 @@ class SignInScreen extends React.Component {
       // Signed in
       console.info(`User ${user.id} signed in`)
       this.props.navigation.navigate('App')
-    } else if (signInResponse.status === 404) {
+    } else {
+      console.log('Authentication error:', {
+        signInResponse: signInResponse,
+        token: token
+      })
+      throw new Error('Invalid user ID:' + signInResponse.id)
+    }
+  }
+
+  /**
+   * Redirect to SignUp if user not found
+   * Otherwise throw an Error
+   *
+   * @param NetworkError error
+   *
+   * @memberof SignInScreen
+   */
+  maybeSignUpOrError = (error, userInfo, token) => {
+    if (!(error instanceof NetworkError)) {
+      throw error
+    }
+
+    if (error.body !== undefined && error.statusCode === 404) {
       // Must sign up
       console.info(`Signing up user`, userInfo)
 
       this.props.navigation.navigate('SignUp', { user: userInfo })
     } else {
-      console.log('Authentication failed', {
-        signInResponse: signInResponse,
-        token: token
+      console.log('Sign in failed:', {
+        token: token,
+        errorMessage: error.message,
+        errorCode: error.statusCode,
+        errorBody: error.body
       })
+      this.setState({ loading: false })
       throw new Error('Error signing in')
     }
-  }
-
-  /**
-   * FIXME: API connection needs to be in provider
-   * (AuthProvider.signIn(userInfo))
-   *
-   * POST /signin
-   * @return Promise
-   * {
-   *   "id": 1,
-   *   "name": "Duck",
-   *   "hometown": "",
-   *   "events": [
-   *       {
-   *           "id": 22,
-   *           "datetime": "2019-02-08T23:25:00+00:00",
-   *           "title": "Alice Lake ride"
-   *       }
-   *   ],
-   *   "friends": [
-   *       {
-   *           "id": 1,
-   *           "name": "Duck"
-   *       }
-   *   ],
-   *   "level": 0,
-   *   "preferred": 0,
-   *   "favourites": "",
-   *   "picture": null,
-   *   "email": "kachnitel@gmail.com"
-   * }
-   * @memberof SignInScreen
-   */
-  signInToAPI = async (accessToken, userInfo) => {
-    let url = getEnvVars().apiUrl + '/signin'
-    let response = await fetch(url, {
-      method: 'POST',
-      headers: getHeaders(accessToken),
-      body: JSON.stringify(userInfo)
-    }).catch((error) => {
-      throw new Error(error)
-    })
-
-    return response
   }
 
   render () {
@@ -150,7 +129,8 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 20,
     textAlign: 'center',
-    marginTop: 40
+    marginTop: 40,
+    color: '#fff'
   },
   introText: {
     height: Layout.window.hp(20),

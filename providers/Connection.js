@@ -1,16 +1,29 @@
 /* global fetch */
-import { Alert } from 'react-native'
 import ApplicationStore from '../stores/ApplicationStore.mobx'
 import { getEnvVars } from '../constants/Env'
+import AppError from '../src/AppError'
+import NetworkError from '../src/NetworkError'
 
-const handleErrorResponse = (res) => {
-  console.log('RES', res)
-  throw new Error('Network response was not "ok".')
+const validateResponse = (res) => {
+  if (!res.ok) {
+    let error = new NetworkError('Network error')
+    error.setStatusCode(res.status)
+    error.setBody(res.json())
+
+    throw error
+  }
 }
 
-const handleError = (error) => {
-  Alert.alert('Network error')
-  throw new Error(error)
+const handleError = (message, err) => {
+  // Do not catch own error
+  if (err instanceof NetworkError) {
+    throw err
+  }
+
+  let error = new AppError(message)
+  error.setData({ error: JSON.stringify(err) })
+
+  throw error
 }
 
 export const get = (path) => {
@@ -22,13 +35,11 @@ export const get = (path) => {
     headers: getHeaders(ApplicationStore.accessToken)
   })
     .then((res) => {
-      if (!res.ok) {
-        handleErrorResponse(res)
-      }
+      validateResponse(res)
       return res.json()
     })
     .catch((error) => {
-      handleError(error)
+      handleError('Network request failed', error)
     })
 }
 
@@ -49,13 +60,11 @@ const submitData = (method, path, data) => {
     body: dataJson
   })
     .then((res) => {
-      if (!res.ok) {
-        handleErrorResponse(res)
-      }
+      validateResponse(res)
       return res.json()
     })
     .catch((error) => {
-      handleError(error)
+      handleError('Network error', error)
     })
 }
 
