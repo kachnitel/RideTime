@@ -51,6 +51,7 @@ class SignInScreen extends React.Component {
       this.props.UserStore.updateUserId(user.id)
       this.props.UserStore.updateName(user.name)
       this.props.UserStore.updatePicture(user.picture)
+      // TODO: all..
 
       // Signed in
       console.info(`User ${user.id} signed in`)
@@ -58,6 +59,11 @@ class SignInScreen extends React.Component {
     } else if (signInResponse.status === 404) {
       // Must sign up
       console.info(`Signing up user`, userInfo)
+
+      // Ensure UserStore is clear. Less than ideal solution
+      this.props.UserStore.reset()
+      this.props.UserStore.updateAccessToken(token.access_token)
+
       this.props.navigation.navigate('SignUp', { user: userInfo })
     } else {
       console.log('Authentication failed', {
