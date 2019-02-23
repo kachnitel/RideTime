@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import Authentication from '../src/Authentication'
 import { observer, inject } from 'mobx-react'
-import { post } from '../providers/Connection'
+import { post } from '../src/Connection'
 import { SecureStore } from 'expo'
 import BulletList from '../components/lists/BulletList'
 import TerrainIcon from '../components/icons/TerrainIcon'

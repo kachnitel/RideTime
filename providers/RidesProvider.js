@@ -1,4 +1,4 @@
-import { get, post } from './Connection'
+import { get, post } from '../src/Connection'
 
 export default class RidesProvider {
   getRides = () => {

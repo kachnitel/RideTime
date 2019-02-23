@@ -1,8 +1,8 @@
 /* global fetch */
 import ApplicationStore from '../stores/ApplicationStore.mobx'
 import { getEnvVars } from '../constants/Env'
-import AppError from '../src/AppError'
-import NetworkError from '../src/NetworkError'
+import AppError from './AppError'
+import NetworkError from './NetworkError'
 
 const validateResponse = (res) => {
   if (!res.ok) {

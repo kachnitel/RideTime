@@ -1,4 +1,4 @@
-import { get, put } from './Connection'
+import { get, put } from '../src/Connection'
 
 export default class RidersProvider {
   /**
