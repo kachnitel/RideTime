@@ -15,7 +15,7 @@ import { getEnvVars } from '../constants/Env'
 import BulletList from '../components/lists/BulletList'
 import TerrainIcon from '../components/icons/TerrainIcon'
 import Colors from '../constants/Colors'
-import Layout from '../constants/Layout';
+import Layout from '../constants/Layout'
 
 export default
 @inject('UserStore')
