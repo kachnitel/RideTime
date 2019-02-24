@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import EditPicture from '../profile/EditPicture'
 import Layout from '../../constants/Layout'
-import FormTextInput from './FormTextInput'
+import FormTextInput from '../form/FormTextInput'
 import { observer, inject } from 'mobx-react'
 import Form from './Form'
 
