@@ -6,12 +6,15 @@ import InputTitle from './InputTitle'
 
 export default class FormTextInput extends React.Component {
   render () {
+    let inputStyle = this.props.required && !this.props.value
+      ? { ...this.props.style, ...styles.input, borderBottomColor: 'red' }
+      : { ...this.props.style, ...styles.input }
     return (
       <View style={this.props.containerStyle}>
         <InputTitle>{this.props.title}</InputTitle>
         <TextInput
           {...this.props}
-          style={{ ...this.props.style, ...styles.input }}
+          style={inputStyle}
           placeholderTextColor='#666'
         />
       </View>
@@ -25,7 +28,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     color: '#fff',
     padding: Layout.window.hp(1),
-    width: Layout.window.wp(50)
+    width: Layout.window.wp(65)
   },
   title: {
     fontSize: Layout.window.hp(2),

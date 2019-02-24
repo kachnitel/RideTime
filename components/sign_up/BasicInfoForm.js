@@ -29,12 +29,14 @@ class BasicInfoForm extends React.Component {
           title='Your name'
           containerStyle={styles.inputContainer}
           onChangeText={(val) => this.props.UserStore.updateName(val)}
+          required
         />
         <FormTextInput
           value={this.props.UserStore.email}
           title='Your E-Mail'
           containerStyle={styles.inputContainer}
           onChangeText={(val) => this.props.UserStore.updateEmail(val)}
+          required
         />
         <FormTextInput
           value={this.props.UserStore.hometown}
