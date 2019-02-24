@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
+import PropTypes from 'prop-types'
 
 /**
- * create a clone of {this.props.children}
- * TODO only support one child
+ * use props.outlineStyle{color} to change
  * @prop outlineStyle
+ * @prop thicknedd
  */
 export default class OutlineIcon extends Component {
   render () {
@@ -25,6 +26,13 @@ export default class OutlineIcon extends Component {
       {icon}
     </View>
   }
+}
+
+OutlineIcon.propTypes = {
+  children: PropTypes.any,
+  outlineStyle: PropTypes.any,
+  style: PropTypes.any,
+  thickness: PropTypes.number
 }
 
 const stylesWProps = (props, thickness) => StyleSheet.create({
