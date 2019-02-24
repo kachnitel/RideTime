@@ -4,6 +4,8 @@ import Layout from '../../constants/Layout'
 import FormTextInput from './FormTextInput'
 import { observer, inject } from 'mobx-react'
 import Form from './Form'
+import DifficultyIcon from '../icons/DifficultyIcon'
+import SelectDifficulty from './SelectDifficulty'
 
 export default
 @inject('UserStore')
@@ -14,6 +16,8 @@ class DetailsForm extends React.Component {
   }
 
   render () {
+    let options = DifficultyIcon.icons
+    console.log(options)
     return (
       <Form>
         <FormTextInput
@@ -23,6 +27,7 @@ class DetailsForm extends React.Component {
           containerStyle={styles.inputContainer}
           onChangeText={() => {}}
         />
+        <SelectDifficulty />
       </Form>
     )
   }

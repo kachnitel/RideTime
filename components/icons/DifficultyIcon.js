@@ -15,36 +15,47 @@ import PropTypes from 'prop-types'
  * @extends {RideTimeIcon}
  */
 export default class DifficultyIcon extends RideTimeIcon {
-  blue = '#069';
-  green = '#393';
-  orange = '#f90';
-  black = 'black';
+  static colors = {
+    blue: '#069',
+    green: '#393',
+    orange: '#f90',
+    black: 'black'
+  }
 
   static icons = {
-    0: SvgSkiTrailRatingSymbolGreenCircle,
-    1: SvgSkiTrailRatingSymbolBlueSquare,
-    2: SvgSkiTrailRatingSymbolBlackDiamond,
-    3: SvgSkiTrailRatingSymbolDoubleBlackDiamond,
-    4: SvgSkiTrailRatingSymbolTerrainPark
-  };
+    0: {
+      class: SvgSkiTrailRatingSymbolGreenCircle,
+      label: 'Beginner',
+      color: DifficultyIcon.colors.green
+    },
+    1: {
+      class: SvgSkiTrailRatingSymbolBlueSquare,
+      label: 'Intermediate',
+      color: DifficultyIcon.colors.blue
+    },
+    2: {
+      class: SvgSkiTrailRatingSymbolBlackDiamond,
+      label: 'Advanced',
+      color: DifficultyIcon.colors.black
+    },
+    3: {
+      class: SvgSkiTrailRatingSymbolDoubleBlackDiamond,
+      label: 'Expert',
+      color: DifficultyIcon.colors.black
+    },
+    4: {
+      class: SvgSkiTrailRatingSymbolTerrainPark,
+      label: 'Other',
+      color: DifficultyIcon.colors.orange
+    }
+  }
 
   render () {
     let difficultyLevel = this.props.d
 
-    let iconColor = this.black
-    switch (difficultyLevel) {
-      case 0:
-        iconColor = this.green
-        break
-      case 1:
-        iconColor = this.blue
-        break
-      case 4:
-        iconColor = this.orange
-        break
-    }
+    let iconColor = DifficultyIcon.icons[difficultyLevel].color
+    let Icon = DifficultyIcon.icons[difficultyLevel].class
 
-    let Icon = DifficultyIcon.icons[difficultyLevel]
     if (Icon === undefined) {
       throw new Error('Difficulty Icon ' + this.props.d + ' is not defined')
     }
