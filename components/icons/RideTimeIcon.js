@@ -36,6 +36,6 @@ export default class RideTimeIcon extends React.Component {
 
 RideTimeIcon.propTypes = {
   icon: PropTypes.any,
-  size: PropTypes.number,
+  size: PropTypes.number.isRequired,
   style: PropTypes.any
 }
