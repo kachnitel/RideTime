@@ -1,9 +1,11 @@
-import * as React from 'react'
-import { Alert, Text, View, TouchableOpacity, StyleSheet } from 'react-native'
-import {
-  CustomPicker
-} from 'react-native-custom-picker'
+import React from 'react'
+import { Alert, Text, View, StyleSheet } from 'react-native'
+import { CustomPicker } from 'react-native-custom-picker'
 import DifficultyIcon from '../icons/DifficultyIcon'
+import OutlineIcon from '../icons/OutlineIcon'
+import Layout from '../../constants/Layout'
+import Colors from '../../constants/Colors'
+import InputTitle from './InputTitle'
 
 export default class SelectDifficulty extends React.Component {
   render () {
@@ -12,43 +14,57 @@ export default class SelectDifficulty extends React.Component {
         value: index,
         ...DifficultyIcon.icons[index]
       })
-    })
+    }).filter((level) => this.props.max === undefined ? true : level.value <= this.props.max)
 
     return (
-      <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
+      <View {...this.props}>
+        <InputTitle>Riding experience</InputTitle>
         <CustomPicker
-          placeholder={'Please select your favorite item...'}
+          placeholder={'What\' s your riding experience?'}
           options={options}
           getLabel={item => item.label}
           fieldTemplate={this.renderField}
           optionTemplate={this.renderOption}
-          // headerTemplate={this.renderHeader}
-          // footerTemplate={this.renderFooter}
-          onValueChange={value => {
-            Alert.alert('Selected Item', value ? JSON.stringify(value) : 'No item were selected!')
-          }}
+          headerTemplate={this.renderHeader}
+          footerTemplate={this.renderFooter}
+          onValueChange={this.props.onValueChange || ((value) => Alert.alert(value.value + ' selected'))}
         />
       </View>
     )
   }
 
+  renderHeader () {
+    return (
+      <View style={styles.headerFooterContainer}>
+        <Text style={styles.headerText}>Select trail difficulty</Text>
+      </View>
+    )
+  }
+
   renderField (settings) {
-    const { selectedItem, defaultText, getLabel, clear } = settings
+    const { selectedItem, defaultText, getLabel } = settings
     return (
       <View style={styles.container}>
-        <View>
-          {!selectedItem && <Text style={[styles.text, { color: 'grey' }]}>{defaultText}</Text>}
-          {selectedItem && (
-            <View style={styles.innerContainer}>
-              <TouchableOpacity style={styles.clearButton} onPress={clear}>
-                <Text style={{ color: '#fff' }}>Clear</Text>
-              </TouchableOpacity>
-              <Text style={[styles.text, { color: selectedItem.color }]}>
-                {getLabel(selectedItem)}
-              </Text>
-            </View>
-          )}
-        </View>
+        {selectedItem
+          ? <View style={styles.innerContainer}>
+            <OutlineIcon outlineStyle={styles.iconOutline}>
+              <DifficultyIcon d={selectedItem.value} size={Layout.window.hp(6)} />
+            </OutlineIcon>
+            <Text style={styles.text}>
+              {getLabel(selectedItem)}
+            </Text>
+          </View>
+          : <Text style={{ ...styles.text, ...styles.placeholderText }}>{defaultText}</Text>}
+      </View>
+    )
+  }
+
+  renderFooter () {
+    return (
+      <View style={styles.headerFooterContainer}>
+        <Text style={styles.footerText}>
+          Choose difficulty you're generally comfortable riding. It will be displayed on yor profile.
+        </Text>
       </View>
     )
   }
@@ -57,10 +73,8 @@ export default class SelectDifficulty extends React.Component {
     const { item, getLabel } = settings
     return (
       <View style={styles.optionContainer}>
-        <View style={styles.innerContainer}>
-          <View style={[styles.box, { backgroundColor: item.color }]} />
-          <Text style={{ color: item.color, alignSelf: 'flex-start' }}>{getLabel(item)}</Text>
-        </View>
+        <DifficultyIcon d={item.value} size={Layout.window.hp(6)} />
+        <Text style={styles.optionLabel}>{getLabel(item)}</Text>
       </View>
     )
   }
@@ -68,34 +82,52 @@ export default class SelectDifficulty extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: 'grey',
-    borderWidth: 1,
-    padding: 15
+    borderBottomColor: Colors.tintColor,
+    borderBottomWidth: 1,
+    padding: Layout.window.wp(1.5),
+    width: Layout.window.wp(65)
   },
   innerContainer: {
     flexDirection: 'row',
     alignItems: 'stretch'
   },
   text: {
-    fontSize: 18
+    fontSize: Layout.window.hp(2.5),
+    color: '#fff',
+    textAlignVertical: 'center',
+    paddingHorizontal: Layout.window.wp(5),
+    height: Layout.window.hp(7)
+  },
+  placeholderText: {
+    color: '#666',
+    paddingHorizontal: Layout.window.wp(1.5)
   },
   headerFooterContainer: {
-    padding: 10,
+    padding: Layout.window.wp(3),
     alignItems: 'center'
   },
-  clearButton: { backgroundColor: 'grey', borderRadius: 5, marginRight: 10, padding: 5 },
+  headerText: {
+    fontSize: Layout.window.hp(3)
+  },
+  footerText: {
+    textAlign: 'center'
+  },
   optionContainer: {
-    padding: 10,
-    borderBottomColor: 'grey',
+    flexDirection: 'row',
+    padding: Layout.window.hp(1),
+    borderBottomColor: Colors.darkBackground,
     borderBottomWidth: 1
   },
   optionInnerContainer: {
     flex: 1,
     flexDirection: 'row'
   },
-  box: {
-    width: 20,
-    height: 20,
-    marginRight: 10
+  optionLabel: {
+    textAlignVertical: 'center',
+    fontSize: Layout.window.hp(2.75),
+    paddingHorizontal: Layout.window.wp(5)
+  },
+  iconOutline: {
+    color: '#fff'
   }
 })

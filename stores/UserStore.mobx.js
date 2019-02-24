@@ -10,6 +10,7 @@ class UserStore {
   @persist @observable _picture = ''
   @persist @observable _email = ''
   @persist @observable _hometown = ''
+  @persist @observable _level = null
   // TODO: level, terrain, phone, ...
 
   // Picture that hasn't been uploaded yet
@@ -29,6 +30,9 @@ class UserStore {
 
   @action updateHometown (newValue) { this._hometown = newValue }
   @computed get hometown () { return this._hometown }
+
+  @action updateLevel (newValue) { this._level = newValue }
+  @computed get level () { return this._level }
 
   @action updateTempPicture (newValue) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }

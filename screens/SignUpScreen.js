@@ -64,8 +64,7 @@ class SignUpScreen extends React.Component {
             bounces={false}
             ref='scrollView'
             onScrollBeginDrag={this.handlehandleScrollScroll}
-            // showsHorizontalScrollIndicator={false}
-            indicatorStyle='white'
+            showsHorizontalScrollIndicator={false}
             scrollEnabled={false}
           >
             <BasicInfoForm />
@@ -83,12 +82,14 @@ class SignUpScreen extends React.Component {
                   this.setState({ formPosition: 1 })
                 }
               }}
+              disabled={!this.props.UserStore.name || !this.props.UserStore.email}
             />
             {
               this.state.formPosition === 2 && <Button
                 title='Sign Up!'
                 onPress={() => console.log(this.props.UserStore)}
                 color='#f90'
+                disabled={!this.props.UserStore.name || !this.props.UserStore.email}
               />
             }
           </View>
