@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
  * @property d int 0-4
  *
  * @export
- * @class DifficultyIcon
+ * @icon DifficultyIcon
  * @extends {RideTimeIcon}
  */
 export default class DifficultyIcon extends RideTimeIcon {
@@ -24,27 +24,27 @@ export default class DifficultyIcon extends RideTimeIcon {
 
   static icons = {
     0: {
-      class: SvgSkiTrailRatingSymbolGreenCircle,
+      icon: SvgSkiTrailRatingSymbolGreenCircle,
       label: 'Beginner',
       color: DifficultyIcon.colors.green
     },
     1: {
-      class: SvgSkiTrailRatingSymbolBlueSquare,
+      icon: SvgSkiTrailRatingSymbolBlueSquare,
       label: 'Intermediate',
       color: DifficultyIcon.colors.blue
     },
     2: {
-      class: SvgSkiTrailRatingSymbolBlackDiamond,
+      icon: SvgSkiTrailRatingSymbolBlackDiamond,
       label: 'Advanced',
       color: DifficultyIcon.colors.black
     },
     3: {
-      class: SvgSkiTrailRatingSymbolDoubleBlackDiamond,
+      icon: SvgSkiTrailRatingSymbolDoubleBlackDiamond,
       label: 'Expert',
       color: DifficultyIcon.colors.black
     },
     4: {
-      class: SvgSkiTrailRatingSymbolTerrainPark,
+      icon: SvgSkiTrailRatingSymbolTerrainPark,
       label: 'Other',
       color: DifficultyIcon.colors.orange
     }
@@ -54,7 +54,7 @@ export default class DifficultyIcon extends RideTimeIcon {
     let difficultyLevel = this.props.d
 
     let iconColor = DifficultyIcon.icons[difficultyLevel].color
-    let Icon = DifficultyIcon.icons[difficultyLevel].class
+    let Icon = DifficultyIcon.icons[difficultyLevel].icon
 
     if (Icon === undefined) {
       throw new Error('Difficulty Icon ' + this.props.d + ' is not defined')
