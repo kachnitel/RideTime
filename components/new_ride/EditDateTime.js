@@ -34,12 +34,13 @@ export default class EditDateTime extends React.Component {
           onCancel={this.hideDateTimePicker}
           mode='datetime'
         />
+        {/* Android */}
         <TouchableOpacity activeOpacity={1} onPress={this.showDateTimePicker}>
           <EditDescription
             placeholder={this.props.placeholder}
             title={this.props.title}
             value={this.props.value}
-            onTouchStart={() => this.showDateTimePicker}
+            onTouchStart={() => this.showDateTimePicker} // iOS
             editable={false}
           />
         </TouchableOpacity>

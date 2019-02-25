@@ -25,8 +25,7 @@ export default class SelectWithIcon extends React.Component {
     )
   }
 
-  renderField = (settings) => {
-    const { selectedItem, defaultText, getLabel } = settings
+  renderField = ({ selectedItem, defaultText, getLabel }) => {
     return (
       <View style={styles.container}>
         {selectedItem
@@ -57,8 +56,7 @@ export default class SelectWithIcon extends React.Component {
     )
   }
 
-  renderOption = (settings) => {
-    const { item, getLabel } = settings
+  renderOption = ({ item, getLabel }) => {
     return (
       <View style={styles.optionContainer}>
         {this.props.icon(item.value)}
