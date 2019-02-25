@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Alert, Text, View, StyleSheet } from 'react-native'
 import { CustomPicker } from 'react-native-custom-picker'
@@ -68,6 +69,18 @@ export default class SelectWithIcon extends React.Component {
       </View>
     )
   }
+}
+
+SelectWithIcon.propTypes = {
+  footerText: PropTypes.string,
+  headerText: PropTypes.string,
+  icon: PropTypes.any,
+  onValueChange: PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    label: PropTypes.string
+  })),
+  placeholder: PropTypes.string
 }
 
 const styles = StyleSheet.create({
