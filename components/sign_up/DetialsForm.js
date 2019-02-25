@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react'
 import Form from './Form'
 import SelectDifficulty from './SelectDifficulty'
 import SelectBike from './SelectBike'
+import HomeLocationsPicker from './HomeLocationsPicker'
 
 export default
 @inject('UserStore')
@@ -18,6 +19,7 @@ class DetailsForm extends React.Component {
         <SelectBike
           onValueChange={(value) => this.props.UserStore.updateBike(value.value)}
         />
+        <HomeLocationsPicker />
       </Form>
     )
   }
