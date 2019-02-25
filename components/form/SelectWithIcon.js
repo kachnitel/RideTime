@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Alert, Text, View, StyleSheet } from 'react-native'
 import { CustomPicker } from 'react-native-custom-picker'
-import OutlineIcon from '../icons/OutlineIcon'
 import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
 import InputTitle from './InputTitle'
@@ -11,7 +10,7 @@ export default class SelectWithIcon extends React.Component {
   render () {
     return (
       <View {...this.props}>
-        <InputTitle>Riding experience</InputTitle>
+        <InputTitle>{this.props.title}</InputTitle>
         <CustomPicker
           placeholder={this.props.placeholder}
           options={this.props.options}
@@ -32,9 +31,7 @@ export default class SelectWithIcon extends React.Component {
       <View style={styles.container}>
         {selectedItem
           ? <View style={styles.innerContainer}>
-            <OutlineIcon outlineStyle={styles.iconOutline}>
-              {this.props.icon(selectedItem.value)}
-            </OutlineIcon>
+            {this.props.icon(selectedItem.value)}
             <Text style={styles.text}>
               {getLabel(selectedItem)}
             </Text>
@@ -80,7 +77,8 @@ SelectWithIcon.propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     label: PropTypes.string
   })),
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  title: PropTypes.string
 }
 
 const styles = StyleSheet.create({
@@ -129,8 +127,5 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     fontSize: Layout.window.hp(2.75),
     paddingHorizontal: Layout.window.wp(5)
-  },
-  iconOutline: {
-    color: '#fff'
   }
 })

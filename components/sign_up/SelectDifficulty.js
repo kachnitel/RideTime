@@ -2,6 +2,8 @@ import React from 'react'
 import DifficultyIcon from '../icons/DifficultyIcon'
 import Layout from '../../constants/Layout'
 import SelectWithIcon from '../form/SelectWithIcon'
+import OutlineIcon from '../icons/OutlineIcon'
+import { StyleSheet } from 'react-native'
 
 export default class SelectDifficulty extends React.Component {
   render () {
@@ -18,9 +20,20 @@ export default class SelectDifficulty extends React.Component {
         placeholder={'What\'s your riding experience?'}
         headerText='Select trail difficulty'
         footerText={'Choose difficulty you\'re generally comfortable riding. It will be displayed on yor profile.'}
+        title='Riding experience'
         onValueChange={this.props.onValueChange}
-        icon={(value) => <DifficultyIcon d={value} size={Layout.window.hp(6)} />}
+        icon={(value) =>
+          <OutlineIcon outlineStyle={styles.iconOutline}>
+            <DifficultyIcon d={value} size={Layout.window.hp(6)} />
+          </OutlineIcon>
+        }
       />
     )
   }
 }
+
+const styles = StyleSheet.create({
+  iconOutline: {
+    color: '#fff'
+  }
+})
