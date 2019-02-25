@@ -2,6 +2,7 @@ import React from 'react'
 import { observer, inject } from 'mobx-react'
 import Form from './Form'
 import SelectDifficulty from './SelectDifficulty'
+import SelectBike from './SelectBike'
 
 export default
 @inject('UserStore')
@@ -13,6 +14,9 @@ class DetailsForm extends React.Component {
         <SelectDifficulty
           max={3}
           onValueChange={(value) => this.props.UserStore.updateLevel(value.value)}
+        />
+        <SelectBike
+          onValueChange={(value) => this.props.UserStore.updateBike(value.value)}
         />
       </Form>
     )

@@ -13,15 +13,15 @@ import RideTimeIcon from './RideTimeIcon'
 export default class TerrainIcon extends RideTimeIcon {
   static icons = {
     trail: {
-      name: 'Trail',
+      label: 'Trail',
       icon: SvgBikeMountain
     },
     downhill: {
-      name: 'Downhill',
+      label: 'Downhill',
       icon: SvgBikeDownhill
     },
     road: {
-      name: 'Road',
+      label: 'Road',
       icon: SvgBikeRoad
     }
   };
