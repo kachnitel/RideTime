@@ -72,11 +72,11 @@ export default class HomeLocationsPicker extends React.Component {
         <View style={styles.innerContainer}>
           {this.renderSelectedItems()}
           {this.state.picked.length < maxItems &&
-            <TouchableNativeFeedback onPress={this.onShow} >
+            <TouchableNativeFeedback onPress={this.onShow}>
               <Text style={styles.placeholderText}>
                 {this.state.picked.length > 0
                   ? `Tap here to add up to ${maxItems} locations...`
-                  : 'Where do you ride a lot?'}
+                  : 'Where do you ride most often?'}
               </Text>
             </TouchableNativeFeedback>
           }
@@ -133,9 +133,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   innerContainer: {
+    padding: Layout.window.hp(1),
     flexWrap: 'wrap',
-    padding: Layout.window.hp(1.5),
-    flexDirection: 'row'
+    flexDirection: 'row',
+    backgroundColor: 'rgba(255,255,255,0.03);'
   },
   selectedItemContainer: {
     padding: Layout.window.hp(0.25),

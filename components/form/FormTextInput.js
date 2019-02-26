@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     color: '#fff',
     padding: Layout.window.hp(1),
-    width: Layout.window.wp(65)
+    width: Layout.window.wp(65),
+    backgroundColor: 'rgba(255,255,255,0.03);'
   }
 })

@@ -83,8 +83,9 @@ const styles = StyleSheet.create({
   container: {
     borderBottomColor: Colors.tintColor,
     borderBottomWidth: 1,
-    padding: Layout.window.wp(1.5),
-    width: Layout.window.wp(65)
+    padding: Layout.window.wp(1),
+    width: Layout.window.wp(65),
+    backgroundColor: 'rgba(255,255,255,0.03);'
   },
   innerContainer: {
     flexDirection: 'row',
