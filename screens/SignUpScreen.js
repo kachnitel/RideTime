@@ -2,8 +2,10 @@ import React from 'react'
 import {
   StyleSheet,
   View,
-  ScrollView
+  ScrollView,
+  KeyboardAvoidingView
 } from 'react-native'
+import { Header } from 'react-navigation'
 import { observer, inject } from 'mobx-react'
 import BasicInfoForm from '../components/sign_up/BasicInfoForm'
 import DetialsForm from '../components/sign_up/DetialsForm'
@@ -43,7 +45,12 @@ class SignUpScreen extends React.Component {
 
   render () {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        keyboardVerticalOffset={Header.HEIGHT + 24}
+        // style={styles.screen}
+        behavior='padding'
+      >
         {/*
         TODO:
         once submitted
@@ -66,6 +73,7 @@ class SignUpScreen extends React.Component {
             onScrollBeginDrag={this.handlehandleScrollScroll}
             showsHorizontalScrollIndicator={false}
             scrollEnabled={false}
+            keyboardShouldPersistTaps='handled'
           >
             <BasicInfoForm />
             <DetialsForm />
@@ -94,7 +102,7 @@ class SignUpScreen extends React.Component {
             }
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
