@@ -52,6 +52,8 @@ export default class RidesScreen extends React.Component {
       })
 
     this.subs = [
+      // Adds listener to reload rides when screen is focused
+      // But why this.subs? FIXME: test w/o the assignment
       this.props.navigation.addListener('didFocus', this.componentDidFocus)
     ]
   }

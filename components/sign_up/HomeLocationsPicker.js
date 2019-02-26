@@ -5,6 +5,7 @@ import InputTitle from '../form/InputTitle'
 import Button from '../Button'
 import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
+import LocationsProvider from '../../providers/LocationsProvider'
 
 export default class HomeLocationsPicker extends React.Component {
   constructor (props) {
@@ -12,8 +13,24 @@ export default class HomeLocationsPicker extends React.Component {
 
     this.state = {
       visible: false,
-      picked: []
+      picked: [],
+      locations: []
     }
+  }
+
+  componentDidMount = () => {
+    this.loadLocations()
+  }
+
+  loadLocations () {
+    let locationsProvider = new LocationsProvider()
+    locationsProvider.getLocations()
+      .then((result) => {
+        this.setState({ locations: result.map((value) => ({
+          key: value.id,
+          label: value.name
+        })) })
+      })
   }
 
   /**
@@ -38,29 +55,6 @@ export default class HomeLocationsPicker extends React.Component {
   }
 
   render () {
-    const options = [
-      {
-        key: 'kenya',
-        label: 'Kenya'
-      },
-      {
-        key: 'uganda',
-        label: 'Uganda'
-      },
-      {
-        key: 'libya',
-        label: 'Libya'
-      },
-      {
-        key: 'morocco',
-        label: 'Morocco'
-      },
-      {
-        key: 'estonia',
-        label: 'Estonia'
-      }
-    ]
-
     return (
       <View style={styles.container}>
         <InputTitle>Local areas</InputTitle>
@@ -75,7 +69,7 @@ export default class HomeLocationsPicker extends React.Component {
           visible={this.state.visible}
           onSelect={this.onSelect}
           onCancel={this.onCancel}
-          options={options}
+          options={this.state.locations}
         />
       </View>
     )
@@ -114,7 +108,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     padding: Layout.window.hp(1),
-    width: Layout.window.wp(15),
+    width: Layout.window.wp(15)
   },
   selectedItem: {
     padding: 5,
