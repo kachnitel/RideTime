@@ -19,7 +19,9 @@ class DetailsForm extends React.Component {
         <SelectBike
           onValueChange={(value) => this.props.UserStore.updateBike(value.value)}
         />
-        <HomeLocationsPicker />
+        <HomeLocationsPicker
+          onValueChange={(values) => this.props.UserStore.updateLocations(values)}
+        />
       </Form>
     )
   }

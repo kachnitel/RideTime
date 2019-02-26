@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
     width: Layout.window.wp(100),
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-evenly'
   }
 })
