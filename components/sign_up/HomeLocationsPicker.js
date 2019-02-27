@@ -52,7 +52,7 @@ export default class HomeLocationsPicker extends React.Component {
               </Text>
               <TouchableNativeFeedback onPress={() => this.removeItem(item)}>
                 <Icon
-                  name='highlight-off'
+                  name='clear'
                   size={Layout.window.hp(3.5)}
                   style={styles.selectedItemRemoveIcon}
                 />
@@ -141,8 +141,8 @@ const styles = StyleSheet.create({
   selectedItemContainer: {
     padding: Layout.window.hp(0.25),
     flexDirection: 'row',
-    backgroundColor: 'rgba(255,255,255,0.1);',
-    borderRadius: Layout.window.hp(1),
+    backgroundColor: '#fff2',
+    borderRadius: Layout.window.hp(2.75),
     alignItems: 'center'
   },
   selectedItemText: {
@@ -151,10 +151,11 @@ const styles = StyleSheet.create({
     padding: Layout.window.hp(1)
   },
   selectedItemRemoveIcon: {
-    padding: Layout.window.hp(0.75),
-    color: '#996633',
-    backgroundColor: 'rgba(255,255,255,0.1);',
-    borderRadius: Layout.window.hp(1)
+    padding: Layout.window.hp(0.5),
+    margin: Layout.window.hp(0.25),
+    color: '#fff6',
+    backgroundColor: '#fff2',
+    borderRadius: Layout.window.hp(2.5)
   },
   placeholderText: {
     color: '#666',
