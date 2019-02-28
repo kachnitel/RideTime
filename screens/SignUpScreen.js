@@ -58,9 +58,12 @@ class SignUpScreen extends React.Component {
       picture: this.state.selectedPicture === null ? this.props.UserStore.tempPicture : null
     })
 
-    if (this.state.selectedPicture) {
-      provider.uploadPicture(user.id, this.state.selectedPicture)
-    }
+    // FIXME: Upload is broken!
+    // if (this.state.selectedPicture) {
+    //   provider.uploadPicture(user.id, this.state.selectedPicture)
+    //   // TODO: On fail, display a note
+    //   // about being able to set it in profile and redirect to app
+    // }
   }
 
   render () {

@@ -1,4 +1,4 @@
-/* global fetch, FormData */
+/* global fetch, FormData, XMLHttpRequest */
 import ApplicationStore from '../stores/ApplicationStore.mobx'
 import { getEnvVars } from '../constants/Env'
 import AppError from './AppError'
@@ -75,26 +75,28 @@ export const put = (path, data) => {
   return submitData('PUT', path, data)
 }
 
+/**
+ * FIXME: Doesn't work!
+ * Error: Multipart body must have at least one part
+ *
+ * TODO: Once working, refactor to use submitData
+ * @param {*} path
+ * @param {*} key
+ * @param {*} file
+ */
 export const postFile = async (path, key, file) => {
   let url = getEnvVars().apiUrl + '/' + path
 
-  let uriParts = file.uri.split('.')
-  let fileType = uriParts[uriParts.length - 1]
+  console.log('POST', path, key, file)
+
+  let blob = await urlToBlob(file.uri)
 
   let formData = new FormData()
-  formData.append(key, {
-    file,
-    name: `photo.${fileType}`,
-    type: `image/${fileType}`
-  })
-console.log(formData)
+  formData.append(key, blob)
   let options = {
     method: 'POST',
     body: formData,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'multipart/form-data'
-    }
+    headers: getHeaders(ApplicationStore.accessToken, 'multipart/form-data')
   }
 
   let result = await fetch(url, options)
@@ -107,6 +109,21 @@ console.log(formData)
   //   form,
   //   getHeaders(ApplicationStore.accessToken, 'multipart/form-data')
   // )
+}
+
+const urlToBlob = (url) => {
+  return new Promise((resolve, reject) => {
+    var xhr = new XMLHttpRequest()
+    xhr.onerror = reject
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        resolve(xhr.response)
+      }
+    }
+    xhr.open('GET', url)
+    xhr.responseType = 'blob' // convert type
+    xhr.send()
+  })
 }
 
 export const getHeaders = (authToken, contentType = 'application/json') => {
