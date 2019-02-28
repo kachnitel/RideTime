@@ -12,6 +12,7 @@ import DetialsForm from '../components/sign_up/DetialsForm'
 import Colors from '../constants/Colors'
 import Button from '../components/Button'
 import Layout from '../constants/Layout'
+import RidersProvider from '../providers/RidersProvider'
 
 export default
 @inject('UserStore')
@@ -21,7 +22,8 @@ class SignUpScreen extends React.Component {
     super(props)
 
     this.state = {
-      formPosition: 1
+      formPosition: 1,
+      selectedPicture: null
     }
   }
 
@@ -33,13 +35,31 @@ class SignUpScreen extends React.Component {
   }
 
   handleScroll = (event) => {
-    console.log(event.nativeEvent.contentOffset.x)
     if (event.nativeEvent.contentOffset.x === event.nativeEvent.contentSize.width / 2) {
       this.refs.scrollView.scrollTo({ x: 0 })
       this.setState({ formPosition: 1 })
     } else {
       this.refs.scrollView.scrollToEnd()
       this.setState({ formPosition: 2 })
+    }
+  }
+
+  handleSelectPicture = (image) => {
+    this.setState({ selectedPicture: image })
+  }
+
+  submit = async () => {
+    let provider = new RidersProvider()
+    let user = await provider.signUp({
+      name: this.props.UserStore.name,
+      hometown: this.props.UserStore.hometown,
+      email: this.props.UserStore.email,
+      // Only send picture if local isn't selected
+      picture: this.state.selectedPicture === null ? this.props.UserStore.tempPicture : null
+    })
+
+    if (this.state.selectedPicture) {
+      provider.uploadPicture(user.id, this.state.selectedPicture)
     }
   }
 
@@ -75,7 +95,9 @@ class SignUpScreen extends React.Component {
             scrollEnabled={false}
             keyboardShouldPersistTaps='handled'
           >
-            <BasicInfoForm />
+            <BasicInfoForm
+              onSelectPicture={this.handleSelectPicture}
+            />
             <DetialsForm />
           </ScrollView>
           <View style={styles.controls}>
@@ -95,7 +117,7 @@ class SignUpScreen extends React.Component {
             {
               this.state.formPosition === 2 && <Button
                 title='Sign Up!'
-                onPress={() => console.log(this.props.UserStore)}
+                onPress={this.submit}
                 color='#f90'
                 disabled={!this.props.UserStore.name || !this.props.UserStore.email}
               />

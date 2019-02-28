@@ -11,8 +11,8 @@ export default
 @observer
 class BasicInfoForm extends React.Component {
   _handleSelectPicture = (image) => {
-    console.log(image)
     this.props.UserStore.updateTempPicture(image.uri)
+    this.props.onSelectPicture(image)
   }
 
   render () {

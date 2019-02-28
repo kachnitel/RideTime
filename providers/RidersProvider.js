@@ -1,4 +1,4 @@
-import { get, put } from '../src/Connection'
+import { get, put, post, postFile } from '../src/Connection'
 
 export default class RidersProvider {
   /**
@@ -24,5 +24,13 @@ export default class RidersProvider {
 
   updateUser = (id, data) => {
     return put('api/users/' + id, data)
+  }
+
+  uploadPicture = (id, imageObject) => {
+    return postFile(`api/users/${id}/picture`, 'picture', imageObject)
+  }
+
+  signUp = (data) => {
+    return post('signup', data)
   }
 }

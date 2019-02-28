@@ -1,4 +1,4 @@
-/* global fetch */
+/* global fetch, FormData */
 import ApplicationStore from '../stores/ApplicationStore.mobx'
 import { getEnvVars } from '../constants/Env'
 import AppError from './AppError'
@@ -9,7 +9,6 @@ const validateResponse = (res) => {
     let error = new NetworkError('Network error')
     error.setStatusCode(res.status)
     error.setBody(res.json())
-
     throw error
   }
 }
@@ -76,10 +75,44 @@ export const put = (path, data) => {
   return submitData('PUT', path, data)
 }
 
-export const getHeaders = (authToken) => {
+export const postFile = async (path, key, file) => {
+  let url = getEnvVars().apiUrl + '/' + path
+
+  let uriParts = file.uri.split('.')
+  let fileType = uriParts[uriParts.length - 1]
+
+  let formData = new FormData()
+  formData.append(key, {
+    file,
+    name: `photo.${fileType}`,
+    type: `image/${fileType}`
+  })
+console.log(formData)
+  let options = {
+    method: 'POST',
+    body: formData,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data'
+    }
+  }
+
+  let result = await fetch(url, options)
+  console.log(result)
+  return result.json()
+
+  // return submitData(
+  //   'POST',
+  //   path,
+  //   form,
+  //   getHeaders(ApplicationStore.accessToken, 'multipart/form-data')
+  // )
+}
+
+export const getHeaders = (authToken, contentType = 'application/json') => {
   return {
     'Accept': 'application/json',
-    'Content-Type': 'application/json',
+    'Content-Type': contentType,
     'Authorization': 'Bearer ' + authToken
   }
 }
