@@ -49,6 +49,7 @@ class SignUpScreen extends React.Component {
   }
 
   submit = async () => {
+    // TODO: Show loading
     let provider = new RidersProvider()
     let user = await provider.signUp({
       name: this.props.UserStore.name,
@@ -64,6 +65,9 @@ class SignUpScreen extends React.Component {
     //   // TODO: On fail, display a note
     //   // about being able to set it in profile and redirect to app
     // }
+
+    this.props.UserStore.updatePicture(user.picture)
+    this.props.navigation.navigate('App')
   }
 
   render () {
