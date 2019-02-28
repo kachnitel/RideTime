@@ -20,7 +20,7 @@ export default class EditPicture extends React.Component {
       return
     }
 
-    this.props.onSelect(picture.uri)
+    this.props.onSelect(picture)
   }
 
   render () {
