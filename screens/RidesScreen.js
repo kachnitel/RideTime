@@ -31,7 +31,7 @@ export default class RidesScreen extends React.Component {
         </TouchableHighlight>
       )
     }
-  };
+  }
 
   constructor (props) {
     super(props)

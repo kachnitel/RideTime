@@ -8,7 +8,7 @@ export default class SelectLocationScreen extends React.Component {
     return {
       header: null
     }
-  };
+  }
 
   constructor (props) {
     super(props)

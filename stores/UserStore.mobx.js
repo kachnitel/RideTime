@@ -4,8 +4,9 @@ import { AsyncStorage } from 'react-native'
 
 class UserStore {
   // TODO: Friends, Home Locations, ...if needed
+  // Likely separate store for at least friends
   // @persist('list') @observable _AnExampleArray = []
-  @persist @observable _userId = false
+  @persist @observable _userId = false // REVIEW: immutable doesn't need @observable?
   @persist @observable _name = ''
   @persist @observable _picture = ''
   @persist @observable _email = ''

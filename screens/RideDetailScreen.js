@@ -7,7 +7,7 @@ export default class RideDetailScreen extends React.Component {
     return {
       title: navigation.getParam('title', 'NO NAME RIDE')
     }
-  };
+  }
 
   constructor (props) {
     super(props)
