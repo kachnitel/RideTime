@@ -1,8 +1,9 @@
-/* global fetch, FormData, XMLHttpRequest */
+/* global fetch, FormData */
 import ApplicationStore from '../stores/ApplicationStore.mobx'
 import { getEnvVars } from '../constants/Env'
 import AppError from './AppError'
 import NetworkError from './NetworkError'
+import Mime from 'mime/lite'
 
 const validateResponse = (res) => {
   if (!res.ok) {
@@ -96,7 +97,7 @@ export const postFile = async (path, key, file) => {
   formData.append(key, {
     ...file,
     name: `photo.${fileType}`,
-    type: `image/jpeg`
+    type: Mime.getType(fileType)
   })
   let options = {
     method: 'POST',
