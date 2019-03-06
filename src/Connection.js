@@ -89,10 +89,15 @@ export const postFile = async (path, key, file) => {
 
   console.log('POST', path, key, file)
 
-  let blob = await urlToBlob(file.uri)
+  let uriParts = file.uri.split('.')
+  let fileType = uriParts[uriParts.length - 1]
 
   let formData = new FormData()
-  formData.append(key, blob)
+  formData.append(key, {
+    ...file,
+    name: `photo.${fileType}`,
+    type: `image/jpeg`
+  })
   let options = {
     method: 'POST',
     body: formData,
@@ -100,7 +105,6 @@ export const postFile = async (path, key, file) => {
   }
 
   let result = await fetch(url, options)
-  console.log(result)
   return result.json()
 
   // return submitData(
@@ -109,21 +113,6 @@ export const postFile = async (path, key, file) => {
   //   form,
   //   getHeaders(ApplicationStore.accessToken, 'multipart/form-data')
   // )
-}
-
-const urlToBlob = (url) => {
-  return new Promise((resolve, reject) => {
-    var xhr = new XMLHttpRequest()
-    xhr.onerror = reject
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4) {
-        resolve(xhr.response)
-      }
-    }
-    xhr.open('GET', url)
-    xhr.responseType = 'blob' // convert type
-    xhr.send()
-  })
 }
 
 export const getHeaders = (authToken, contentType = 'application/json') => {

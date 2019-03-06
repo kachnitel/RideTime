@@ -60,11 +60,11 @@ class SignUpScreen extends React.Component {
     })
 
     // FIXME: Upload is broken!
-    // if (this.state.selectedPicture) {
-    //   provider.uploadPicture(user.id, this.state.selectedPicture)
-    //   // TODO: On fail, display a note
-    //   // about being able to set it in profile and redirect to app
-    // }
+    if (this.state.selectedPicture) {
+      provider.uploadPicture(user.id, this.state.selectedPicture)
+      // TODO: On fail, display a note
+      // about being able to set it in profile and redirect to app
+    }
 
     this.props.UserStore.updatePicture(user.picture)
     this.props.navigation.navigate('App')
