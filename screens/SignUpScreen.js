@@ -55,18 +55,21 @@ class SignUpScreen extends React.Component {
       name: this.props.UserStore.name,
       hometown: this.props.UserStore.hometown,
       email: this.props.UserStore.email,
-      // Only send picture if local isn't selected
+      level: this.props.UserStore.level,
+      favTerrain: this.props.UserStore.bike,
+      // Only send picture if local isn't selected to prevent server processing twoce
       picture: this.state.selectedPicture === null ? this.props.UserStore.tempPicture : null
     })
 
-    // FIXME: Upload is broken!
     if (this.state.selectedPicture) {
-      provider.uploadPicture(user.id, this.state.selectedPicture)
+      user = await provider.uploadPicture(user.id, this.state.selectedPicture)
       // TODO: On fail, display a note
       // about being able to set it in profile and redirect to app
     }
 
-    this.props.UserStore.updatePicture(user.picture)
+    this.props.UserStore.populateFromApiResponse(user)
+    // Signed in
+    console.info(`User ${user.id} signed up`)
     this.props.navigation.navigate('App')
   }
 

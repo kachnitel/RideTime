@@ -60,7 +60,19 @@ class UserStore {
     this.updatePicture(UserStore.prototype._picture)
     this.updateEmail(UserStore.prototype._email)
     this.updateHometown(UserStore.prototype._hometown)
+    this.updateLevel(UserStore.prototype._level)
+    this.updateBike(UserStore.prototype._bike)
     this.updateTempPicture(UserStore.prototype._tempPicture)
+  }
+
+  @action populateFromApiResponse (user: Object) {
+    this.updateUserId(user.id)
+    this.updateName(user.name)
+    this.updatePicture(user.picture)
+    this.updateBike(user.preferred)
+    this.updateLevel(user.level)
+    this.updateHometown(user.hometown)
+    // this.updateEmail(user.email)
   }
 }
 
