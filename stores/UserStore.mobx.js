@@ -72,6 +72,7 @@ class UserStore {
     this.updateBike(user.preferred)
     this.updateLevel(user.level)
     this.updateHometown(user.hometown)
+    this.updateLocations(user.locations || [])
     // this.updateEmail(user.email)
   }
 }
