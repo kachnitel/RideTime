@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Keyboard
 } from 'react-native'
 import { Header } from 'react-navigation'
 import { observer, inject } from 'mobx-react'
@@ -104,6 +105,7 @@ class SignUpScreen extends React.Component {
             <Button
               title={this.state.formPosition === 1 ? 'Next' : 'Previous'}
               onPress={() => {
+                Keyboard.dismiss() // REVIEW: Might only need on smaller screen?
                 if (this.state.formPosition === 1) {
                   this.refs.scrollView.scrollToEnd()
                   this.setState({ formPosition: 2 })
