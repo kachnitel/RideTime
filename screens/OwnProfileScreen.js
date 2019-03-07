@@ -48,7 +48,7 @@ class OwnProfileScreen extends React.Component {
         </TouchableHighlight>
       )
     }
-  };
+  }
 
   constructor (props) {
     super(props)
@@ -56,20 +56,21 @@ class OwnProfileScreen extends React.Component {
     this.state = {
       user: null,
       updatedUser: null,
-      editing: false
+      editing: false,
+      updatedPicture: null
     }
   }
 
   _editProfile = () => {
     // Done editing and user changed
-    if (this.state.editing && this.state.updatedUser) {
+    if (this.state.editing && (this.state.updatedUser || this.state.updatedPicture)) {
       // TODO this will need to be changed once I add cancel
       this.saveProfile(this.state.updatedUser)
     }
     this.setState((prevState, props) => ({ editing: !prevState.editing }))
   }
 
-  saveProfile = (updatedUser) => {
+  saveProfile = async (updatedUser) => {
     // Only send updated fields
     let update = {}
     for (var key in updatedUser) {
@@ -82,17 +83,26 @@ class OwnProfileScreen extends React.Component {
     }
 
     let provider = new RidersProvider()
-    provider.updateUser(this.props.UserStore.userId, update)
-      .then((result) => {
-        this.setState({ user: updatedUser })
-        this.props.UserStore.updateName(updatedUser.name) // TODO: all that is stored in UserStore..
-        this.props.UserStore.updatePicture(updatedUser.picture)
-        ToastAndroid.show('User profile saved.', ToastAndroid.SHORT)
-      })
+    let userResponse = await provider.updateUser(this.props.UserStore.userId, update)
+
+    if (this.state.updatedPicture) {
+      userResponse = await provider.uploadPicture(this.props.UserStore.userId, this.state.updatedPicture)
+        .catch((error) => {
+          console.warn(error)
+          ToastAndroid.show('Error updating picture', ToastAndroid.SHORT)
+        })
+    }
+    this.setState({ user: userResponse })
+    this.props.UserStore.populateFromApiResponse(userResponse)
+    ToastAndroid.show('User profile saved.', ToastAndroid.SHORT)
   }
 
   updateUser = (val) => {
     this.setState({ updatedUser: val })
+  }
+
+  updatePicture = (val) => {
+    this.setState({ updatedPicture: val })
   }
 
   async componentDidMount () {
@@ -103,6 +113,7 @@ class OwnProfileScreen extends React.Component {
     })
 
     let userId = this.props.UserStore.userId
+    // TODO: Get from STORE
     let provider = new RidersProvider()
     await provider.getUser(userId)
       .then((result) => {
@@ -120,9 +131,22 @@ class OwnProfileScreen extends React.Component {
   }
 
   render () {
+    let user = {
+      ...this.state.user,
+      ...this.state.updatedUser
+    }
+
+    if (this.state.updatedPicture) {
+      user.picture = this.state.updatedPicture.uri
+    }
+
     return (
       this.state.editing
-        ? <EditProfileHeader user={this.state.user} updateCallback={this.updateUser} />
+        ? <EditProfileHeader
+          user={user}
+          updateCallback={this.updateUser}
+          updatePictureCallback={this.updatePicture}
+        />
         : this.state.user && <ProfileHeader user={this.state.user} />
     )
   };

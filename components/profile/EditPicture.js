@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import {
   View,
@@ -11,6 +12,11 @@ import Layout from '../../constants/Layout'
 import { ImagePicker, ImageManipulator } from 'expo'
 
 export default class EditPicture extends React.Component {
+  /**
+   * Calls onSelect with @param Object { uri, width, height }
+   *
+   * @memberof EditPicture
+   */
   _selectPicture = async () => {
     let picture = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -57,6 +63,14 @@ export default class EditPicture extends React.Component {
       </TouchableWithoutFeedback>
     )
   }
+}
+
+EditPicture.propTypes = {
+  iconSize: PropTypes.number,
+  onSelect: PropTypes.func,
+  picture: PropTypes.string,
+  size: PropTypes.number,
+  style: PropTypes.any
 }
 
 const styles = StyleSheet.create({

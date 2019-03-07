@@ -25,6 +25,10 @@ export default class EditProfileHeader extends React.Component {
     this.handleUpdate(val, 'hometown')
   }
 
+  handleUpdatePicture = (val) => {
+    this.props.updatePictureCallback(val)
+  }
+
   handleUpdate = async (val, key) => {
     await this.setState(
       (prevState) => ({ user: { ...prevState.user, [key]: val } })
@@ -47,7 +51,11 @@ export default class EditProfileHeader extends React.Component {
           }}
         />
         <View style={styles.businessCard}>
-          <EditPicture picture={this.props.user.picture} size={profilePictureSize} />
+          <EditPicture
+            picture={this.props.user.picture}
+            size={profilePictureSize}
+            onSelect={this.handleUpdatePicture}
+          />
           <TextInput
             style={styles.name}
             underlineColorAndroid='white'
