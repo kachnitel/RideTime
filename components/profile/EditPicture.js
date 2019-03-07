@@ -1,9 +1,14 @@
 import React from 'react'
-import { View, StyleSheet, TouchableWithoutFeedback, Alert } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Alert
+} from 'react-native'
 import ProfilePicture from './ProfilePicture'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Layout from '../../constants/Layout'
-import { ImagePicker } from 'expo'
+import { ImagePicker, ImageManipulator } from 'expo'
 
 export default class EditPicture extends React.Component {
   _selectPicture = async () => {
@@ -18,6 +23,19 @@ export default class EditPicture extends React.Component {
     if (picture.height < 300) {
       Alert.alert(`Sorry! That picture is too small! Minimum size is 300x300 px`)
       return
+    }
+    if (picture.height > 900) {
+      console.log('Picture is too large! Resizing...', picture)
+      picture = await ImageManipulator.manipulateAsync(
+        picture.uri,
+        [
+          { resize: { width: 900, height: 900 } }
+        ],
+        {
+          compress: 0.4,
+          format: 'png'
+        }
+      )
     }
 
     this.props.onSelect(picture)

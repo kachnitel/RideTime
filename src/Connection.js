@@ -77,13 +77,10 @@ export const put = (path, data) => {
 }
 
 /**
- * FIXME: Doesn't work!
- * Error: Multipart body must have at least one part
- *
  * TODO: Once working, refactor to use submitData
- * @param {*} path
- * @param {*} key
- * @param {*} file
+ * @param {string} path
+ * @param {string} key
+ * @param {object} file Result from Expo ImagePicker/ImageManipulator
  */
 export const postFile = async (path, key, file) => {
   let url = getEnvVars().apiUrl + '/' + path
