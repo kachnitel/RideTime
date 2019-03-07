@@ -58,7 +58,7 @@ class SignUpScreen extends React.Component {
       email: this.props.UserStore.email,
       level: this.props.UserStore.level,
       favTerrain: this.props.UserStore.bike,
-      // Only send picture if local isn't selected to prevent server processing twoce
+      // Only send picture if local isn't selected to prevent server processing twice
       picture: this.state.selectedPicture === null ? this.props.UserStore.tempPicture : null
     })
 
@@ -81,22 +81,8 @@ class SignUpScreen extends React.Component {
       <KeyboardAvoidingView
         style={styles.container}
         keyboardVerticalOffset={Header.HEIGHT + 24}
-        // style={styles.screen}
         behavior='padding'
       >
-        {/*
-        TODO:
-        once submitted
-        RidersProvider.signUp
-        POST /signUp
-        On submit upload UserStore.tempPicture
-        (send URL in POST body or upload image if local)
-        Separate from 'user' object
-        Server processes the image (saves to storage)
-        and returns user with updated 'picture'
-
-        reset UserStore and populate from signed in user
-        */}
         <View style={styles.form}>
           <ScrollView
             horizontal
