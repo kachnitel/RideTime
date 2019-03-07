@@ -40,7 +40,7 @@ class UserStore {
   @action updateBike (newValue) { this._bike = newValue }
   @computed get bike () { return this._bike }
 
-  @action updateLocations (newValue) { this._locations = newValue }
+  @action updateLocations (newValue: Array) { this._locations = newValue }
   @action addLocation (newValue) { this._locations.push(newValue) }
   @computed get locations () { return this._locations }
 
