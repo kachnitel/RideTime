@@ -3,11 +3,14 @@ import {
   ActivityIndicator,
   StatusBar,
   StyleSheet,
-  View
+  View,
+  Alert
 } from 'react-native'
 import { observer, inject } from 'mobx-react'
 import { SecureStore } from 'expo'
 import Authentication from '../src/Authentication'
+import RidersProvider from '../providers/RidersProvider'
+import NetworkError from '../src/NetworkError'
 
 export default
 @inject('UserStore')
@@ -30,7 +33,25 @@ class AuthLoadingScreen extends React.Component {
       let auth = new Authentication()
       let token = await auth.refreshToken(refreshToken)
       this.props.ApplicationStore.updateAccessToken(token.access_token)
-      route = 'App'
+
+      let provider = new RidersProvider()
+      let user = await provider.getUser(signedInUserId)
+        .catch(async (error) => {
+          Alert.alert('Error loading account ID: ' + signedInUserId)
+          if (error instanceof NetworkError) {
+            console.warn(await error.body)
+          } else {
+            throw error
+          }
+        })
+
+      if (user !== undefined) {
+        this.props.UserStore.populateFromApiResponse(user)
+        route = 'App'
+      } else {
+        this.props.UserStore.reset()
+        route = 'Auth'
+      }
     } else {
       // Ensure UserStore is clear. Less than ideal solution
       this.props.UserStore.reset()
