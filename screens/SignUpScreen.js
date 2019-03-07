@@ -58,6 +58,7 @@ class SignUpScreen extends React.Component {
       email: this.props.UserStore.email,
       level: this.props.UserStore.level,
       favTerrain: this.props.UserStore.bike,
+      locations: this.props.UserStore.locations,
       // Only send picture if local isn't selected to prevent server processing twice
       picture: this.state.selectedPicture === null ? this.props.UserStore.tempPicture : null
     })
