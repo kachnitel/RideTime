@@ -30,8 +30,15 @@ class AuthLoadingScreen extends React.Component {
     // Exchange refresh_token(from SecureStore) for access_token
     if (signedInUserId) {
       let refreshToken = await SecureStore.getItemAsync('refreshToken')
+      if (!refreshToken) {
+        console.warn('Error loading refresh token!')
+      }
       let auth = new Authentication()
       let token = await auth.refreshToken(refreshToken)
+      if (token.error) {
+        console.warn('Error refreshing API token!')
+        console.log(token)
+      }
       this.props.ApplicationStore.updateAccessToken(token.access_token)
 
       let provider = new RidersProvider()

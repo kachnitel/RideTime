@@ -75,7 +75,7 @@ class SignInScreen extends React.Component {
       // Must sign up
       console.info(`Signing up user`, userInfo)
 
-      this.props.navigation.navigate('SignUp', { user: userInfo })
+      this.props.navigation.navigate('SignUp', { user: userInfo, token: token })
     } else {
       console.log('Sign in failed:', {
         token: token,

@@ -13,6 +13,7 @@ import Colors from '../constants/Colors'
 import Button from '../components/Button'
 import Layout from '../constants/Layout'
 import RidersProvider from '../providers/RidersProvider'
+import { SecureStore } from 'expo'
 
 export default
 @inject('UserStore')
@@ -68,7 +69,9 @@ class SignUpScreen extends React.Component {
     }
 
     this.props.UserStore.populateFromApiResponse(user)
-    // Signed in
+    let token = this.props.navigation.getParam('token')
+    SecureStore.setItemAsync('refreshToken', token.refresh_token)
+    // Signed up
     console.info(`User ${user.id} signed up`)
     this.props.navigation.navigate('App')
   }
