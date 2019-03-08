@@ -3,7 +3,7 @@ import React from 'react'
 import {
   View,
   StyleSheet,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
   Alert
 } from 'react-native'
 import ProfilePicture from './ProfilePicture'
@@ -49,7 +49,7 @@ export default class EditPicture extends React.Component {
 
   render () {
     return (
-      <TouchableWithoutFeedback onPress={this._selectPicture}>
+      <TouchableOpacity onPress={this._selectPicture}>
         <View style={this.props.style} >
           <ProfilePicture picture={this.props.picture} size={this.props.size} />
           <Icon
@@ -60,7 +60,7 @@ export default class EditPicture extends React.Component {
             }}
           />
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableOpacity>
     )
   }
 }
