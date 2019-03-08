@@ -14,7 +14,7 @@ export default class ProfileHeader extends React.Component {
           style={styles.coverPicture}
         />
         <View style={styles.businessCard}>
-          <View style={styles.profilePicture} >
+          <View style={styles.profilePicture}>
             <ProfilePicture picture={this.props.user.picture} size={profilePictureSize} />
           </View>
           <Text style={styles.name}>{this.props.user.name}</Text>

@@ -1,11 +1,13 @@
 import React from 'react'
-import { TextInput, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import CoverPicture from './CoverPicture'
-import ProfileSummary from './ProfileSummary'
 import styles, { profilePictureSize } from './ProfileHeaderStyle'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Layout from '../../constants/Layout'
 import EditPicture from './EditPicture'
+import SelectDifficulty from '../sign_up/SelectDifficulty'
+import SelectBike from '../sign_up/SelectBike'
+import TextInputWithTitle from '../form/TextInputWithTitle'
 
 export default class EditProfileHeader extends React.Component {
   constructor (props) {
@@ -16,13 +18,20 @@ export default class EditProfileHeader extends React.Component {
     }
   }
 
-  // FIXME: the TextInput should be a component
   handleUpdateName = (val) => {
     this.handleUpdate(val, 'name')
   }
 
   handleUpdateCity = (val) => {
     this.handleUpdate(val, 'hometown')
+  }
+
+  handleUpdateLevel = (selected) => {
+    this.handleUpdate(selected.value, 'level')
+  }
+
+  handleUpdateBike = (selected) => {
+    this.handleUpdate(selected.value, 'favTerrain')
   }
 
   handleUpdatePicture = (val) => {
@@ -50,31 +59,46 @@ export default class EditProfileHeader extends React.Component {
             ...editStyles.editIcon, ...editStyles.editIconCoverPicture
           }}
         />
-        <View style={styles.businessCard}>
-          <EditPicture
-            picture={this.props.user.picture}
-            size={profilePictureSize}
-            onSelect={this.handleUpdatePicture}
-          />
-          <TextInput
-            style={styles.name}
-            underlineColorAndroid='white'
-            textAlign={'center'}
-            value={this.state.user.name}
-            onChangeText={this.handleUpdateName}
-            placeholder='Your name'
-            placeholderTextColor='gray'
-          />
-          <TextInput
-            style={styles.hometown}
-            underlineColorAndroid='white'
-            textAlign={'center'}
-            value={this.state.user.hometown}
-            onChangeText={this.handleUpdateCity}
-            placeholder='Hometown, BC'
-            placeholderTextColor='gray'
-          />
-          <ProfileSummary style={styles.profileSummary} user={this.props.user} />
+        <View style={{ ...styles.businessCard, ...editStyles.businessCard }}>
+          {/* TODO:
+            Other settings
+              - (level, terrain, locations, stuff (fav trails eventually))
+          */}
+          <View style={styles.profilePicture}>
+            <EditPicture
+              picture={this.props.user.picture}
+              size={profilePictureSize}
+              onSelect={this.handleUpdatePicture}
+            />
+          </View>
+          <View style={editStyles.form}>
+            <TextInputWithTitle
+              value={this.state.user.name}
+              onChangeText={this.handleUpdateName}
+              placeholder='Your name'
+              title='Name'
+              containerStyle={editStyles.textInput}
+            />
+            <TextInputWithTitle
+              value={this.state.user.hometown}
+              onChangeText={this.handleUpdateCity}
+              placeholder='Hometown, BC'
+              title='Hometown'
+              containerStyle={editStyles.textInput}
+            />
+            <SelectDifficulty
+              // FIXME:
+              // value={this.state.user.level}
+              onValueChange={this.handleUpdateLevel}
+              max={3}
+              style={editStyles.textInput}
+            />
+            <SelectBike
+              // value={this.state.user.favTerrain}
+              onValueChange={this.handleUpdateBike}
+              style={editStyles.textInput}
+            />
+          </View>
         </View>
       </View>
     )
@@ -82,6 +106,16 @@ export default class EditProfileHeader extends React.Component {
 }
 
 const editStyles = StyleSheet.create({
+  textInput: {
+    padding: Layout.window.hp(1)
+  },
+  form: {
+    paddingVertical: Layout.window.hp(2)
+  },
+  businessCard: {
+    // flex: 1,6
+    height: Layout.window.hp(100)
+  },
   editIcon: {
     fontSize: Layout.window.hp(5),
     position: 'absolute',

@@ -14,14 +14,16 @@ export default class SelectBike extends React.Component {
 
     return (
       <SelectWithIcon
+        {...this.props}
         options={options}
         placeholder={'What\'s your primary bike?'}
         headerText='Select bike type'
         footerText={'Choose what kind of bike do you ride most often. It will be displayed on yor profile.'}
         title={'Your bike'}
-        onValueChange={this.props.onValueChange}
         icon={(value) => <TerrainIcon terrain={value} size={Layout.window.hp(6)} />}
       />
     )
   }
 }
+
+SelectBike.propTypes = SelectWithIcon.propTypes
