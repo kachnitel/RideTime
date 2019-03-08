@@ -2,6 +2,7 @@ import React from 'react'
 import { TextInput, StyleSheet } from 'react-native'
 import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
+import PropTypes from 'prop-types'
 
 export default class FormTextInput extends React.Component {
   render () {
@@ -11,11 +12,18 @@ export default class FormTextInput extends React.Component {
     return (
       <TextInput
         {...this.props}
-        style={inputStyle}
+        style={{ ...inputStyle, ...this.props.style }}
         placeholderTextColor='#666'
       />
     )
   }
+}
+
+FormTextInput.propTypes = {
+  ...TextInput.propTypes,
+  required: PropTypes.bool,
+  style: PropTypes.any,
+  value: PropTypes.any
 }
 
 const styles = StyleSheet.create({
