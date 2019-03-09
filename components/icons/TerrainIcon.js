@@ -4,11 +4,12 @@ import SvgBikeMountain from './bike_icons/BikeMountain'
 import SvgBikeDownhill from './bike_icons/BikeDownhill'
 import SvgBikeRoad from './bike_icons/BikeRoad'
 import RideTimeIcon from './RideTimeIcon'
+import PropTypes from 'prop-types'
 
 /**
  * props:
  *  size: number
- *  terrain: [trail, road]
+ *  terrain: [trail, road, downhill]
  */
 export default class TerrainIcon extends RideTimeIcon {
   static icons = {
@@ -45,4 +46,9 @@ export default class TerrainIcon extends RideTimeIcon {
       />
     )
   }
+}
+
+TerrainIcon.propTypes = {
+  style: PropTypes.any,
+  terrain: PropTypes.oneOf(Object.keys(TerrainIcon.icons))
 }
