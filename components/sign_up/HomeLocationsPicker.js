@@ -51,7 +51,6 @@ export default class HomeLocationsPicker extends React.Component {
           return (
             <View key={item} style={styles.selectedItemContainer}>
               <Text style={styles.selectedItemText} numberOfLines={1}>
-                {console.log(this.state)}
                 {this.state.locations.find((location) => (location.key === item)).label}
               </Text>
               <TouchableNativeFeedback onPress={() => this.removeItem(item)}>
@@ -65,6 +64,21 @@ export default class HomeLocationsPicker extends React.Component {
           )
         })}
       </>
+    )
+  }
+
+  renderOption = ({ key, label }) => {
+    if (this.state.picked.indexOf(key) !== -1) return <></>
+    return (
+      <TouchableNativeFeedback activeOpacity={0.7}
+        onPress={() => this.onSelect(key)}
+      >
+        <View
+          style={styles.optionContainer}
+        >
+          <Text style={styles.optionText}>{label}</Text>
+        </View>
+      </TouchableNativeFeedback>
     )
   }
 
@@ -90,6 +104,9 @@ export default class HomeLocationsPicker extends React.Component {
           onSelect={this.onSelect}
           onCancel={this.onCancel}
           options={this.state.locations}
+          renderOption={this.renderOption}
+          placeholderText='Search locations'
+          autoFocus
         />
       </View>
     )
@@ -164,5 +181,15 @@ const styles = StyleSheet.create({
   placeholderText: {
     color: '#666',
     fontSize: Layout.window.hp(2.5)
+  },
+  optionContainer: {
+    height: Layout.window.hp(8),
+    justifyContent: 'center',
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1
+  },
+  optionText: {
+    fontSize: Layout.window.hp(2.5),
+    padding: Layout.window.hp(1)
   }
 })
