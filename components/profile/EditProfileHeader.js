@@ -87,14 +87,13 @@ export default class EditProfileHeader extends React.Component {
               containerStyle={editStyles.textInput}
             />
             <SelectDifficulty
-              // FIXME:
-              // value={this.state.user.level}
+              value={this.state.user.level}
               onValueChange={this.handleUpdateLevel}
               max={3}
               style={editStyles.textInput}
             />
             <SelectBike
-              // value={this.state.user.favTerrain}
+              value={this.state.user.favTerrain}
               onValueChange={this.handleUpdateBike}
               style={editStyles.textInput}
             />

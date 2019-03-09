@@ -8,16 +8,22 @@ import PropTypes from 'prop-types'
 
 export default class SelectDifficulty extends React.Component {
   render () {
-    const options = Object.keys(DifficultyIcon.icons).map((value, index) => {
+    let options = Object.keys(DifficultyIcon.icons).map((value, index) => {
       return ({
         value: index,
         ...DifficultyIcon.icons[index]
       })
     }).filter((level) => this.props.max === undefined ? true : level.value <= this.props.max)
 
+    let value = {
+      ...DifficultyIcon.icons[this.props.value],
+      value: this.props.value
+    }
+
     return (
       <SelectWithIcon
         {...this.props}
+        value={value}
         options={options}
         placeholder={'What\'s your riding experience?'}
         headerText='Select trail difficulty'

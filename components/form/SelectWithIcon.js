@@ -20,6 +20,7 @@ export default class SelectWithIcon extends React.Component {
           headerTemplate={this.renderHeader}
           footerTemplate={this.renderFooter}
           onValueChange={this.props.onValueChange || ((value) => Alert.alert(value.value + ' selected'))}
+          value={this.props.value}
         />
       </View>
     )
