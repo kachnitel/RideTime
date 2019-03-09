@@ -12,10 +12,12 @@ export default class SelectBike extends React.Component {
       })
     })
 
-    let value = {
-      ...TerrainIcon.icons[this.props.value],
-      value: this.props.value
-    }
+    let value = this.props.value !== undefined
+      ? {
+        ...TerrainIcon.icons[this.props.value],
+        value: this.props.value
+      }
+      : undefined
 
     return (
       <SelectWithIcon
