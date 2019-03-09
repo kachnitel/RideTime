@@ -52,7 +52,7 @@ export default class EditProfileHeader extends React.Component {
 
   render () {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps='handled'>
         <CoverPicture
           user={this.props.user}
           style={styles.coverPicture}
@@ -64,7 +64,7 @@ export default class EditProfileHeader extends React.Component {
             ...editStyles.editIcon, ...editStyles.editIconCoverPicture
           }}
         />
-        <View style={{ ...styles.businessCard, ...editStyles.businessCard }}>
+        <View style={styles.businessCard}>
           <View style={styles.profilePicture}>
             <EditPicture
               picture={this.props.user.picture}
@@ -101,7 +101,7 @@ export default class EditProfileHeader extends React.Component {
             <HomeLocationsPicker
               onValueChange={this.handleUpdateLocations}
               style={editStyles.textInput}
-              value={this.state.user.locations} // TODO: preselect existing
+              value={this.state.user.locations}
             />
           </View>
         </View>
@@ -116,10 +116,6 @@ const editStyles = StyleSheet.create({
   },
   form: {
     paddingVertical: Layout.window.hp(2)
-  },
-  businessCard: {
-    height: Layout.window.hp(100),
-    alignItems: 'center'
   },
   editIcon: {
     fontSize: Layout.window.hp(5),

@@ -4,8 +4,7 @@ import Colors from '../../constants/Colors'
 import Layout from '../../constants/Layout'
 
 let coverPictureHeight = Layout.window.wp(60)
-let businessCardHeight = Layout.window.hp(33)
-let businessCardOffset = coverPictureHeight - businessCardHeight / 2
+let businessCardOffset = coverPictureHeight * 0.5
 
 const profilePictureSize = Layout.window.hp(17)
 export { profilePictureSize }
@@ -19,11 +18,10 @@ const styles = StyleSheet.create({
   businessCard: {
     backgroundColor: Colors.darkBackground,
     width: Layout.window.wp(85),
-    height: businessCardHeight,
     top: businessCardOffset,
     alignSelf: 'center',
     alignItems: 'center',
-    marginBottom: businessCardOffset
+    paddingBottom: businessCardOffset
   },
   profilePicture: {
     marginTop: -profilePictureSize / 2
@@ -39,8 +37,7 @@ const styles = StyleSheet.create({
     fontSize: Layout.window.hp(2.5)
   },
   profileSummary: {
-    bottom: Layout.window.hp(3.5),
-    position: 'absolute',
+    paddingTop: Layout.window.hp(1.5),
     flexDirection: 'row'
   }
 })
