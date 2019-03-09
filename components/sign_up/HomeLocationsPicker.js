@@ -30,9 +30,9 @@ export default class HomeLocationsPicker extends React.Component {
     }
   }
 
-  loadLocations () {
+  async loadLocations () {
     let locationsProvider = new LocationsProvider()
-    locationsProvider.getLocations()
+    await locationsProvider.getLocations()
       .then((result) => {
         this.setState({ locations: result.map((value) => ({
           key: value.id,
@@ -51,6 +51,7 @@ export default class HomeLocationsPicker extends React.Component {
           return (
             <View key={item} style={styles.selectedItemContainer}>
               <Text style={styles.selectedItemText} numberOfLines={1}>
+                {console.log(this.state)}
                 {this.state.locations.find((location) => (location.key === item)).label}
               </Text>
               <TouchableNativeFeedback onPress={() => this.removeItem(item)}>
@@ -73,7 +74,7 @@ export default class HomeLocationsPicker extends React.Component {
       <View style={{ ...styles.container, ...this.props.style }}>
         <InputTitle>Local areas</InputTitle>
         <View style={styles.innerContainer}>
-          {this.renderSelectedItems()}
+          {!this.state.loading && this.renderSelectedItems()}
           {this.state.picked.length < maxItems &&
             <TouchableNativeFeedback onPress={this.onShow}>
               <Text style={styles.placeholderText}>
