@@ -23,7 +23,9 @@ export default class HomeLocationsPicker extends React.Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    this.props.onValueChange(this.state.picked)
+    if (JSON.stringify(this.state.picked) !== JSON.stringify(prevState.picked)) {
+      this.props.onValueChange(this.state.picked)
+    }
   }
 
   loadLocations () {

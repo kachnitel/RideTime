@@ -14,7 +14,6 @@ import SignOutButton from '../components/SignOutButton'
  * TODO:
  * Display Profile w/ cached data and a loading icon,
  * replace update state once loaded and hide icon.
- * Disable edit while offline/loading? (w/ Toast onPress)
  */
 export default
 @inject('UserStore')

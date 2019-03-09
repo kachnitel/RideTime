@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import CoverPicture from './CoverPicture'
 import styles, { profilePictureSize } from './ProfileHeaderStyle'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -8,6 +8,7 @@ import EditPicture from './EditPicture'
 import SelectDifficulty from '../sign_up/SelectDifficulty'
 import SelectBike from '../sign_up/SelectBike'
 import TextInputWithTitle from '../form/TextInputWithTitle'
+import HomeLocationsPicker from '../sign_up/HomeLocationsPicker'
 
 export default class EditProfileHeader extends React.Component {
   constructor (props) {
@@ -38,6 +39,10 @@ export default class EditProfileHeader extends React.Component {
     this.props.updatePictureCallback(val)
   }
 
+  handleUpdateLocations = (val) => {
+    this.handleUpdate(val, 'locations')
+  }
+
   handleUpdate = async (val, key) => {
     await this.setState(
       (prevState) => ({ user: { ...prevState.user, [key]: val } })
@@ -47,7 +52,7 @@ export default class EditProfileHeader extends React.Component {
 
   render () {
     return (
-      <View>
+      <ScrollView>
         <CoverPicture
           user={this.props.user}
           style={styles.coverPicture}
@@ -60,10 +65,6 @@ export default class EditProfileHeader extends React.Component {
           }}
         />
         <View style={{ ...styles.businessCard, ...editStyles.businessCard }}>
-          {/* TODO:
-            Other settings
-              - (level, terrain, locations, stuff (fav trails eventually))
-          */}
           <View style={styles.profilePicture}>
             <EditPicture
               picture={this.props.user.picture}
@@ -97,23 +98,28 @@ export default class EditProfileHeader extends React.Component {
               onValueChange={this.handleUpdateBike}
               style={editStyles.textInput}
             />
+            <HomeLocationsPicker
+              onValueChange={this.handleUpdateLocations}
+              style={editStyles.textInput}
+              // value={this.state.user.locations} // TODO: preselect existing
+            />
           </View>
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }
 
 const editStyles = StyleSheet.create({
   textInput: {
-    padding: Layout.window.hp(1)
+    margin: Layout.window.hp(1)
   },
   form: {
     paddingVertical: Layout.window.hp(2)
   },
   businessCard: {
-    // flex: 1,6
-    height: Layout.window.hp(100)
+    height: Layout.window.hp(100),
+    alignItems: 'center'
   },
   editIcon: {
     fontSize: Layout.window.hp(5),
