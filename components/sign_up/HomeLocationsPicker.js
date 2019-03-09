@@ -41,7 +41,6 @@ export default class HomeLocationsPicker extends React.Component {
    * @memberof HomeLocationsPicker
    */
   renderSelectedItems = () => {
-    // console.log(this.state.locations, this.state.picked)
     return (
       <>
         {this.state.picked.length > 0 && this.state.picked.map((item) => {
@@ -67,7 +66,7 @@ export default class HomeLocationsPicker extends React.Component {
   render () {
     let maxItems = 3
     return (
-      <View style={styles.container}>
+      <View style={{ ...styles.container, ...this.props.style }}>
         <InputTitle>Local areas</InputTitle>
         <View style={styles.innerContainer}>
           {this.renderSelectedItems()}
