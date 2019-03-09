@@ -13,7 +13,7 @@ export default class HomeLocationsPicker extends React.Component {
 
     this.state = {
       visible: false,
-      picked: [],
+      picked: this.props.value || [],
       locations: []
     }
   }

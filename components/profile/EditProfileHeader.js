@@ -101,7 +101,7 @@ export default class EditProfileHeader extends React.Component {
             <HomeLocationsPicker
               onValueChange={this.handleUpdateLocations}
               style={editStyles.textInput}
-              // value={this.state.user.locations} // TODO: preselect existing
+              value={this.state.user.locations} // TODO: preselect existing
             />
           </View>
         </View>
