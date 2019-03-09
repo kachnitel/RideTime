@@ -1,5 +1,11 @@
 import React from 'react'
-import { StyleSheet, ToastAndroid, TouchableHighlight, View } from 'react-native'
+import {
+  StyleSheet,
+  ToastAndroid,
+  TouchableHighlight,
+  View,
+  KeyboardAvoidingView
+} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import EditProfileHeader from '../components/profile/EditProfileHeader'
 import ProfileHeader from '../components/profile/ProfileHeader'
@@ -9,6 +15,7 @@ import RidersProvider from '../providers/RidersProvider'
 import { observer, inject } from 'mobx-react'
 import Button from '../components/Button'
 import SignOutButton from '../components/SignOutButton'
+import { Header } from 'react-navigation'
 
 /**
  * TODO:
@@ -141,11 +148,16 @@ class OwnProfileScreen extends React.Component {
 
     return (
       this.state.editing
-        ? <EditProfileHeader
-          user={user}
-          updateCallback={this.updateUser}
-          updatePictureCallback={this.updatePicture}
-        />
+        ? <KeyboardAvoidingView
+          keyboardVerticalOffset={Header.HEIGHT + 24}
+          behavior='padding'
+        >
+          <EditProfileHeader
+            user={user}
+            updateCallback={this.updateUser}
+            updatePictureCallback={this.updatePicture}
+          />
+        </KeyboardAvoidingView>
         : this.state.user && <ProfileHeader user={this.state.user} />
     )
   };
