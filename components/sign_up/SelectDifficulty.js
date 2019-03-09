@@ -44,7 +44,8 @@ export default class SelectDifficulty extends React.Component {
 SelectDifficulty.propTypes = {
   ...SelectWithIcon.propTypes,
   max: DifficultyIcon.propTypes.d,
-  onValueChange: PropTypes.func
+  onValueChange: PropTypes.func,
+  value: DifficultyIcon.propTypes.d
 }
 
 const styles = StyleSheet.create({

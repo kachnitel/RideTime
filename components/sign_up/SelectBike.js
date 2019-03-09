@@ -34,4 +34,7 @@ export default class SelectBike extends React.Component {
   }
 }
 
-SelectBike.propTypes = SelectWithIcon.propTypes
+SelectBike.propTypes = {
+  ...SelectWithIcon.propTypes,
+  value: TerrainIcon.propTypes.terrain
+}
