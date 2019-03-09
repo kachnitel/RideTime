@@ -70,6 +70,6 @@ export default class DifficultyIcon extends RideTimeIcon {
 }
 
 DifficultyIcon.propTypes = {
-  d: PropTypes.oneOf([0, 1, 2, 3, 4]).isRequired,
+  d: PropTypes.oneOf(Object.keys(DifficultyIcon.icons).map(Number)).isRequired,
   style: PropTypes.any
 }
