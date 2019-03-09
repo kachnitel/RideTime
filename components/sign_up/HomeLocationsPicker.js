@@ -14,12 +14,14 @@ export default class HomeLocationsPicker extends React.Component {
     this.state = {
       visible: false,
       picked: this.props.value || [],
-      locations: []
+      locations: [],
+      loading: true
     }
   }
 
-  componentDidMount = () => {
-    this.loadLocations()
+  componentDidMount = async () => {
+    await this.loadLocations()
+    this.setState({ loading: false })
   }
 
   componentDidUpdate = (prevProps, prevState) => {
