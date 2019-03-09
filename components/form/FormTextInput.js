@@ -28,6 +28,7 @@ FormTextInput.propTypes = {
 
 const styles = StyleSheet.create({
   input: {
+    fontSize: Layout.window.hp(2.5),
     borderBottomColor: Colors.tintColor,
     borderBottomWidth: 1,
     color: '#fff',
