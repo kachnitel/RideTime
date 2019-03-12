@@ -50,6 +50,12 @@ class SignUpScreen extends React.Component {
     this.setState({ selectedPicture: image })
   }
 
+  /**
+   * TODO: use UserStore to submit
+   * (ensures DRY code)
+   *
+   * @memberof SignUpScreen
+   */
   submit = async () => {
     // TODO: Show loading
     let provider = new RidersProvider()

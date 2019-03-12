@@ -1,11 +1,11 @@
 import React from 'react'
-import { StyleSheet, TouchableHighlight, View } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { View } from 'react-native'
 import { AreaMap } from '../components/AreaMap'
 import { CreateRideButton } from '../components/CreateRideButton'
 import RidesList from '../components/lists/RidesList'
 import LocationsProvider from '../providers/LocationsProvider'
 import RidesProvider from '../providers/RidesProvider'
+import DrawerButton from '../components/DrawerButton'
 
 /**
  * TODO:
@@ -22,14 +22,7 @@ export default class RidesScreen extends React.Component {
       // https://reactnavigation.org/docs/en/stack-navigator.html#navigationoptions-for-screens-inside-of-the-navigator
       title: 'RideTime',
       drawerLabel: 'Home',
-      headerLeft: (
-        <TouchableHighlight
-          onPress={() => navigation.toggleDrawer()}>
-          <View style={styles.headerMenuIconContainer}>
-            <Icon style={styles.headerMenuIcon} name='menu' />
-          </View>
-        </TouchableHighlight>
-      )
+      headerLeft: <DrawerButton navigation={navigation} />
     }
   }
 
@@ -94,16 +87,3 @@ export default class RidesScreen extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create(
-  {
-    headerMenuIconContainer: {
-      justifyContent: 'center'
-    },
-    headerMenuIcon: {
-      fontSize: 24,
-      paddingLeft: 15,
-      color: '#0C5E14'
-    }
-  }
-)

@@ -5,7 +5,7 @@ import RidesProvider from '../providers/RidesProvider'
 export default class RideDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam('title', 'NO NAME RIDE')
+      title: navigation.getParam('title')
     }
   }
 

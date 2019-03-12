@@ -2,8 +2,6 @@ import React from 'react'
 import Profile from '../components/profile/Profile'
 import RidersProvider from '../providers/RidersProvider'
 
-// TODO: OwnProfileScreen, title just Profile or My Profile
-// w/ little name under in drawer eventually
 // TODO: Configure back button behavior to go back to ride
 // Can use 'key' to go to the right card in stack if set
 export default class PublicProfileScreen extends React.Component {

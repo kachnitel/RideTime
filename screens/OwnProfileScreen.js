@@ -2,20 +2,18 @@ import React from 'react'
 import {
   StyleSheet,
   ToastAndroid,
-  TouchableHighlight,
   View,
   KeyboardAvoidingView
 } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import EditProfileHeader from '../components/profile/EditProfileHeader'
 import ProfileHeader from '../components/profile/ProfileHeader'
-import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 import RidersProvider from '../providers/RidersProvider'
 import { observer, inject } from 'mobx-react'
 import Button from '../components/Button'
 import SignOutButton from '../components/SignOutButton'
 import { Header } from 'react-navigation'
+import DrawerButton from '../components/DrawerButton'
 
 /**
  * TODO:
@@ -45,14 +43,7 @@ class OwnProfileScreen extends React.Component {
           </View>
         </View>
       ),
-      headerLeft: (
-        <TouchableHighlight
-          onPress={() => navigation.toggleDrawer()}>
-          <View style={styles.headerMenuIconContainer}>
-            <Icon style={styles.headerMenuIcon} name='menu' />
-          </View>
-        </TouchableHighlight>
-      )
+      headerLeft: <DrawerButton navigation={navigation} />
     }
   }
 
@@ -170,13 +161,5 @@ const styles = StyleSheet.create({
   },
   navBarButton: {
     margin: Layout.window.wp(1)
-  },
-  headerMenuIconContainer: {
-    justifyContent: 'center'
-  },
-  headerMenuIcon: {
-    fontSize: 24,
-    paddingLeft: 15,
-    color: Colors.tintColor
   }
 })
