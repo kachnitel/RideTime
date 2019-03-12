@@ -127,7 +127,6 @@ class SignUpScreen extends React.Component {
                 title='Sign Up!'
                 onPress={this.submit}
                 color='#f90'
-                disabled={!this.props.UserStore.name || !this.props.UserStore.email}
               />
             }
           </View>
