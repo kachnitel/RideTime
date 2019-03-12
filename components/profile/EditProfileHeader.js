@@ -19,28 +19,8 @@ export default class EditProfileHeader extends React.Component {
     }
   }
 
-  handleUpdateName = (val) => {
-    this.handleUpdate(val, 'name')
-  }
-
-  handleUpdateCity = (val) => {
-    this.handleUpdate(val, 'hometown')
-  }
-
-  handleUpdateLevel = (selected) => {
-    this.handleUpdate(selected.value, 'level')
-  }
-
-  handleUpdateBike = (selected) => {
-    this.handleUpdate(selected.value, 'favTerrain')
-  }
-
   handleUpdatePicture = (val) => {
     this.props.updatePictureCallback(val)
-  }
-
-  handleUpdateLocations = (val) => {
-    this.handleUpdate(val, 'locations')
   }
 
   handleUpdate = async (val, key) => {
@@ -58,12 +38,7 @@ export default class EditProfileHeader extends React.Component {
           style={headerStyles.coverPicture}
         />
         {/* TODO: Use EditPicture with repositioned icon (override icon style) */}
-        <Icon
-          name='edit'
-          style={{
-            ...styles.editIcon, ...styles.editIconCoverPicture
-          }}
-        />
+        <Icon name='edit' style={styles.editIcon} />
         <View style={headerStyles.businessCard}>
           <View style={headerStyles.profilePicture}>
             <EditPicture
@@ -75,33 +50,33 @@ export default class EditProfileHeader extends React.Component {
           <View style={styles.form}>
             <TextInputWithTitle
               value={this.state.user.name}
-              onChangeText={this.handleUpdateName}
+              onChangeText={(val) => this.handleUpdate(val, 'name')}
               placeholder='Your name'
               title='Name'
               containerStyle={styles.textInput}
             />
             <TextInputWithTitle
               value={this.state.user.hometown}
-              onChangeText={this.handleUpdateCity}
+              onChangeText={(val) => this.handleUpdate(val, 'hometown')}
               placeholder='Hometown, BC'
               title='Hometown'
               containerStyle={styles.textInput}
             />
             <SelectDifficulty
               value={this.state.user.level}
-              onValueChange={this.handleUpdateLevel}
+              onValueChange={(selected) => this.handleUpdate(selected.value, 'level')}
               max={3}
               style={styles.textInput}
             />
             <SelectBike
               value={this.state.user.favTerrain}
-              onValueChange={this.handleUpdateBike}
+              onValueChange={(selected) => this.handleUpdate(selected.value, 'favTerrain')}
               style={styles.textInput}
             />
             <HomeLocationsPicker
-              onValueChange={this.handleUpdateLocations}
-              style={styles.textInput}
               value={this.state.user.locations}
+              onValueChange={(val) => this.handleUpdate(val, 'locations')}
+              style={styles.textInput}
             />
           </View>
         </View>
@@ -128,9 +103,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
     color: 'white',
     backgroundColor: 'rgba(255,255,255,0.75);',
-    right: 5
-  },
-  editIconCoverPicture: {
+    right: 5,
     top: 5
   }
 })
