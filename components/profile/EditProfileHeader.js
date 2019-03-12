@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, ScrollView } from 'react-native'
 import CoverPicture from './CoverPicture'
-import styles, { profilePictureSize } from './ProfileHeaderStyle'
+import headerStyles, { profilePictureSize } from './ProfileHeaderStyle'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Layout from '../../constants/Layout'
 import EditPicture from './EditPicture'
@@ -55,52 +55,52 @@ export default class EditProfileHeader extends React.Component {
       <ScrollView keyboardShouldPersistTaps='handled'>
         <CoverPicture
           user={this.props.user}
-          style={styles.coverPicture}
+          style={headerStyles.coverPicture}
         />
         {/* TODO: Use EditPicture with repositioned icon (override icon style) */}
         <Icon
           name='edit'
           style={{
-            ...editStyles.editIcon, ...editStyles.editIconCoverPicture
+            ...styles.editIcon, ...styles.editIconCoverPicture
           }}
         />
-        <View style={styles.businessCard}>
-          <View style={styles.profilePicture}>
+        <View style={headerStyles.businessCard}>
+          <View style={headerStyles.profilePicture}>
             <EditPicture
               picture={this.props.user.picture}
               size={profilePictureSize}
               onSelect={this.handleUpdatePicture}
             />
           </View>
-          <View style={editStyles.form}>
+          <View style={styles.form}>
             <TextInputWithTitle
               value={this.state.user.name}
               onChangeText={this.handleUpdateName}
               placeholder='Your name'
               title='Name'
-              containerStyle={editStyles.textInput}
+              containerStyle={styles.textInput}
             />
             <TextInputWithTitle
               value={this.state.user.hometown}
               onChangeText={this.handleUpdateCity}
               placeholder='Hometown, BC'
               title='Hometown'
-              containerStyle={editStyles.textInput}
+              containerStyle={styles.textInput}
             />
             <SelectDifficulty
               value={this.state.user.level}
               onValueChange={this.handleUpdateLevel}
               max={3}
-              style={editStyles.textInput}
+              style={styles.textInput}
             />
             <SelectBike
               value={this.state.user.favTerrain}
               onValueChange={this.handleUpdateBike}
-              style={editStyles.textInput}
+              style={styles.textInput}
             />
             <HomeLocationsPicker
               onValueChange={this.handleUpdateLocations}
-              style={editStyles.textInput}
+              style={styles.textInput}
               value={this.state.user.locations}
             />
           </View>
@@ -110,7 +110,7 @@ export default class EditProfileHeader extends React.Component {
   }
 }
 
-const editStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   textInput: {
     margin: Layout.window.hp(1)
   },
