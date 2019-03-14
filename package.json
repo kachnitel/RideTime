@@ -45,7 +45,9 @@
     "react-navigation": "^3.0.9"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.3.0",
     "babel-eslint": "^10.0.1",
+    "babel-plugin-transform-react-jsx-source": "^6.22.0",
     "babel-preset-expo": "^5.0.0",
     "jest-coverage-badges": "^1.1.2",
     "jest-expo": "^32.0.0",
