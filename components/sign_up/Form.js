@@ -3,10 +3,6 @@ import { View, StyleSheet } from 'react-native'
 import Layout from '../../constants/Layout'
 
 export default class Form extends React.Component {
-  _handleSelectPicture = (uri) => {
-    this.props.UserStore.updateTempPicture(uri)
-  }
-
   render () {
     return (
       <View style={styles.container}>
