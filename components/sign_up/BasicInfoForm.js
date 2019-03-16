@@ -7,11 +7,11 @@ import { observer, inject } from 'mobx-react'
 import Form from './Form'
 
 export default
-@inject('UserStore')
+@inject('User')
 @observer
 class BasicInfoForm extends React.Component {
   _handleSelectPicture = (image) => {
-    this.props.UserStore.updateTempPicture(image.uri)
+    this.props.User.updateTempPicture(image.uri)
     this.props.onSelectPicture(image)
   }
 
@@ -20,30 +20,30 @@ class BasicInfoForm extends React.Component {
       <Form>
         {/* TODO: cover picture */}
         <EditPicture
-          picture={this.props.UserStore.tempPicture}
+          picture={this.props.User.tempPicture}
           size={Layout.window.hp(15)}
           iconSize={Layout.window.hp(4)}
           onSelect={this._handleSelectPicture}
         />
         <TextInputWithTitle
-          value={this.props.UserStore.name}
+          value={this.props.User.name}
           title='Your name'
           containerStyle={styles.inputContainer}
-          onChangeText={(val) => this.props.UserStore.updateName(val)}
+          onChangeText={(val) => this.props.User.updateName(val)}
           required
         />
         <TextInputWithTitle
-          value={this.props.UserStore.email}
+          value={this.props.User.email}
           title='Your E-Mail'
           containerStyle={styles.inputContainer}
-          onChangeText={(val) => this.props.UserStore.updateEmail(val)}
+          onChangeText={(val) => this.props.User.updateEmail(val)}
           required
         />
         <TextInputWithTitle
-          value={this.props.UserStore.hometown}
+          value={this.props.User.hometown}
           title='Your hometown'
           containerStyle={styles.inputContainer}
-          onChangeText={(val) => this.props.UserStore.updateHometown(val)}
+          onChangeText={(val) => this.props.User.updateHometown(val)}
           placeholder='Squamish, BC'
         />
       </Form>

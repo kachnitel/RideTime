@@ -6,7 +6,7 @@ import SelectBike from './SelectBike'
 import HomeLocationsPicker from './HomeLocationsPicker'
 
 export default
-@inject('UserStore')
+@inject('User')
 @observer
 class DetailsForm extends React.Component {
   render () {
@@ -14,13 +14,13 @@ class DetailsForm extends React.Component {
       <Form>
         <SelectDifficulty
           max={3}
-          onValueChange={(value) => this.props.UserStore.updateLevel(value.value)}
+          onValueChange={(value) => this.props.User.updateLevel(value.value)}
         />
         <SelectBike
-          onValueChange={(value) => this.props.UserStore.updateBike(value.value)}
+          onValueChange={(value) => this.props.User.updateBike(value.value)}
         />
         <HomeLocationsPicker
-          onValueChange={(values) => this.props.UserStore.updateLocations(values)}
+          onValueChange={(values) => this.props.User.updateLocations(values)}
         />
       </Form>
     )

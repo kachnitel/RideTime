@@ -113,13 +113,12 @@ export const postFile = async (path, key, file) => {
   // )
 }
 
-export const getHeaders = (authToken, contentType = 'application/json') => {
+export const getHeaders = (contentType = 'application/json') => {
   let headers = {
     'Accept': 'application/json',
     'Content-Type': contentType,
     'Authorization': 'Bearer ' + rootStore.appStore.accessToken
   }
 
-  console.log(headers)
   return headers
 }

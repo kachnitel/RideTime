@@ -4,20 +4,22 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
-  Keyboard
+  Keyboard,
+  Text
 } from 'react-native'
 import { Header } from 'react-navigation'
-import { observer, inject } from 'mobx-react'
+import { observer, inject, Provider } from 'mobx-react'
 import BasicInfoForm from '../components/sign_up/BasicInfoForm'
 import DetialsForm from '../components/sign_up/DetialsForm'
 import Colors from '../constants/Colors'
 import Button from '../components/Button'
 import Layout from '../constants/Layout'
-import RidersProvider from '../providers/RidersProvider'
 import { SecureStore } from 'expo'
+import { User } from '../stores/UserStore.mobx'
 
 export default
 @inject('UserStore')
+@inject('ApplicationStore')
 @observer
 class SignUpScreen extends React.Component {
   constructor (props) {
@@ -27,13 +29,18 @@ class SignUpScreen extends React.Component {
       formPosition: 1,
       selectedPicture: null
     }
+
+    this.user = this.initUser(props.navigation.getParam('user'), props.UserStore)
   }
 
-  componentDidMount = () => {
-    let user = this.props.navigation.getParam('user')
-    user.name !== user.email && this.props.UserStore.updateName(user.name)
-    this.props.UserStore.updateTempPicture(user.picture)
-    this.props.UserStore.updateEmail(user.email)
+  initUser = (userInfo, store) => {
+    let user = new User(store)
+
+    userInfo.name !== userInfo.email && user.updateName(userInfo.name)
+    user.updateTempPicture(userInfo.picture)
+    user.updateEmail(userInfo.email)
+
+    return user
   }
 
   handleScroll = (event) => {
@@ -51,62 +58,53 @@ class SignUpScreen extends React.Component {
   }
 
   /**
-   * TODO: use UserStore to submit
-   * (ensures DRY code)
-   *
    * @memberof SignUpScreen
    */
   submit = async () => {
-    // TODO: Show loading
-    let provider = new RidersProvider()
-    let user = await provider.signUp({
-      name: this.props.UserStore.name,
-      hometown: this.props.UserStore.hometown,
-      email: this.props.UserStore.email,
-      level: this.props.UserStore.level,
-      favTerrain: this.props.UserStore.bike,
-      locations: this.props.UserStore.locations,
-      // Only send picture if local isn't selected to prevent server processing twice
-      picture: this.state.selectedPicture === null ? this.props.UserStore.tempPicture : null
-    })
-
+    // REVIEW: two ifs?
+    // Only send picture if local isn't selected to prevent server processing twice
     if (this.state.selectedPicture) {
-      user = await provider.uploadPicture(user.id, this.state.selectedPicture)
-      // TODO: On fail, display a note
-      // about being able to set it in profile and redirect to app
+      this.user.updateTempPicture(null)
+    }
+    // TODO: Show loading
+    await this.user.save()
+    if (this.state.selectedPicture) {
+      await this.user.uploadPicture(this.state.selectedPicture)
     }
 
-    this.props.UserStore.populateFromApiResponse(user)
     let token = this.props.navigation.getParam('token')
     SecureStore.setItemAsync('refreshToken', token.refresh_token)
+    this.props.ApplicationStore.updateUserId(this.user.id)
     // Signed up
-    console.info(`User ${user.id} signed up`)
+    console.info(`User ${this.user.id} signed up`)
     this.props.navigation.navigate('App')
   }
 
   render () {
-    return (
+    return this.user ? (
       <KeyboardAvoidingView
         style={styles.container}
         keyboardVerticalOffset={Header.HEIGHT + 24}
         behavior='padding'
       >
         <View style={styles.form}>
-          <ScrollView
-            horizontal
-            pagingEnabled
-            bounces={false}
-            ref='scrollView'
-            onScrollBeginDrag={this.handlehandleScrollScroll}
-            showsHorizontalScrollIndicator={false}
-            scrollEnabled={false}
-            keyboardShouldPersistTaps='handled'
-          >
-            <BasicInfoForm
-              onSelectPicture={this.handleSelectPicture}
-            />
-            <DetialsForm />
-          </ScrollView>
+          <Provider User={this.user}>
+            <ScrollView
+              horizontal
+              pagingEnabled
+              bounces={false}
+              ref='scrollView'
+              onScrollBeginDrag={this.handlehandleScrollScroll}
+              showsHorizontalScrollIndicator={false}
+              scrollEnabled={false}
+              keyboardShouldPersistTaps='handled'
+            >
+              <BasicInfoForm
+                onSelectPicture={this.handleSelectPicture}
+              />
+              <DetialsForm />
+            </ScrollView>
+          </Provider>
           <View style={styles.controls}>
             <Button
               title={this.state.formPosition === 1 ? 'Next' : 'Previous'}
@@ -120,7 +118,7 @@ class SignUpScreen extends React.Component {
                   this.setState({ formPosition: 1 })
                 }
               }}
-              disabled={!this.props.UserStore.name || !this.props.UserStore.email}
+              disabled={!this.user.name || !this.user.email}
             />
             {
               this.state.formPosition === 2 && <Button
@@ -132,7 +130,7 @@ class SignUpScreen extends React.Component {
           </View>
         </View>
       </KeyboardAvoidingView>
-    )
+    ) : <Text>Loading</Text>
   }
 }
 

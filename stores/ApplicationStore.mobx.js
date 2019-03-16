@@ -14,7 +14,7 @@ export default class ApplicationStore {
 
   // @computed get signedInUser () { return this.rootStore.userStore.get(this._userId) }
 
-  @action updateUserID (newValue) {
+  @action updateUserId (newValue) {
     this._userId = newValue
     // Side effect (@reaction? refreshUser)
   }
@@ -42,6 +42,6 @@ export default class ApplicationStore {
   @action reset () {
     // TODO: Reset all stores
     this.updateAccessToken(ApplicationStore.prototype._accessToken)
-    this.updateUserID(ApplicationStore.prototype._userId)
+    this.updateUserId(ApplicationStore.prototype._userId)
   }
 }

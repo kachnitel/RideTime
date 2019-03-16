@@ -1,12 +1,14 @@
 import { observable, action, computed } from 'mobx' // REVIEW: 'mobx-react/native'
 import RidersProvider from '../providers/RidersProvider'
+import { RootStore } from './RootStore'
 
 export default class UserStore {
   provider: RidersProvider
+  rootStore: RootStore
   @observable _users = []
 
-  constructor (userProvider: ?RidersProvider) {
-    // TODO: RootStore for references
+  constructor (rootStore: RootStore, userProvider: ?RidersProvider) {
+    this.rootStore = rootStore
     this.provider = userProvider
   }
 
@@ -16,7 +18,7 @@ export default class UserStore {
     }
   }
 
-  get = async (id) => {
+  get = async (id: Number) => {
     let user = this._users.find(user => user.id === id)
     if (user === undefined) {
       // Look for user at API
@@ -79,8 +81,6 @@ export class User {
   @action updateTempPicture (newValue) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }
 
-  // TODO: @computed get user () { return object w/ all}
-
   /**
    * TODO: loop through all props and reset
    *
@@ -100,13 +100,38 @@ export class User {
   @action async populateFromApi (id: Number) {
     let user = await this.userStore.provider.getUser(id)
 
-    this.updateId(user.id)
-    this.updateName(user.name)
-    this.updatePicture(user.picture)
-    this.updateBike(user.preferred)
-    this.updateLevel(user.level)
-    this.updateHometown(user.hometown)
-    this.updateLocations(user.locations || [])
-    // this.updateEmail(user.email)
+    this.populateFromApiResponse(user)
+  }
+
+  @action async save () {
+    let userResponse = await this.userStore.provider.signUp({
+      name: this.name,
+      hometown: this.hometown,
+      email: this.email,
+      level: this.level,
+      favTerrain: this.bike,
+      locations: this.locations,
+      picture: this.tempPicture
+    })
+
+    this.populateFromApiResponse(userResponse)
+
+    this.userStore.add(this)
+  }
+
+  @action uploadPicture (image: Object) {
+    console.log(image)
+    return this.userStore.provider.uploadPicture(this.id, image)
+  }
+
+  @action populateFromApiResponse (userResponse: Object) {
+    this.updateId(userResponse.id)
+    this.updateName(userResponse.name)
+    this.updatePicture(userResponse.picture)
+    this.updateBike(userResponse.preferred)
+    this.updateLevel(userResponse.level)
+    this.updateHometown(userResponse.hometown)
+    this.updateLocations(userResponse.locations || [])
+    this.updateEmail(userResponse.email)
   }
 }

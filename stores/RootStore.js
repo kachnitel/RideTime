@@ -6,7 +6,7 @@ import { AsyncStorage } from 'react-native'
 
 export class RootStore {
   constructor () {
-    this.userStore = new UserStore(this, RidersProvider)
+    this.userStore = new UserStore(this, new RidersProvider())
 
     let applicationStore = new ApplicationStore(this)
 

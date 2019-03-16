@@ -24,11 +24,12 @@ class AuthLoadingScreen extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    let signedInUserId = this.props.UserStore.userId
+    let signedInUserId = this.props.ApplicationStore.userId
     let route = null
 
     // Exchange refresh_token(from SecureStore) for access_token
     if (signedInUserId) {
+      // TODO: To appStore.refreshAccessToken ---
       let refreshToken = await SecureStore.getItemAsync('refreshToken')
       if (!refreshToken) {
         console.warn('Error loading refresh token!')
@@ -40,7 +41,9 @@ class AuthLoadingScreen extends React.Component {
         console.log(token)
       }
       this.props.ApplicationStore.updateAccessToken(token.access_token)
+      // ----------------------------------------
 
+      // TODO: Use UserStore::get --------
       let provider = new RidersProvider()
       let user = await provider.getUser(signedInUserId)
         .catch(async (error) => {
@@ -51,17 +54,18 @@ class AuthLoadingScreen extends React.Component {
             throw error
           }
         })
+      // ---------------------------------
 
       if (user !== undefined) {
-        this.props.UserStore.populateFromApiResponse(user)
         route = 'App'
       } else {
-        this.props.UserStore.reset()
+        // FIXME: duplicated below
+        this.props.ApplicationStore.reset()
         route = 'Auth'
       }
     } else {
       // Ensure UserStore is clear. Less than ideal solution
-      this.props.UserStore.reset()
+      this.props.ApplicationStore.reset()
       route = 'Auth'
     }
     // This will switch to the App screen or Auth screen and this loading
