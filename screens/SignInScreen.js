@@ -45,7 +45,7 @@ class SignInScreen extends React.Component {
       // On successful login save tokens
       SecureStore.setItemAsync('refreshToken', token.refresh_token)
 
-      this.props.UserStore.populateFromApiResponse(signInResponse)
+      this.props.ApplicationStore.updateUserId(signInResponse.id)
       // Signed in
       console.info(`User ${signInResponse.id} signed in`)
       this.props.navigation.navigate('App')
