@@ -1,28 +1,47 @@
-import { observable, action, computed } from 'mobx'
-// import { create, persist } from 'mobx-persist'
-// import { AsyncStorage } from 'react-native'
+import { observable, action, computed, autorun } from 'mobx'
+import { persist } from 'mobx-persist'
+// import { SecureStore } from 'expo'
+// import Authentication from '../src/Authentication'
+import { RootStore } from './RootStore'
 
-class ApplicationStore {
+export default class ApplicationStore {
+  constructor (rootStore: RootStore) {
+    this.rootStore = rootStore
+  }
+
+  @persist @observable _userId = null
   @observable _accessToken = null
+
+  // @computed get signedInUser () { return this.rootStore.userStore.get(this._userId) }
+
+  @action updateUserID (newValue) {
+    this._userId = newValue
+    // Side effect (@reaction? refreshUser)
+  }
+  @computed get userId () { return this._userId }
 
   @action updateAccessToken (newValue) { this._accessToken = newValue }
   @computed get accessToken () { return this._accessToken }
+
+  disposer = autorun(() => console.log('AppStore::autorun', this.accessToken))
+
+  // @action async refreshAccessToken () {
+  //   let refreshToken = await SecureStore.getItemAsync('refreshToken')
+  //   if (!refreshToken) {
+  //     console.warn('Error loading refresh token!')
+  //   }
+  //   let auth = new Authentication()
+  //   let token = await auth.refreshToken(refreshToken)
+  //   if (token.error) {
+  //     console.warn('Error refreshing API token!')
+  //     console.log(token)
+  //   }
+  //   this.updateAccessToken(token.access_token)
+  // }
+
+  @action reset () {
+    // TODO: Reset all stores
+    this.updateAccessToken(ApplicationStore.prototype._accessToken)
+    this.updateUserID(ApplicationStore.prototype._userId)
+  }
 }
-
-/*
-  We create and export a singleton (a single instance of our state).
-  This allows us to use inject the same state across the app with ease.
-  Some situations warrant having a new instance of state (e.g. login or sensitive state).
-*/
-const singleton = new ApplicationStore()
-export default singleton
-
-// const hydrate = create({
-//   storage: AsyncStorage, // Choose our storage medium, ensure it's imported above
-//   jsonify: true // if you use AsyncStorage, this needs to be true
-// })
-
-// // We hydrate anything we've persisted so that it is updated into the state on creation
-// hydrate('persistedState', singleton).then((data) => {
-//   console.log('Hydrated persisted data ', data)
-// })

@@ -1,9 +1,9 @@
 /* global fetch, FormData */
-import ApplicationStore from '../stores/ApplicationStore.mobx'
 import { getEnvVars } from '../constants/Env'
 import AppError from './AppError'
 import NetworkError from './NetworkError'
 import Mime from 'mime/lite'
+import rootStore from '../stores/RootStore'
 
 const validateResponse = (res) => {
   if (!res.ok) {
@@ -32,7 +32,7 @@ export const get = (path) => {
   console.log('GET', url)
 
   return fetch(url, {
-    headers: getHeaders(ApplicationStore.accessToken)
+    headers: getHeaders()
   })
     .then((res) => {
       validateResponse(res)
@@ -56,7 +56,7 @@ const submitData = (method, path, data) => {
 
   return fetch(url, {
     method: method,
-    headers: getHeaders(ApplicationStore.accessToken),
+    headers: getHeaders(),
     body: dataJson
   })
     .then((res) => {
@@ -99,7 +99,7 @@ export const postFile = async (path, key, file) => {
   let options = {
     method: 'POST',
     body: formData,
-    headers: getHeaders(ApplicationStore.accessToken, 'multipart/form-data')
+    headers: getHeaders('multipart/form-data')
   }
 
   let result = await fetch(url, options)
@@ -109,14 +109,17 @@ export const postFile = async (path, key, file) => {
   //   'POST',
   //   path,
   //   form,
-  //   getHeaders(ApplicationStore.accessToken, 'multipart/form-data')
+  //   getHeaders('multipart/form-data')
   // )
 }
 
 export const getHeaders = (authToken, contentType = 'application/json') => {
-  return {
+  let headers = {
     'Accept': 'application/json',
     'Content-Type': contentType,
-    'Authorization': 'Bearer ' + authToken
+    'Authorization': 'Bearer ' + rootStore.appStore.accessToken
   }
+
+  console.log(headers)
+  return headers
 }
