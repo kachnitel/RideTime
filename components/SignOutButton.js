@@ -6,12 +6,11 @@ import { observer, inject } from 'mobx-react'
 import Button from './Button'
 
 export default
-@inject('UserStore')
 @inject('ApplicationStore')
 @observer
 class SignOutButton extends Component {
   _signOut = () => {
-    console.info(`User ${this.props.UserStore.userId} signing out`)
+    console.info(`User ${this.props.ApplicationStore.userId} signing out`)
     Alert.alert(
       'Sign out',
       'Are you sure?',
@@ -25,8 +24,7 @@ class SignOutButton extends Component {
           text: 'OK',
           onPress: () => {
             SecureStore.deleteItemAsync('refreshToken')
-            this.props.UserStore.reset()
-            this.props.ApplicationStore.updateAccessToken(null)
+            this.props.ApplicationStore.reset()
 
             this.props.navigation.navigate('Auth')
           }
@@ -48,6 +46,5 @@ class SignOutButton extends Component {
 
 SignOutButton.propTypes = {
   ApplicationStore: PropTypes.any,
-  UserStore: PropTypes.any,
   navigation: PropTypes.any
 }
