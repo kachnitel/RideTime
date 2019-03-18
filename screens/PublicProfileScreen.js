@@ -28,6 +28,7 @@ export default class PublicProfileScreen extends React.Component {
   componentDidMount () {
     let provider = new RidersProvider()
     let userId = this.props.navigation.getParam('id')
+    // TODO: UserStore.get(userId)
     provider.getUser(userId)
       .then((result) => {
         this.setState({ user: result })

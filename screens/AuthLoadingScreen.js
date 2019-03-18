@@ -7,9 +7,6 @@ import {
   Alert
 } from 'react-native'
 import { observer, inject } from 'mobx-react'
-import { SecureStore } from 'expo'
-import Authentication from '../src/Authentication'
-import RidersProvider from '../providers/RidersProvider'
 import NetworkError from '../src/NetworkError'
 
 export default
@@ -29,24 +26,11 @@ class AuthLoadingScreen extends React.Component {
 
     // Exchange refresh_token(from SecureStore) for access_token
     if (signedInUserId) {
-      // TODO: To appStore.refreshAccessToken ---
-      let refreshToken = await SecureStore.getItemAsync('refreshToken')
-      if (!refreshToken) {
-        console.warn('Error loading refresh token!')
-      }
-      let auth = new Authentication()
-      let token = await auth.refreshToken(refreshToken)
-      if (token.error) {
-        console.warn('Error refreshing API token!')
-        console.log(token)
-      }
-      this.props.ApplicationStore.updateAccessToken(token.access_token)
-      // ----------------------------------------
+      await this.props.ApplicationStore.refreshAccessToken()
 
-      // TODO: Use UserStore::get --------
-      let provider = new RidersProvider()
-      let user = await provider.getUser(signedInUserId)
+      let user = await this.props.UserStore.get(signedInUserId)
         .catch(async (error) => {
+          // Custom catch to allow redirect
           Alert.alert('Error loading account ID: ' + signedInUserId)
           if (error instanceof NetworkError) {
             console.warn(await error.body)
@@ -54,7 +38,6 @@ class AuthLoadingScreen extends React.Component {
             throw error
           }
         })
-      // ---------------------------------
 
       if (user !== undefined) {
         route = 'App'
@@ -71,7 +54,7 @@ class AuthLoadingScreen extends React.Component {
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
     this.props.navigation.navigate(route)
-  };
+  }
 
   // Render any loading content that you like here
   render () {

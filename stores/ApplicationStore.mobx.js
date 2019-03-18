@@ -1,8 +1,8 @@
-import { observable, action, computed, autorun } from 'mobx'
+import { observable, action, computed } from 'mobx'
 import { persist } from 'mobx-persist'
-// import { SecureStore } from 'expo'
-// import Authentication from '../src/Authentication'
 import { RootStore } from './RootStore'
+import { SecureStore } from 'expo'
+import Authentication from '../src/Authentication'
 
 export default class ApplicationStore {
   constructor (rootStore: RootStore) {
@@ -12,32 +12,25 @@ export default class ApplicationStore {
   @persist @observable _userId = null
   @observable _accessToken = null
 
-  // @computed get signedInUser () { return this.rootStore.userStore.get(this._userId) }
-
-  @action updateUserId (newValue) {
-    this._userId = newValue
-    // Side effect (@reaction? refreshUser)
-  }
+  @action updateUserId (newValue) { this._userId = newValue }
   @computed get userId () { return this._userId }
 
   @action updateAccessToken (newValue) { this._accessToken = newValue }
   @computed get accessToken () { return this._accessToken }
 
-  disposer = autorun(() => console.log('AppStore::autorun', this.accessToken))
-
-  // @action async refreshAccessToken () {
-  //   let refreshToken = await SecureStore.getItemAsync('refreshToken')
-  //   if (!refreshToken) {
-  //     console.warn('Error loading refresh token!')
-  //   }
-  //   let auth = new Authentication()
-  //   let token = await auth.refreshToken(refreshToken)
-  //   if (token.error) {
-  //     console.warn('Error refreshing API token!')
-  //     console.log(token)
-  //   }
-  //   this.updateAccessToken(token.access_token)
-  // }
+  @action async refreshAccessToken () {
+    let refreshToken = await SecureStore.getItemAsync('refreshToken')
+    if (!refreshToken) {
+      console.warn('Error loading refresh token!')
+    }
+    let auth = new Authentication()
+    let token = await auth.refreshToken(refreshToken)
+    if (token.error) {
+      console.warn('Error refreshing API token!')
+      console.log(token)
+    }
+    this.updateAccessToken(token.access_token)
+  }
 
   @action reset () {
     // TODO: Reset all stores
