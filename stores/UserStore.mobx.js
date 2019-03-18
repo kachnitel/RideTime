@@ -29,6 +29,11 @@ export default class UserStore {
 
     return user
   }
+
+  update = async (updatedUser: User) => {
+    let user = this._users.find(user => user.id === updatedUser.id)
+    user.update(updatedUser)
+  }
 }
 
 export class User {
@@ -81,22 +86,6 @@ export class User {
   @action updateTempPicture (newValue) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }
 
-  /**
-   * TODO: loop through all props and reset
-   *
-   * @memberof User
-   */
-  @action reset () {
-    this.updateId(User.prototype._id)
-    this.updateName(User.prototype._name)
-    this.updatePicture(User.prototype._picture)
-    this.updateEmail(User.prototype._email)
-    this.updateHometown(User.prototype._hometown)
-    this.updateLevel(User.prototype._level)
-    this.updateBike(User.prototype._bike)
-    this.updateTempPicture(User.prototype._tempPicture)
-  }
-
   @action async populateFromApi (id: Number) {
     let user = await this.userStore.provider.getUser(id)
 
@@ -120,18 +109,43 @@ export class User {
   }
 
   @action uploadPicture (image: Object) {
-    console.log(image)
     return this.userStore.provider.uploadPicture(this.id, image)
+  }
+
+  @action async update (user: User) {
+    this.updateName(user.name)
+    this.updatePicture(user.picture)
+    this.updateEmail(user.email)
+    this.updateHometown(user.hometown)
+    this.updateLevel(user.level)
+    this.updateBike(user.bike)
+    this.updateTempPicture(user.tempPicture)
+    this.updateLocations(user.locations)
+
+    return this.userStore.provider.updateUser(this.id, this.createApiJson)
   }
 
   @action populateFromApiResponse (userResponse: Object) {
     this.updateId(userResponse.id)
     this.updateName(userResponse.name)
     this.updatePicture(userResponse.picture)
-    this.updateBike(userResponse.preferred)
+    this.updateBike(userResponse.favTerrain)
     this.updateLevel(userResponse.level)
     this.updateHometown(userResponse.hometown)
     this.updateLocations(userResponse.locations || [])
     this.updateEmail(userResponse.email)
+  }
+
+  @computed get createApiJson () {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      hometown: this.hometown,
+      picture: this.picture,
+      favTerrain: this.bike,
+      level: this.level,
+      locations: this.locations
+    }
   }
 }

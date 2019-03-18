@@ -9,32 +9,21 @@ import SelectDifficulty from '../sign_up/SelectDifficulty'
 import SelectBike from '../sign_up/SelectBike'
 import TextInputWithTitle from '../form/TextInputWithTitle'
 import HomeLocationsPicker from '../sign_up/HomeLocationsPicker'
+import { observer, inject } from 'mobx-react'
 
-export default class EditProfileHeader extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      user: this.props.user
-    }
-  }
-
+export default
+@inject('User')
+@observer
+class EditProfileHeader extends React.Component {
   handleUpdatePicture = (val) => {
     this.props.updatePictureCallback(val)
-  }
-
-  handleUpdate = async (val, key) => {
-    await this.setState(
-      (prevState) => ({ user: { ...prevState.user, [key]: val } })
-    )
-    this.props.updateCallback(this.state.user)
   }
 
   render () {
     return (
       <ScrollView keyboardShouldPersistTaps='handled'>
         <CoverPicture
-          user={this.props.user}
+          user={this.props.User}
           style={headerStyles.coverPicture}
         />
         {/* TODO: Use EditPicture with repositioned icon (override icon style) */}
@@ -42,40 +31,40 @@ export default class EditProfileHeader extends React.Component {
         <View style={headerStyles.businessCard}>
           <View style={headerStyles.profilePicture}>
             <EditPicture
-              picture={this.props.user.picture}
+              picture={this.props.User.picture}
               size={profilePictureSize}
               onSelect={this.handleUpdatePicture}
             />
           </View>
           <View style={styles.form}>
             <TextInputWithTitle
-              value={this.state.user.name}
-              onChangeText={(val) => this.handleUpdate(val, 'name')}
+              value={this.props.User.name}
+              onChangeText={(val) => this.props.User.updateName(val)}
               placeholder='Your name'
               title='Name'
               containerStyle={styles.textInput}
             />
             <TextInputWithTitle
-              value={this.state.user.hometown}
-              onChangeText={(val) => this.handleUpdate(val, 'hometown')}
+              value={this.props.User.hometown}
+              onChangeText={(val) => this.props.User.updateHometown(val)}
               placeholder='Hometown, BC'
               title='Hometown'
               containerStyle={styles.textInput}
             />
             <SelectDifficulty
-              value={this.state.user.level}
-              onValueChange={(selected) => this.handleUpdate(selected.value, 'level')}
+              value={this.props.User.level}
+              onValueChange={(val) => this.props.User.updateLevel(val.value)}
               max={3}
               style={styles.textInput}
             />
             <SelectBike
-              value={this.state.user.favTerrain}
-              onValueChange={(selected) => this.handleUpdate(selected.value, 'favTerrain')}
+              value={this.props.User.bike}
+              onValueChange={(val) => this.props.User.updateBike(val.value)}
               style={styles.textInput}
             />
             <HomeLocationsPicker
-              value={this.state.user.locations}
-              onValueChange={(val) => this.handleUpdate(val, 'locations')}
+              value={this.props.User.locations}
+              onValueChange={(val) => this.props.User.updateLocations(val)}
               style={styles.textInput}
             />
           </View>

@@ -3,25 +3,22 @@ import {
   StyleSheet,
   ToastAndroid,
   View,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ActivityIndicator
 } from 'react-native'
 import EditProfileHeader from '../components/profile/EditProfileHeader'
 import ProfileHeader from '../components/profile/ProfileHeader'
 import Layout from '../constants/Layout'
-import RidersProvider from '../providers/RidersProvider'
-import { observer, inject } from 'mobx-react'
+import { observer, inject, Provider } from 'mobx-react/native'
 import Button from '../components/Button'
 import SignOutButton from '../components/SignOutButton'
 import { Header } from 'react-navigation'
 import DrawerButton from '../components/DrawerButton'
+import { User } from '../stores/UserStore.mobx'
 
-/**
- * TODO:
- * Display Profile w/ cached data and a loading icon,
- * replace update state once loaded and hide icon.
- */
 export default
 @inject('UserStore')
+@inject('ApplicationStore')
 @observer
 class OwnProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -47,55 +44,34 @@ class OwnProfileScreen extends React.Component {
     }
   }
 
+  user: User
+
   constructor (props) {
     super(props)
 
     this.state = {
-      user: null,
-      updatedUser: null,
       editing: false,
       updatedPicture: null
     }
+
+    this.user = new User(props.UserStore)
   }
 
   _editProfile = () => {
-    // Done editing and user changed
-    if (this.state.editing && (this.state.updatedUser || this.state.updatedPicture)) {
-      // TODO this will need to be changed once I add cancel
-      this.saveProfile(this.state.updatedUser)
+    // Done editing
+    if (this.state.editing) {
+      // TODO: this will need to be changed once I add cancel
+      this.saveProfile()
     }
     this.setState((prevState, props) => ({ editing: !prevState.editing }))
   }
 
-  saveProfile = async (updatedUser) => {
-    // Only send updated fields
-    let update = {}
-    for (var key in updatedUser) {
-      // skip loop if the property is from prototype
-      if (!updatedUser.hasOwnProperty(key)) continue
-
-      if (updatedUser[key] !== this.state.user[key]) {
-        update[key] = updatedUser[key]
-      }
-    }
-
-    let provider = new RidersProvider()
-    let userResponse = await provider.updateUser(this.props.UserStore.userId, update)
-
+  saveProfile = async () => {
+    await this.props.UserStore.update(this.user)
     if (this.state.updatedPicture) {
-      userResponse = await provider.uploadPicture(this.props.UserStore.userId, this.state.updatedPicture)
-        .catch((error) => {
-          console.warn(error)
-          ToastAndroid.show('Error updating picture', ToastAndroid.SHORT)
-        })
+      await this.user.uploadPicture(this.state.updatedPicture)
     }
-    this.setState({ user: userResponse })
-    this.props.UserStore.populateFromApiResponse(userResponse)
     ToastAndroid.show('User profile saved.', ToastAndroid.SHORT)
-  }
-
-  updateUser = (val) => {
-    this.setState({ updatedUser: val })
   }
 
   updatePicture = (val) => {
@@ -109,13 +85,10 @@ class OwnProfileScreen extends React.Component {
       loadingUser: true
     })
 
-    let userId = this.props.UserStore.userId
-    // TODO: Get from STORE
-    let provider = new RidersProvider()
-    await provider.getUser(userId)
-      .then((result) => {
-        this.setState({ user: result })
-      })
+    let originalUser = await this.props.UserStore.get(this.props.ApplicationStore.userId)
+    // REVIEW: bit dirty trick to "clone" the user
+    this.user.populateFromApiResponse(originalUser.createApiJson)
+
     this.props.navigation.setParams({ loadingUser: false })
   }
 
@@ -128,30 +101,28 @@ class OwnProfileScreen extends React.Component {
   }
 
   render () {
-    let user = {
-      ...this.state.user,
-      ...this.state.updatedUser
-    }
+    let user = this.user
 
+    // TODO: Should be part of user (track if pic updated and upload as needed)
     if (this.state.updatedPicture) {
-      user.picture = this.state.updatedPicture.uri
+      user.updatePicture(this.state.updatedPicture.uri)
     }
 
     return (
-      this.state.editing
-        ? <KeyboardAvoidingView
-          keyboardVerticalOffset={Header.HEIGHT + 24}
-          behavior='padding'
-        >
-          <EditProfileHeader
-            user={user}
-            updateCallback={this.updateUser}
-            updatePictureCallback={this.updatePicture}
-          />
-        </KeyboardAvoidingView>
-        : this.state.user && <ProfileHeader user={this.state.user} />
+      user.id
+        ? <Provider User={user}>
+          <KeyboardAvoidingView
+            keyboardVerticalOffset={Header.HEIGHT + 24}
+            behavior='padding'
+          >
+            { this.state.editing
+              ? <EditProfileHeader updatePictureCallback={this.updatePicture} />
+              : <ProfileHeader user={user} /> }
+          </KeyboardAvoidingView>
+        </Provider>
+        : <ActivityIndicator />
     )
-  };
+  }
 }
 
 const styles = StyleSheet.create({
