@@ -22,7 +22,6 @@ class AuthLoadingScreen extends React.Component {
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
     let signedInUserId = this.props.ApplicationStore.userId
-    let route = null
 
     // Exchange refresh_token(from SecureStore) for access_token
     if (signedInUserId) {
@@ -40,20 +39,14 @@ class AuthLoadingScreen extends React.Component {
         })
 
       if (user !== undefined) {
-        route = 'App'
-      } else {
-        // FIXME: duplicated below
-        this.props.ApplicationStore.reset()
-        route = 'Auth'
+        this.props.navigation.navigate('App')
+        return
       }
-    } else {
-      // Ensure UserStore is clear. Less than ideal solution
-      this.props.ApplicationStore.reset()
-      route = 'Auth'
     }
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(route)
+    this.props.ApplicationStore.reset()
+    this.props.navigation.navigate('Auth')
   }
 
   // Render any loading content that you like here
