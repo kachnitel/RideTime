@@ -16,7 +16,7 @@ import Button from '../components/Button'
  * @extends {React.Component}
  */
 export default
-@inject('UserStore')
+@inject('ApplicationStore')
 @observer
 class CreateRideScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -37,7 +37,7 @@ class CreateRideScreen extends React.Component {
         difficulty: null,
         datetime: null,
         terrain: null,
-        createdBy: this.props.UserStore.userId
+        createdBy: this.props.ApplicationStore.userId
       }
     }
   }

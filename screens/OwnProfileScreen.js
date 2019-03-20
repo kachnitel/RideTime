@@ -96,12 +96,6 @@ class OwnProfileScreen extends React.Component {
   render () {
     let user = this.user
 
-    // TODO: Should be part of user (track if pic updated and upload as needed)
-    // - [x] move this to user/could use tempPicture?
-    //   - [x] then User.picture shows updated if set
-    // - [x] then remove from SignUpScreen
-    // - [ ] do not send in UserStore updateUser if not updated
-
     return (
       user.id
         ? <Provider User={user}>
