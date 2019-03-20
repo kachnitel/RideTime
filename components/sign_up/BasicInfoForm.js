@@ -11,8 +11,7 @@ export default
 @observer
 class BasicInfoForm extends React.Component {
   _handleSelectPicture = (image) => {
-    this.props.User.updateTempPicture(image.uri)
-    this.props.onSelectPicture(image)
+    this.props.User.updateTempPicture(image)
   }
 
   render () {
@@ -20,7 +19,7 @@ class BasicInfoForm extends React.Component {
       <Form>
         {/* TODO: cover picture */}
         <EditPicture
-          picture={this.props.User.tempPicture}
+          picture={this.props.User.picture}
           size={Layout.window.hp(15)}
           iconSize={Layout.window.hp(4)}
           onSelect={this._handleSelectPicture}

@@ -15,10 +15,6 @@ export default
 @inject('User')
 @observer
 class EditProfileHeader extends React.Component {
-  handleUpdatePicture = (val) => {
-    this.props.updatePictureCallback(val)
-  }
-
   render () {
     return (
       <ScrollView keyboardShouldPersistTaps='handled'>
@@ -33,7 +29,7 @@ class EditProfileHeader extends React.Component {
             <EditPicture
               picture={this.props.User.picture}
               size={profilePictureSize}
-              onSelect={this.handleUpdatePicture}
+              onSelect={(val) => this.props.User.updateTempPicture(val)}
             />
           </View>
           <View style={styles.form}>

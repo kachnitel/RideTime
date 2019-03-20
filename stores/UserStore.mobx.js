@@ -64,14 +64,14 @@ export class User {
   // Likely separate store for at least friends
 
   // ID can change when creating new user
-  @observable _id: Number = false
-  @observable _name: String = ''
-  @observable _picture: String = '' // Web URL
-  @observable _email: String = ''
-  @observable _hometown: String = ''
-  @observable _level: Number = null
-  @observable _bike: String = ''
-  @observable _locations: Array = []
+  @observable _id = false
+  @observable _name = ''
+  @observable _picture = '' // Web URL
+  @observable _email = ''
+  @observable _hometown = ''
+  @observable _level = null
+  @observable _bike = ''
+  @observable _locations = []
   // TODO: phone, ...
 
   // Picture that hasn't been uploaded yet
@@ -81,32 +81,32 @@ export class User {
     this.userStore = userStore
   }
 
-  @action updateId (newValue) { this._id = newValue }
+  @action updateId (newValue: Number) { this._id = newValue }
   @computed get id () { return this._id }
 
-  @action updateName (newValue) { this._name = newValue }
+  @action updateName (newValue: String) { this._name = newValue }
   @computed get name () { return this._name }
 
-  @action updatePicture (newValue) { this._picture = newValue }
-  @computed get picture () { return this._picture }
+  @action updatePicture (newValue: String) { this._picture = newValue }
+  @computed get picture () { return this.tempPicture ? this.tempPicture.uri : this._picture }
 
-  @action updateEmail (newValue) { this._email = newValue }
+  @action updateEmail (newValue: String) { this._email = newValue }
   @computed get email () { return this._email }
 
-  @action updateHometown (newValue) { this._hometown = newValue }
+  @action updateHometown (newValue: String) { this._hometown = newValue }
   @computed get hometown () { return this._hometown }
 
-  @action updateLevel (newValue) { this._level = newValue }
+  @action updateLevel (newValue: Number) { this._level = newValue }
   @computed get level () { return this._level }
 
-  @action updateBike (newValue) { this._bike = newValue }
+  @action updateBike (newValue: String) { this._bike = newValue }
   @computed get bike () { return this._bike }
 
   @action updateLocations (newValue: Array) { this._locations = newValue }
   @action addLocation (newValue) { this._locations.push(newValue) }
   @computed get locations () { return this._locations }
 
-  @action updateTempPicture (newValue) { this._tempPicture = newValue }
+  @action updateTempPicture (newValue: Object) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }
 
   @action async populateFromApi (id: Number) {
@@ -115,19 +115,25 @@ export class User {
     this.populateFromApiResponse(user)
   }
 
-  @action async save () {
-    // FIXME: api JSON
-    let userResponse = await this.userStore.provider.signUp({
-      name: this.name,
-      hometown: this.hometown,
-      email: this.email,
-      level: this.level,
-      favTerrain: this.bike,
-      locations: this.locations,
-      picture: this.tempPicture
-    })
+  /**
+   * Save a new user to Store/DB
+   *
+   * @memberof User
+   */
+  @action async saveNew () {
+    let exclude = ['picture']
+    let data = this.createApiJson(exclude)
+
+    if (this.tempPicture && this.tempPicture.isWeb) {
+      data.picture = this.tempPicture.uri
+    }
+    let userResponse = await this.userStore.provider.signUp(data)
 
     this.populateFromApiResponse(userResponse)
+
+    if (this.tempPicture && !this.tempPicture.isWeb) {
+      this.uploadPicture(this.tempPicture)
+    }
 
     this.userStore.add(this)
   }
@@ -143,10 +149,21 @@ export class User {
     this.updateHometown(user.hometown)
     this.updateLevel(user.level)
     this.updateBike(user.bike)
-    this.updateTempPicture(user.tempPicture)
     this.updateLocations(user.locations)
 
-    return this.userStore.provider.updateUser(this.id, this.createApiJson())
+    let exclude = []
+    if (user.tempPicture) {
+      if (user.tempPicture.isWeb) {
+        this.updatePicture(user.tempPicture.uri)
+      } else {
+        exclude.push('picture')
+
+        this.uploadPicture(user.tempPicture)
+      }
+    }
+
+    let userResponse = await this.userStore.provider.updateUser(this.id, this.createApiJson(exclude))
+    this.populateFromApiResponse(userResponse)
   }
 
   @action populateFromApiResponse (userResponse: Object) {

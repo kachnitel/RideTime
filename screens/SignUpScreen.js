@@ -37,7 +37,7 @@ class SignUpScreen extends React.Component {
     let user = new User(store)
 
     userInfo.name !== userInfo.email && user.updateName(userInfo.name)
-    user.updateTempPicture(userInfo.picture)
+    user.updateTempPicture({ uri: userInfo.picture, isWeb: true })
     user.updateEmail(userInfo.email)
 
     return user
@@ -53,24 +53,12 @@ class SignUpScreen extends React.Component {
     }
   }
 
-  handleSelectPicture = (image) => {
-    this.setState({ selectedPicture: image })
-  }
-
   /**
    * @memberof SignUpScreen
    */
   submit = async () => {
-    // REVIEW: two ifs?
-    // Only send picture if local isn't selected to prevent server processing twice
-    if (this.state.selectedPicture) {
-      this.user.updateTempPicture(null)
-    }
     // TODO: Show loading
-    await this.user.save()
-    if (this.state.selectedPicture) {
-      await this.user.uploadPicture(this.state.selectedPicture)
-    }
+    await this.user.saveNew()
 
     let token = this.props.navigation.getParam('token')
     SecureStore.setItemAsync('refreshToken', token.refresh_token)
@@ -99,9 +87,7 @@ class SignUpScreen extends React.Component {
               scrollEnabled={false}
               keyboardShouldPersistTaps='handled'
             >
-              <BasicInfoForm
-                onSelectPicture={this.handleSelectPicture}
-              />
+              <BasicInfoForm />
               <DetialsForm />
             </ScrollView>
           </Provider>

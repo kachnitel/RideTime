@@ -23,7 +23,6 @@ class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     let signedInUserId = this.props.ApplicationStore.userId
 
-    // Exchange refresh_token(from SecureStore) for access_token
     if (signedInUserId) {
       await this.props.ApplicationStore.refreshAccessToken()
 

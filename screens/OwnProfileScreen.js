@@ -50,8 +50,7 @@ class OwnProfileScreen extends React.Component {
     super(props)
 
     this.state = {
-      editing: false,
-      updatedPicture: null
+      editing: false
     }
 
     this.user = new User(props.UserStore)
@@ -68,14 +67,8 @@ class OwnProfileScreen extends React.Component {
 
   saveProfile = async () => {
     await this.props.UserStore.update(this.user)
-    if (this.state.updatedPicture) {
-      await this.user.uploadPicture(this.state.updatedPicture)
-    }
-    ToastAndroid.show('User profile saved.', ToastAndroid.SHORT)
-  }
 
-  updatePicture = (val) => {
-    this.setState({ updatedPicture: val })
+    ToastAndroid.show('User profile saved.', ToastAndroid.SHORT)
   }
 
   async componentDidMount () {
@@ -87,7 +80,7 @@ class OwnProfileScreen extends React.Component {
 
     let originalUser = await this.props.UserStore.get(this.props.ApplicationStore.userId)
     // REVIEW: bit dirty trick to "clone" the user
-    this.user.populateFromApiResponse(originalUser.createApiJson)
+    this.user.populateFromApiResponse(originalUser.createApiJson())
 
     this.props.navigation.setParams({ loadingUser: false })
   }
@@ -104,9 +97,10 @@ class OwnProfileScreen extends React.Component {
     let user = this.user
 
     // TODO: Should be part of user (track if pic updated and upload as needed)
-    if (this.state.updatedPicture) {
-      user.updatePicture(this.state.updatedPicture.uri)
-    }
+    // - [x] move this to user/could use tempPicture?
+    //   - [x] then User.picture shows updated if set
+    // - [x] then remove from SignUpScreen
+    // - [ ] do not send in UserStore updateUser if not updated
 
     return (
       user.id
@@ -116,7 +110,7 @@ class OwnProfileScreen extends React.Component {
             behavior='padding'
           >
             { this.state.editing
-              ? <EditProfileHeader updatePictureCallback={this.updatePicture} />
+              ? <EditProfileHeader />
               : <ProfileHeader user={user} /> }
           </KeyboardAvoidingView>
         </Provider>
