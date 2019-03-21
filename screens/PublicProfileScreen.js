@@ -1,10 +1,14 @@
 import React from 'react'
+import { ActivityIndicator } from 'react-native'
 import Profile from '../components/profile/Profile'
-import RidersProvider from '../providers/RidersProvider'
+import { observer, inject, Provider } from 'mobx-react/native'
 
 // TODO: Configure back button behavior to go back to ride
 // Can use 'key' to go to the right card in stack if set
-export default class PublicProfileScreen extends React.Component {
+export default
+@inject('UserStore')
+@observer
+class PublicProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       headerStyle: {
@@ -20,24 +24,23 @@ export default class PublicProfileScreen extends React.Component {
   constructor (props) {
     super(props)
 
+    this.user = null
     this.state = {
-      user: null
+      loading: true
     }
   }
 
-  componentDidMount () {
-    let provider = new RidersProvider()
+  async componentDidMount () {
     let userId = this.props.navigation.getParam('id')
-    // TODO: UserStore.get(userId)
-    provider.getUser(userId)
-      .then((result) => {
-        this.setState({ user: result })
-      })
+    this.user = await this.props.UserStore.get(userId)
+    this.setState({ loading: false })
   }
 
   render () {
     return (
-      this.state.user && <Profile user={this.state.user} />
+      this.state.loading
+        ? <ActivityIndicator />
+        : <Provider User={this.user}><Profile /></Provider>
     )
   }
 }

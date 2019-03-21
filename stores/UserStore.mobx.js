@@ -57,7 +57,9 @@ export class User {
     { apiParam: 'picture', getter: 'picture' },
     { apiParam: 'favTerrain', getter: 'bike' },
     { apiParam: 'level', getter: 'level' },
-    { apiParam: 'locations', getter: 'locations' }
+    { apiParam: 'locations', getter: 'locations' },
+    { apiParam: 'events', getter: 'events' },
+    { apiParam: 'friends', getter: 'friends' }
   ]
 
   // TODO: Friends, Home Locations, ...if needed
@@ -71,7 +73,10 @@ export class User {
   @observable _hometown = ''
   @observable _level = null
   @observable _bike = ''
+  // TODO: references for other stores
   @observable _locations = []
+  @observable _events = []
+  @observable _friends = []
   // TODO: phone, ...
 
   // Picture that hasn't been uploaded yet
@@ -105,6 +110,14 @@ export class User {
   @action updateLocations (newValue: Array) { this._locations = newValue }
   @action addLocation (newValue) { this._locations.push(newValue) }
   @computed get locations () { return this._locations }
+
+  @action updateEvents (newValue: Array) { this._events = newValue }
+  @action addEvent (newValue) { this._events.push(newValue) }
+  @computed get events () { return this._events }
+
+  @action updateFriends (newValue: Array) { this._friends = newValue }
+  @action addFriend (newValue) { this._friends.push(newValue) }
+  @computed get friends () { return this._friends }
 
   @action updateTempPicture (newValue: Object) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }

@@ -8,8 +8,12 @@ import { FriendList } from './FriendList'
 import ProfileHeader from './ProfileHeader'
 import { Favourites } from './Favourites'
 import Layout from '../../constants/Layout'
+import { observer, inject } from 'mobx-react/native'
 
-export default class Profile extends React.Component {
+export default
+@inject('User')
+@observer
+class Profile extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -19,9 +23,10 @@ export default class Profile extends React.Component {
     this.ridesProvider = new RidesProvider()
   }
 
+  // TODO: EventStore,get
   async componentDidMount () {
-    if (this.props.user.events.length > 0) {
-      let upcomingRide = await this.ridesProvider.getRide(this.props.user.events[0].id)
+    if (this.props.User.events.length > 0) {
+      let upcomingRide = await this.ridesProvider.getRide(this.props.User.events[0].id)
       this.setState({
         upcomingRide: upcomingRide,
         loadingRide: false
@@ -32,15 +37,15 @@ export default class Profile extends React.Component {
   render () {
     return (
       <ScrollView>
-        <ProfileHeader user={this.props.user} />
-        <FriendList friends={this.props.user.friends} style={styles.friendList} />
-        <CountHeader number={this.props.user.events.length} style={styles.title}>Upcoming Rides</CountHeader>
+        <ProfileHeader user={this.props.User} />
+        <FriendList friends={this.props.User.friends} style={styles.friendList} />
+        <CountHeader number={this.props.User.events.length} style={styles.title}>Upcoming Rides</CountHeader>
         { !this.state.loadingRide &&
         <View style={styles.rideItemContainer}>
           <RideItem ride={this.state.upcomingRide} style={styles.rideItem} />
         </View>
         }
-        <Favourites text={this.props.user.favourites} style={styles.title} />
+        <Favourites text={this.props.User.favourites} style={styles.title} />
       </ScrollView>
     )
   }
