@@ -19,9 +19,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkBackground,
     width: Layout.window.wp(85),
     top: businessCardOffset,
+    marginBottom: businessCardOffset,
     alignSelf: 'center',
     alignItems: 'center',
-    paddingBottom: businessCardOffset
+    paddingBottom: Layout.window.hp(4)
   },
   profilePicture: {
     marginTop: -profilePictureSize / 2
