@@ -1,6 +1,6 @@
 import { observable, action, computed } from 'mobx' // REVIEW: 'mobx-react/native'
 import RidersProvider from '../providers/RidersProvider'
-import { RootStore } from './RootStore'
+import { RootStore } from './RootStore.mobx'
 
 export default class UserStore {
   provider: RidersProvider
@@ -171,6 +171,7 @@ export class User {
       } else {
         exclude.push('picture')
 
+        // TODO: populateFromApiResponse and reset tempPicture
         this.uploadPicture(user.tempPicture)
       }
     }

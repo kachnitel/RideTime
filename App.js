@@ -5,7 +5,7 @@ import Layout from './constants/Layout'
 import AppContainer from './navigation/AppNavigator'
 import PropTypes from 'prop-types'
 import { Provider, observer } from 'mobx-react'
-import rootStore from './stores/RootStore'
+import rootStore from './stores/RootStore.singleton'
 
 /**
  * Set default Text style

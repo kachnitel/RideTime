@@ -3,7 +3,7 @@ import { getEnvVars } from '../constants/Env'
 import AppError from './AppError'
 import NetworkError from './NetworkError'
 import Mime from 'mime/lite'
-import rootStore from '../stores/RootStore'
+import rootStore from '../stores/RootStore.singleton'
 
 const validateResponse = (res) => {
   if (!res.ok) {

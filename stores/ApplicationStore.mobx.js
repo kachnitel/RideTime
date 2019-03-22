@@ -1,6 +1,6 @@
 import { observable, action, computed } from 'mobx'
 import { persist } from 'mobx-persist'
-import { RootStore } from './RootStore'
+import { RootStore } from './RootStore.mobx'
 import { SecureStore } from 'expo'
 import Authentication from '../src/Authentication'
 
