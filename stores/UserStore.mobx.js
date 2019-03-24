@@ -80,11 +80,6 @@ export class User extends BaseEntity {
   // Picture that hasn't been uploaded yet
   @observable _tempPicture = null
 
-  constructor (store: ?UserStore) {
-    super()
-    super.constructor(store)
-  }
-
   @action updateId (newValue: Number) { this._id = newValue }
   @computed get id () { return this._id }
 
