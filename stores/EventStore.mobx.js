@@ -62,6 +62,7 @@ export class Event extends BaseEntity {
    */
   API_PARAMS = [
     { apiParam: 'id', getter: 'id' },
+    { apiParam: 'createdBy', getter: 'createdBy' },
     { apiParam: 'title', getter: 'title' },
     { apiParam: 'description', getter: 'description' },
     { apiParam: 'members', getter: 'members' },
@@ -73,17 +74,21 @@ export class Event extends BaseEntity {
   ]
 
   @observable _id = false
+  @observable _createdBy = null // User.id
   @observable _title = null
   @observable _description = null
   @observable _members = []
   @observable _difficulty = null
-  @observable _location = null
+  @observable _location = null // Location.id
   @observable _terrain = null
   @observable _route = null
   @observable _datetime = null
 
   @action updateId (newValue: Number) { this._id = newValue }
   @computed get id () { return this._id }
+
+  @action updateCreatedBy (newValue: Number) { this._createdBy = newValue }
+  @computed get createdBy () { return this._createdBy }
 
   @action updateTitle (newValue: String) { this._title = newValue }
   @computed get title () { return this._title }
@@ -97,17 +102,7 @@ export class Event extends BaseEntity {
   @action updateDifficulty (newValue: Number) { this._difficulty = newValue }
   @computed get difficulty () { return this._difficulty }
 
-  /**
-   * {
-   *  id: Number,
-   *  name: String,
-   *  gps: Array[lat, lon]
-   * }
-   *
-   * @param {Object} newValue
-   * @memberof Event
-   */
-  @action updateLocation (newValue: Object) { this._location = newValue }
+  @action updateLocation (newValue: Number) { this._location = newValue }
   @computed get location () { return this._location }
 
   @action updateTerrain (newValue: String) { this._terrain = newValue }
@@ -116,6 +111,14 @@ export class Event extends BaseEntity {
   @action updateRoute (newValue: String) { this._route = newValue }
   @computed get route () { return this._route }
 
-  @action updateDatetime (newValue: Number) { this._datetime = newValue }
+  @action updateDatetime (newValue) { this._datetime = newValue }
   @computed get datetime () { return this._datetime }
+
+  @action async saveNew () {
+    let data = this.createApiJson()
+    let userResponse = await this.store.provider.addRide(data)
+    this.populateFromApiResponse(userResponse)
+
+    this.store.add(this)
+  }
 }

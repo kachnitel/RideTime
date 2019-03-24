@@ -7,64 +7,54 @@ import Colors from '../../constants/Colors'
 import EditDateTime from './EditDateTime'
 import Moment from 'moment'
 import SelectTerrain from './SelectTerrain'
+import { observer, inject } from 'mobx-react/native'
 
-export default class CreateRide extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      ride: this.props.ride
-    }
-  }
-
-  handleUpdate = async (val, key) => {
-    await this.setState(
-      (prevState) => ({ ride: { ...prevState.ride, [key]: val } })
-    )
-    this.props.updateCallback(this.state.ride)
-  }
-
+export default
+@inject('Event')
+@observer
+class CreateRide extends React.Component {
   render () {
     return (
       <View {...this.props}>
         <TextInput
           style={styles.rideTitleInput}
           placeholder='Ride name'
-          value={this.state.ride.title}
-          onChangeText={(text) => this.handleUpdate(text, 'title')}
+          value={this.props.Event.title}
+          onChangeText={(text) => this.props.Event.updateTitle(text)}
         />
         <SelectDifficulty
-          onSelect={(d) => this.handleUpdate(d, 'difficulty')}
+          onSelect={(d) => this.props.Event.updateDifficulty(d)}
           style={{ ...styles.itemContainer, ...styles.selectDifficulty }}
-          selected={this.state.ride.difficulty}
+          selected={this.props.Event.difficulty}
           title='Tap to select difficulty'
         />
         <EditDateTime
-          value={this.state.ride.datetime && this.state.ride.datetime.format('llll')}
-          onSelect={(dt) => this.handleUpdate(new Moment(dt), 'datetime')}
+          // FIXME: shouldn't need to recreate new Moment to display
+          value={this.props.Event.datetime && new Moment(this.props.Event.datetime).format('llll')}
+          onSelect={(dt) => this.props.Event.updateDatetime(new Moment(dt))}
           title='Select date and time'
           containerStyle={styles.itemContainer}
           placeholder='Tap to select'
         />
         <SelectTerrain
-          onSelect={(t) => this.handleUpdate(t, 'terrain')}
+          onSelect={(t) => this.props.Event.updateTerrain(t)}
           style={{ ...styles.itemContainer, ...styles.selectTerrain }}
-          selected={this.state.ride.terrain}
+          selected={this.props.Event.terrain}
           title='What kind of a ride?'
         />
         <EditDescription
           title='Description'
           placeholder='Ride description'
-          value={this.state.ride.description}
+          value={this.props.Event.description}
           containerStyle={styles.itemContainer}
-          onChangeText={(desc) => this.handleUpdate(desc, 'description')}
+          onChangeText={(desc) => this.props.Event.updateDescription(desc)}
         />
         <EditDescription
           title='Planned route'
           placeholder='Mashiter, 50 more shades, Rupert'
-          value={this.state.ride.route}
+          value={this.props.Event.route}
           containerStyle={styles.itemContainer}
-          onChangeText={(route) => this.handleUpdate(route, 'route')}
+          onChangeText={(route) => this.props.Event.updateRoute(route)}
         />
       </View>
     )

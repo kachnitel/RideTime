@@ -2,9 +2,9 @@ import React from 'react'
 import { StyleSheet, ScrollView, KeyboardAvoidingView, ToastAndroid } from 'react-native'
 import CreateRide from '../components/new_ride/CreateRide'
 import { Header, StackActions, NavigationActions } from 'react-navigation'
-import RidesProvider from '../providers/RidesProvider'
-import { observer, inject } from 'mobx-react'
+import { observer, inject, Provider } from 'mobx-react'
 import Button from '../components/Button'
+import { Event } from '../stores/EventStore.mobx'
 
 /**
  * Setup ride here - difficulty, trails, friends, ...
@@ -16,52 +16,40 @@ import Button from '../components/Button'
  * @extends {React.Component}
  */
 export default
-@inject('ApplicationStore')
+@inject('ApplicationStore', 'EventStore')
 @observer
 class CreateRideScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       header: null
     }
-  };
+  }
+
+  event: Event
 
   constructor (props) {
     super(props)
 
-    this.state = {
-      ride: {
-        title: this.props.navigation.getParam('name') + ' ride',
-        description: '',
-        route: '',
-        locationId: this.props.navigation.getParam('id'),
-        difficulty: null,
-        datetime: null,
-        terrain: null,
-        createdBy: this.props.ApplicationStore.userId
-      }
-    }
+    this.event = new Event(this.props.EventStore)
+    this.event.updateTitle(this.props.navigation.getParam('name') + ' ride')
+    this.event.updateLocation(this.props.navigation.getParam('id'))
+    this.event.updateCreatedBy(this.props.ApplicationStore.userId)
   }
 
-  updateRide = (val) => {
-    this.setState({ ride: val })
-  }
-
-  saveRide = () => {
+  saveRide = async () => {
     // TODO: Validate
-    let ridesProvider = new RidesProvider()
-    ridesProvider.addRide(this.state.ride)
-      .then((result) => {
-        ToastAndroid.show('Ride created.', ToastAndroid.SHORT)
+    await this.event.saveNew()
 
-        const resetAction = StackActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({
-            routeName: 'RideDetail',
-            params: { id: result.id }
-          })]
-        })
-        this.props.navigation.dispatch(resetAction)
-      })
+    ToastAndroid.show('Ride created.', ToastAndroid.SHORT)
+
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({
+        routeName: 'RideDetail',
+        params: { id: this.event.id }
+      })]
+    })
+    this.props.navigation.dispatch(resetAction)
   }
 
   render () {
@@ -72,11 +60,12 @@ class CreateRideScreen extends React.Component {
         behavior='padding'
       >
         <ScrollView style={styles.container}>
-          <CreateRide
-            ride={this.state.ride}
-            style={styles.rideContainer}
-            updateCallback={this.updateRide}
-          />
+          <Provider Event={this.event}>
+            <CreateRide
+              style={styles.rideContainer}
+              updateCallback={this.updateRide}
+            />
+          </Provider>
         </ScrollView>
         <Button
           title='Create ride'
