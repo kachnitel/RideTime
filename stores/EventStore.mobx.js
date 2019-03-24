@@ -1,36 +1,19 @@
 import { observable, action, computed } from 'mobx'
 import RidesProvider from '../providers/RidesProvider'
 import { BaseEntity } from './BaseEntity'
+import { BaseCollectionStore } from './BaseCollectionStore'
 
-export default class EventStore {
+export default class EventStore extends BaseCollectionStore {
   provider: RidesProvider
-  _events = observable.array([])
 
   constructor (eventProvider: ?RidesProvider) {
+    super()
     this.provider = eventProvider
   }
 
-  @action add (newEvent: Event) {
-    if (undefined === this._events.find(event => event.id === newEvent.id)) {
-      this._events.push(newEvent)
-    }
-  }
-
   get = async (id: Number) => {
-    let event = this._events.find(event => event.id === id)
-    if (event === undefined) {
-      // Look for event at API
-      event = new Event(this)
-      await event.populateFromApi(id)
-      this.add(event)
-    }
-
-    return event
-  }
-
-  update = async (updatedEvent: Event) => {
-    let event = this._events.find(event => event.id === updatedEvent.id)
-    event.update(updatedEvent)
+    let result = await super.getEntity(id, new Event(this))
+    return result
   }
 
   populate = async (ids: ?Number[]) => {
@@ -40,10 +23,6 @@ export default class EventStore {
       event.populateFromApiResponse(result)
       this.add(event)
     })
-  }
-
-  list = () => {
-    return this._events
   }
 }
 

@@ -1,36 +1,19 @@
 import { observable, action, computed } from 'mobx'
 import RidersProvider from '../providers/RidersProvider'
 import { BaseEntity } from './BaseEntity'
+import { BaseCollectionStore } from './BaseCollectionStore'
 
-export default class UserStore {
+export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
-  @observable _users = []
 
   constructor (userProvider: ?RidersProvider) {
+    super()
     this.provider = userProvider
   }
 
-  @action add (newUser: User) {
-    if (undefined === this._users.find(user => user.id === newUser.id)) {
-      this._users.push(newUser)
-    }
-  }
-
   get = async (id: Number) => {
-    let user = this._users.find(user => user.id === id)
-    if (user === undefined) {
-      // Look for user at API
-      user = new User(this)
-      await user.populateFromApi(id)
-      this.add(user)
-    }
-
-    return user
-  }
-
-  update = async (updatedUser: User) => {
-    let user = this._users.find(user => user.id === updatedUser.id)
-    user.update(updatedUser)
+    let result = await super.getEntity(id, new User(this))
+    return result
   }
 }
 
