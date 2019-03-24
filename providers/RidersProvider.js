@@ -18,7 +18,7 @@ export default class RidersProvider {
    *
    * @memberof RidersProvider
    */
-  getUser = (id) => {
+  get = (id) => {
     return get('api/users/' + id)
   }
 

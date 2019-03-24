@@ -20,7 +20,7 @@ export default class RideDetailScreen extends React.Component {
   componentDidMount () {
     let provider = new RidesProvider()
     let rideId = this.props.navigation.getParam('id')
-    provider.getRide(rideId)
+    provider.get(rideId)
       .then((result) => {
         this.setState({ ride: result })
       })

@@ -39,7 +39,7 @@ export default class RidesScreen extends React.Component {
     this.loadRides()
 
     let locationsProvider = new LocationsProvider()
-    locationsProvider.getLocations()
+    locationsProvider.list()
       .then((result) => {
         this.setState({ locations: result })
       })
@@ -61,7 +61,7 @@ export default class RidesScreen extends React.Component {
 
   loadRides () {
     let ridesProvider = new RidesProvider()
-    ridesProvider.getRides()
+    ridesProvider.list()
       .then((result) => {
         this.setState({ rides: result })
       })

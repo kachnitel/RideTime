@@ -32,7 +32,7 @@ export default class HomeLocationsPicker extends React.Component {
 
   async loadLocations () {
     let locationsProvider = new LocationsProvider()
-    await locationsProvider.getLocations()
+    await locationsProvider.list()
       .then((result) => {
         this.setState({ locations: result.map((value) => ({
           key: value.id,

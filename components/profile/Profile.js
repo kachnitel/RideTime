@@ -26,7 +26,7 @@ class Profile extends React.Component {
   // TODO: EventStore,get
   async componentDidMount () {
     if (this.props.User.events.length > 0) {
-      let upcomingRide = await this.ridesProvider.getRide(this.props.User.events[0].id)
+      let upcomingRide = await this.ridesProvider.get(this.props.User.events[0].id)
       this.setState({
         upcomingRide: upcomingRide,
         loadingRide: false

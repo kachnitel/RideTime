@@ -20,7 +20,7 @@ export default class SelectLocationScreen extends React.Component {
 
   componentDidMount () {
     let locationsProvider = new LocationsProvider()
-    locationsProvider.getLocations()
+    locationsProvider.list()
       .then((result) => {
         this.setState({ locations: result })
       })

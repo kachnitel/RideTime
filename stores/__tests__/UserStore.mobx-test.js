@@ -33,3 +33,14 @@ test('should return correct API object', () => {
     name: 'Joe'
   })
 })
+
+test('should populate user from json', () => {
+  let json = {
+    id: 10,
+    name: 'Joey'
+  }
+  let user = new User()
+  user.populateFromApiResponse(json)
+  expect(user.id).toBe(json.id)
+  expect(user.name).toBe(json.name)
+})

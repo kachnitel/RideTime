@@ -1,5 +1,6 @@
-import { observable, action, computed } from 'mobx' // REVIEW: 'mobx-react/native'
+import { observable, action, computed } from 'mobx'
 import RidersProvider from '../providers/RidersProvider'
+import { BaseEntity } from './BaseEntity'
 
 export default class UserStore {
   provider: RidersProvider
@@ -33,8 +34,8 @@ export default class UserStore {
   }
 }
 
-export class User {
-  userStore: UserStore
+export class User extends BaseEntity {
+  store: UserStore
 
   /**
    * API object parameter mapping
@@ -64,12 +65,12 @@ export class User {
 
   // ID can change when creating new user
   @observable _id = false
-  @observable _name = ''
-  @observable _picture = '' // Web URL
-  @observable _email = ''
-  @observable _hometown = ''
+  @observable _name = null
+  @observable _picture = null // Web URL
+  @observable _email = null
+  @observable _hometown = null
   @observable _level = null
-  @observable _bike = ''
+  @observable _bike = null
   // TODO: references for other stores
   @observable _locations = []
   @observable _events = []
@@ -79,8 +80,9 @@ export class User {
   // Picture that hasn't been uploaded yet
   @observable _tempPicture = null
 
-  constructor (userStore: ?UserStore) {
-    this.userStore = userStore
+  constructor (store: ?UserStore) {
+    super()
+    super.constructor(store)
   }
 
   @action updateId (newValue: Number) { this._id = newValue }
@@ -119,12 +121,6 @@ export class User {
   @action updateTempPicture (newValue: Object) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }
 
-  @action async populateFromApi (id: Number) {
-    let user = await this.userStore.provider.getUser(id)
-
-    this.populateFromApiResponse(user)
-  }
-
   /**
    * Save a new user to Store/DB
    *
@@ -137,7 +133,7 @@ export class User {
     if (this.tempPicture && this.tempPicture.isWeb) {
       data.picture = this.tempPicture.uri
     }
-    let userResponse = await this.userStore.provider.signUp(data)
+    let userResponse = await this.store.provider.signUp(data)
 
     this.populateFromApiResponse(userResponse)
 
@@ -145,11 +141,11 @@ export class User {
       this.uploadPicture(this.tempPicture)
     }
 
-    this.userStore.add(this)
+    this.store.add(this)
   }
 
   @action uploadPicture (image: Object) {
-    return this.userStore.provider.uploadPicture(this.id, image)
+    return this.store.provider.uploadPicture(this.id, image)
   }
 
   @action async update (user: User) {
@@ -173,33 +169,7 @@ export class User {
       }
     }
 
-    let userResponse = await this.userStore.provider.updateUser(this.id, this.createApiJson(exclude))
+    let userResponse = await this.store.provider.updateUser(this.id, this.createApiJson(exclude))
     this.populateFromApiResponse(userResponse)
-  }
-
-  @action populateFromApiResponse (userResponse: Object) {
-    this.updateId(userResponse.id)
-    this.updateName(userResponse.name)
-    this.updatePicture(userResponse.picture)
-    this.updateBike(userResponse.favTerrain)
-    this.updateLevel(userResponse.level)
-    this.updateHometown(userResponse.hometown)
-    this.updateLocations(userResponse.locations || [])
-    this.updateEmail(userResponse.email)
-  }
-
-  /**
-   * @param {?Array} exclude Array of API params to exclude
-   * @returns Object
-   * @memberof User
-   */
-  createApiJson (exclude: ?Array) {
-    return this.API_PARAMS.reduce((result, mapping) => {
-      if (!(exclude && exclude.includes(mapping.apiParam))) {
-        result[mapping.apiParam] = this[mapping.getter]
-      }
-
-      return result
-    }, {})
   }
 }

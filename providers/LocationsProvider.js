@@ -11,7 +11,7 @@ export default class LocationsProvider {
      * @param lonMax
      *
      */
-  getLocations = () => {
+  list = () => {
     return get('api/locations')
   }
 }

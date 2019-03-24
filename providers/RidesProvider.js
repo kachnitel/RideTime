@@ -1,11 +1,11 @@
 import { get, post } from '../src/Connection'
 
 export default class RidesProvider {
-  getRides = () => {
+  list = () => {
     return get('api/events')
   }
 
-  getRide = (id) => {
+  get = (id) => {
     return get('api/events/' + id)
   }
 
