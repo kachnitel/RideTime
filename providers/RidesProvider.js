@@ -1,8 +1,12 @@
 import { get, post } from '../src/Connection'
 
 export default class RidesProvider {
-  list = () => {
-    return get('api/events')
+  list = (ids: ?Number[]) => {
+    let q = ''
+    if (ids) {
+      q = '?ids=' + ids.join(',')
+    }
+    return get('api/events' + q)
   }
 
   get = (id) => {

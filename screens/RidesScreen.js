@@ -1,11 +1,11 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import { AreaMap } from '../components/AreaMap'
 import { CreateRideButton } from '../components/CreateRideButton'
 import RidesList from '../components/lists/RidesList'
 import LocationsProvider from '../providers/LocationsProvider'
-import RidesProvider from '../providers/RidesProvider'
 import DrawerButton from '../components/DrawerButton'
+import { observer, inject } from 'mobx-react/native'
 
 /**
  * TODO:
@@ -16,7 +16,10 @@ import DrawerButton from '../components/DrawerButton'
  * @class RidesScreen
  * @extends {React.Component}
  */
-export default class RidesScreen extends React.Component {
+export default
+@inject('EventStore')
+@observer
+class RidesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       // https://reactnavigation.org/docs/en/stack-navigator.html#navigationoptions-for-screens-inside-of-the-navigator
@@ -31,40 +34,28 @@ export default class RidesScreen extends React.Component {
 
     this.state = {
       locations: [],
-      rides: []
+      loading: true
     }
   }
 
-  componentDidMount () {
-    this.loadRides()
+  async componentDidMount () {
+    await this.loadRides()
 
     let locationsProvider = new LocationsProvider()
     locationsProvider.list()
       .then((result) => {
         this.setState({ locations: result })
       })
-
-    this.subs = [
-      // Adds listener to reload rides when screen is focused
-      // But why this.subs? FIXME: test w/o the assignment
-      this.props.navigation.addListener('didFocus', this.componentDidFocus)
-    ]
-  }
-
-  componentDidFocus = () => {
-    this.loadRides()
   }
 
   onRidesRefresh = () => {
     this.loadRides()
   }
 
-  loadRides () {
-    let ridesProvider = new RidesProvider()
-    ridesProvider.list()
-      .then((result) => {
-        this.setState({ rides: result })
-      })
+  async loadRides () {
+    this.setState({ loading: true })
+    await this.props.EventStore.populate()
+    this.setState({ loading: false })
   }
 
   render () {
@@ -75,11 +66,10 @@ export default class RidesScreen extends React.Component {
         </View>
 
         <View style={{ flex: 65 }}>
-          <RidesList
-            rides={this.state.rides}
+          {this.state.loading ? <ActivityIndicator /> : <RidesList
             navigation={this.props.navigation}
             onRefresh={this.onRidesRefresh}
-          />
+          />}
         </View>
 
         <CreateRideButton navigation={this.props.navigation} />

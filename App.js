@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import { Provider, observer } from 'mobx-react'
 import userStore from './stores/UserStore.singleton'
 import applicationStore from './stores/ApplicationStore.singleton'
+import eventStore from './stores/EventStore.singleton'
 
 /**
  * Set default Text style
@@ -40,8 +41,9 @@ class App extends React.Component {
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
           <Provider
-            UserStore={userStore}
             ApplicationStore={applicationStore}
+            UserStore={userStore}
+            EventStore={eventStore}
           >
             <AppContainer />
           </Provider>

@@ -1,35 +1,35 @@
 import React from 'react'
-import { RideDetail } from '../components/RideDetail'
-import RidesProvider from '../providers/RidesProvider'
+import RideDetail from '../components/RideDetail'
+import { observer, inject, Provider } from 'mobx-react/native'
+import { Event } from '../stores/EventStore.mobx'
+import { ActivityIndicator } from 'react-native'
 
-export default class RideDetailScreen extends React.Component {
+export default
+@inject('EventStore')
+@observer
+class RideDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('title')
     }
   }
 
-  constructor (props) {
-    super(props)
+  event: Event
+  state = { loading: true }
 
-    this.state = {
-      ride: null
-    }
-  }
-
-  componentDidMount () {
-    let provider = new RidesProvider()
-    let rideId = this.props.navigation.getParam('id')
-    provider.get(rideId)
-      .then((result) => {
-        this.setState({ ride: result })
-      })
+  async componentDidMount () {
+    let eventId = this.props.navigation.getParam('id')
+    this.event = await this.props.EventStore.get(eventId)
+    this.setState({ loading: false })
   }
 
   render () {
     return (
-      // FIXME: loading?
-      this.state.ride && <RideDetail ride={this.state.ride} navigation={this.props.navigation} />
+      this.state.loading
+        ? <ActivityIndicator />
+        : <Provider Event={this.event}>
+          <RideDetail navigation={this.props.navigation} />
+        </Provider>
     )
   }
 }
