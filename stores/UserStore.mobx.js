@@ -1,14 +1,11 @@
 import { observable, action, computed } from 'mobx' // REVIEW: 'mobx-react/native'
 import RidersProvider from '../providers/RidersProvider'
-import RootStore from './RootStore.mobx'
 
 export default class UserStore {
   provider: RidersProvider
-  rootStore: RootStore
   @observable _users = []
 
-  constructor (rootStore: ?RootStore, userProvider: ?RidersProvider) {
-    this.rootStore = rootStore
+  constructor (userProvider: ?RidersProvider) {
     this.provider = userProvider
   }
 

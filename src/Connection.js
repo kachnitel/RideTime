@@ -3,7 +3,7 @@ import { getEnvVars } from '../constants/Env'
 import AppError from './AppError'
 import NetworkError from './NetworkError'
 import Mime from 'mime/lite'
-import rootStore from '../stores/RootStore.singleton'
+import applicationStore from '../stores/ApplicationStore.singleton'
 
 const validateResponse = (res) => {
   if (!res.ok) {
@@ -117,7 +117,7 @@ export const getHeaders = (contentType = 'application/json') => {
   let headers = {
     'Accept': 'application/json',
     'Content-Type': contentType,
-    'Authorization': 'Bearer ' + rootStore.appStore.accessToken
+    'Authorization': 'Bearer ' + applicationStore.accessToken
   }
 
   return headers

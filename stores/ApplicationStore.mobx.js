@@ -1,14 +1,9 @@
 import { observable, action, computed } from 'mobx'
 import { persist } from 'mobx-persist'
-import RootStore from './RootStore.mobx'
 import { SecureStore } from 'expo'
 import Authentication from '../src/Authentication'
 
 export default class ApplicationStore {
-  constructor (rootStore: RootStore) {
-    this.rootStore = rootStore
-  }
-
   @persist @observable _userId = null
   @observable _accessToken = null
 
