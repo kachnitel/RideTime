@@ -6,11 +6,6 @@ import { BaseCollectionStore } from './BaseCollectionStore'
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
 
-  constructor (userProvider: ?RidersProvider) {
-    super()
-    this.provider = userProvider
-  }
-
   get = async (id: Number) => {
     let result = await super.getEntity(User, id)
     return result

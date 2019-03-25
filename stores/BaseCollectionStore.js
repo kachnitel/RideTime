@@ -3,9 +3,13 @@ import { BaseEntity } from './BaseEntity'
 
 export class BaseCollectionStore {
   _collection = observable.array([])
+  provider // REVIEW: Need some sort of interface
 
-  constructor () {
+  constructor (provider) {
+    this.provider = provider
+
     this.getEntity = this.getEntity.bind(this)
+    this.populateEntities = this.populateEntities.bind(this)
   }
 
   async getEntity (entityType, id: Number) {
