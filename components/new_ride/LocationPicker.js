@@ -3,8 +3,16 @@ import { StyleSheet, TextInput, View } from 'react-native'
 import Layout from '../../constants/Layout'
 import LocationList from '../lists/LocationList'
 import MapButton from './MapButton'
+import { inject, observer } from 'mobx-react/native'
 
-export default class LocationPicker extends Component {
+export default
+@inject('LocationStore')
+@observer
+class LocationPicker extends Component {
+  async componentDidMount () {
+    await this.props.LocationStore.populate()
+  }
+
   goToRideConfig = (location) => {
     this.props.navigation.push(
       'CreateRide',
@@ -13,6 +21,8 @@ export default class LocationPicker extends Component {
   }
 
   render () {
+    let locations = this.props.LocationStore.list()
+
     return <View {...this.props}>
       <View style={styles.inputRow}>
         <TextInput
@@ -23,8 +33,9 @@ export default class LocationPicker extends Component {
       </View>
       {/* TODO filter locations by TextInput above */}
       <LocationList
-        locations={this.props.locations}
-        onLocationPress={this.goToRideConfig} />
+        locations={locations}
+        onLocationPress={this.goToRideConfig}
+      />
     </View>
   }
 }

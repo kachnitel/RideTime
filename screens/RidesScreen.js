@@ -3,7 +3,6 @@ import { View, ActivityIndicator } from 'react-native'
 import { AreaMap } from '../components/AreaMap'
 import { CreateRideButton } from '../components/CreateRideButton'
 import RidesList from '../components/lists/RidesList'
-import LocationsProvider from '../providers/LocationsProvider'
 import DrawerButton from '../components/DrawerButton'
 import { observer, inject } from 'mobx-react/native'
 
@@ -17,7 +16,7 @@ import { observer, inject } from 'mobx-react/native'
  * @extends {React.Component}
  */
 export default
-@inject('EventStore')
+@inject('EventStore', 'LocationStore')
 @observer
 class RidesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -33,19 +32,13 @@ class RidesScreen extends React.Component {
     super(props)
 
     this.state = {
-      locations: [],
       loading: true
     }
   }
 
   async componentDidMount () {
+    this.props.LocationStore.populate()
     await this.loadRides()
-
-    let locationsProvider = new LocationsProvider()
-    locationsProvider.list()
-      .then((result) => {
-        this.setState({ locations: result })
-      })
   }
 
   onRidesRefresh = () => {
@@ -62,7 +55,9 @@ class RidesScreen extends React.Component {
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <View style={{ flex: 35 }}>
-          <AreaMap locations={this.state.locations} />
+          <AreaMap
+            // locations={this.props.LocationStore.list()}
+          />
         </View>
 
         <View style={{ flex: 65 }}>

@@ -8,6 +8,7 @@ import { Provider, observer } from 'mobx-react'
 import userStore from './stores/UserStore.singleton'
 import applicationStore from './stores/ApplicationStore.singleton'
 import eventStore from './stores/EventStore.singleton'
+import locationStore from './stores/LocationStore.singleton'
 
 /**
  * Set default Text style
@@ -44,6 +45,7 @@ class App extends React.Component {
             ApplicationStore={applicationStore}
             UserStore={userStore}
             EventStore={eventStore}
+            LocationStore={locationStore}
           >
             <AppContainer />
           </Provider>
