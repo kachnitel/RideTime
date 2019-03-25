@@ -65,7 +65,7 @@ export class Event extends BaseEntity {
   @action updateDescription (newValue: String) { this._description = newValue }
   @computed get description () { return this._description }
 
-  @action updateMembers (newValue: Array) { this._members = newValue }
+  @action updateMembers (newValue: Array) { this._members.replace(newValue) }
   @computed get members () { return this._members }
 
   @action updateDifficulty (newValue: Number) { this._difficulty = newValue }
