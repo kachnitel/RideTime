@@ -46,9 +46,9 @@ export class User extends BaseEntity {
   @observable _hometown = null
   @observable _level = null
   @observable _bike = null
-  @observable _locations = []
-  @observable _events = []
-  @observable _friends = []
+  _locations = observable.array([])
+  _events = observable.array([])
+  _friends = observable.array([])
 
   // Picture that hasn't been uploaded yet
   @observable _tempPicture = null

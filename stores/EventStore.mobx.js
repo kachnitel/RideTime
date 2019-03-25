@@ -46,7 +46,7 @@ export class Event extends BaseEntity {
   @observable _createdBy = null // User.id
   @observable _title = null
   @observable _description = null
-  @observable _members = []
+  _members = observable.array([])
   @observable _difficulty = null
   @observable _location = null // Location.id
   @observable _terrain = null

@@ -8,6 +8,7 @@ export class BaseCollectionStore {
   constructor (provider) {
     this.provider = provider
 
+    this.add = this.add.bind(this)
     this.getEntity = this.getEntity.bind(this)
     this.populateEntities = this.populateEntities.bind(this)
   }
