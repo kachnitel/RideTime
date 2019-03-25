@@ -12,7 +12,7 @@ export default class EventStore extends BaseCollectionStore {
   }
 
   get = async (id: Number) => {
-    let result = await super.getEntity(id, new Event(this))
+    let result = await super.getEntity(id, Event)
     return result
   }
 
