@@ -12,17 +12,12 @@ export default class EventStore extends BaseCollectionStore {
   }
 
   get = async (id: Number) => {
-    let result = await super.getEntity(id, Event)
+    let result = await super.getEntity(Event, id)
     return result
   }
 
   populate = async (ids: ?Number[]) => {
-    let results = await this.provider.list(ids)
-    results.map((result) => {
-      let event = new Event(this)
-      event.populateFromApiResponse(result)
-      this.add(event)
-    })
+    await super.populateEntities(Event, ids)
   }
 }
 

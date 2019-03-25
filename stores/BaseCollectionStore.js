@@ -8,7 +8,7 @@ export class BaseCollectionStore {
     this.getEntity = this.getEntity.bind(this)
   }
 
-  async getEntity (id: Number, entityType) {
+  async getEntity (entityType, id: Number) {
     let entity = this._collection.find(entity => entity.id === id)
     if (entity === undefined) {
       // Look for entity at API
@@ -33,5 +33,14 @@ export class BaseCollectionStore {
 
   list = () => {
     return this._collection
+  }
+
+  async populateEntities (entityType, ids: ?Number[]) {
+    let results = await this.provider.list(ids)
+    results.map((result) => {
+      let entity = new [entityType][0](this)
+      entity.populateFromApiResponse(result)
+      this.add(entity)
+    })
   }
 }

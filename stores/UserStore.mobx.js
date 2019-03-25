@@ -12,7 +12,7 @@ export default class UserStore extends BaseCollectionStore {
   }
 
   get = async (id: Number) => {
-    let result = await super.getEntity(id, User)
+    let result = await super.getEntity(User, id)
     return result
   }
 }
