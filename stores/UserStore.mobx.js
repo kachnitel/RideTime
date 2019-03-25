@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx'
+import { observable, action, computed, toJS } from 'mobx'
 import RidersProvider from '../providers/RidersProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
@@ -131,7 +131,7 @@ export class User extends BaseEntity {
       } else {
         exclude.push('picture')
 
-        let response = await this.uploadPicture(user.tempPicture)
+        let response = await this.uploadPicture(toJS(user.tempPicture))
         // Update picture url
         this.populateFromApiResponse(response)
         // Reset tempPicture
