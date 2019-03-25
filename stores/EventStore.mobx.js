@@ -30,16 +30,16 @@ export class Event extends BaseEntity {
    * @memberof Event
    */
   API_PARAMS = [
-    { apiParam: 'id', getter: 'id' },
-    { apiParam: 'createdBy', getter: 'createdBy' },
-    { apiParam: 'title', getter: 'title' },
-    { apiParam: 'description', getter: 'description' },
-    { apiParam: 'members', getter: 'members' },
-    { apiParam: 'difficulty', getter: 'difficulty' },
-    { apiParam: 'location', getter: 'location' },
-    { apiParam: 'terrain', getter: 'terrain' },
-    { apiParam: 'route', getter: 'route' },
-    { apiParam: 'datetime', getter: 'datetime' }
+    'id',
+    'createdBy',
+    'title',
+    'description',
+    'members',
+    'difficulty',
+    'location',
+    'terrain',
+    'route',
+    'datetime'
   ]
 
   @observable _id = false

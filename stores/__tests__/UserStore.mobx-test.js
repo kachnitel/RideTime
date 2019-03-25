@@ -24,11 +24,11 @@ test('should return correct API object', () => {
   expect(user.createApiJson()).toMatchObject({
     id: 2,
     name: 'Joe',
-    favTerrain: 'trail',
+    bike: 'trail',
     picture: 'http://pic.tu/re'
   })
 
-  expect(user.createApiJson(['picture', 'favTerrain'])).toMatchObject({
+  expect(user.createApiJson(['picture', 'bike'])).toMatchObject({
     id: 2,
     name: 'Joe'
   })

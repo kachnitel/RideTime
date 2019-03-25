@@ -26,16 +26,16 @@ export class User extends BaseEntity {
    * @memberof User
    */
   API_PARAMS = [
-    { apiParam: 'id', getter: 'id' },
-    { apiParam: 'name', getter: 'name' },
-    { apiParam: 'email', getter: 'email' },
-    { apiParam: 'hometown', getter: 'hometown' },
-    { apiParam: 'picture', getter: 'picture' },
-    { apiParam: 'favTerrain', getter: 'bike' },
-    { apiParam: 'level', getter: 'level' },
-    { apiParam: 'locations', getter: 'locations' },
-    { apiParam: 'events', getter: 'events' },
-    { apiParam: 'friends', getter: 'friends' }
+    'id',
+    'name',
+    'email',
+    'hometown',
+    'picture',
+    'bike',
+    'level',
+    'locations',
+    'events',
+    'friends'
   ]
 
   // ID can change when creating new user
@@ -119,8 +119,7 @@ export class User extends BaseEntity {
   @action async update (user: User) {
     let exclude = []
 
-    this.API_PARAMS.map((val) => {
-      let key = val.getter
+    this.API_PARAMS.map((key) => {
       if (JSON.stringify(user[key]) === JSON.stringify(this[key])) {
         exclude.push(key)
       }
