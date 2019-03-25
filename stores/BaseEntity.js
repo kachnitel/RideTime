@@ -13,10 +13,13 @@ export class BaseEntity {
 
   populateFromApiResponse (userResponse: Object) {
     this.API_PARAMS.map((val) => {
+      // id => updateId()
       let updateMethod = 'update' + val.getter.charAt(0).toUpperCase() + val.getter.slice(1)
       if (typeof this[updateMethod] === 'function') {
         // console.log(updateMethod, userResponse[val.apiParam])
         this[updateMethod](userResponse[val.apiParam])
+      } else {
+        throw new Error(`Trying to call undefined updater '${updateMethod}'`)
       }
     })
   }
@@ -28,7 +31,7 @@ export class BaseEntity {
    */
   createApiJson (exclude: ?Array) {
     return this.API_PARAMS.reduce((result, mapping) => {
-      if (!(exclude && exclude.includes(mapping.apiParam))) {
+      if (!(exclude && exclude.includes(mapping.getter))) {
         result[mapping.apiParam] = this[mapping.getter]
       }
 

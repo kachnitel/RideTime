@@ -38,9 +38,6 @@ export class User extends BaseEntity {
     { apiParam: 'friends', getter: 'friends' }
   ]
 
-  // TODO: Friends, Home Locations, ...if needed
-  // Likely separate store for at least friends
-
   // ID can change when creating new user
   @observable _id = false
   @observable _name = null
@@ -49,11 +46,9 @@ export class User extends BaseEntity {
   @observable _hometown = null
   @observable _level = null
   @observable _bike = null
-  // TODO: references for other stores
   @observable _locations = []
   @observable _events = []
   @observable _friends = []
-  // TODO: phone, ...
 
   // Picture that hasn't been uploaded yet
   @observable _tempPicture = null
@@ -122,27 +117,30 @@ export class User extends BaseEntity {
   }
 
   @action async update (user: User) {
-    this.updateName(user.name)
-    this.updatePicture(user.picture)
-    this.updateEmail(user.email)
-    this.updateHometown(user.hometown)
-    this.updateLevel(user.level)
-    this.updateBike(user.bike)
-    this.updateLocations(user.locations)
-
     let exclude = []
+
+    this.API_PARAMS.map((val) => {
+      let key = val.getter
+      if (JSON.stringify(user[key]) === JSON.stringify(this[key])) {
+        exclude.push(key)
+      }
+    })
+
     if (user.tempPicture) {
       if (user.tempPicture.isWeb) {
         this.updatePicture(user.tempPicture.uri)
       } else {
         exclude.push('picture')
 
-        // TODO: populateFromApiResponse and reset tempPicture
-        this.uploadPicture(user.tempPicture)
+        let response = await this.uploadPicture(user.tempPicture)
+        // Update picture url
+        this.populateFromApiResponse(response)
+        // Reset tempPicture
+        this.updateTempPicture(User.prototype._tempPicture)
       }
     }
 
-    let userResponse = await this.store.provider.updateUser(this.id, this.createApiJson(exclude))
+    let userResponse = await this.store.provider.updateUser(this.id, user.createApiJson(exclude))
     this.populateFromApiResponse(userResponse)
   }
 }
