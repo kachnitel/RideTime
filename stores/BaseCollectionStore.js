@@ -13,8 +13,16 @@ export class BaseCollectionStore {
     this.populateEntities = this.populateEntities.bind(this)
   }
 
+  /**
+   * Get entity, look up at API if not in collection
+   *
+   * @param {*} entityType
+   * @param {Number} id
+   * @returns
+   * @memberof BaseCollectionStore
+   */
   async getEntity (entityType, id: Number) {
-    let entity = this._collection.find(entity => entity.id === id)
+    let entity = this._findInCollection(id)
     if (entity === undefined) {
       // Look for entity at API
       entity = new [entityType][0](this)
@@ -25,14 +33,25 @@ export class BaseCollectionStore {
     return entity
   }
 
+  /**
+   * Synchronously return locally stored Entity
+   *
+   * @param {Number} id
+   * @returns
+   * @memberof BaseCollectionStore
+   */
+  getSync (id: Number) {
+    return this._findInCollection(id)
+  }
+
   @action add (newEntity) {
-    if (undefined === this._collection.find(entity => entity.id === newEntity.id)) {
+    if (undefined === this._findInCollection(newEntity.id)) {
       this._collection.push(newEntity)
     }
   }
 
   update = async (updatedEntity: BaseEntity) => {
-    let entity = this._collection.find(entity => entity.id === updatedEntity.id)
+    let entity = this._findInCollection(updatedEntity.id)
     entity.update(updatedEntity)
   }
 
@@ -47,5 +66,9 @@ export class BaseCollectionStore {
       entity.populateFromApiResponse(result)
       this.add(entity)
     })
+  }
+
+  _findInCollection (id) {
+    return this._collection.find(entity => entity.id === id)
   }
 }
