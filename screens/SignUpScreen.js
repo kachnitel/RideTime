@@ -10,7 +10,7 @@ import {
 import { Header } from 'react-navigation'
 import { observer, inject, Provider } from 'mobx-react'
 import BasicInfoForm from '../components/sign_up/BasicInfoForm'
-import DetialsForm from '../components/sign_up/DetialsForm'
+import DetailsForm from '../components/sign_up/DetailsForm'
 import Colors from '../constants/Colors'
 import Button from '../components/Button'
 import Layout from '../constants/Layout'
@@ -88,7 +88,7 @@ class SignUpScreen extends React.Component {
               keyboardShouldPersistTaps='handled'
             >
               <BasicInfoForm />
-              <DetialsForm />
+              <DetailsForm />
             </ScrollView>
           </Provider>
           <View style={styles.controls}>
