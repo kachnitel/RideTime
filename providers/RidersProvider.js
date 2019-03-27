@@ -33,4 +33,8 @@ export default class RidersProvider {
   signUp = (data) => {
     return post('signup', data)
   }
+
+  list = () => {
+    return get('api/users')
+  }
 }

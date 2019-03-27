@@ -10,6 +10,10 @@ export default class UserStore extends BaseCollectionStore {
     let result = await super.getEntity(User, id)
     return result
   }
+
+  populate = async (ids: ?Number[]) => {
+    await super.populateEntities(User, ids)
+  }
 }
 
 export class User extends BaseEntity {

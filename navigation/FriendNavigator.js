@@ -1,0 +1,22 @@
+import { createStackNavigator } from 'react-navigation' // Version can be specified in package.json
+import Colors from '../constants/Colors'
+import PublicProfileScreen from '../screens/PublicProfileScreen'
+import FriendListScreen from '../screens/FriendListScreen'
+
+const FriendStack = createStackNavigator(
+  {
+    FriendList: { screen: FriendListScreen },
+    PublicProfile: { screen: PublicProfileScreen }
+  },
+  {
+    initialRouteName: 'FriendList',
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: '#ffffff'
+      },
+      headerTintColor: Colors.tintColor
+    })
+  }
+)
+
+export default FriendStack
