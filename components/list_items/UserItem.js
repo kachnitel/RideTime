@@ -1,9 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import Layout from '../../constants/Layout'
-import ProfilePicture from '../profile/ProfilePicture'
 import { inject, observer } from 'mobx-react/native'
 import { User } from '../../stores/UserStore.mobx'
+import Header from '../Header'
+import ProfilePictureDecorated from '../profile/ProfilePictureDecorated';
 
 @inject('UserStore') @observer
 export class UserItem extends React.Component {
@@ -21,10 +22,12 @@ export class UserItem extends React.Component {
     return this.state.loading
       ? <ActivityIndicator />
       : <View style={{ ...styles.container, ...this.props.style }}>
-        <ProfilePicture picture={this.user.picture} size={Layout.window.hp(7)} />
-        <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
-          {this.user.name}
-        </Text>
+        <ProfilePictureDecorated user={this.user} />
+        <View style={styles.details}>
+          <Header style={{ ...this.props.style, ...styles.name }} numberOfLines={1} >
+            {this.user.name}
+          </Header>
+        </View>
       </View>
   }
 }
@@ -35,11 +38,15 @@ const styles = StyleSheet.create({
     height: Layout.window.hp(12.5),
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: Layout.window.hp(2)
+    padding: Layout.window.wp(3)
+  },
+  details: {
+    alignItems: 'flex-start',
+    flex: 1,
+    height: '100%',
+    paddingLeft: Layout.window.wp(3)
   },
   name: {
-    textAlign: 'center',
-    paddingTop: Layout.window.hp(1),
-    flex: 1
+    //
   }
 })
