@@ -8,22 +8,26 @@ export default
 @observer
 class FriendListScreen extends Component {
   state = {
-    ids: []
+    ids: [],
+    loading: true
   }
 
   async componentDidMount () {
     let user = await this.props.UserStore.get(this.props.ApplicationStore.userId)
-    this.props.UserStore.populate(user.friends) // Preload all friends at once
-    this.setState({ ids: user.friends.slice() })
+    await this.props.UserStore.populate(user.friends) // Preload all friends at once
+    this.setState({
+      ids: user.friends.slice(),
+      loading: false
+    })
   }
 
   render () {
     return (
       <View style={styles.container}>
-        <UsersList
+        {!this.state.loading && <UsersList
           ids={this.state.ids}
           style={styles.list}
-        />
+        />}
       </View>
     )
   }

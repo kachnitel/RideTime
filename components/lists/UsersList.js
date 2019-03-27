@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, StyleSheet, View, Text } from 'react-native'
-import Layout from '../../constants/Layout'
-import TouchableRiderItem from '../list_items/TouchableRiderItem'
+import { StyleSheet, View, Text } from 'react-native'
 import { inject, observer } from 'mobx-react/native'
 import AlternatingStyleList from './AlternatingStyleList'
 import { UserItem } from '../list_items/UserItem'
@@ -28,7 +26,6 @@ export class UsersList extends Component {
           itemComponent={this.itemComponent}
           onItemPress={(item) => console.log(item + ' tapped')}
         />
-        <Text>{this.props.ids}</Text>
       </View>
     )
   }

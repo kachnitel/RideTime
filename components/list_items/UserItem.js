@@ -1,12 +1,15 @@
 import React from 'react'
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, ActivityIndicator, TouchableOpacity } from 'react-native'
 import Layout from '../../constants/Layout'
 import { inject, observer } from 'mobx-react/native'
 import { User } from '../../stores/UserStore.mobx'
 import Header from '../Header'
-import ProfilePictureDecorated from '../profile/ProfilePictureDecorated';
+import ProfilePictureDecorated from '../profile/ProfilePictureDecorated'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import Colors from '../../constants/Colors'
+import TerrainIcon from '../icons/TerrainIcon'
 
-@inject('UserStore') @observer
+@inject('UserStore', 'ApplicationStore') @observer
 export class UserItem extends React.Component {
   user: User
   state = {
@@ -18,16 +21,47 @@ export class UserItem extends React.Component {
     this.setState({ loading: false })
   }
 
+  getActionButtons = () => {
+    let actions = []
+    actions.push({
+      icon: 'message',
+      action: () => console.log('Message ' + this.user.id)
+    })
+    if (this.user.friends && this.user.friends.includes(this.props.ApplicationStore.userId)) {
+      actions.push({
+        icon: 'more-vert',
+        action: () => console.log('Open more settings (delete, ...)')
+      })
+    } else {
+      actions.push({
+        icon: 'person-add',
+        action: () => console.log('Add friend ' + this.user.id)
+      })
+    }
+
+    return <View style={styles.actions}>
+      {actions.map(({icon, action}, index) => {
+        return <TouchableOpacity onPress={action} key={action + index} style={styles.actionButton}>
+          <Icon name={icon} size={Layout.window.hp(3.5)} color='#fff' />
+        </TouchableOpacity>
+      })}
+    </View>
+  }
+
   render () {
     return this.state.loading
       ? <ActivityIndicator />
       : <View style={{ ...styles.container, ...this.props.style }}>
         <ProfilePictureDecorated user={this.user} />
         <View style={styles.details}>
-          <Header style={{ ...this.props.style, ...styles.name }} numberOfLines={1} >
+          <Header style={this.props.style} numberOfLines={1} >
             {this.user.name}
           </Header>
+          <View>
+            {console.log(typeof this.user.bike) && !!this.user.bike && <TerrainIcon terrain={this.user.bike} size={Layout.window.hp(4.5)} />}
+          </View>
         </View>
+        {this.getActionButtons()}
       </View>
   }
 }
@@ -46,7 +80,13 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingLeft: Layout.window.wp(3)
   },
-  name: {
-    //
+  actions: {},
+  actionButton: {
+    // borderColor: Colors.tintColor,
+    // borderWidth: 1,
+    borderRadius: Layout.window.hp(0.75),
+    padding: Layout.window.hp(.75),
+    margin: Layout.window.hp(.25),
+    backgroundColor: Colors.tintColor
   }
 })
