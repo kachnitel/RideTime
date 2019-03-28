@@ -5,15 +5,6 @@ import { BaseCollectionStore } from './BaseCollectionStore'
 
 export default class EventStore extends BaseCollectionStore {
   provider: RidesProvider
-
-  get = async (id: Number) => {
-    let result = await super.getEntity(Event, id)
-    return result
-  }
-
-  populate = async (ids: ?Number[]) => {
-    await super.populateEntities(Event, ids)
-  }
 }
 
 export class Event extends BaseEntity {

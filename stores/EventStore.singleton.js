@@ -1,5 +1,5 @@
-import EventStore from './EventStore.mobx'
+import EventStore, { Event } from './EventStore.mobx'
 import RidesProvider from '../providers/RidesProvider'
 
-const eventStore = new EventStore(new RidesProvider())
+const eventStore = new EventStore(new RidesProvider(), Event)
 export default eventStore

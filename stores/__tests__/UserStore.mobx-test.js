@@ -2,7 +2,7 @@ import UserStore, { User } from '../UserStore.mobx'
 
 /* eslint-env jest */
 test('should add user to store', async () => {
-  let store = new UserStore()
+  let store = new UserStore(undefined, User)
   let user = new User(store)
 
   user.updateId(1)

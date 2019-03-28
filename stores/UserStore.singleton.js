@@ -1,5 +1,5 @@
-import UserStore from './UserStore.mobx'
+import UserStore, { User } from './UserStore.mobx'
 import RidersProvider from '../providers/RidersProvider'
 
-const userStore = new UserStore(new RidersProvider())
+const userStore = new UserStore(new RidersProvider(), User)
 export default userStore
