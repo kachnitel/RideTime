@@ -20,7 +20,6 @@ export default class ProfilePictureDecorated extends Component {
   render () {
     return <View {...this.props}>
       <ProfilePicture picture={this.props.user.picture} size={Layout.window.hp(7)} />
-      {/* {this.props.user.level && this.renderDiffIcon()} */}
       {this.renderDiffIcon()}
     </View>
   }

@@ -22,12 +22,22 @@ export class UserItem extends React.Component {
   }
 
   getActionButtons = () => {
+    return <View style={styles.actions}>
+      {this.getActions().map(({icon, action}, index) => {
+        return <TouchableOpacity onPress={action} key={action + index} style={styles.actionButton}>
+          <Icon name={icon} size={Layout.window.hp(3.5)} color='#fff' />
+        </TouchableOpacity>
+      })}
+    </View>
+  }
+
+  getActions = () => {
     let actions = []
     actions.push({
       icon: 'mail-outline',
       action: () => console.log('Message ' + this.user.id)
     })
-    if (this.user.friends && this.user.friends.includes(this.props.ApplicationStore.userId)) {
+    if (this.user.friends && this.user.isFriendWith(this.props.ApplicationStore.userId)) {
       actions.push({
         icon: 'more-vert',
         action: () => console.log('Open more settings (delete, ...)')
@@ -39,13 +49,7 @@ export class UserItem extends React.Component {
       })
     }
 
-    return <View style={styles.actions}>
-      {actions.map(({icon, action}, index) => {
-        return <TouchableOpacity onPress={action} key={action + index} style={styles.actionButton}>
-          <Icon name={icon} size={Layout.window.hp(3.5)} color='#fff' />
-        </TouchableOpacity>
-      })}
-    </View>
+    return actions
   }
 
   render () {

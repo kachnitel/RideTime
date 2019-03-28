@@ -45,3 +45,20 @@ test('should populate user from json', () => {
   expect(user.id).toBe(json.id)
   expect(user.name).toBe(json.name)
 })
+
+test('should return other party in friendship', () => {
+  let store = new UserStore(new RidersProvider(), User)
+  let user = new User(store)
+  store.add(user)
+  user.updateId(1)
+
+  let friendA = new User(store)
+  friendA.updateId(2)
+  store.add(friendA)
+
+  user.addFriend(friendA)
+
+  let friendB = new User(store)
+  friendB.updateId(3)
+  store.add(friendB)
+})

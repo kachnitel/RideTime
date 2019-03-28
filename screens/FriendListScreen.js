@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { UsersList } from '../components/lists/UsersList'
+import { FriendList } from '../components/lists/FriendList'
 import { inject, observer } from 'mobx-react/native'
 
 export default
@@ -8,15 +8,18 @@ export default
 @observer
 class FriendListScreen extends Component {
   state = {
-    ids: [],
+    friendships: [],
     loading: true
   }
 
   async componentDidMount () {
-    let user = await this.props.UserStore.get(this.props.ApplicationStore.userId)
-    await this.props.UserStore.populate(user.friends) // Preload all friends at once
+    let signedInUserId = this.props.ApplicationStore.userId
+    let user = await this.props.UserStore.get(signedInUserId)
+    await this.props.UserStore.populate(user.friends.map(
+      (fs) => fs.userId === signedInUserId ? fs.friendId : fs.userId
+    )) // Preload all friends at once
     this.setState({
-      ids: user.friends.slice(),
+      friendships: user.friends.slice(),
       loading: false
     })
   }
@@ -24,8 +27,8 @@ class FriendListScreen extends Component {
   render () {
     return (
       <View style={styles.container}>
-        {!this.state.loading && <UsersList
-          ids={this.state.ids}
+        {!this.state.loading && <FriendList
+          friendships={this.state.friendships}
           style={styles.list}
         />}
       </View>
