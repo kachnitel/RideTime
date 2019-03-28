@@ -212,6 +212,10 @@ export class Friendship {
 
   @computed get status () { return this._status }
 
+  @computed get requestedBy () {
+    return this._userId
+  }
+
   /**
    * Return the other party user
    * async
