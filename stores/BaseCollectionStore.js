@@ -4,13 +4,24 @@ import { BaseEntity } from './BaseEntity'
 export class BaseCollectionStore {
   _collection = observable.array([])
   provider // REVIEW: Need some sort of interface
+  EntityClass: BaseEntity
 
-  constructor (provider) {
+  constructor (provider, EntityClass) {
     this.provider = provider
+    this.EntityClass = EntityClass
 
     this.add = this.add.bind(this)
     this.getEntity = this.getEntity.bind(this)
     this.populateEntities = this.populateEntities.bind(this)
+  }
+
+  get = async (id: Number) => {
+    let result = await this.getEntity(id)
+    return result
+  }
+
+  populate = async (ids: ?Number[]) => {
+    await this.populateEntities(ids)
   }
 
   /**
@@ -21,11 +32,11 @@ export class BaseCollectionStore {
    * @returns
    * @memberof BaseCollectionStore
    */
-  async getEntity (entityType, id: Number) {
+  async getEntity (id: Number) {
     let entity = this._findInCollection(id)
     if (entity === undefined) {
       // Look for entity at API
-      entity = new [entityType][0](this)
+      entity = new this.EntityClass(this)
       await entity.populateFromApi(id)
       this.add(entity)
     }
@@ -59,10 +70,10 @@ export class BaseCollectionStore {
     return this._collection
   }
 
-  async populateEntities (entityType, ids: ?Number[]) {
+  async populateEntities (ids: ?Number[]) {
     let results = await this.provider.list(ids)
     results.map((result) => {
-      let entity = new [entityType][0](this)
+      let entity = new this.EntityClass(this)
       entity.populateFromApiResponse(result)
       this.add(entity)
     })

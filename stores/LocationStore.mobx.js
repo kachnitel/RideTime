@@ -5,15 +5,6 @@ import { BaseCollectionStore } from './BaseCollectionStore'
 
 export default class LocationStore extends BaseCollectionStore {
   provider: LocationsProvider
-
-  get = async (id: Number) => {
-    let result = await super.getEntity(Location, id)
-    return result
-  }
-
-  populate = async (ids: ?Number[]) => {
-    await super.populateEntities(Location, ids)
-  }
 }
 
 export class Location extends BaseEntity {
