@@ -24,7 +24,7 @@ export class UserItem extends React.Component {
   getActionButtons = () => {
     let actions = []
     actions.push({
-      icon: 'message',
+      icon: 'mail-outline',
       action: () => console.log('Message ' + this.user.id)
     })
     if (this.user.friends && this.user.friends.includes(this.props.ApplicationStore.userId)) {
@@ -58,7 +58,7 @@ export class UserItem extends React.Component {
             {this.user.name}
           </Header>
           <View>
-            {console.log(typeof this.user.bike) && !!this.user.bike && <TerrainIcon terrain={this.user.bike} size={Layout.window.hp(4.5)} />}
+            {/* {this.user.bike && <TerrainIcon terrain={this.user.bike} size={Layout.window.hp(4.5)} />} */}
           </View>
         </View>
         {this.getActionButtons()}
