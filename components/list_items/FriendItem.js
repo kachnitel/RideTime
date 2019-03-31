@@ -1,5 +1,11 @@
 import React from 'react'
-import { StyleSheet, View, ActivityIndicator, TouchableOpacity } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  TouchableOpacity,
+  Text
+} from 'react-native'
 import Layout from '../../constants/Layout'
 import { inject, observer } from 'mobx-react/native'
 import { User } from '../../stores/UserStore.mobx'
@@ -17,14 +23,14 @@ export class FriendItem extends React.Component {
   }
 
   async componentDidMount () {
-    this.user = await this.props.UserStore.get(this.props.friendship.friendId)
+    this.user = await this.props.UserStore.get(this.props.id)
     this.setState({ loading: false })
   }
 
   getActionButtons = () => {
     return <View style={styles.actions}>
       {this.getActions().map(({icon, action}, index) => {
-        return <TouchableOpacity onPress={action} key={action + index} style={styles.actionButton}>
+        return <TouchableOpacity onPress={() => action(this.props.id)} key={action + index} style={styles.actionButton}>
           <Icon name={icon} size={Layout.window.hp(3.5)} color='#fff' />
         </TouchableOpacity>
       })}
@@ -32,24 +38,7 @@ export class FriendItem extends React.Component {
   }
 
   getActions = () => {
-    let actions = []
-    actions.push({
-      icon: 'mail-outline',
-      action: () => console.log('Message ' + this.user.id)
-    })
-    if (this.props.friendship.status === 1) {
-      actions.push({
-        icon: 'more-vert',
-        action: () => console.log('Open more settings (delete, ...)')
-      })
-    } else {
-      actions.push({
-        icon: 'person-add',
-        action: () => console.log('Add friend ' + this.user.id)
-      })
-    }
-
-    return actions
+    return this.props.actions || []
   }
 
   render () {

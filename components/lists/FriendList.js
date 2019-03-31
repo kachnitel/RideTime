@@ -15,17 +15,7 @@ import { inject, observer } from 'mobx-react/native'
 @observer
 export class FriendList extends Component {
   itemComponent = (fs, style) => {
-    let id = fs.friendId
-    let requestedByMe = this.props.ApplicationStore.userId === fs.requestedBy
-
-    if (fs.status !== 1) {
-      // pending
-      let clr = requestedByMe ? 'blue' : 'red'
-      style = StyleSheet.create({
-        clr: { backgroundColor: clr }
-      }).clr
-    }
-    return <FriendItem friendship={fs} style={style} />
+    return <FriendItem id={fs.friendId} style={style} actions={this.props.actions} />
   }
 
   render () {
