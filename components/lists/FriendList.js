@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import AlternatingStyleList from './AlternatingStyleList'
 import { FriendItem } from '../list_items/FriendItem'
+import { inject, observer } from 'mobx-react/native'
 
 /**
  * fixme Pretty well duplicated from RidersList
@@ -10,16 +11,21 @@ import { FriendItem } from '../list_items/FriendItem'
  * @class FriendList
  * @extends {Component}
  */
+@inject('ApplicationStore')
+@observer
 export class FriendList extends Component {
   itemComponent = (fs, style) => {
     let id = fs.friendId
+    let requestedByMe = this.props.ApplicationStore.userId === fs.requestedBy
+
     if (fs.status !== 1) {
       // pending
+      let clr = requestedByMe ? 'blue' : 'red'
       style = StyleSheet.create({
-        red: { backgroundColor: 'red' }
-      }).red
+        clr: { backgroundColor: clr }
+      }).clr
     }
-    return <FriendItem id={id} style={style} />
+    return <FriendItem friendship={fs} style={style} />
   }
 
   render () {
