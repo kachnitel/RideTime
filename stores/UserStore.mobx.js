@@ -5,6 +5,20 @@ import { BaseCollectionStore } from './BaseCollectionStore'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
+  _friendships = observable.array([])
+
+  @action addFriendship = (fs: Friendship) => {
+    let i = this._friendships.findIndex(
+      (friendship) =>
+        friendship.userId === fs.userId &&
+        friendship.friendId === fs.friendId
+    )
+    if (i === -1) {
+      this._friendships.push(fs)
+    } else {
+      this._friendships[i] = fs
+    }
+  }
 }
 
 export class User extends BaseEntity {
@@ -43,7 +57,6 @@ export class User extends BaseEntity {
   @observable _bike = null
   _locations = observable.array([])
   _events = observable.array([])
-  _friends = observable.array([])
 
   // Picture that hasn't been uploaded yet
   @observable _tempPicture = null
@@ -79,29 +92,55 @@ export class User extends BaseEntity {
 
   @action updateFriends (newValue: Array) {
     if (newValue && Array.isArray(newValue)) {
-      this._friends.replace(newValue.map((val) => {
-        return new Friendship(
-          this.store,
-          this.id,
-          val.userId,
-          val.friendId,
-          val.status
-        )
-      }))
-    } else {
-      this._friends.replace([])
+      newValue.map((fs) => this.addFriendship(fs))
     }
   }
-  @action addFriend (newValue) {
-    this._friends.push(new Friendship(
-      this.store,
-      this.id,
+
+  @action addFriendship (newValue) {
+    this.store.addFriendship(new Friendship(
       newValue.userId,
       newValue.friendId,
       newValue.status
     ))
   }
-  @computed get friends () { return this._friends }
+
+  @action addFriend (friend: User) {
+    this.addFriendship({
+      userId: this.id,
+      friendId: friend.id,
+      status: 0
+    })
+  }
+
+  /**
+   * @returns Friendship[]
+   * @memberof User
+   */
+  @computed get friendships () {
+    return this.store?._friendships.filter(
+      (fs) => fs.userId === this.id || fs.friendId === this.id
+    )
+  }
+
+  /**
+   * @returns Number[]
+   * @memberof User
+   */
+  @computed get friends () {
+    return this.friendships?.filter(
+      (fs) => fs.status === 1
+    ).map(
+      (fs) => fs.userId === this.id ? fs.friendId : fs.userId
+    )
+  }
+
+  @computed get friendRequests () {
+    return this.store?._friendships.filter(
+      (fs) => fs.status === 0 && fs.friendId === this.id
+    ).map(
+      (fs) => fs.userId
+    )
+  }
 
   @action updateTempPicture (newValue: Object) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }
@@ -160,20 +199,12 @@ export class User extends BaseEntity {
     this.populateFromApiResponse(userResponse)
   }
 
-  isFriendWith (id) {
-    return this.friends.find((fs) => fs.friendId === id && fs.status === 1)
-  }
+  // isFriendWith (id) {
+  //   return this.friends.find((fs) => fs.friendId === id && fs.status === 1)
+  // }
 }
 
 export class Friendship {
-  _userStore: UserStore
-  /**
-   * Owner of the relationship
-   *
-   * @type {Number}
-   * @memberof Friendship
-   */
-  _ownerId: Number
   /**
    * ID of requesting user
    *
@@ -194,46 +225,23 @@ export class Friendship {
    */
   @observable _status
 
-  constructor (userStore: UserStore, ownerId: Number, userId: Number, friendId: Number, status: Number = 0) {
-    this._userStore = userStore
-    this._ownerId = ownerId
+  constructor (userId: Number, friendId: Number, status: Number = 0) {
     this._userId = userId
     this._friendId = friendId
     this._status = status
   }
 
   static request (userStore: UserStore, myId: Number, friendId: Number) {
-    return new this(userStore, myId, myId, friendId)
+    let fs = new this(myId, friendId)
+    userStore.addFriendship(fs)
+    return fs
   }
 
-  @computed get friendId () {
-    return this._ownerId === this._userId ? this._friendId : this._userId
-  }
+  @computed get friendId () { return this._friendId }
 
   @computed get status () { return this._status }
 
-  @computed get requestedBy () {
-    return this._userId
-  }
-
-  /**
-   * Return the other party user
-   * async
-   *
-   * @returns
-   * @memberof Friendship
-   */
-  @computed get friend () {
-    return this._userStore.get(this.friendId)
-  }
-
-  @computed get friendSync () {
-    return this._userStore.getSync(this.friendId)
-  }
-
-  @computed get ownerId () {
-    return this._ownerId
-  }
+  @computed get userId () { return this._userId }
 
   @action accept () {
     this.status = 1

@@ -14,15 +14,15 @@ import { inject, observer } from 'mobx-react/native'
 @inject('ApplicationStore')
 @observer
 export class FriendList extends Component {
-  itemComponent = (fs, style) => {
-    return <FriendItem id={fs.friendId} style={style} actions={this.props.actions} />
+  itemComponent = (id, style) => {
+    return <FriendItem id={id} style={style} actions={this.props.actions} />
   }
 
   render () {
     return (
       <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
         <AlternatingStyleList
-          items={this.props.friendships}
+          items={this.props.friends}
           emptyComponent={<Text>No frenz</Text>}
           itemComponent={this.itemComponent}
           onItemPress={(item) => console.log(item + ' tapped')}

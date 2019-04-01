@@ -2,28 +2,25 @@ import React, { Component } from 'react'
 import { ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
 import { FriendList } from '../components/lists/FriendList'
 import { inject, observer } from 'mobx-react/native'
-import lodash from 'lodash'
 import Header from '../components/Header'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
+import { User } from '../stores/UserStore.mobx'
 
 export default
 @inject('UserStore', 'ApplicationStore')
 @observer
 class FriendListScreen extends Component {
   state = {
-    friendships: [],
-    invites: [],
-    sent: [],
     loading: true
   }
+  user: User
 
   // TODO: Soon (TM)
   // actions = [{
   //   icon: 'mail-outline',
   //   action: () => console.log('Message ' + this.user.id)
   // }]
-
   actions = []
 
   actionsFriend = [
@@ -44,18 +41,10 @@ class FriendListScreen extends Component {
 
   async componentDidMount () {
     let signedInUserId = this.props.ApplicationStore.userId
-    let user = await this.props.UserStore.get(signedInUserId)
-    await this.props.UserStore.populate(user.friends.map(
-      (fs) => fs.userId === signedInUserId ? fs.friendId : fs.userId
-    )) // Preload all friends at once
+    this.user = await this.props.UserStore.get(signedInUserId)
+    await this.props.UserStore.populate(this.user.friends) // Preload all friends at once
 
-    // Split the friends list
-    let [confirmed, pending] = lodash.partition(user.friends.slice(), ({ status }) => status)
-    let [sent, invites] = lodash.partition(pending, ({ requestedBy }) => requestedBy === signedInUserId)
     this.setState({
-      friendships: confirmed,
-      invites: invites,
-      sent: sent,
       loading: false
     })
   }
@@ -67,13 +56,13 @@ class FriendListScreen extends Component {
         : <ScrollView style={styles.container}>
           <Header style={styles.header}>Requests</Header>
           <FriendList
-            friendships={this.state.invites}
+            friends={this.user.friendRequests}
             style={styles.list}
             actions={this.actionsRequest}
           />
           <Header style={styles.header}>Friends</Header>
           <FriendList
-            friendships={this.state.friendships}
+            friends={this.user.friends}
             style={styles.list}
             actions={this.actionsFriend}
           />
