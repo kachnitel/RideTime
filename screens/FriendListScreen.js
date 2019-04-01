@@ -1,16 +1,30 @@
 import React, { Component } from 'react'
 import { ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
-import FriendList from '../components/lists/FriendList'
+import UsersList from '../components/lists/UsersList'
 import { inject, observer } from 'mobx-react/native'
 import Header from '../components/Header'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 import { User } from '../stores/UserStore.mobx'
+import Button from '../components/Button'
 
 export default
 @inject('UserStore', 'ApplicationStore')
 @observer
-class FriendListScreen extends Component {
+class UsersListScreen extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      // w/ little name under in drawer eventually
+      title: 'Friends',
+      headerRight: (
+        <Button
+          title='Add'
+          onPress={() => console.log('Add mates')}
+        />
+      )
+    }
+  }
+
   state = {
     loading: true
   }
@@ -59,13 +73,13 @@ class FriendListScreen extends Component {
         ? <ActivityIndicator />
         : <ScrollView style={styles.container}>
           <Header style={styles.header}>Requests</Header>
-          <FriendList
+          <UsersList
             friends={this.user.friendRequests}
             style={styles.list}
             actions={this.actionsRequest}
           />
           <Header style={styles.header}>Friends</Header>
-          <FriendList
+          <UsersList
             friends={this.user.friends}
             style={styles.list}
             actions={this.actionsFriend}

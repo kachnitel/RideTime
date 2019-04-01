@@ -15,7 +15,7 @@ import Colors from '../../constants/Colors'
 
 export default
 @inject('UserStore', 'ApplicationStore') @observer
-class FriendItem extends React.Component {
+class UserItem extends React.Component {
   user: User
   state = {
     loading: true
