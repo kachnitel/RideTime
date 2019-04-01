@@ -11,7 +11,7 @@ import Button from '../components/Button'
 export default
 @inject('UserStore', 'ApplicationStore')
 @observer
-class UsersListScreen extends Component {
+class FriendListScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       // w/ little name under in drawer eventually
