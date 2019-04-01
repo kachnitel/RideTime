@@ -35,9 +35,13 @@ class FriendListScreen extends Component {
     ...this.actions,
     {
       icon: 'person-add',
-      action: (e) => console.log('Confirm friend ', e)
+      action: (id) => this.acceptFriend(id)
     }
   ]
+
+  acceptFriend = (id) => {
+    this.user.acceptFriend(id)
+  }
 
   async componentDidMount () {
     let signedInUserId = this.props.ApplicationStore.userId

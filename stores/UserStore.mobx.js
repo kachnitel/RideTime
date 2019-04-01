@@ -142,6 +142,12 @@ export class User extends BaseEntity {
     )
   }
 
+  @action acceptFriend (id: Number) {
+    let fs = this.friendships.find((fs) => fs.userId === id)
+    fs.accept()
+    this.store.provider.acceptFriend(id, this.id)
+  }
+
   @action updateTempPicture (newValue: Object) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }
 
@@ -244,6 +250,6 @@ export class Friendship {
   @computed get userId () { return this._userId }
 
   @action accept () {
-    this.status = 1
+    this._status = 1
   }
 }

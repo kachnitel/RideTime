@@ -37,4 +37,8 @@ export default class RidersProvider {
   list = () => {
     return get('api/users')
   }
+
+  acceptFriend = (requesterId: Number, userId: Number) => {
+    return put(`api/users/${requesterId}/friends/${userId}/accept`)
+  }
 }

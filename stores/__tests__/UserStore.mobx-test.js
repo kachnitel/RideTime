@@ -46,7 +46,7 @@ test('should populate user from json', () => {
   expect(user.name).toBe(json.name)
 })
 
-test('should return other party in friendship', () => {
+test('should return other party IDs in friendship', () => {
   let store = new UserStore(new RidersProvider(), User)
   let user = new User(store)
   user.updateId(1)
@@ -64,8 +64,11 @@ test('should return other party in friendship', () => {
   friendB.addFriend(user)
 
   expect(user.friends).toEqual([])
-  // accept!
-  expect(user.friends).toEqual([2, 3])
-  expect(friendA.friends).toEqual([1])
-  expect(friendB.friends).toEqual([1])
+  expect(user.friendRequests).toEqual([friendB.id])
+
+  user.acceptFriend(friendB.id)
+  friendA.acceptFriend(user.id)
+  expect(user.friends).toEqual([friendA.id, friendB.id])
+  expect(friendA.friends).toEqual([user.id])
+  expect(friendB.friends).toEqual([user.id])
 })
