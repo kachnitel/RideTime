@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
-import { FriendList } from '../components/lists/FriendList'
+import FriendList from '../components/lists/FriendList'
 import { inject, observer } from 'mobx-react/native'
 import Header from '../components/Header'
 import Colors from '../constants/Colors'

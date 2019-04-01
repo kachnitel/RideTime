@@ -3,8 +3,7 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
-  TouchableOpacity,
-  Text
+  TouchableOpacity
 } from 'react-native'
 import Layout from '../../constants/Layout'
 import { inject, observer } from 'mobx-react/native'
@@ -13,10 +12,10 @@ import Header from '../Header'
 import ProfilePictureDecorated from '../profile/ProfilePictureDecorated'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Colors from '../../constants/Colors'
-import TerrainIcon from '../icons/TerrainIcon'
 
+export default
 @inject('UserStore', 'ApplicationStore') @observer
-export class FriendItem extends React.Component {
+class FriendItem extends React.Component {
   user: User
   state = {
     loading: true
@@ -29,7 +28,7 @@ export class FriendItem extends React.Component {
 
   getActionButtons = () => {
     return <View style={styles.actions}>
-      {this.getActions().map(({icon, action}, index) => {
+      {this.getActions().map(({ icon, action }, index) => {
         return <TouchableOpacity onPress={() => action(this.props.id)} key={action + index} style={styles.actionButton}>
           <Icon name={icon} size={Layout.window.hp(3.5)} color='#fff' />
         </TouchableOpacity>
@@ -75,11 +74,9 @@ const styles = StyleSheet.create({
   },
   actions: {},
   actionButton: {
-    // borderColor: Colors.tintColor,
-    // borderWidth: 1,
     borderRadius: Layout.window.hp(0.75),
-    padding: Layout.window.hp(.75),
-    margin: Layout.window.hp(.25),
+    padding: Layout.window.hp(0.75),
+    margin: Layout.window.hp(0.25),
     backgroundColor: Colors.tintColor
   }
 })

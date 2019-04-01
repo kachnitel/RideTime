@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import AlternatingStyleList from './AlternatingStyleList'
-import { FriendItem } from '../list_items/FriendItem'
+import FriendItem from '../list_items/FriendItem'
 import { inject, observer } from 'mobx-react/native'
 
 /**
@@ -11,9 +11,10 @@ import { inject, observer } from 'mobx-react/native'
  * @class FriendList
  * @extends {Component}
  */
+export default
 @inject('ApplicationStore')
 @observer
-export class FriendList extends Component {
+class FriendList extends Component {
   itemComponent = (id, style) => {
     return <FriendItem id={id} style={style} actions={this.props.actions} />
   }
