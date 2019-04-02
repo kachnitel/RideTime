@@ -23,7 +23,7 @@ class UsersList extends Component {
     return (
       <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
         <AlternatingStyleList
-          items={this.props.friends}
+          items={this.props.users}
           emptyComponent={<Text>No frenz</Text>}
           itemComponent={this.itemComponent}
           onItemPress={(item) => console.log(item + ' tapped')}

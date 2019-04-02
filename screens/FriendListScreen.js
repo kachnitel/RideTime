@@ -74,13 +74,13 @@ class FriendListScreen extends Component {
         : <ScrollView style={styles.container}>
           <Header style={styles.header}>Requests</Header>
           <UsersList
-            friends={this.user.friendRequests}
+            users={this.user.friendRequests}
             style={styles.list}
             actions={this.actionsRequest}
           />
           <Header style={styles.header}>Friends</Header>
           <UsersList
-            friends={this.user.friends}
+            users={this.user.friends}
             style={styles.list}
             actions={this.actionsFriend}
           />
