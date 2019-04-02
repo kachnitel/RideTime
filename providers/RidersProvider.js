@@ -38,6 +38,10 @@ export default class RidersProvider {
     return get('api/users')
   }
 
+  requestFriend = (requesterId: Number, friendId: Number) => {
+    return post(`api/users/${requesterId}/friends/${friendId}`)
+  }
+
   acceptFriend = (requesterId: Number, userId: Number) => {
     return put(`api/users/${requesterId}/friends/${userId}/accept`)
   }

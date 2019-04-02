@@ -19,7 +19,7 @@ class FriendListScreen extends Component {
       headerRight: (
         <Button
           title='Add'
-          onPress={() => console.log('Add mates')}
+          onPress={() => navigation.push('AddFriend')}
         />
       )
     }

@@ -96,6 +96,10 @@ export class User extends BaseEntity {
     }
   }
 
+  /**
+   * Adds new Friendship to the store
+   * @param {Object} newValue
+   */
   @action addFriendship (newValue) {
     this.store.addFriendship(new Friendship(
       newValue.userId,
@@ -104,12 +108,17 @@ export class User extends BaseEntity {
     ))
   }
 
-  @action addFriend (friend: User) {
+  /**
+   * Create new Friendship and push to API
+   * @param {Number} id
+   */
+  @action addFriend (id: Number) {
     this.addFriendship({
       userId: this.id,
-      friendId: friend.id,
+      friendId: id,
       status: 0
     })
+    this.store.provider.requestFriend(this.id, id)
   }
 
   /**
@@ -205,9 +214,9 @@ export class User extends BaseEntity {
     this.populateFromApiResponse(userResponse)
   }
 
-  // isFriendWith (id) {
-  //   return this.friends.find((fs) => fs.friendId === id && fs.status === 1)
-  // }
+  isFriendWith (id) {
+    return this.friends.indexOf(id) !== -1
+  }
 }
 
 export class Friendship {

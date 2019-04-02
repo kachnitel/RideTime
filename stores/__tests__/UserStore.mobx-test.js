@@ -60,8 +60,8 @@ test('should return other party IDs in friendship', () => {
   friendB.updateId(3)
   store.add(friendB)
 
-  user.addFriend(friendA)
-  friendB.addFriend(user)
+  user.addFriend(friendA.id)
+  friendB.addFriend(user.id)
 
   expect(user.friends).toEqual([])
   expect(user.friendRequests).toEqual([friendB.id])
