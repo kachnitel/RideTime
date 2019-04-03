@@ -6,18 +6,18 @@ export class BaseEntity {
   }
 
   async populateFromApi (id: Number) {
-    let user = await this.store.provider.get(id)
+    let entity = await this.store.provider.get(id)
 
-    this.populateFromApiResponse(user)
+    this.populateFromApiResponse(entity)
   }
 
-  populateFromApiResponse (userResponse: Object) {
+  populateFromApiResponse (responseData: Object) {
     this.API_PARAMS.map((key) => {
       // id => updateId()
       let updateMethod = 'update' + key.charAt(0).toUpperCase() + key.slice(1)
       if (typeof this[updateMethod] === 'function') {
-        // console.log(updateMethod, userResponse[key])
-        this[updateMethod](userResponse[key])
+        // console.log(updateMethod, responseData[key])
+        this[updateMethod](responseData[key])
       } else {
         throw new Error(`Trying to call undefined updater '${updateMethod}'`)
       }
