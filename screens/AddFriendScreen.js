@@ -22,6 +22,7 @@ class AddFriendScreen extends Component {
     {
       icon: 'person-add',
       action: (id) => this.requestFriend(id),
+      // disable already sent requests
       disabled: (id) => (this.user.friendships.find((fs) => fs.friendId === id) !== undefined)
     }
   ]
@@ -43,7 +44,6 @@ class AddFriendScreen extends Component {
         this.user.friends.indexOf(user.id) === -1 &&
         this.user.friendRequests.indexOf(user.id) === -1
     }).map((user) => user.id)
-    // TODO: filter and mark sent requests
 
     this.setState({
       loading: false,
