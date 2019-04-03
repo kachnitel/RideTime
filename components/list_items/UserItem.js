@@ -28,8 +28,28 @@ class UserItem extends React.Component {
 
   getActionButtons = () => {
     return <View style={styles.actions}>
-      {this.getActions().map(({ icon, action }, index) => {
-        return <TouchableOpacity onPress={() => action(this.props.id)} key={action + index} style={styles.actionButton}>
+      {this.getActions().map(({ icon, action, disabled }, index) => {
+        let d = false
+        if (disabled !== undefined) {
+          if (typeof disabled === 'boolean') {
+            d = disabled
+          } else if (typeof disabled === 'function') {
+            d = disabled(this.props.id)
+          } else {
+            throw new Error('actions.disabled must be either bool or a function (' + typeof disabled + ')')
+          }
+        }
+
+        let style = d
+          ? { ...styles.actionButton, ...styles.actionButtonDisabled }
+          : styles.actionButton
+        return <TouchableOpacity
+          onPress={() => action(this.props.id)}
+          disabled={d}
+          activeOpacity={d ? 0.5 : 1}
+          key={action + index}
+          style={style}
+        >
           <Icon name={icon} size={Layout.window.hp(3.5)} color='#fff' />
         </TouchableOpacity>
       })}
@@ -78,5 +98,8 @@ const styles = StyleSheet.create({
     padding: Layout.window.hp(0.75),
     margin: Layout.window.hp(0.25),
     backgroundColor: Colors.tintColor
+  },
+  actionButtonDisabled: {
+    backgroundColor: '#6666'
   }
 })

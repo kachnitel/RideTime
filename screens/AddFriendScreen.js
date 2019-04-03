@@ -21,7 +21,8 @@ class AddFriendScreen extends Component {
   actions = [
     {
       icon: 'person-add',
-      action: (id) => this.requestFriend(id)
+      action: (id) => this.requestFriend(id),
+      disabled: (id) => (this.user.friendships.find((fs) => fs.friendId === id) !== undefined)
     }
   ]
 
