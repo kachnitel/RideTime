@@ -5,19 +5,19 @@ import Header from './Header'
 export default class CountHeader extends Component {
   render () {
     return (
-      <View style={{ ...styles.upcomingRidesTitleContainer, ...this.props.style }}>
-        <Header>{this.props.children}</Header>
-        <Header style={styles.upcomingRidesCount}>{this.props.number || '0'}</Header>
+      <View style={{ ...styles.container, ...this.props.style }}>
+        <Header style={this.props.textStyle}>{this.props.children}</Header>
+        <Header style={styles.count}>{this.props.number || '0'}</Header>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  upcomingRidesTitleContainer: {
+  container: {
     flexDirection: 'row'
   },
-  upcomingRidesCount: {
+  count: {
     color: '#b8b8b8',
     paddingLeft: 10
   }
