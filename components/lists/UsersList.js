@@ -27,6 +27,7 @@ class UsersList extends Component {
           emptyComponent={<Text>No frenz</Text>}
           itemComponent={this.itemComponent}
           onItemPress={(item) => console.log(item + ' tapped')}
+          keyExtractor={(item) => 'user_' + item}
         />
       </View>
     )

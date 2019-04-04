@@ -41,7 +41,9 @@ export default class AlternatingStyleList extends Component {
           data={this.props.items}
           renderItem={this.touchableItem}
           ListEmptyComponent={this.props.emptyComponent}
-          keyExtractor={(item, index) => 'index_' + index.toString()}
+          keyExtractor={typeof this.props.keyExtractor === 'function'
+            ? this.props.keyExtractor
+            : (item, index) => 'index_' + index.toString()}
           onRefresh={this.props.onRefresh}
           refreshing={this.state.refreshing}
         />
@@ -54,7 +56,8 @@ AlternatingStyleList.propTypes = {
   onItemPress: PropTypes.func,
   items: PropTypes.array,
   emptyComponent: PropTypes.any,
-  itemComponent: PropTypes.func
+  itemComponent: PropTypes.func,
+  keyExtractor: PropTypes.func
 }
 
 const styles = StyleSheet.create({
