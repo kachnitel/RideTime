@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
 import UsersList from '../components/lists/UsersList'
 import { inject, observer } from 'mobx-react/native'
-import Header from '../components/Header'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 import { User } from '../stores/UserStore.mobx'
 import Button from '../components/Button'
+import CountHeader from '../components/CountHeader'
 
 export default
 @inject('UserStore', 'ApplicationStore')
@@ -35,10 +35,8 @@ class FriendListScreen extends Component {
   //   icon: 'mail-outline',
   //   action: () => console.log('Message ' + this.user.id)
   // }]
-  actions = []
 
   actionsFriend = [
-    ...this.actions,
     {
       icon: 'more-vert',
       action: () => console.log('Open more settings (delete, ...)')
@@ -46,16 +44,15 @@ class FriendListScreen extends Component {
   ]
 
   actionsRequest = [
-    ...this.actions,
     {
       icon: 'person-add',
-      action: (id) => this.acceptFriend(id)
+      action: (id) => this.user.acceptFriend(id)
+    },
+    {
+      icon: 'block',
+      action: (id) => this.user.removeFriend(id)
     }
   ]
-
-  acceptFriend = (id) => {
-    this.user.acceptFriend(id)
-  }
 
   async componentDidMount () {
     let signedInUserId = this.props.ApplicationStore.userId
@@ -72,13 +69,27 @@ class FriendListScreen extends Component {
       this.state.loading
         ? <ActivityIndicator />
         : <ScrollView style={styles.container}>
-          <Header style={styles.header}>Requests</Header>
-          <UsersList
-            users={this.user.friendRequests}
-            style={styles.list}
-            actions={this.actionsRequest}
-          />
-          <Header style={styles.header}>Friends</Header>
+          {this.user.friendRequests.length > 0 && <>
+            <CountHeader
+              number={this.user.friendRequests.length}
+              style={styles.header}
+              textStyle={styles.headerText}
+            >
+              Requests
+            </CountHeader>
+            <UsersList
+              users={this.user.friendRequests}
+              style={styles.list}
+              actions={this.actionsRequest}
+            />
+          </>}
+          <CountHeader
+            number={this.user.friends.length}
+            style={styles.header}
+            textStyle={styles.headerText}
+          >
+            Friends
+          </CountHeader>
           <UsersList
             users={this.user.friends}
             style={styles.list}
@@ -96,7 +107,9 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: Colors.tintColor,
-    color: '#fff',
     padding: Layout.window.hp(1.5)
+  },
+  headerText: {
+    color: '#fff'
   }
 })

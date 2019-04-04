@@ -157,6 +157,16 @@ export class User extends BaseEntity {
     this.store.provider.acceptFriend(id, this.id)
   }
 
+  @action removeFriend (id: Number) {
+    let fs = this.friendships.find((fs) =>
+      (fs.userId === this.id && fs.friendId === id) ||
+      (fs.friendId === this.id && fs.userId === id)
+    )
+    this.store._friendships.remove(fs)
+
+    this.store.provider.removeFriend(fs.userId, fs.friendId)
+  }
+
   @action updateTempPicture (newValue: Object) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }
 

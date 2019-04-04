@@ -1,4 +1,4 @@
-import { get, put, post, postFile } from '../src/Connection'
+import { get, put, post, del, postFile } from '../src/Connection'
 
 export default class RidersProvider {
   /**
@@ -44,5 +44,9 @@ export default class RidersProvider {
 
   acceptFriend = (requesterId: Number, userId: Number) => {
     return put(`api/users/${requesterId}/friends/${userId}/accept`)
+  }
+
+  removeFriend = (requesterId: Number, userId: Number) => {
+    return del(`api/users/${requesterId}/friends/${userId}`)
   }
 }

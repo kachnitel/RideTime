@@ -43,6 +43,23 @@ export const get = (path) => {
     })
 }
 
+export const del = (path) => {
+  let url = getEnvVars().apiUrl + '/' + path
+
+  console.log('DELETE', url)
+
+  return fetch(url, {
+    headers: getHeaders(),
+    method: 'DELETE'
+  })
+    .then((res) => {
+      validateResponse(res)
+    })
+    .catch((error) => {
+      handleError('Network request failed', error)
+    })
+}
+
 /**
  * @param {string} method POST|PUT
  * @param {string} path
