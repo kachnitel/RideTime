@@ -62,7 +62,7 @@ export class Connection {
         body: data
       })
 
-      this.validateResponse(response)
+      await this.validateResponse(response)
 
       // Return true if response contains no data
       // otherwise return data (async)
@@ -71,28 +71,37 @@ export class Connection {
         : await response.json()
       return result
     } catch (error) {
-      this.handleError('Connection error', error)
+      await this.handleError('Connection error', error, response)
     }
   }
 
-  validateResponse = (res) => {
+  validateResponse = async (res) => {
     if (!res.ok) {
       let error = new NetworkError('Network error')
       error.setStatusCode(res.status)
-      error.setBody(res.json())
+      error.setBody(await res.json())
+
+      this.#logError(error.body)
       throw error
     }
   }
 
-  handleError = (message, err) => {
+  handleError = async (message, err, response) => {
     // Do not catch own error
     if (err instanceof NetworkError) {
       throw err
     }
 
     let error = new AppError(message)
-    error.setData({ error: JSON.stringify(err) })
+    error.setData({
+      error: JSON.stringify(err),
+      response: response === null ? null : {
+        status: response.status,
+        body: response.body && await response.json()
+      }
+    })
 
+    this.#logError(error.data)
     throw error
   }
 
@@ -104,6 +113,13 @@ export class Connection {
     }
 
     return { ...headers, ...override }
+  }
+
+  /**
+   * Needed until an error handler is implemented
+   */
+  #logError = (data) => {
+    console.warn('Connection error data', data)
   }
 }
 
