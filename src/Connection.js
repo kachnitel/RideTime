@@ -66,12 +66,12 @@ export class Connection {
 
       // Return true if response contains no data
       // otherwise return data (async)
-      let result = (response.status === 204 && !response.body)
+      var result = (response.status === 204 && !response.body)
         ? true
         : await response.json()
       return result
     } catch (error) {
-      await this.handleError('Connection error', error, response)
+      this.handleError('Connection error', error, response.status, result)
     }
   }
 
@@ -86,7 +86,7 @@ export class Connection {
     }
   }
 
-  handleError = async (message, err, response) => {
+  handleError = (message, err, status, result) => {
     // Do not catch own error
     if (err instanceof NetworkError) {
       throw err
@@ -95,9 +95,9 @@ export class Connection {
     let error = new AppError(message)
     error.setData({
       error: JSON.stringify(err),
-      response: response === null ? null : {
-        status: response.status,
-        body: response.body && await response.json()
+      response: {
+        status: status,
+        body: result
       }
     })
 
@@ -109,7 +109,7 @@ export class Connection {
     let headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + applicationStore.accessToken
+      'Authorization': applicationStore.accessToken ? 'Bearer ' + applicationStore.accessToken : ''
     }
 
     return { ...headers, ...override }

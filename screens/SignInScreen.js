@@ -30,9 +30,9 @@ class SignInScreen extends React.Component {
 
     let auth = new Authentication()
     let token = await auth.loginWithAuth0()
-    let userInfo = await auth.getUserInfo(token.access_token)
-
     this.props.ApplicationStore.updateAccessToken(token.access_token)
+
+    let userInfo = await auth.getUserInfo(token.access_token)
 
     Connection.post('signin', userInfo)
       .then((responseBody) => this.handleSignIn(responseBody, token))
@@ -40,6 +40,11 @@ class SignInScreen extends React.Component {
       .catch((error) => this.maybeSignUpOrError(error, userInfo, token))
   }
 
+  /**
+   * TODO: deprecate /signin, use /dashboard
+   *
+   * @memberof SignInScreen
+   */
   handleSignIn = (signInResponse, token) => {
     if (Number.isInteger(signInResponse.id)) {
       // On successful login save tokens
