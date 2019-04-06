@@ -1,4 +1,4 @@
-import { get, put, post, del, postFile } from '../src/Connection'
+import Connection from '../src/Connection'
 
 export default class RidersProvider {
   /**
@@ -19,34 +19,34 @@ export default class RidersProvider {
    * @memberof RidersProvider
    */
   get = (id) => {
-    return get('api/users/' + id)
+    return Connection.get('api/users/' + id)
   }
 
   updateUser = (id, data) => {
-    return put('api/users/' + id, data)
+    return Connection.put('api/users/' + id, data)
   }
 
   uploadPicture = (id, imageObject) => {
-    return postFile(`api/users/${id}/picture`, 'picture', imageObject)
+    return Connection.postFile(`api/users/${id}/picture`, 'picture', imageObject)
   }
 
   signUp = (data) => {
-    return post('signup', data)
+    return Connection.post('signup', data)
   }
 
   list = () => {
-    return get('api/users')
+    return Connection.get('api/users')
   }
 
   requestFriend = (requesterId: Number, friendId: Number) => {
-    return post(`api/users/${requesterId}/friends/${friendId}`)
+    return Connection.post(`api/users/${requesterId}/friends/${friendId}`)
   }
 
   acceptFriend = (requesterId: Number, userId: Number) => {
-    return put(`api/users/${requesterId}/friends/${userId}/accept`)
+    return Connection.put(`api/users/${requesterId}/friends/${userId}/accept`)
   }
 
   removeFriend = (requesterId: Number, userId: Number) => {
-    return del(`api/users/${requesterId}/friends/${userId}`)
+    return Connection.delete(`api/users/${requesterId}/friends/${userId}`)
   }
 }

@@ -1,4 +1,4 @@
-import { get, post } from '../src/Connection'
+import Connection from '../src/Connection'
 
 export default class RidesProvider {
   list = (ids: ?Number[]) => {
@@ -6,14 +6,14 @@ export default class RidesProvider {
     if (ids) {
       q = '?ids=' + ids.join(',')
     }
-    return get('api/events' + q)
+    return Connection.get('api/events' + q)
   }
 
   get = (id) => {
-    return get('api/events/' + id)
+    return Connection.get('api/events/' + id)
   }
 
   addRide = (data) => {
-    return post('api/events', data)
+    return Connection.post('api/events', data)
   }
 }
