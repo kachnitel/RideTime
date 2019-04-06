@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import Authentication from '../src/Authentication'
 import { observer, inject } from 'mobx-react'
-import Connection from '../src/Connection'
+import ApiConnection from '../src/ApiConnection'
 import { SecureStore } from 'expo'
 import BulletList from '../components/lists/BulletList'
 import TerrainIcon from '../components/icons/TerrainIcon'
@@ -34,7 +34,7 @@ class SignInScreen extends React.Component {
 
     let userInfo = await auth.getUserInfo(token.access_token)
 
-    Connection.post('signin', userInfo)
+    ApiConnection.post('signin', userInfo)
       .then((responseBody) => this.handleSignIn(responseBody, token))
       // navigate to SignUpScreen if User not found
       .catch((error) => this.maybeSignUpOrError(error, userInfo, token))

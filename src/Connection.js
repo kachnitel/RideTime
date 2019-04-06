@@ -1,9 +1,7 @@
 /* global fetch, FormData */
-import { getEnvVars } from '../constants/Env'
 import AppError from './AppError'
 import NetworkError from './NetworkError'
 import Mime from 'mime/lite'
-import applicationStore from '../stores/ApplicationStore.singleton'
 
 export class Connection {
   baseUrl: String
@@ -44,14 +42,14 @@ export class Connection {
       type: Mime.getType(fileType)
     })
 
-    return this.#doRequest('POST', path, formData, this.getApiHeaders({
+    return this.#doRequest('POST', path, formData, this.getHeaders({
       'Content-Type': 'multipart/form-data'
     }))
   }
 
   #doRequest = async (method: String, path: String, data = null, headers: ?Object = null) => {
     let url = this.baseUrl + '/' + path
-    let requestHeaders = headers === null ? this.getApiHeaders() : headers
+    let requestHeaders = headers === null ? this.getHeaders() : headers
 
     console.log(method, url, data)
 
@@ -71,7 +69,12 @@ export class Connection {
         : await response.json()
       return result
     } catch (error) {
-      this.handleError('Connection error', error, response.status, result)
+      this.handleError(
+        'Connection error',
+        error,
+        response?.status,
+        result
+      )
     }
   }
 
@@ -105,11 +108,10 @@ export class Connection {
     throw error
   }
 
-  getApiHeaders = (override: Object = {}) => {
+  getHeaders (override: Object = {}) {
     let headers = {
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': applicationStore.accessToken ? 'Bearer ' + applicationStore.accessToken : ''
+      'Content-Type': 'application/json'
     }
 
     return { ...headers, ...override }
@@ -122,5 +124,3 @@ export class Connection {
     console.warn('Connection error data', data)
   }
 }
-
-export default new Connection(getEnvVars().apiUrl)
