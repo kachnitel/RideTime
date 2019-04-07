@@ -19,3 +19,16 @@ test('test correct headers are returned', () => {
     'Authentication': 'Bearer AsDf12QwEr34'
   })
 })
+
+test('test addHeaders', () => {
+  let conn = new Connection('http://api.example.com')
+
+  conn.addHeaders({
+    'X-Test': '1234'
+  })
+
+  expect(conn.getHeaders()).toEqual({
+    ...conn.headers,
+    'X-Test': '1234'
+  })
+})

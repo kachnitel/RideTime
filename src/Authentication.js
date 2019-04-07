@@ -123,6 +123,9 @@ export default class Authentication {
    */
   getUserInfo = async (apiToken) => {
     console.info('Getting user info')
+    this.connection.addHeaders({
+      'Authorization': 'Bearer ' + apiToken
+    })
     let user = await this.connection.get('userinfo')
 
     return user

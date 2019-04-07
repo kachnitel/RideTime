@@ -5,6 +5,10 @@ import Mime from 'mime/lite'
 
 export class Connection {
   baseUrl: String
+  headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }
 
   constructor (baseUrl: String) {
     this.baseUrl = baseUrl
@@ -51,7 +55,7 @@ export class Connection {
     let url = this.baseUrl + '/' + path
     let requestHeaders = headers === null ? this.getHeaders() : headers
 
-    console.log(method, url, data)
+    console.log(method, url, data, requestHeaders)
 
     try {
       var response = await fetch(url, {
@@ -109,12 +113,11 @@ export class Connection {
   }
 
   getHeaders (override: Object = {}) {
-    let headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
+    return { ...this.headers, ...override }
+  }
 
-    return { ...headers, ...override }
+  addHeaders (headers: Object) {
+    this.headers = { ...this.headers, ...headers }
   }
 
   /**
