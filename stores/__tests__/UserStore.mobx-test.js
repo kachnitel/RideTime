@@ -46,7 +46,7 @@ test('should populate user from json', () => {
   expect(user.name).toBe(json.name)
 })
 
-test('should return other party IDs in friendship', () => {
+test('should return other party IDs in friendship', async () => {
   let store = new UserStore(new RidersProvider(), User)
   let user = new User(store)
   user.updateId(1)
@@ -60,14 +60,14 @@ test('should return other party IDs in friendship', () => {
   friendB.updateId(3)
   store.add(friendB)
 
-  user.addFriend(friendA.id)
-  friendB.addFriend(user.id)
+  await user.addFriend(friendA.id)
+  await friendB.addFriend(user.id)
 
   expect(user.friends).toEqual([])
   expect(user.friendRequests).toEqual([friendB.id])
 
-  user.acceptFriend(friendB.id)
-  friendA.acceptFriend(user.id)
+  await user.acceptFriend(friendB.id)
+  await friendA.acceptFriend(user.id)
   expect(user.friends).toEqual([friendA.id, friendB.id])
   expect(friendA.friends).toEqual([user.id])
   expect(friendB.friends).toEqual([user.id])

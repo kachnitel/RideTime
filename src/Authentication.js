@@ -1,4 +1,3 @@
-/* global fetch */
 import { AuthSession } from 'expo'
 import {
   auth0ClientId,
@@ -7,12 +6,17 @@ import {
   auth0RedirectUri
 } from '../secrets'
 import randomatic from 'randomatic'
+import { Connection } from './Connection'
 
 /*
   TODO:
   If you use Facebook through Auth0, be sure to follow this guide: https://auth0.com/docs/connections/social/facebook
 */
 export default class Authentication {
+  constructor () {
+    this.connection = new Connection(auth0Domain)
+  }
+
   /**
    *
    * @return Promise
@@ -54,7 +58,6 @@ export default class Authentication {
       let token = await this.getOAuthToken(codeVerifier, result.params.code)
 
       return token
-      // this.handleParams(token)
     } // FIXME: handle fail https://docs.expo.io/versions/latest/sdk/auth-session/#returns
   }
 
@@ -67,21 +70,14 @@ export default class Authentication {
    */
   getOAuthToken = async (codeVerifier, code) => {
     console.info('Getting OAuth token')
-    const rawResponse = await fetch(`${auth0Domain}/oauth/token`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        grant_type: 'authorization_code',
-        client_id: auth0ClientId,
-        code_verifier: codeVerifier,
-        code: code,
-        redirect_uri: auth0RedirectUri
-      })
+
+    const content = await this.connection.post('oauth/token', {
+      grant_type: 'authorization_code',
+      client_id: auth0ClientId,
+      code_verifier: codeVerifier,
+      code: code,
+      redirect_uri: auth0RedirectUri
     })
-    const content = await rawResponse.json()
 
     // console.log('Result /oauth/token: ', content)
     return content
@@ -105,19 +101,14 @@ export default class Authentication {
   refreshToken = async (refreshToken) => {
     console.info('Refreshing token')
 
-    const rawResponse = await fetch(`${auth0Domain}/oauth/token`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    const content = await this.connection.post(
+      'oauth/token',
+      {
         grant_type: 'refresh_token',
         client_id: auth0ClientId,
         refresh_token: refreshToken
-      })
-    })
-    const content = await rawResponse.json()
+      }
+    )
 
     // console.log('Result(refresh) /oauth/token: ', content)
     return content
@@ -127,30 +118,15 @@ export default class Authentication {
    * GET /userinfo (JSON)
    *
    * @return Promise | user object
-   * {
-   *   "email_verified": false,
-   *   "email": "test.account@userinfo.com",
-   *   "updated_at": "2016-12-05T15:15:40.545Z",
-   *   "name": "test.account@userinfo.com",
-   *   "picture": "https://s.gravatar.com/avatar/dummy.png",
-   *   "user_id": "auth0|58454...",
-   *   "nickname": "test.account",
-   *   "created_at": "2016-12-05T11:16:59.640Z",
-   *   "sub": "auth0|58454..."
-   * }
    *
    * @memberof Authentication
    */
   getUserInfo = async (apiToken) => {
     console.info('Getting user info')
-    let response = await fetch(`${auth0Domain}/userinfo`, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + apiToken
-      }
+    this.connection.addHeaders({
+      'Authorization': 'Bearer ' + apiToken
     })
-    let user = await response.json()
+    let user = await this.connection.get('userinfo')
 
     return user
   }

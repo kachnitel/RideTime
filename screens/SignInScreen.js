@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import Authentication from '../src/Authentication'
 import { observer, inject } from 'mobx-react'
-import { post } from '../src/Connection'
+import ApiConnection from '../src/ApiConnection'
 import { SecureStore } from 'expo'
 import BulletList from '../components/lists/BulletList'
 import TerrainIcon from '../components/icons/TerrainIcon'
@@ -30,16 +30,21 @@ class SignInScreen extends React.Component {
 
     let auth = new Authentication()
     let token = await auth.loginWithAuth0()
-    let userInfo = await auth.getUserInfo(token.access_token)
-
     this.props.ApplicationStore.updateAccessToken(token.access_token)
 
-    post('signin', userInfo)
+    let userInfo = await auth.getUserInfo(token.access_token)
+
+    ApiConnection.post('signin', userInfo)
       .then((responseBody) => this.handleSignIn(responseBody, token))
       // navigate to SignUpScreen if User not found
       .catch((error) => this.maybeSignUpOrError(error, userInfo, token))
   }
 
+  /**
+   * TODO: deprecate /signin, use /dashboard
+   *
+   * @memberof SignInScreen
+   */
   handleSignIn = (signInResponse, token) => {
     if (Number.isInteger(signInResponse.id)) {
       // On successful login save tokens
