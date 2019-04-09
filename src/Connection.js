@@ -2,6 +2,7 @@
 import AppError from './AppError'
 import NetworkError from './NetworkError'
 import Mime from 'mime/lite'
+import QueryString from 'query-string'
 
 export class Connection {
   baseUrl: String
@@ -14,7 +15,10 @@ export class Connection {
     this.baseUrl = baseUrl
   }
 
-  get = (path) => {
+  get = (path, params) => {
+    if (params) {
+      path += QueryString.stringify(params)
+    }
     return this.#doRequest('GET', path)
   }
 

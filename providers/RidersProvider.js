@@ -34,8 +34,8 @@ export default class RidersProvider {
     return ApiConnection.post('signup', data)
   }
 
-  list = () => {
-    return ApiConnection.get('api/users')
+  list = (ids) => {
+    return ApiConnection.get('api/users', { ids: ids })
   }
 
   requestFriend = (requesterId: Number, friendId: Number) => {
