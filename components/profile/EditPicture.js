@@ -30,16 +30,16 @@ export default class EditPicture extends React.Component {
       Alert.alert(`Sorry! That picture is too small! Minimum size is 300x300 px`)
       return
     }
-    if (picture.height > 900) {
+    if (picture.height > 600) {
       console.log('Picture is too large! Resizing...', picture)
       picture = await ImageManipulator.manipulateAsync(
         picture.uri,
         [
-          { resize: { width: 900, height: 900 } }
+          { resize: { width: 600, height: 600 } }
         ],
         {
-          compress: 0.4,
-          format: 'png'
+          compress: 0.85,
+          format: 'jpeg'
         }
       )
     }
