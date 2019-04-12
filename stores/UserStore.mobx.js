@@ -5,19 +5,27 @@ import { BaseCollectionStore } from './BaseCollectionStore'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
-  _friendships = observable.array([])
 
-  @action addFriendship = (fs: Friendship) => {
-    let i = this._friendships.findIndex(
-      (friendship) =>
-        friendship.userId === fs.userId &&
-        friendship.friendId === fs.friendId
-    )
-    if (i === -1) {
-      this._friendships.push(fs)
-    } else {
-      this._friendships[i] = fs
-    }
+  // WIP add getters/setters
+  // use in FriendListScreen
+  // Replace AppStore.userId with signedInUser throughout the app
+  _friendRequests = observable.array([])
+  _sentRequests = observable.array([])
+  @observable _signedInUserId = null
+
+  @action updateSignedInUserId (id: Number) {
+    this._signedInUserId = id
+    return this.get(id) // load from API if not known
+  }
+
+  /**
+   * Synchronosly get current user
+   *
+   * @readonly
+   * @memberof UserStore
+   */
+  @computed get signedInUser () {
+    return this.getSync(this._signedInUserId)
   }
 }
 
@@ -57,6 +65,7 @@ export class User extends BaseEntity {
   @observable _bike = null
   _locations = observable.array([])
   _events = observable.array([])
+  _friends = observable.array([])
 
   // Picture that hasn't been uploaded yet
   @observable _tempPicture = null
@@ -90,82 +99,38 @@ export class User extends BaseEntity {
   @action addEvent (newValue) { this._events.push(newValue) }
   @computed get events () { return this._events }
 
-  @action updateFriends (newValue: Array) {
-    if (newValue && Array.isArray(newValue)) {
-      newValue.map((fs) => this.addFriendship(fs))
-    }
-  }
+  @action updateFriends (newValue: Array) { this._friends.replace(newValue) }
+  @action addFriend (newValue) { this._friends.push(newValue) }
+  @computed get friends () { return this._friends }
 
-  /**
-   * Adds new Friendship to the store
-   * @param {Object} newValue
-   */
-  @action addFriendship (newValue) {
-    this.store.addFriendship(new Friendship(
-      newValue.userId,
-      newValue.friendId,
-      newValue.status
-    ))
-  }
+  // /**
+  //  * Create new Friendship and push to API
+  //  * @param {Number} id
+  //  */
+  // @action addFriend (id: Number) {
+  //   this.addFriendship({
+  //     userId: this.id,
+  //     friendId: id,
+  //     status: 0
+  //   })
+  //   this.store.provider.requestFriend(this.id, id)
+  // }
 
-  /**
-   * Create new Friendship and push to API
-   * @param {Number} id
-   */
-  @action addFriend (id: Number) {
-    this.addFriendship({
-      userId: this.id,
-      friendId: id,
-      status: 0
-    })
-    this.store.provider.requestFriend(this.id, id)
-  }
+  // @action acceptFriend (id: Number) {
+  //   let fs = this.friendships.find((fs) => fs.userId === id)
+  //   fs.accept()
+  //   this.store.provider.acceptFriend(id, this.id)
+  // }
 
-  /**
-   * @returns Friendship[]
-   * @memberof User
-   */
-  @computed get friendships () {
-    return this.store?._friendships.filter(
-      (fs) => fs.userId === this.id || fs.friendId === this.id
-    )
-  }
+  // @action removeFriend (id: Number) {
+  //   let fs = this.friendships.find((fs) =>
+  //     (fs.userId === this.id && fs.friendId === id) ||
+  //     (fs.friendId === this.id && fs.userId === id)
+  //   )
+  //   this.store._friendships.remove(fs)
 
-  /**
-   * @returns Number[]
-   * @memberof User
-   */
-  @computed get friends () {
-    return this.friendships?.filter(
-      (fs) => fs.status === 1
-    ).map(
-      (fs) => fs.userId === this.id ? fs.friendId : fs.userId
-    )
-  }
-
-  @computed get friendRequests () {
-    return this.store?._friendships.filter(
-      (fs) => fs.status === 0 && fs.friendId === this.id
-    ).map(
-      (fs) => fs.userId
-    )
-  }
-
-  @action acceptFriend (id: Number) {
-    let fs = this.friendships.find((fs) => fs.userId === id)
-    fs.accept()
-    this.store.provider.acceptFriend(id, this.id)
-  }
-
-  @action removeFriend (id: Number) {
-    let fs = this.friendships.find((fs) =>
-      (fs.userId === this.id && fs.friendId === id) ||
-      (fs.friendId === this.id && fs.userId === id)
-    )
-    this.store._friendships.remove(fs)
-
-    this.store.provider.removeFriend(fs.userId, fs.friendId)
-  }
+  //   this.store.provider.removeFriend(fs.userId, fs.friendId)
+  // }
 
   @action updateTempPicture (newValue: Object) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }
@@ -229,46 +194,46 @@ export class User extends BaseEntity {
   }
 }
 
-export class Friendship {
-  /**
-   * ID of requesting user
-   *
-   * @memberof Friendship
-   */
-  _userId
-  /**
-   * ID of other party
-   *
-   * @memberof Friendship
-   */
-  _friendId
-  /**
-   * 0 - pending
-   * 1 - accepted
-   *
-   * @memberof Friendship
-   */
-  @observable _status
+// export class Friendship {
+//   /**
+//    * ID of requesting user
+//    *
+//    * @memberof Friendship
+//    */
+//   _userId
+//   /**
+//    * ID of other party
+//    *
+//    * @memberof Friendship
+//    */
+//   _friendId
+//   /**
+//    * 0 - pending
+//    * 1 - accepted
+//    *
+//    * @memberof Friendship
+//    */
+//   @observable _status
 
-  constructor (userId: Number, friendId: Number, status: Number = 0) {
-    this._userId = userId
-    this._friendId = friendId
-    this._status = status
-  }
+//   constructor (userId: Number, friendId: Number, status: Number = 0) {
+//     this._userId = userId
+//     this._friendId = friendId
+//     this._status = status
+//   }
 
-  static request (userStore: UserStore, myId: Number, friendId: Number) {
-    let fs = new this(myId, friendId)
-    userStore.addFriendship(fs)
-    return fs
-  }
+//   static request (userStore: UserStore, myId: Number, friendId: Number) {
+//     let fs = new this(myId, friendId)
+//     userStore.addFriendship(fs)
+//     return fs
+//   }
 
-  @computed get friendId () { return this._friendId }
+//   @computed get friendId () { return this._friendId }
 
-  @computed get status () { return this._status }
+//   @computed get status () { return this._status }
 
-  @computed get userId () { return this._userId }
+//   @computed get userId () { return this._userId }
 
-  @action accept () {
-    this._status = 1
-  }
-}
+//   @action accept () {
+//     this._status = 1
+//   }
+// }

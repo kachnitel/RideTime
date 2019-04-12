@@ -69,7 +69,7 @@ class FriendListScreen extends Component {
       this.state.loading
         ? <ActivityIndicator />
         : <ScrollView style={styles.container}>
-          {this.user.friendRequests.length > 0 && <>
+          {/* {this.user.friendRequests.length > 0 && <>
             <CountHeader
               number={this.user.friendRequests.length}
               style={styles.header}
@@ -82,7 +82,7 @@ class FriendListScreen extends Component {
               style={styles.list}
               actions={this.actionsRequest}
             />
-          </>}
+          </>} */}
           <CountHeader
             number={this.user.friends.length}
             style={styles.header}
