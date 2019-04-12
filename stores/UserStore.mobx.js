@@ -5,28 +5,6 @@ import { BaseCollectionStore } from './BaseCollectionStore'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
-
-  // WIP add getters/setters
-  // use in FriendListScreen
-  // Replace AppStore.userId with signedInUser throughout the app
-  _friendRequests = observable.array([])
-  _sentRequests = observable.array([])
-  @observable _signedInUserId = null
-
-  @action updateSignedInUserId (id: Number) {
-    this._signedInUserId = id
-    return this.get(id) // load from API if not known
-  }
-
-  /**
-   * Synchronosly get current user
-   *
-   * @readonly
-   * @memberof UserStore
-   */
-  @computed get signedInUser () {
-    return this.getSync(this._signedInUserId)
-  }
 }
 
 export class User extends BaseEntity {
@@ -101,36 +79,8 @@ export class User extends BaseEntity {
 
   @action updateFriends (newValue: Array) { this._friends.replace(newValue) }
   @action addFriend (newValue) { this._friends.push(newValue) }
+  @action removeFriend (id) { this._friends.remove(id) }
   @computed get friends () { return this._friends }
-
-  // /**
-  //  * Create new Friendship and push to API
-  //  * @param {Number} id
-  //  */
-  // @action addFriend (id: Number) {
-  //   this.addFriendship({
-  //     userId: this.id,
-  //     friendId: id,
-  //     status: 0
-  //   })
-  //   this.store.provider.requestFriend(this.id, id)
-  // }
-
-  // @action acceptFriend (id: Number) {
-  //   let fs = this.friendships.find((fs) => fs.userId === id)
-  //   fs.accept()
-  //   this.store.provider.acceptFriend(id, this.id)
-  // }
-
-  // @action removeFriend (id: Number) {
-  //   let fs = this.friendships.find((fs) =>
-  //     (fs.userId === this.id && fs.friendId === id) ||
-  //     (fs.friendId === this.id && fs.userId === id)
-  //   )
-  //   this.store._friendships.remove(fs)
-
-  //   this.store.provider.removeFriend(fs.userId, fs.friendId)
-  // }
 
   @action updateTempPicture (newValue: Object) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }
@@ -193,47 +143,3 @@ export class User extends BaseEntity {
     return this.friends.indexOf(id) !== -1
   }
 }
-
-// export class Friendship {
-//   /**
-//    * ID of requesting user
-//    *
-//    * @memberof Friendship
-//    */
-//   _userId
-//   /**
-//    * ID of other party
-//    *
-//    * @memberof Friendship
-//    */
-//   _friendId
-//   /**
-//    * 0 - pending
-//    * 1 - accepted
-//    *
-//    * @memberof Friendship
-//    */
-//   @observable _status
-
-//   constructor (userId: Number, friendId: Number, status: Number = 0) {
-//     this._userId = userId
-//     this._friendId = friendId
-//     this._status = status
-//   }
-
-//   static request (userStore: UserStore, myId: Number, friendId: Number) {
-//     let fs = new this(myId, friendId)
-//     userStore.addFriendship(fs)
-//     return fs
-//   }
-
-//   @computed get friendId () { return this._friendId }
-
-//   @computed get status () { return this._status }
-
-//   @computed get userId () { return this._userId }
-
-//   @action accept () {
-//     this._status = 1
-//   }
-// }
