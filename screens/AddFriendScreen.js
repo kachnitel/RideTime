@@ -21,9 +21,10 @@ class AddFriendScreen extends Component {
   actions = [
     {
       icon: 'person-add',
-      action: (id) => this.requestFriend(id),
+      action: (id) => this.requestFriend(id)
       // disable already sent requests
-      disabled: (id) => (this.user.friendships.find((fs) => fs.friendId === id) !== undefined)
+      // TODO:
+      // disabled: (id) => (this.user.friendships.find((fs) => fs.friendId === id) !== undefined)
     }
   ]
 
@@ -39,11 +40,13 @@ class AddFriendScreen extends Component {
     await this.props.UserStore.populate()
     let users = this.props.UserStore.list()
     // Filter out existing friends
-    let ids = users.filter((user) => {
-      return user.id !== signedInUserId &&
-        this.user.friends.indexOf(user.id) === -1 &&
-        this.user.friendRequests.indexOf(user.id) === -1
-    }).map((user) => user.id)
+    // TODO:
+    // let ids = users.filter((user) => {
+    //   return user.id !== signedInUserId &&
+    //     this.user.friends.indexOf(user.id) === -1 &&
+    //     this.user.friendRequests.indexOf(user.id) === -1
+    // }).map((user) => user.id)
+    let ids = users.map((user) => user.id)
 
     this.setState({
       loading: false,
