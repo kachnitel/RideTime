@@ -33,20 +33,18 @@ class AddFriendScreen extends Component {
   }
 
   async componentDidMount () {
-    let signedInUserId = this.props.ApplicationStore.userId
-    this.user = await this.props.UserStore.get(signedInUserId)
+    this.user = await this.props.UserStore.currentUser
 
     // TODO: search and stuff
     await this.props.UserStore.populate()
     let users = this.props.UserStore.list()
+
     // Filter out existing friends
-    // TODO:
-    // let ids = users.filter((user) => {
-    //   return user.id !== signedInUserId &&
-    //     this.user.friends.indexOf(user.id) === -1 &&
-    //     this.user.friendRequests.indexOf(user.id) === -1
-    // }).map((user) => user.id)
-    let ids = users.map((user) => user.id)
+    let ids = users.filter((user) => {
+      return user.id !== this.user.id &&
+        this.user.friends.indexOf(user.id) === -1 // &&
+        // this.user.friendRequests.indexOf(user.id) === -1 // TODO:
+    }).map((user) => user.id)
 
     this.setState({
       loading: false,

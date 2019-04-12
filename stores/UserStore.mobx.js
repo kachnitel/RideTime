@@ -2,9 +2,13 @@ import { observable, action, computed, toJS } from 'mobx'
 import RidersProvider from '../providers/RidersProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
+import ApplicationStore from './ApplicationStore.singleton'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
+  @computed get currentUser () {
+    return this.get(ApplicationStore.userId)
+  }
 }
 
 export class User extends BaseEntity {
