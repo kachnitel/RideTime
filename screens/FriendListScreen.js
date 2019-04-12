@@ -55,8 +55,7 @@ class FriendListScreen extends Component {
   ]
 
   async componentDidMount () {
-    let signedInUserId = this.props.ApplicationStore.userId
-    this.user = await this.props.UserStore.get(signedInUserId)
+    this.user = await this.props.UserStore.currentUser
     await this.props.UserStore.populate(this.user.friends) // Preload all friends at once
 
     this.setState({
