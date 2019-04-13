@@ -4,7 +4,6 @@ import UsersList from '../components/lists/UsersList'
 import { inject, observer } from 'mobx-react/native'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
-import { User } from '../stores/UserStore.mobx'
 import Button from '../components/Button'
 import CountHeader from '../components/CountHeader'
 
@@ -28,12 +27,11 @@ class FriendListScreen extends Component {
   state = {
     loading: true
   }
-  user: User
 
   // TODO: Soon (TM)
   // actions = [{
   //   icon: 'mail-outline',
-  //   action: () => console.log('Message ' + this.user.id)
+  //   action: () => console.log('Message ' + this.props.UserStore.currentUser.id)
   // }]
 
   actionsFriend = [
@@ -55,9 +53,8 @@ class FriendListScreen extends Component {
   ]
 
   async componentDidMount () {
-    this.user = this.props.UserStore.currentUser
     await this.props.UserStore.populate([
-      ...this.user.friends,
+      ...this.props.UserStore.currentUser.friends,
       ...this.props.UserStore.friendRequests
     ]) // Preload all friends at once
 
@@ -73,7 +70,7 @@ class FriendListScreen extends Component {
         : <ScrollView style={styles.container}>
           {this.props.UserStore.friendRequests.length > 0 && <>
             <CountHeader
-              number={this.user.friendRequests.length}
+              number={this.props.UserStore.friendRequests.length}
               style={styles.header}
               textStyle={styles.headerText}
             >
@@ -86,14 +83,14 @@ class FriendListScreen extends Component {
             />
           </>}
           <CountHeader
-            number={this.user.friends.length}
+            number={this.props.UserStore.currentUser.friends.length}
             style={styles.header}
             textStyle={styles.headerText}
           >
             Friends
           </CountHeader>
           <UsersList
-            users={this.user.friends}
+            users={this.props.UserStore.currentUser.friends}
             style={styles.list}
             actions={this.actionsFriend}
           />

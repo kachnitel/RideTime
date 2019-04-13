@@ -38,6 +38,10 @@ export default class RidersProvider {
     return ApiConnection.get('api/users', { ids: ids })
   }
 
+  dashboard = () => {
+    return ApiConnection.get('dashboard')
+  }
+
   // requestFriend = (requesterId: Number, friendId: Number) => {
   //   return ApiConnection.post(`api/users/${requesterId}/friends/${friendId}`)
   // }
