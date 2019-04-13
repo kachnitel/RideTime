@@ -46,17 +46,20 @@ class FriendListScreen extends Component {
   actionsRequest = [
     {
       icon: 'person-add',
-      action: (id) => this.user.acceptFriend(id)
+      action: (id) => this.props.UserStore.acceptFriendRequest(id)
     },
     {
       icon: 'block',
-      action: (id) => this.user.removeFriend(id)
+      action: (id) => this.props.UserStore.removeFriendRequest(id)
     }
   ]
 
   async componentDidMount () {
-    this.user = await this.props.UserStore.currentUser
-    await this.props.UserStore.populate(this.user.friends) // Preload all friends at once
+    this.user = this.props.UserStore.currentUser
+    await this.props.UserStore.populate([
+      ...this.user.friends,
+      ...this.props.UserStore.friendRequests
+    ]) // Preload all friends at once
 
     this.setState({
       loading: false
@@ -68,7 +71,7 @@ class FriendListScreen extends Component {
       this.state.loading
         ? <ActivityIndicator />
         : <ScrollView style={styles.container}>
-          {/* {this.user.friendRequests.length > 0 && <>
+          {this.props.UserStore.friendRequests.length > 0 && <>
             <CountHeader
               number={this.user.friendRequests.length}
               style={styles.header}
@@ -77,11 +80,11 @@ class FriendListScreen extends Component {
               Requests
             </CountHeader>
             <UsersList
-              users={this.user.friendRequests}
+              users={this.props.UserStore.friendRequests}
               style={styles.list}
               actions={this.actionsRequest}
             />
-          </>} */}
+          </>}
           <CountHeader
             number={this.user.friends.length}
             style={styles.header}
