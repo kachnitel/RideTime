@@ -2,13 +2,19 @@ import { observable, action, computed, toJS } from 'mobx'
 import RidersProvider from '../providers/RidersProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
-import ApplicationStore from './ApplicationStore.singleton'
+import ApplicationStore from './ApplicationStore.mobx'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
+  applicationStore: ApplicationStore
+
+  constructor (provider, EntityClass, applicationStore: ApplicationStore) {
+    super(provider, EntityClass)
+    this.applicationStore = applicationStore
+  }
 
   @computed get currentUser () {
-    return this.getSync(ApplicationStore.userId)
+    return this.getSync(this.applicationStore.userId)
   }
 
   _friendRequests = observable.array([])
