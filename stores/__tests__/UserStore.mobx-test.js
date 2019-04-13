@@ -1,6 +1,6 @@
 import UserStore, { User } from '../UserStore.mobx'
 import RidersProvider from '../../providers/RidersProvider'
-import applicationStore from '../ApplicationStore.singleton'
+import ApplicationStore from '../ApplicationStore.mobx'
 
 /* eslint-env jest */
 test('should add user to store', async () => {
@@ -48,7 +48,8 @@ test('should populate user from json', () => {
 })
 
 test('should move ID from requests to friends', () => {
-  let store = new UserStore(new RidersProvider(), User)
+  let applicationStore = new ApplicationStore()
+  let store = new UserStore(new RidersProvider(), User, applicationStore)
   let user = new User(store)
   user.updateId(1)
   store.add(user)
