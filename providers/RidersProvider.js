@@ -38,15 +38,15 @@ export default class RidersProvider {
     return ApiConnection.get('api/users', { ids: ids })
   }
 
-  requestFriend = (requesterId: Number, friendId: Number) => {
-    return ApiConnection.post(`api/users/${requesterId}/friends/${friendId}`)
+  // requestFriend = (requesterId: Number, friendId: Number) => {
+  //   return ApiConnection.post(`api/users/${requesterId}/friends/${friendId}`)
+  // }
+
+  acceptFriend = (requesterId: Number) => {
+    return ApiConnection.put(`dashboard/friends/${requesterId}/accept`)
   }
 
-  acceptFriend = (requesterId: Number, userId: Number) => {
-    return ApiConnection.put(`api/users/${requesterId}/friends/${userId}/accept`)
-  }
-
-  removeFriend = (requesterId: Number, userId: Number) => {
-    return ApiConnection.delete(`api/users/${requesterId}/friends/${userId}`)
-  }
+  // removeFriend = (requesterId: Number, userId: Number) => {
+  //   return ApiConnection.delete(`api/users/${requesterId}/friends/${userId}`)
+  // }
 }

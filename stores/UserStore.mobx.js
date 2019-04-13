@@ -29,7 +29,8 @@ export default class UserStore extends BaseCollectionStore {
    * TODO: Send to API
    * @param {Number} id
    */
-  acceptFriendRequest (id: Number) {
+  async acceptFriendRequest (id: Number) {
+    await this.provider.acceptFriend(id)
     this.removeFriendRequest(id)
     this.currentUser.addFriend(id)
   }
