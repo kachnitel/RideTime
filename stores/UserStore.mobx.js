@@ -1,4 +1,4 @@
-import { observable, action, computed, toJS } from 'mobx'
+import { observable, action, computed, toJS, when } from 'mobx'
 import RidersProvider from '../providers/RidersProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
@@ -6,7 +6,7 @@ import ApplicationStore from './ApplicationStore.mobx'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
-  applicationStore: ApplicationStore
+  @observable applicationStore: ApplicationStore
 
   constructor (provider, EntityClass, applicationStore: ApplicationStore) {
     super(provider, EntityClass)
@@ -17,6 +17,13 @@ export default class UserStore extends BaseCollectionStore {
     return this.getSync(this.applicationStore.userId)
   }
 
+  disposer = when(
+    () => this.applicationStore?.accessToken,
+    () => {
+      this.loadDashboard()
+    }
+  )
+
   _friendRequests = observable.array([])
   _sentRequests = observable.array([])
 
@@ -25,8 +32,12 @@ export default class UserStore extends BaseCollectionStore {
   @action addFriendRequest (id: Number) { this._friendRequests.push(id) }
   @action removeFriendRequest (id: Number) { this._friendRequests.remove(id) }
 
+  async loadDashboard () {
+    let dashboard = await this.provider.dashboard()
+    this.updateFriendRequests(dashboard.requests)
+  }
+
   /**
-   * TODO: Send to API
    * @param {Number} id
    */
   async acceptFriendRequest (id: Number) {
