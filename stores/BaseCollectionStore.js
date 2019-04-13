@@ -52,7 +52,11 @@ export class BaseCollectionStore {
    * @memberof BaseCollectionStore
    */
   getSync (id: Number) {
-    return this._findInCollection(id)
+    let entity = this._findInCollection(id)
+    if (!entity) {
+      throw new Error(`Trying to get entity ${this.EntityClass.name}:${id} before it is initialized`)
+    }
+    return entity
   }
 
   @action add (newEntity) {
