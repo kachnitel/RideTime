@@ -6,8 +6,26 @@ import ApplicationStore from './ApplicationStore.singleton'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
+
   @computed get currentUser () {
-    return this.get(ApplicationStore.userId)
+    return this.getSync(ApplicationStore.userId)
+  }
+
+  _friendRequests = observable.array([])
+  _sentRequests = observable.array([])
+
+  @action updateFriendRequests (newValue: Array) { this._friendRequests.replace(newValue) }
+  @computed get friendRequests () { return this._friendRequests }
+  @action addFriendRequest (id: Number) { this._friendRequests.push(id) }
+  @action removeFriendRequest (id: Number) { this._friendRequests.remove(id) }
+
+  /**
+   * TODO: Send to API
+   * @param {Number} id
+   */
+  acceptFriendRequest (id: Number) {
+    this.removeFriendRequest(id)
+    this.currentUser.addFriend(id)
   }
 }
 
