@@ -48,7 +48,7 @@ class FriendListScreen extends Component {
     },
     {
       icon: 'block',
-      action: (id) => this.props.UserStore.removeFriendRequest(id)
+      action: (id) => this.props.UserStore.declineFriendRequest(id)
     }
   ]
 
