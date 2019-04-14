@@ -43,10 +43,15 @@ export default class UserStore extends BaseCollectionStore {
   /**
    * @param {Number} id
    */
-  async acceptFriendRequest (id: Number) {
-    await this.provider.acceptFriend(id)
-    this.removeFriendRequest(id)
+  acceptFriendRequest (id: Number) {
+    this.provider.acceptFriend(id)
     this.currentUser.addFriend(id)
+    this.removeFriendRequest(id)
+  }
+
+  declineFriendRequest (id: Number) {
+    this.provider.removeFriend(id)
+    this.removeFriendRequest(id)
   }
 }
 
