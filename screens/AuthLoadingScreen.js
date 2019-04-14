@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   ActivityIndicator,
-  StatusBar,
   StyleSheet,
   View,
   Alert
@@ -42,7 +41,7 @@ class AuthLoadingScreen extends React.Component {
         return
       }
     }
-    // This will switch to the App screen or Auth screen and this loading
+    // This will switch to the Auth screen and this loading
     // screen will be unmounted and thrown away.
     this.props.ApplicationStore.reset()
     this.props.navigation.navigate('Auth')
@@ -53,7 +52,6 @@ class AuthLoadingScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ActivityIndicator />
-        <StatusBar barStyle='default' />
       </View>
     )
   }
