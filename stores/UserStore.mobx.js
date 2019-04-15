@@ -37,12 +37,17 @@ export default class UserStore extends BaseCollectionStore {
   @action addFriendRequest (id: Number) { this._friendRequests.push(id) }
   @action removeFriendRequest (id: Number) { this._friendRequests.remove(id) }
 
+  @action updateSentRequests (newValue: Array) { this._sentRequests.replace(newValue) }
+  @computed get sentRequests () { return this._sentRequests }
+  @action addSentRequest (id: Number) { this._sentRequests.push(id) }
+
   async loadDashboard () {
     let dashboard = await this.provider.dashboard()
     let currentUser = new User(this)
     currentUser.populateFromApiResponse(dashboard.currentUser)
     this.add(currentUser)
     this.updateFriendRequests(dashboard.requests)
+    this.updateSentRequests(dashboard.sentRequests)
   }
 
   /**
