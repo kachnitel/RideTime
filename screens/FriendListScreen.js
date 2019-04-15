@@ -6,6 +6,7 @@ import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 import Button from '../components/Button'
 import CountHeader from '../components/CountHeader'
+import FriendMenuModal from '../components/friends/FriendMenuModal'
 
 export default
 @inject('UserStore', 'ApplicationStore')
@@ -25,7 +26,9 @@ class FriendListScreen extends Component {
   }
 
   state = {
-    loading: true
+    loading: true,
+    friendMenuModalId: null,
+    friendMenuModalVisible: false
   }
 
   // TODO: Soon (TM)
@@ -37,7 +40,7 @@ class FriendListScreen extends Component {
   actionsFriend = [
     {
       icon: 'more-vert',
-      action: () => console.log('Open more settings (delete, ...)')
+      action: (id) => this.showFriendMenuModal(id)
     }
   ]
 
@@ -51,6 +54,20 @@ class FriendListScreen extends Component {
       action: (id) => this.props.UserStore.declineFriendRequest(id)
     }
   ]
+
+  showFriendMenuModal = (id: Number) => {
+    this.setState({
+      friendMenuModalId: id,
+      friendMenuModalVisible: true
+    })
+  }
+
+  hideFriendMenuModal = () => {
+    this.setState({
+      friendMenuModalId: null,
+      friendMenuModalVisible: false
+    })
+  }
 
   async componentDidMount () {
     await this.props.UserStore.populate([
@@ -93,6 +110,11 @@ class FriendListScreen extends Component {
             users={this.props.UserStore.currentUser.friends}
             style={styles.list}
             actions={this.actionsFriend}
+          />
+          <FriendMenuModal
+            visible={this.state.friendMenuModalVisible}
+            userId={this.state.friendMenuModalId}
+            hide={this.hideFriendMenuModal}
           />
         </ScrollView>
     )

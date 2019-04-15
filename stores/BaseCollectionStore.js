@@ -48,7 +48,7 @@ export class BaseCollectionStore {
    * Synchronously return locally stored Entity
    *
    * @param {Number} id
-   * @returns BaseEntity
+   * @returns {BaseEntity}
    * @memberof BaseCollectionStore
    */
   getSync (id: Number) {
