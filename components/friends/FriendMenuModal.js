@@ -43,6 +43,8 @@ class FriendMenuModal extends Component {
     return (
       <Modal
         isVisible={this.props.visible}
+        onBackdropPress={this.props.hide}
+        onBackButtonPress={this.props.hide}
       >
         <View style={styles.container}>
           <TouchableNativeFeedback onPress={this.handleRemoveFriend}>
