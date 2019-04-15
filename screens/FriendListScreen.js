@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
-import { ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
+import {
+  ScrollView,
+  StyleSheet,
+  ActivityIndicator,
+  RefreshControl
+} from 'react-native'
 import UsersList from '../components/lists/UsersList'
 import { inject, observer } from 'mobx-react/native'
 import Colors from '../constants/Colors'
@@ -80,11 +85,27 @@ class FriendListScreen extends Component {
     })
   }
 
+  refreshControl () {
+    return <RefreshControl
+      refreshing={this.state.loading}
+      onRefresh={this.refresh}
+    />
+  }
+
+  refresh = async () => {
+    this.setState({ loading: true })
+    await this.props.UserStore.loadDashboard()
+    this.setState({ loading: false })
+  }
+
   render () {
     return (
       this.state.loading
         ? <ActivityIndicator />
-        : <ScrollView style={styles.container}>
+        : <ScrollView
+          style={styles.container}
+          refreshControl={this.refreshControl()}
+        >
           {this.props.UserStore.friendRequests.length > 0 && <>
             <CountHeader
               number={this.props.UserStore.friendRequests.length}
