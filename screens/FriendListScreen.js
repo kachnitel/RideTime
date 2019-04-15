@@ -106,32 +106,8 @@ class FriendListScreen extends Component {
           style={styles.container}
           refreshControl={this.refreshControl()}
         >
-          {this.props.UserStore.friendRequests.length > 0 && <>
-            <CountHeader
-              number={this.props.UserStore.friendRequests.length}
-              style={styles.header}
-              textStyle={styles.headerText}
-            >
-              Requests
-            </CountHeader>
-            <UsersList
-              users={this.props.UserStore.friendRequests}
-              style={styles.list}
-              actions={this.actionsRequest}
-            />
-          </>}
-          <CountHeader
-            number={this.props.UserStore.currentUser.friends.length}
-            style={styles.header}
-            textStyle={styles.headerText}
-          >
-            Friends
-          </CountHeader>
-          <UsersList
-            users={this.props.UserStore.currentUser.friends}
-            style={styles.list}
-            actions={this.actionsFriend}
-          />
+          {this.props.UserStore.friendRequests.length > 0 && this.friendRequestList()}
+          {this.friendList()}
           <FriendMenuModal
             visible={this.state.friendMenuModalVisible}
             userId={this.state.friendMenuModalId}
@@ -140,6 +116,36 @@ class FriendListScreen extends Component {
         </ScrollView>
     )
   }
+
+  friendRequestList = () => <>
+    <CountHeader
+      number={this.props.UserStore.friendRequests.length}
+      style={styles.header}
+      textStyle={styles.headerText}
+    >
+      Requests
+    </CountHeader>
+    <UsersList
+      users={this.props.UserStore.friendRequests}
+      style={styles.list}
+      actions={this.actionsRequest}
+    />
+  </>
+
+  friendList = () => <>
+    <CountHeader
+      number={this.props.UserStore.currentUser.friends.length}
+      style={styles.header}
+      textStyle={styles.headerText}
+    >
+      Friends
+    </CountHeader>
+    <UsersList
+      users={this.props.UserStore.currentUser.friends}
+      style={styles.list}
+      actions={this.actionsFriend}
+    />
+  </>
 }
 
 const styles = StyleSheet.create({
