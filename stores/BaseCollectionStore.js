@@ -60,16 +60,12 @@ export class BaseCollectionStore {
   }
 
   /**
-   * @TODO: Compare timestamp if found
-   *
    * @param {*} newEntity
    * @memberof BaseCollectionStore
    */
   @action add (newEntity) {
     if (undefined === this._findInCollection(newEntity.id)) {
       this._collection.push(newEntity)
-    } else {
-      this._collection.replace([newEntity])
     }
   }
 
@@ -84,6 +80,7 @@ export class BaseCollectionStore {
 
   async populateEntities (ids: ?Number[]) {
     let results = await this.provider.list(ids)
+    console.log(results)
     results.map((result) => {
       let entity = new this.EntityClass(this)
       entity.populateFromApiResponse(result)
