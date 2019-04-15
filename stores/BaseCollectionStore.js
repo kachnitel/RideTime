@@ -59,9 +59,17 @@ export class BaseCollectionStore {
     return entity
   }
 
+  /**
+   * @TODO: Compare timestamp if found
+   *
+   * @param {*} newEntity
+   * @memberof BaseCollectionStore
+   */
   @action add (newEntity) {
     if (undefined === this._findInCollection(newEntity.id)) {
       this._collection.push(newEntity)
+    } else {
+      this._collection.replace([newEntity])
     }
   }
 
