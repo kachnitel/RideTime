@@ -13,6 +13,11 @@ export default class UserStore extends BaseCollectionStore {
     this.applicationStore = applicationStore
   }
 
+  /**
+   * @returns {User} Signed in user
+   * @readonly
+   * @memberof UserStore
+   */
   @computed get currentUser () {
     return this.getSync(this.applicationStore.userId)
   }
@@ -52,6 +57,11 @@ export default class UserStore extends BaseCollectionStore {
   declineFriendRequest (id: Number) {
     this.provider.removeFriend(id)
     this.removeFriendRequest(id)
+  }
+
+  removeFriend (id: Number) {
+    this.provider.removeFriend(id)
+    this.currentUser.removeFriend(id)
   }
 }
 
