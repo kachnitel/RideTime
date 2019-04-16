@@ -45,12 +45,25 @@ class SignUpScreen extends React.Component {
 
   handleScroll = (event) => {
     if (event.nativeEvent.contentOffset.x === event.nativeEvent.contentSize.width / 2) {
-      this.refs.scrollView.scrollTo({ x: 0 })
-      this.setState({ formPosition: 1 })
+      this.scrollTo(1)
     } else {
-      this.refs.scrollView.scrollToEnd()
-      this.setState({ formPosition: 2 })
+      this.scrollTo(2)
     }
+  }
+
+  scrollTo = (position: Number) => {
+    switch (position) {
+      case 1:
+        this.refs.scrollView.scrollTo({ x: 0 })
+        break
+      case 2:
+        this.refs.scrollView.scrollToEnd()
+        break
+      default:
+        throw Error('Trying to scroll to unknown position')
+    }
+
+    this.setState({ formPosition: position })
   }
 
   /**
@@ -82,7 +95,7 @@ class SignUpScreen extends React.Component {
               pagingEnabled
               bounces={false}
               ref='scrollView'
-              onScrollBeginDrag={this.handlehandleScrollScroll}
+              onScrollBeginDrag={this.handleScroll}
               showsHorizontalScrollIndicator={false}
               scrollEnabled={false}
               keyboardShouldPersistTaps='handled'
@@ -97,11 +110,9 @@ class SignUpScreen extends React.Component {
               onPress={() => {
                 Keyboard.dismiss() // REVIEW: Might only need on smaller screen?
                 if (this.state.formPosition === 1) {
-                  this.refs.scrollView.scrollToEnd()
-                  this.setState({ formPosition: 2 })
+                  this.scrollTo(2)
                 } else {
-                  this.refs.scrollView.scrollTo({ x: 0 })
-                  this.setState({ formPosition: 1 })
+                  this.scrollTo(1)
                 }
               }}
               disabled={!this.user.name || !this.user.email}
