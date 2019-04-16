@@ -23,10 +23,10 @@ class SignOutButton extends Component {
         {
           text: 'OK',
           onPress: () => {
+            this.props.navigation.navigate('Auth')
+
             SecureStore.deleteItemAsync('refreshToken')
             this.props.ApplicationStore.reset()
-
-            this.props.navigation.navigate('Auth')
           }
         }
       ],
