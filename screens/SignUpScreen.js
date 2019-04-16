@@ -60,7 +60,7 @@ class SignUpScreen extends React.Component {
         this.refs.scrollView.scrollToEnd()
         break
       default:
-        throw Error('Trying to scroll to unknown position')
+        throw new Error('Trying to scroll to unknown position')
     }
 
     this.setState({ formPosition: position })
