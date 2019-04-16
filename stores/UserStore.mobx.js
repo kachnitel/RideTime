@@ -53,6 +53,14 @@ export default class UserStore extends BaseCollectionStore {
   /**
    * @param {Number} id
    */
+  requestFriend (id: Number) {
+    this.provider.requestFriend(id)
+    this.addSentRequest(id)
+  }
+
+  /**
+   * @param {Number} id
+   */
   acceptFriendRequest (id: Number) {
     this.provider.acceptFriend(id)
     this.currentUser.addFriend(id)
