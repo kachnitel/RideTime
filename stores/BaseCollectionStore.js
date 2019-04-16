@@ -80,7 +80,6 @@ export class BaseCollectionStore {
 
   async populateEntities (ids: ?Number[]) {
     let results = await this.provider.list(ids)
-    console.log(results)
     results.map((result) => {
       let entity = new this.EntityClass(this)
       entity.populateFromApiResponse(result)
