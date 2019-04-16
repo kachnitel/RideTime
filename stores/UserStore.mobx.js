@@ -43,7 +43,9 @@ export default class UserStore extends BaseCollectionStore {
 
   async loadDashboard () {
     let dashboard = await this.provider.dashboard()
-    this.currentUser.populateFromApiResponse(dashboard.currentUser)
+    let currentUser = this._findInCollection(dashboard.currentUser.id) || new User(this)
+    currentUser.populateFromApiResponse(dashboard.currentUser)
+    this.add(currentUser)
     this.updateFriendRequests(dashboard.requests)
     this.updateSentRequests(dashboard.sentRequests)
   }
