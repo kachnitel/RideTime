@@ -1,4 +1,4 @@
-import { observable, action, computed, toJS, when } from 'mobx'
+import { observable, action, computed, toJS, autorun } from 'mobx'
 import RidersProvider from '../providers/RidersProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
@@ -11,6 +11,12 @@ export default class UserStore extends BaseCollectionStore {
   constructor (provider, EntityClass, applicationStore: ApplicationStore) {
     super(provider, EntityClass)
     this.applicationStore = applicationStore
+
+    autorun((reaction) => {
+      if (this.applicationStore.accessToken) {
+        this.loadDashboard()
+      }
+    })
   }
 
   /**
@@ -21,13 +27,6 @@ export default class UserStore extends BaseCollectionStore {
   @computed get currentUser () {
     return this.getSync(this.applicationStore.userId)
   }
-
-  disposer = when(
-    () => this.applicationStore?.accessToken,
-    () => {
-      this.loadDashboard()
-    }
-  )
 
   _friendRequests = observable.array([])
   _sentRequests = observable.array([])
