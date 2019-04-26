@@ -4,7 +4,7 @@ import ApplicationStore from '../ApplicationStore.mobx'
 
 /* eslint-env jest */
 test('should add user to store', async () => {
-  let store = new UserStore(new RidersProvider(), User)
+  let store = new UserStore(new RidersProvider(), User, new ApplicationStore())
   let user = new User(store)
 
   user.updateId(1)
