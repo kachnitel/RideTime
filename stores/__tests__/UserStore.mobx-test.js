@@ -1,9 +1,10 @@
 import UserStore, { User } from '../UserStore.mobx'
 import RidersProvider from '../../providers/RidersProvider'
+import ApplicationStore from '../ApplicationStore.mobx'
 
 /* eslint-env jest */
 test('should add user to store', async () => {
-  let store = new UserStore(new RidersProvider(), User)
+  let store = new UserStore(new RidersProvider(), User, new ApplicationStore())
   let user = new User(store)
 
   user.updateId(1)
@@ -46,29 +47,25 @@ test('should populate user from json', () => {
   expect(user.name).toBe(json.name)
 })
 
-test('should return other party IDs in friendship', async () => {
-  let store = new UserStore(new RidersProvider(), User)
+test('should move ID from requests to friends', () => {
+  let applicationStore = new ApplicationStore()
+  let store = new UserStore(new RidersProvider(), User, applicationStore)
   let user = new User(store)
   user.updateId(1)
   store.add(user)
+  applicationStore.updateUserId(user.id)
 
-  let friendA = new User(store)
-  friendA.updateId(2)
-  store.add(friendA)
+  let friend = new User(store)
+  friend.updateId(2)
+  store.add(friend)
 
-  let friendB = new User(store)
-  friendB.updateId(3)
-  store.add(friendB)
-
-  await user.addFriend(friendA.id)
-  await friendB.addFriend(user.id)
+  store.addFriendRequest(2)
 
   expect(user.friends).toEqual([])
-  expect(user.friendRequests).toEqual([friendB.id])
+  expect(store.friendRequests).toEqual([friend.id])
 
-  await user.acceptFriend(friendB.id)
-  await friendA.acceptFriend(user.id)
-  expect(user.friends).toEqual([friendA.id, friendB.id])
-  expect(friendA.friends).toEqual([user.id])
-  expect(friendB.friends).toEqual([user.id])
+  store.acceptFriendRequest(friend.id)
+
+  expect(user.friends).toEqual([friend.id])
+  expect(store.friendRequests).toEqual([])
 })

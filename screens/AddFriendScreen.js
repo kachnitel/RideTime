@@ -5,7 +5,6 @@ import { inject, observer } from 'mobx-react/native'
 import Header from '../components/Header'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
-import { User } from '../stores/UserStore.mobx'
 
 export default
 @inject('UserStore', 'ApplicationStore')
@@ -16,33 +15,25 @@ class AddFriendScreen extends Component {
     userIds: []
   }
 
-  user: User
-
   actions = [
     {
       icon: 'person-add',
-      action: (id) => this.requestFriend(id),
+      action: (id) => this.props.UserStore.requestFriend(id),
       // disable already sent requests
-      disabled: (id) => (this.user.friendships.find((fs) => fs.friendId === id) !== undefined)
+      disabled: (id) => (this.props.UserStore.sentRequests.indexOf(id) !== -1)
     }
   ]
 
-  requestFriend = (id) => {
-    this.user.addFriend(id)
-  }
-
   async componentDidMount () {
-    let signedInUserId = this.props.ApplicationStore.userId
-    this.user = await this.props.UserStore.get(signedInUserId)
-
     // TODO: search and stuff
     await this.props.UserStore.populate()
     let users = this.props.UserStore.list()
-    // Filter out existing friends
+
+    // Filter out existing friends, requests(REVIEW: show with accept?) and self
     let ids = users.filter((user) => {
-      return user.id !== signedInUserId &&
-        this.user.friends.indexOf(user.id) === -1 &&
-        this.user.friendRequests.indexOf(user.id) === -1
+      return user.id !== this.props.UserStore.currentUser.id &&
+        this.props.UserStore.currentUser.friends.indexOf(user.id) === -1 &&
+        this.props.UserStore.friendRequests.indexOf(user.id) === -1
     }).map((user) => user.id)
 
     this.setState({

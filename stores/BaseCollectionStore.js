@@ -48,13 +48,21 @@ export class BaseCollectionStore {
    * Synchronously return locally stored Entity
    *
    * @param {Number} id
-   * @returns BaseEntity
+   * @returns {BaseEntity}
    * @memberof BaseCollectionStore
    */
   getSync (id: Number) {
-    return this._findInCollection(id)
+    let entity = this._findInCollection(id)
+    if (!entity) {
+      throw new Error(`Trying to get entity ${this.EntityClass.name}:${id} before it is initialized`)
+    }
+    return entity
   }
 
+  /**
+   * @param {*} newEntity
+   * @memberof BaseCollectionStore
+   */
   @action add (newEntity) {
     if (undefined === this._findInCollection(newEntity.id)) {
       this._collection.push(newEntity)

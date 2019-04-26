@@ -18,7 +18,6 @@ import { User } from '../stores/UserStore.mobx'
 
 export default
 @inject('UserStore')
-@inject('ApplicationStore')
 @observer
 class OwnProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -78,7 +77,7 @@ class OwnProfileScreen extends React.Component {
       loadingUser: true
     })
 
-    let originalUser = await this.props.UserStore.get(this.props.ApplicationStore.userId)
+    let originalUser = await this.props.UserStore.currentUser
     // REVIEW: bit dirty trick to "clone" the user
     this.user.populateFromApiResponse(originalUser.createApiJson())
 

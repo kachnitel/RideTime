@@ -3,23 +3,14 @@ import ApiConnection from '../src/ApiConnection'
 export default class RidersProvider {
   /**
    * Return Promise
-   * {
-   *   "id": 71,
-   *   "name": "Ondřej Váňa",
-   *   "hometown": null,
-   *   "events": [],
-   *   "friends": [],
-   *   "level": null,
-   *   "preferred": null,
-   *   "favourites": null,
-   *   "picture": "https://lh5.googleusercontent.com/-txLCi973qWQ/AAAAAAAAAAI/AAAAAAAANuk/BpCrITncuGE/photo.jpg",
-   *   "email": "vana.ondrej@gmail.com"
-   * }
-   *
    * @memberof RidersProvider
    */
   get = (id) => {
     return ApiConnection.get('api/users/' + id)
+  }
+
+  list = (ids) => {
+    return ApiConnection.get('api/users', { ids: ids })
   }
 
   updateUser = (id, data) => {
@@ -34,19 +25,19 @@ export default class RidersProvider {
     return ApiConnection.post('signup', data)
   }
 
-  list = (ids) => {
-    return ApiConnection.get('api/users', { ids: ids })
+  dashboard = () => {
+    return ApiConnection.get('dashboard')
   }
 
-  requestFriend = (requesterId: Number, friendId: Number) => {
-    return ApiConnection.post(`api/users/${requesterId}/friends/${friendId}`)
+  requestFriend = (friendId: Number) => {
+    return ApiConnection.post(`dashboard/friends/${friendId}`)
   }
 
-  acceptFriend = (requesterId: Number, userId: Number) => {
-    return ApiConnection.put(`api/users/${requesterId}/friends/${userId}/accept`)
+  acceptFriend = (requesterId: Number) => {
+    return ApiConnection.put(`dashboard/friends/${requesterId}/accept`)
   }
 
-  removeFriend = (requesterId: Number, userId: Number) => {
-    return ApiConnection.delete(`api/users/${requesterId}/friends/${userId}`)
+  removeFriend = (requesterId: Number) => {
+    return ApiConnection.delete(`dashboard/friends/${requesterId}`)
   }
 }
