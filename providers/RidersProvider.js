@@ -40,4 +40,8 @@ export default class RidersProvider {
   removeFriend = (requesterId: Number) => {
     return ApiConnection.delete(`dashboard/friends/${requesterId}`)
   }
+
+  search = (name: String) => {
+    return ApiConnection.get('api/users/search', { q: `name:${name}` })
+  }
 }
