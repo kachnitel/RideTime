@@ -25,16 +25,11 @@ class AddFriendScreen extends Component {
   ]
 
   async componentDidMount () {
-    // TODO: search and stuff
+    // TODO: populate with sensible defaults?
     await this.props.UserStore.populate()
     let users = this.props.UserStore.list()
 
-    // Filter out existing friends, requests(REVIEW: show with accept?) and self
-    let ids = users.filter((user) => {
-      return user.id !== this.props.UserStore.currentUser.id &&
-        this.props.UserStore.currentUser.friends.indexOf(user.id) === -1 &&
-        this.props.UserStore.friendRequests.indexOf(user.id) === -1
-    }).map((user) => user.id)
+    let ids = users.filter(this.filterFriends).map((user) => user.id)
 
     this.setState({
       loading: false,
@@ -42,9 +37,26 @@ class AddFriendScreen extends Component {
     })
   }
 
+  /**
+   * TODO: timeout
+   *
+   * @memberof AddFriendScreen
+   */
   handleSearchOnChange = async (val) => {
-    let ids = await this.props.UserStore.search(val)
+    let users = await this.props.UserStore.search(val)
+    let ids = users.filter(this.filterFriends).map((user) => user.id)
     this.setState({ userIds: ids })
+  }
+
+  /**
+   * Filter out existing friends, requests(REVIEW: show with accept?) and self
+   *
+   * @memberof AddFriendScreen
+   */
+  filterFriends = (user) => {
+    return user.id !== this.props.UserStore.currentUser.id &&
+      this.props.UserStore.currentUser.friends.indexOf(user.id) === -1 &&
+      this.props.UserStore.friendRequests.indexOf(user.id) === -1
   }
 
   render () {

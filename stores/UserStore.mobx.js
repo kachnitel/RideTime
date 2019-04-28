@@ -53,21 +53,20 @@ export default class UserStore extends BaseCollectionStore {
    * Search users by name
    *
    * @param {String} name
-   * @returns {Array} resultIds
+   * @returns {User[]}
    * @memberof UserStore
    */
   async search (name: String) {
     let result = await this.provider.search(name)
-    let resultIds = []
     result.map((item) => {
       let user = this._findInCollection(item.id) || new User(this)
 
       // TODO: Incomplete info (missing relations)
       user.populateFromApiResponse(item)
-      resultIds.push(item.id)
+      this.add(user)
     })
 
-    return resultIds
+    return result
   }
 
   /**
