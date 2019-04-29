@@ -3,6 +3,7 @@ import RidersProvider from '../providers/RidersProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
 import ApplicationStore from './ApplicationStore.mobx'
+import PushNotifications from '../src/PushNotifications'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
@@ -15,6 +16,9 @@ export default class UserStore extends BaseCollectionStore {
     autorun((reaction) => {
       if (this.applicationStore.accessToken) {
         this.loadDashboard()
+
+        let notifications = new PushNotifications()
+        notifications.updateToken()
       }
     })
   }

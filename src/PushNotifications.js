@@ -1,0 +1,30 @@
+import { Permissions, Notifications } from 'expo'
+import NotificationsProvider from '../providers/NotificationsProvider'
+
+export default class PushNotifications {
+  getToken = async () => {
+    let result = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    )
+
+    if (result.status !== 'granted') {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      result = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+    }
+
+    if (result.status !== 'granted') {
+      return
+    }
+
+    let token = await Notifications.getExpoPushTokenAsync()
+    return token
+  }
+
+  updateToken = async () => {
+    let token = await this.getToken()
+    let provider = new NotificationsProvider()
+
+    provider.setToken(token)
+  }
+}
