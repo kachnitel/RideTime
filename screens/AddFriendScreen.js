@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { ScrollView, StyleSheet, ActivityIndicator, TextInput } from 'react-native'
+import { ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
 import UsersList from '../components/lists/UsersList'
 import { inject, observer } from 'mobx-react/native'
 import Header from '../components/Header'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
+import SearchInput from '../components/form/SearchInput'
 
 export default
 @inject('UserStore', 'ApplicationStore')
@@ -38,12 +39,12 @@ class AddFriendScreen extends Component {
   }
 
   /**
-   * TODO: timeout
-   *
    * @memberof AddFriendScreen
    */
   handleSearchOnChange = async (val) => {
-    let users = await this.props.UserStore.search(val)
+    let users = val === ''
+      ? this.props.UserStore.list()
+      : await this.props.UserStore.search(val)
     let ids = users.filter(this.filterFriends).map((user) => user.id)
     this.setState({ userIds: ids })
   }
@@ -65,9 +66,7 @@ class AddFriendScreen extends Component {
         ? <ActivityIndicator />
         : <ScrollView style={styles.container}>
           {/* TODO: Move to header */}
-          <TextInput
-            onChangeText={this.handleSearchOnChange}
-          />
+          <SearchInput onChangeText={this.handleSearchOnChange} />
           <Header style={styles.header}>Users</Header>
           <UsersList
             users={this.state.userIds}
