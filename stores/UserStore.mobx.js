@@ -37,7 +37,7 @@ export default class UserStore extends BaseCollectionStore {
 
   @action updateFriendRequests (newValue: Array) { this._friendRequests.replace(newValue) }
   @computed get friendRequests () { return this._friendRequests }
-  @action addFriendRequest (id: Number) { this._friendRequests.push(id) }
+  @action addFriendRequest (id: Number) { this._friendRequests.indexOf(id) === -1 && this._friendRequests.push(id) }
   @action removeFriendRequest (id: Number) { this._friendRequests.remove(id) }
 
   @action updateSentRequests (newValue: Array) { this._sentRequests.replace(newValue) }
