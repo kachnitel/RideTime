@@ -61,7 +61,7 @@ export class Connection {
 
     let logHeaders = JSON.stringify(
       requestHeaders,
-      (key, val) => key === 'Authorization' ? val.slice(0, 10) + '...' : val
+      (key, val) => key === 'Authorization' ? val.slice(0, 10) + '...' + val.slice(-3) : val
     )
     console.log(method, url, data, logHeaders)
 
