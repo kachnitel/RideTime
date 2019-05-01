@@ -1,4 +1,4 @@
-import { observable, action, computed, toJS, autorun } from 'mobx'
+import { observable, action, computed, toJS, autorun, when } from 'mobx'
 import RidersProvider from '../providers/RidersProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
@@ -7,6 +7,13 @@ import PushNotifications from '../src/PushNotifications'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
+  loading = new Promise(async (resolve, reject) => {
+    when(
+      () => this.loaded,
+      () => resolve()
+    )
+  })
+  @observable _loaded = false
   @observable applicationStore: ApplicationStore
 
   constructor (provider, EntityClass, applicationStore: ApplicationStore) {
@@ -44,6 +51,9 @@ export default class UserStore extends BaseCollectionStore {
   @computed get sentRequests () { return this._sentRequests }
   @action addSentRequest (id: Number) { this._sentRequests.push(id) }
 
+  @action updateLoaded (newValue: Boolean) { this._loaded = newValue }
+  @computed get loaded () { return this._loaded }
+
   async loadDashboard () {
     let dashboard = await this.provider.dashboard()
     let currentUser = this._findInCollection(dashboard.currentUser.id) || new User(this)
@@ -51,6 +61,7 @@ export default class UserStore extends BaseCollectionStore {
     this.add(currentUser)
     this.updateFriendRequests(dashboard.requests)
     this.updateSentRequests(dashboard.sentRequests)
+    this.updateLoaded(true)
   }
 
   /**
