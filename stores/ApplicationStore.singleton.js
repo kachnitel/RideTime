@@ -10,9 +10,7 @@ const hydrate = create({
 })
 
 hydrate('persistedState', applicationStore).then((data) => {
-  console.log('Hydrated ApplicationStore', JSON.stringify({
-    user: data.userId
-  }))
+  console.log('Hydrated ApplicationStore', JSON.stringify(data))
 })
 
 export default applicationStore
