@@ -10,6 +10,7 @@ import applicationStore from './stores/ApplicationStore.singleton'
 import eventStore from './stores/EventStore.singleton'
 import locationStore from './stores/LocationStore.singleton'
 import PushNotifications from './src/PushNotifications'
+import navigationService from './src/NavigationService'
 
 /**
  * Set default Text style
@@ -53,7 +54,9 @@ class App extends React.Component {
             EventStore={eventStore}
             LocationStore={locationStore}
           >
-            <AppContainer />
+            <AppContainer
+              ref={(navigatorRef) => { navigationService.setRootNavigator(navigatorRef) }}
+            />
           </Provider>
         </View>
       )
