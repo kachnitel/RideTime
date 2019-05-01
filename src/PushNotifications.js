@@ -23,8 +23,27 @@ export default class PushNotifications {
 
   updateToken = async () => {
     let token = await this.getToken()
-    let provider = new NotificationsProvider()
+    if (token) {
+      let provider = new NotificationsProvider()
+      provider.setToken(token)
+    }
+  }
 
-    provider.setToken(token)
+  /**
+   * @memberof PushNotifications
+   */
+  subscribe = () => {
+    Notifications.addListener(this.listener)
+    Notifications.createChannelAndroidAsync('friendship', {
+      name: 'Friendships',
+      description: 'Friend requests',
+      sound: true,
+      badge: true,
+      vibrate: true
+    })
+  }
+
+  listener = (origin: String, data: Object, remote: Boolean) => {
+    console.log(origin, data, remote)
   }
 }

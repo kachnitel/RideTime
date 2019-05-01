@@ -9,6 +9,7 @@ import userStore from './stores/UserStore.singleton'
 import applicationStore from './stores/ApplicationStore.singleton'
 import eventStore from './stores/EventStore.singleton'
 import locationStore from './stores/LocationStore.singleton'
+import PushNotifications from './src/PushNotifications'
 
 /**
  * Set default Text style
@@ -26,6 +27,11 @@ export default
 class App extends React.Component {
   state = {
     isLoadingComplete: false
+  }
+
+  componentDidMount () {
+    let notifications = new PushNotifications()
+    notifications.subscribe()
   }
 
   render () {
