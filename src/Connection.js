@@ -59,7 +59,11 @@ export class Connection {
     let url = this.baseUrl + '/' + path
     let requestHeaders = headers === null ? this.getHeaders() : headers
 
-    console.log(method, url, data, requestHeaders)
+    let logHeaders = JSON.stringify(
+      requestHeaders,
+      (key, val) => key === 'Authorization' ? val.slice(0, 10) + '...' : val
+    )
+    console.log(method, url, data, logHeaders)
 
     try {
       var response = await fetch(url, {
@@ -116,10 +120,21 @@ export class Connection {
     throw error
   }
 
+  /**
+   * @param {Object} [override={}] Object of headers to merge/overwrite defaults
+   * @returns
+   * @memberof Connection
+   */
   getHeaders (override: Object = {}) {
     return { ...this.headers, ...override }
   }
 
+  /**
+   * Set headers for all requests
+   *
+   * @param {Object} headers
+   * @memberof Connection
+   */
   addHeaders (headers: Object) {
     this.headers = { ...this.headers, ...headers }
   }
