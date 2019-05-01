@@ -32,8 +32,8 @@ export default class PushNotifications {
   /**
    * @memberof PushNotifications
    */
-  subscribe = () => {
-    Notifications.addListener(this.listener)
+  subscribe = (listener) => {
+    Notifications.addListener(listener)
     Notifications.createChannelAndroidAsync('friendship', {
       name: 'Friendships',
       description: 'Friend requests',
@@ -41,9 +41,5 @@ export default class PushNotifications {
       badge: true,
       vibrate: true
     })
-  }
-
-  listener = (origin: String, data: Object, remote: Boolean) => {
-    console.log(origin, data, remote)
   }
 }

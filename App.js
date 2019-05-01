@@ -11,6 +11,7 @@ import eventStore from './stores/EventStore.singleton'
 import locationStore from './stores/LocationStore.singleton'
 import PushNotifications from './src/PushNotifications'
 import navigationService from './src/NavigationService'
+import NotificationsHandler from './src/NotificationsHandler'
 
 /**
  * Set default Text style
@@ -28,11 +29,6 @@ export default
 class App extends React.Component {
   state = {
     isLoadingComplete: false
-  }
-
-  componentDidMount () {
-    let notifications = new PushNotifications()
-    notifications.subscribe()
   }
 
   render () {
@@ -55,12 +51,21 @@ class App extends React.Component {
             LocationStore={locationStore}
           >
             <AppContainer
-              ref={(navigatorRef) => { navigationService.setRootNavigator(navigatorRef) }}
+              ref={(navigatorRef) => {
+                navigationService.setRootNavigator(navigatorRef)
+                this._notificationsSubscribe()
+              }}
             />
           </Provider>
         </View>
       )
     }
+  }
+
+  _notificationsSubscribe () {
+    let notifications = new PushNotifications()
+    let handler = new NotificationsHandler()
+    notifications.subscribe(handler.listener)
   }
 
   _loadResourcesAsync = async () => {
