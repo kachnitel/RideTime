@@ -49,7 +49,8 @@ export default class UserStore extends BaseCollectionStore {
 
   @action updateSentRequests (newValue: Array) { this._sentRequests.replace(newValue) }
   @computed get sentRequests () { return this._sentRequests }
-  @action addSentRequest (id: Number) { this._sentRequests.push(id) }
+  @action addSentRequest (id: Number) { this._sentRequests.indexOf(id) === -1 && this._sentRequests.push(id) }
+  @action removeSentRequest (id: Number) { this._sentRequests.remove(id) }
 
   @action updateLoaded (newValue: Boolean) { this._loaded = newValue }
   @computed get loaded () { return this._loaded }
@@ -183,8 +184,8 @@ export class User extends BaseEntity {
   @computed get events () { return this._events }
 
   @action updateFriends (newValue: Array) { this._friends.replace(newValue) }
-  @action addFriend (newValue) { this._friends.push(newValue) }
-  @action removeFriend (id) { this._friends.remove(id) }
+  @action addFriend (newValue: Number) { this._friends.indexOf(newValue) === -1 && this._friends.push(newValue) }
+  @action removeFriend (id: Number) { this._friends.remove(id) }
   @computed get friends () { return this._friends }
 
   @action updateTempPicture (newValue: Object) { this._tempPicture = newValue }
