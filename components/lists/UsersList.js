@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import AlternatingStyleList from './AlternatingStyleList'
 import UserItem from '../list_items/UserItem'
+import navigationService from '../../src/NavigationService'
 
 /**
  * fixme Pretty well duplicated from RidersList
@@ -22,7 +23,7 @@ export default class UsersList extends Component {
           items={this.props.users}
           emptyComponent={<Text>No frenz</Text>}
           itemComponent={this.itemComponent}
-          onItemPress={(item) => console.log(item + ' tapped')}
+          onItemPress={(item) => navigationService.navigate('PublicProfile', { id: item })}
           keyExtractor={(item) => 'user_' + item}
         />
       </View>
