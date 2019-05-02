@@ -62,7 +62,15 @@ class App extends React.Component {
     }
   }
 
-  _notificationsSubscribe () {
+  async _notificationsSubscribe () {
+    /**
+     * When the app is started from a notification,
+     * it can initialize and call the handler before
+     * loading is completed
+     */
+    if (!userStore.loaded) {
+      await userStore.loading
+    }
     let notifications = new PushNotifications()
     let handler = new NotificationsHandler()
     notifications.subscribe(handler.listener)
