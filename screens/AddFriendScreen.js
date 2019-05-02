@@ -66,7 +66,11 @@ class AddFriendScreen extends Component {
         ? <ActivityIndicator />
         : <ScrollView style={styles.container}>
           {/* TODO: Move to header */}
-          <SearchInput onChangeText={this.handleSearchOnChange} />
+          <SearchInput
+            onChangeText={this.handleSearchOnChange}
+            style={styles.search}
+            placeholder='Search'
+          />
           <Header style={styles.header}>Users</Header>
           <UsersList
             users={this.state.userIds}
@@ -87,5 +91,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.tintColor,
     color: '#fff',
     padding: Layout.window.hp(1.5)
+  },
+  search: {
+    padding: Layout.window.hp(1.5),
+    fontSize: Layout.window.hp(3)
   }
 })
