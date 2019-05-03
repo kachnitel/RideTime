@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Colors from '../../constants/Colors'
 
 export default
-@inject('UserStore', 'ApplicationStore') @observer
+@inject('UserStore') @observer
 class UserItem extends React.Component {
   user: User
   state = {
