@@ -5,6 +5,15 @@ import { BaseCollectionStore } from './BaseCollectionStore'
 
 export default class LocationStore extends BaseCollectionStore {
   provider: LocationsProvider
+
+  /**
+   * TODO:
+   *
+   * @memberof LocationStore
+   */
+  nearby = (distance) => { return this.list() }
+
+  search = (name: String) => { return this.list() }
 }
 
 export class Location extends BaseEntity {
