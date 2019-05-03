@@ -21,7 +21,9 @@ class LocationPicker extends Component {
     })
   }
 
-  goToRideConfig = (location) => {
+  goToRideConfig = async (locationId) => {
+    let location = await this.props.LocationStore.get(locationId)
+
     this.props.navigation.push(
       'CreateRide',
       location

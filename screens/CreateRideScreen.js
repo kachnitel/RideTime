@@ -16,7 +16,7 @@ import { Event } from '../stores/EventStore.mobx'
  * @extends {React.Component}
  */
 export default
-@inject('ApplicationStore', 'EventStore')
+@inject('UserStore', 'EventStore')
 @observer
 class CreateRideScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -33,7 +33,7 @@ class CreateRideScreen extends React.Component {
     this.event = new Event(this.props.EventStore)
     this.event.updateTitle(this.props.navigation.getParam('name') + ' ride')
     this.event.updateLocation(this.props.navigation.getParam('id'))
-    this.event.updateCreatedBy(this.props.ApplicationStore.userId)
+    this.event.updateCreatedBy(this.props.UserStore.currentUser.id)
   }
 
   saveRide = async () => {
