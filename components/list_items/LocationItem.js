@@ -3,22 +3,37 @@ import { StyleSheet, Text, View } from 'react-native'
 import Layout from '../../constants/Layout'
 import LocationItemDetail from '../LocationItemDetail'
 import PropTypes from 'prop-types'
+import { inject, observer } from 'mobx-react/native'
 
-export default class LocationItem extends React.Component {
+export default
+@inject('LocationStore')
+@observer
+class LocationItem extends React.Component {
+  state = {
+    location: null
+  }
+
+  async componentDidMount () {
+    let location = await this.props.LocationStore.get(this.props.locationId)
+    this.setState({
+      location: location
+    })
+  }
+
   render () {
     return (
-      <View style={{ ...styles.container, ...this.props.style }}>
+      this.state.location && <View style={{ ...styles.container, ...this.props.style }}>
         <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
-          {this.props.location.name}
+          {this.state.location.name}
         </Text>
-        <LocationItemDetail location={this.props.location} />
+        <LocationItemDetail location={this.state.location} />
       </View>
     )
   }
 }
 
 LocationItem.propTypes = {
-  location: PropTypes.object,
+  locationId: PropTypes.number,
   style: PropTypes.any
 }
 

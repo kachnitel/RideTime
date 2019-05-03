@@ -5,8 +5,12 @@ import PropTypes from 'prop-types'
 import AlternatingStyleList from './AlternatingStyleList'
 
 export default class LocationList extends Component {
+  componentDidMount () {
+    // TODO: populate
+  }
+
   itemComponent = function (item, style) {
-    return <LocationItem location={item} style={style} />
+    return <LocationItem locationId={item} style={style} />
   }
 
   onItemPress = (item) => this.props.onLocationPress(item)
