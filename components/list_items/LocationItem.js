@@ -1,33 +1,40 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator
+} from 'react-native'
 import Layout from '../../constants/Layout'
 import LocationItemDetail from '../LocationItemDetail'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react/native'
+import { Location } from '../../stores/LocationStore.mobx'
 
 export default
 @inject('LocationStore')
 @observer
 class LocationItem extends React.Component {
+  location: Location
   state = {
-    location: null
+    loading: true
   }
 
   async componentDidMount () {
-    let location = await this.props.LocationStore.get(this.props.locationId)
-    this.setState({
-      location: location
-    })
+    this.location = await this.props.LocationStore.get(this.props.locationId)
+    this.setState({ loading: false })
   }
 
   render () {
     return (
-      this.state.location && <View style={{ ...styles.container, ...this.props.style }}>
-        <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
-          {this.state.location.name}
-        </Text>
-        <LocationItemDetail location={this.state.location} />
-      </View>
+      this.state.loading
+        ? <ActivityIndicator style={{ ...styles.container, ...this.props.style }} />
+        : <View style={{ ...styles.container, ...this.props.style }}>
+          <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
+            {this.location.name}
+          </Text>
+          <LocationItemDetail location={this.location} />
+        </View>
     )
   }
 }
