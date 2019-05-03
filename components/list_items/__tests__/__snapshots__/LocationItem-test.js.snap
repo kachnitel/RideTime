@@ -1,6 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
+<ActivityIndicator
+  animating={true}
+  color="#999999"
+  hidesWhenStopped={true}
+  size="small"
+  style={
+    Object {
+      "height": 200,
+      "paddingHorizontal": 30,
+      "paddingVertical": 20,
+    }
+  }
+/>
+`;
+
+exports[`renders correctly 2`] = `
 <View
   style={
     Object {
