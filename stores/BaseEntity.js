@@ -11,12 +11,14 @@ export class BaseEntity {
     this.populateFromApiResponse(entity)
   }
 
-  populateFromApiResponse (responseData: Object) {
+  populateFromApiResponse (responseData: Object, skipNullValues: Boolean) {
     this.API_PARAMS.map((key) => {
       // id => updateId()
       let updateMethod = 'update' + key.charAt(0).toUpperCase() + key.slice(1)
       if (typeof this[updateMethod] === 'function') {
-        // console.log(updateMethod, responseData[key])
+        if (skipNullValues && responseData[key] == null) {
+          return
+        }
         this[updateMethod](responseData[key])
       } else {
         throw new Error(`Trying to call undefined updater '${updateMethod}'`)

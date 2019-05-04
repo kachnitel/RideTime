@@ -78,7 +78,7 @@ export default class UserStore extends BaseCollectionStore {
       let user = this._findInCollection(item.id) || new User(this)
 
       // TODO: Incomplete info (missing relations)
-      user.populateFromApiResponse(item)
+      user.populateFromApiResponse(item, true)
       this.add(user)
     })
 
