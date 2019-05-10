@@ -37,12 +37,7 @@ export default class LocationStore extends BaseCollectionStore {
       this.currentLocation.coords.longitude,
       distance
     )
-
-    results.map((result) => {
-      let location = this._findInCollection(result.id) || new Location(this)
-      location.populateFromApiResponse(result, true)
-      this.add(location)
-    })
+    this.populateResults(results)
 
     return results
   }
@@ -52,7 +47,20 @@ export default class LocationStore extends BaseCollectionStore {
    *
    * @memberof LocationStore
    */
-  search = (name: String) => { return this.list() }
+  search = async (name: String) => {
+    let results = await this.provider.search(name)
+    this.populateResults(results)
+
+    return results
+  }
+
+  populateResults = (results: Array) => {
+    results.map((result) => {
+      let location = this._findInCollection(result.id) || new Location(this)
+      location.populateFromApiResponse(result, true)
+      this.add(location)
+    })
+  }
 }
 
 export class Location extends BaseEntity {

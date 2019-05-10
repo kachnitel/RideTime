@@ -26,4 +26,10 @@ export default class LocationsProvider {
       range: range
     })
   }
+
+  search = (val) => {
+    return ApiConnection.get('api/locations/search', {
+      name: val
+    })
+  }
 }

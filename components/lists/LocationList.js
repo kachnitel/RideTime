@@ -23,6 +23,7 @@ export default class LocationList extends Component {
           items={this.props.locations}
           itemComponent={this.itemComponent}
           onItemPress={this.onItemPress}
+          keyExtractor={(item) => 'index_' + item}
         />
       </View>
     )
