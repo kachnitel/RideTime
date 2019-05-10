@@ -1,12 +1,20 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import DifficultyIcon from '../icons/DifficultyIcon'
+import Layout from '../../constants/Layout'
 
 export default class LocationDifficulties extends React.Component {
   createDifficultyIcons (props) {
-    return props.difficulties.map(function (difficulty, key) {
-      return <DifficultyIcon d={difficulty} size={props.iconSize} key={key} /> // TODO why do I supply the key here?
+    return Object.entries(props.difficulties).map(function ([difficulty, trailCount]) {
+      console.log(difficulty, trailCount)
+      if (trailCount > 0) {
+        return <View key={difficulty}>
+          <DifficultyIcon d={Number(difficulty)} size={props.iconSize} />
+          <Text style={styles.trailCount}>{trailCount}</Text>
+        </View>
+        // return <DifficultyIcon d={Number(difficulty)} size={props.iconSize} key={difficulty} />
+      }
     })
   }
 
@@ -22,7 +30,7 @@ export default class LocationDifficulties extends React.Component {
 }
 
 LocationDifficulties.propTypes = {
-  difficulties: PropTypes.arrayOf(PropTypes.number),
+  difficulties: PropTypes.object,
   iconSize: PropTypes.number
 }
 
@@ -30,3 +38,14 @@ LocationDifficulties.defaultProps = {
   difficulties: [],
   iconSize: 30
 }
+
+const styles = StyleSheet.create({
+  trailCount: {
+    fontSize: Layout.window.hp(1.5),
+    alignSelf: 'center',
+    backgroundColor: '#fffa',
+    borderRadius: Layout.window.hp(1),
+    padding: 0,
+    paddingHorizontal: Layout.window.wp(1)
+  }
+})

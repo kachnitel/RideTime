@@ -15,9 +15,9 @@ class LocationPicker extends Component {
   }
 
   async componentDidMount () {
-    await this.props.LocationStore.populate()
+    let locations = await this.props.LocationStore.nearby(25)
     this.setState({
-      locationIds: this.props.LocationStore.nearby().map((location) => location.id)
+      locationIds: locations.map((location) => location.id)
     })
   }
 
@@ -35,7 +35,7 @@ class LocationPicker extends Component {
    */
   handleSearchOnChange = async (val) => {
     let locations = val === ''
-      ? this.props.LocationStore.nearby()
+      ? await this.props.LocationStore.nearby(25)
       : await this.props.LocationStore.search(val)
     let ids = locations.map((location) => location.id)
     this.setState({ locationIds: ids })

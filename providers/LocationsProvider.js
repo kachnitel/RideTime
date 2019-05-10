@@ -18,4 +18,12 @@ export default class LocationsProvider {
   get = (id) => {
     return ApiConnection.get('api/locations/' + id)
   }
+
+  near = (lat, lon, range) => {
+    return ApiConnection.get('api/locations/nearby', {
+      lat: lat,
+      lon: lon,
+      range: range
+    })
+  }
 }
