@@ -72,11 +72,13 @@ export class Location extends BaseEntity {
     'id',
     'name',
     'coords',
-    'difficulties'
+    'difficulties',
+    'imagemap'
   ]
 
   @observable _id = false
   @observable _name = null // User.id
+  @observable _imagemap = null
   _coords = observable.array([])
   @observable _difficulties = {
     0: 0,
@@ -97,6 +99,7 @@ export class Location extends BaseEntity {
 
   @action updateDifficulties (newValue: Object) { this._difficulties = newValue }
   @computed get difficulties () { return this._difficulties }
-}
 
-// export class CurrentLocation {}
+  @action updateImagemap (newValue: String) { this._imagemap = newValue }
+  @computed get imagemap () { return this._imagemap }
+}
