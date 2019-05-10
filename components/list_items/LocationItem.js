@@ -50,8 +50,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
   container: {
-    height: Layout.window.hp(15),
+    height: Layout.window.hp(10),
     paddingVertical: Layout.window.hp(1.5),
-    paddingHorizontal: Layout.window.wp(4)
+    paddingHorizontal: Layout.window.wp(4),
+    flexDirection: 'row'
   }
 })

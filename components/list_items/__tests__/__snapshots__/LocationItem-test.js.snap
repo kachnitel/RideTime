@@ -64,15 +64,6 @@ exports[`renders correctly 2`] = `
         }
       }
     />
-    <RiderCount
-      count={6}
-      fontStyle={
-        Object {
-          "fontSize": 40,
-        }
-      }
-      size={53.5}
-    />
   </View>
 </View>
 `;

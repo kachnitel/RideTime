@@ -39,7 +39,7 @@ LocationDifficulties.defaultProps = {
 
 const styles = StyleSheet.create({
   trailCount: {
-    fontSize: Layout.window.hp(1.5),
+    fontSize: Layout.window.hp(1.75),
     alignSelf: 'center',
     backgroundColor: '#fffa',
     borderRadius: Layout.window.hp(1),

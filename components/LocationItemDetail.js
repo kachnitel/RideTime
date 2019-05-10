@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
-import RiderCount from './RiderCount'
 import Layout from '../constants/Layout'
 import LocationDifficulties from './location/LocationDifficulties'
 
@@ -19,10 +18,6 @@ export default class LocationItemDetail extends React.Component {
           difficulties={this.props.location.difficulties}
           style={styles.locationDifficulties}
           iconSize={Layout.window.hp(4)} />
-        <RiderCount
-          count={Math.floor((Math.random() * 10) + 1)}
-          size={Layout.window.hp(4)}
-          fontStyle={styles.riderCountFont} />
       </View>
     )
   }
@@ -30,7 +25,6 @@ export default class LocationItemDetail extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
