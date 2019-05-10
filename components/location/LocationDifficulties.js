@@ -7,13 +7,11 @@ import Layout from '../../constants/Layout'
 export default class LocationDifficulties extends React.Component {
   createDifficultyIcons (props) {
     return Object.entries(props.difficulties).map(function ([difficulty, trailCount]) {
-      console.log(difficulty, trailCount)
       if (trailCount > 0) {
         return <View key={difficulty}>
           <DifficultyIcon d={Number(difficulty)} size={props.iconSize} />
           <Text style={styles.trailCount}>{trailCount}</Text>
         </View>
-        // return <DifficultyIcon d={Number(difficulty)} size={props.iconSize} key={difficulty} />
       }
     })
   }
