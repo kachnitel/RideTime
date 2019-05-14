@@ -3,11 +3,12 @@ import LocationsProvider from '../providers/LocationsProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
 import { Location as ExpoLocation, Permissions } from 'expo'
+import { persist } from 'mobx-persist'
 
 export default class LocationStore extends BaseCollectionStore {
   provider: LocationsProvider
 
-  @observable _currentLocation = {}
+  @persist('object') @observable _currentLocation = {}
 
   constructor (...args) {
     super(...args)
