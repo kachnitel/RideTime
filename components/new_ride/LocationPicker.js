@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, ActivityIndicator, Text } from 'react-native'
 import Layout from '../../constants/Layout'
 import LocationList from '../lists/LocationList'
 import MapButton from './MapButton'
@@ -11,13 +11,16 @@ export default
 @observer
 class LocationPicker extends Component {
   state = {
-    locationIds: []
+    locationIds: [],
+    loading: true,
+    typing: false
   }
 
   async componentDidMount () {
     let locations = await this.props.LocationStore.nearby(25)
     this.setState({
-      locationIds: locations.map((location) => location.id)
+      locationIds: locations.map((location) => location.id),
+      loading: false
     })
   }
 
@@ -31,14 +34,29 @@ class LocationPicker extends Component {
   }
 
   /**
+   * @param {String} val
    * @memberof AddFriendScreen
    */
   handleSearchOnChange = async (val) => {
-    let locations = val === ''
-      ? await this.props.LocationStore.nearby(25)
-      : await this.props.LocationStore.search(val)
+    this.setState({ loading: true })
+    let locations
+    if (val.length === 0) {
+      locations = await this.props.LocationStore.nearby(25)
+    } else if (val.length >= 3) {
+      locations = await this.props.LocationStore.search(val)
+    } else {
+      this.setState({
+        typing: true,
+        loading: false
+      })
+      return
+    }
     let ids = locations.map((location) => location.id)
-    this.setState({ locationIds: ids })
+    this.setState({
+      locationIds: ids,
+      typing: false,
+      loading: false
+    })
   }
 
   render () {
@@ -51,11 +69,19 @@ class LocationPicker extends Component {
         />
         <MapButton size={Layout.window.hp(15)} />
       </View>
-      <LocationList
-        locations={this.state.locationIds}
-        onLocationPress={this.goToRideConfig}
-      />
+      { this.renderList() }
     </View>
+  }
+
+  renderList = () => {
+    return this.state.loading
+      ? <ActivityIndicator />
+      : this.state.typing
+        ? <Text>Type three or more letters to search...</Text>
+        : <LocationList
+          locations={this.state.locationIds}
+          onLocationPress={this.goToRideConfig}
+        />
   }
 }
 
