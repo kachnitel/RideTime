@@ -1,4 +1,4 @@
-import { observable, action, computed, extendObservable } from 'mobx'
+import { observable, action, computed } from 'mobx'
 import LocationsProvider from '../providers/LocationsProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
@@ -8,7 +8,7 @@ import { persist } from 'mobx-persist'
 export default class LocationStore extends BaseCollectionStore {
   provider: LocationsProvider
 
-  @persist('object') @observable _currentLocation = {}
+  @persist('object') @observable _currentLocation = new Map()
 
   constructor (...args) {
     super(...args)
@@ -22,20 +22,26 @@ export default class LocationStore extends BaseCollectionStore {
         timeInterval: 15000,
         distanceInterval: 30
       },
-      (location) => {
-        this.updateCurrentLocation(location)
-        console.log('Location update', location)
-      }
+      (location) => this.updateCurrentLocation(location)
     )
   }
 
-  @action updateCurrentLocation (location) { extendObservable(this._currentLocation, location) }
+  @action updateCurrentLocation (location) {
+    console.log('Location update', JSON.stringify(location))
+    this._currentLocation.merge(location)
+  }
   @computed get currentLocation () { return this._currentLocation }
 
   nearby = async (distance) => {
+    let coords =
+      this.currentLocation.get('coords') ||
+      (await ExpoLocation.getCurrentPositionAsync({
+        accuracy: ExpoLocation.Accuracy.Lowest,
+        maximumAge: 300000
+      })).coords
     let results = await this.provider.near(
-      this.currentLocation.coords.latitude,
-      this.currentLocation.coords.longitude,
+      coords.latitude,
+      coords.longitude,
       distance
     )
     this.populateResults(results)
@@ -62,6 +68,8 @@ export default class LocationStore extends BaseCollectionStore {
       this.add(location)
     })
   }
+
+  watchPosition
 }
 
 export class Location extends BaseEntity {
