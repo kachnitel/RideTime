@@ -10,7 +10,7 @@ const hydrate = create({
   jsonify: true
 })
 
-hydrate('persistedState', locationStore).then((data) => {
+hydrate('locationStore', locationStore).then((data) => {
   console.log('Hydrated LocationStore', JSON.stringify(data))
 })
 

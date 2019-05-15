@@ -8,7 +8,7 @@ import { persist } from 'mobx-persist'
 export default class LocationStore extends BaseCollectionStore {
   provider: LocationsProvider
 
-  @persist('object') @observable _currentLocation = new Map()
+  @persist('map') @observable _currentLocation = new Map()
 
   constructor (...args) {
     super(...args)

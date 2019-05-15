@@ -9,7 +9,7 @@ const hydrate = create({
   jsonify: true
 })
 
-hydrate('persistedState', applicationStore).then((data) => {
+hydrate('applicationStore', applicationStore).then((data) => {
   console.log('Hydrated ApplicationStore', JSON.stringify(data))
 })
 
