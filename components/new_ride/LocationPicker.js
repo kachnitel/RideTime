@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { StyleSheet, View, ActivityIndicator, Text } from 'react-native'
 import Layout from '../../constants/Layout'
 import LocationList from '../lists/LocationList'
-import MapButton from './MapButton'
 import { inject, observer } from 'mobx-react/native'
 import SearchInput from '../form/SearchInput'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Colors from '../../constants/Colors'
 
 export default
 @inject('LocationStore')
@@ -13,7 +14,8 @@ class LocationPicker extends Component {
   state = {
     locationIds: [],
     loading: true,
-    typing: false
+    typing: false,
+    map: false
   }
 
   async componentDidMount () {
@@ -38,7 +40,10 @@ class LocationPicker extends Component {
    * @memberof AddFriendScreen
    */
   handleSearchOnChange = async (val) => {
-    this.setState({ loading: true })
+    this.setState({
+      loading: true,
+      map: false
+    })
     let locations
     if (val.length === 0) {
       locations = await this.props.LocationStore.nearby(25)
@@ -67,9 +72,16 @@ class LocationPicker extends Component {
           style={styles.searchInput}
           onChangeText={this.handleSearchOnChange}
         />
-        <MapButton size={Layout.window.hp(15)} />
+        <Icon.Button
+          name='map-search-outline'
+          style={styles.mapButton}
+          size={Layout.window.hp(4.5)}
+          onPress={() => this.setState((prevState) => ({ map: !prevState.map }))}
+        >
+          <Text style={styles.mapButtonText}>Map</Text>
+        </Icon.Button>
       </View>
-      { this.renderList() }
+      { this.state.map ? this.renderMap() : this.renderList() }
     </View>
   }
 
@@ -83,6 +95,10 @@ class LocationPicker extends Component {
           onLocationPress={this.goToRideConfig}
         />
   }
+
+  renderMap = () => {
+    return <Text>Map</Text>
+  }
 }
 
 const styles = StyleSheet.create({
@@ -90,10 +106,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   searchInput: {
-    // borderColor: '#0F0',
-    borderWidth: 1,
     flex: 1,
     fontSize: Layout.window.hp(3),
     padding: Layout.window.hp(1.5)
+  },
+  mapButton: {
+    backgroundColor: Colors.tintColor,
+    color: '#fff'
+  },
+  mapButtonText: {
+    fontSize: Layout.window.hp(3),
+    color: '#fff'
   }
 })
