@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, ActivityIndicator, Text } from 'react-native'
+import { StyleSheet, View, ActivityIndicator, Text, Platform } from 'react-native'
 import Layout from '../../constants/Layout'
 import LocationList from '../lists/LocationList'
 import { inject, observer } from 'mobx-react/native'
 import SearchInput from '../form/SearchInput'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Colors from '../../constants/Colors'
+import { MapView } from 'expo'
+import { UrlTile, Marker } from 'react-native-maps'
 
 export default
 @inject('LocationStore')
@@ -97,7 +99,35 @@ class LocationPicker extends Component {
   }
 
   renderMap = () => {
-    return <Text>Map</Text>
+    let coords = this.props.LocationStore.currentLocation.get('coords')
+    let tileUrl = 'http://c.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    return <MapView
+      initialRegion={{
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421
+      }}
+      style={styles.map}
+      provider={null}
+      mapType={Platform.OS === 'android' ? 'none' : 'standard'}
+    >
+      <UrlTile urlTemplate={tileUrl} maximumZ={19} />
+      {this.state.locationIds.map((id) => {
+        let location = this.props.LocationStore.getSync(id)
+        let latlng = {
+          latitude: location.coords[0],
+          longitude: location.coords[1]
+        }
+        return <Marker
+          coordinate={latlng}
+          title={location.name}
+          key={location.id}
+          // description={marker.description}
+          onCalloutPress={() => this.goToRideConfig(location.id)}
+        />
+      })}
+    </MapView>
   }
 }
 
@@ -117,5 +147,8 @@ const styles = StyleSheet.create({
   mapButtonText: {
     fontSize: Layout.window.hp(3),
     color: '#fff'
+  },
+  map: {
+    flex: 1
   }
 })
