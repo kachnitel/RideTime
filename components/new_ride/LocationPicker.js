@@ -111,6 +111,18 @@ class LocationPicker extends Component {
       style={styles.map}
       provider={null}
       mapType={Platform.OS === 'android' ? 'none' : 'standard'}
+      onRegionChangeComplete={async (region) => {
+        let bbox = [
+          region.latitude - region.latitudeDelta / 2, // southLat - min lat
+          region.longitude - region.longitudeDelta / 2, // westLng - min lng
+          region.latitude + region.latitudeDelta / 2, // northLat - max lat
+          region.longitude + region.longitudeDelta / 2 // eastLng - max lng
+        ]
+        let locations = await this.props.LocationStore.bbox(bbox)
+        this.setState({
+          locationIds: locations.map((location) => location.id)
+        })
+      }}
     >
       <UrlTile urlTemplate={tileUrl} maximumZ={19} />
       {this.state.locationIds.map((id) => {

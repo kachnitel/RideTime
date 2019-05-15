@@ -27,6 +27,12 @@ export default class LocationsProvider {
     })
   }
 
+  bbox = (coords: Array) => {
+    return ApiConnection.get('api/locations/bbox', {
+      coords: coords
+    })
+  }
+
   search = (val) => {
     return ApiConnection.get('api/locations/search', {
       name: val

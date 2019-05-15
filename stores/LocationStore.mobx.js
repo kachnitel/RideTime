@@ -32,7 +32,7 @@ export default class LocationStore extends BaseCollectionStore {
   }
   @computed get currentLocation () { return this._currentLocation }
 
-  nearby = async (distance) => {
+  nearby = async (distance: Number) => {
     let coords =
       this.currentLocation.get('coords') ||
       (await ExpoLocation.getCurrentPositionAsync({
@@ -44,6 +44,13 @@ export default class LocationStore extends BaseCollectionStore {
       coords.longitude,
       distance
     )
+    this.populateResults(results)
+
+    return results
+  }
+
+  bbox = async (bbox: Array) => {
+    let results = await this.provider.bbox(bbox)
     this.populateResults(results)
 
     return results
