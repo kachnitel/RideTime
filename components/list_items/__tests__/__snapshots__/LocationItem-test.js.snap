@@ -8,7 +8,8 @@ exports[`renders correctly 1`] = `
   size="small"
   style={
     Object {
-      "height": 200,
+      "flexDirection": "row",
+      "height": 133.5,
       "paddingHorizontal": 30,
       "paddingVertical": 20,
     }
@@ -20,7 +21,8 @@ exports[`renders correctly 2`] = `
 <View
   style={
     Object {
-      "height": 200,
+      "flexDirection": "row",
+      "height": 133.5,
       "paddingHorizontal": 30,
       "paddingVertical": 20,
     }
@@ -41,7 +43,6 @@ exports[`renders correctly 2`] = `
     style={
       Object {
         "alignItems": "center",
-        "flex": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
       }
