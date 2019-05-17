@@ -69,7 +69,7 @@ export default class LocationStore extends BaseCollectionStore {
   }
 
   populateResults = (results: Array) => {
-    results.map((result) => {
+    results.forEach((result) => {
       let location = this._findInCollection(result.id) || new Location(this)
       location.populateFromApiResponse(result, true)
       this.add(location)
