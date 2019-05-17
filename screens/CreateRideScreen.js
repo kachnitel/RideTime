@@ -21,7 +21,8 @@ export default
 class CreateRideScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      header: null
+      title: 'New ride at ' + navigation.getParam('name')
+      // TODO: headerRight save
     }
   }
 
