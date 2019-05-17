@@ -1,13 +1,13 @@
 import React from 'react'
-import { View, TextInput, StyleSheet } from 'react-native'
-import SelectDifficulty from './SelectDifficulty'
-import EditDescription from './EditDescription'
+import { View, StyleSheet } from 'react-native'
+import SelectDifficulty from '../sign_up/SelectDifficulty'
 import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
 import EditDateTime from './EditDateTime'
 import Moment from 'moment'
-import SelectTerrain from './SelectTerrain'
 import { observer, inject } from 'mobx-react/native'
+import TextInputWithTitle from '../form/TextInputWithTitle'
+import SelectBike from '../sign_up/SelectBike'
 
 export default
 @inject('Event')
@@ -16,17 +16,20 @@ class CreateRide extends React.Component {
   render () {
     return (
       <View {...this.props}>
-        <TextInput
-          style={styles.rideTitleInput}
-          placeholder='Ride name'
+        <TextInputWithTitle
+          placeholder='Fun ride'
           value={this.props.Event.title}
           onChangeText={(text) => this.props.Event.updateTitle(text)}
+          containerStyle={styles.itemContainer}
+          title='Ride name'
         />
         <SelectDifficulty
-          onSelect={(d) => this.props.Event.updateDifficulty(d)}
+          onValueChange={(d) => this.props.Event.updateDifficulty(d.value)}
           style={{ ...styles.itemContainer, ...styles.selectDifficulty }}
           selected={this.props.Event.difficulty}
-          title='Tap to select difficulty'
+          title='Select difficulty'
+          placeholder='Overall ride difficulty'
+          footerText='Select level to indicate to others how difficult trails you plan on riding.'
         />
         <EditDateTime
           // FIXME: shouldn't need to recreate new Moment to display
@@ -36,20 +39,21 @@ class CreateRide extends React.Component {
           containerStyle={styles.itemContainer}
           placeholder='Tap to select'
         />
-        <SelectTerrain
-          onSelect={(t) => this.props.Event.updateTerrain(t)}
+        <SelectBike
+          onValueChange={(t) => this.props.Event.updateTerrain(t.value)}
           style={{ ...styles.itemContainer, ...styles.selectTerrain }}
           selected={this.props.Event.terrain}
-          title='What kind of a ride?'
+          title='What kind of bike?'
+          placeholder='Select most appropriate bike for the ride'
         />
-        <EditDescription
+        <TextInputWithTitle
           title='Description'
           placeholder='Ride description'
           value={this.props.Event.description}
           containerStyle={styles.itemContainer}
           onChangeText={(desc) => this.props.Event.updateDescription(desc)}
         />
-        <EditDescription
+        <TextInputWithTitle
           title='Planned route'
           placeholder='Mashiter, 50 more shades, Rupert'
           value={this.props.Event.route}

@@ -5,6 +5,8 @@ import { Header, StackActions, NavigationActions } from 'react-navigation'
 import { observer, inject, Provider } from 'mobx-react'
 import Button from '../components/Button'
 import { Event } from '../stores/EventStore.mobx'
+import Colors from '../constants/Colors'
+import Layout from '../constants/Layout'
 
 /**
  * Setup ride here - difficulty, trails, friends, ...
@@ -79,13 +81,16 @@ class CreateRideScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-    // paddingTop: Constants.statusBarHeight // TODO enable once header is disabled
+    flex: 1,
+    width: '100%'
   },
   rideContainer: {
-    flex: 1
+    alignItems: 'center',
+    flex: 1,
+    paddingVertical: Layout.window.hp(2)
   },
   screen: {
-    flex: 1
+    flex: 1,
+    backgroundColor: Colors.darkBackground
   }
 })

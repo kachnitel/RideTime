@@ -23,10 +23,10 @@ export default class SelectBike extends React.Component {
       <SelectWithIcon
         {...this.props}
         options={options}
-        placeholder={'What\'s your primary bike?'}
+        placeholder={this.props.placeholder || 'What\'s your primary bike?'}
         headerText='Select bike type'
-        footerText={'Choose what kind of bike do you ride most often. It will be displayed on yor profile.'}
-        title={'Your bike'}
+        footerText={this.props.footerText || 'Choose what kind of bike do you ride most often. It will be displayed on yor profile.'}
+        title={this.props.title || 'Your bike'}
         icon={(value) => <TerrainIcon terrain={value} size={Layout.window.hp(6)} />}
         value={value}
       />

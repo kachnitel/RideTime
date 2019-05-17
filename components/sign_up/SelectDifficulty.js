@@ -27,10 +27,10 @@ export default class SelectDifficulty extends React.Component {
         {...this.props}
         value={value}
         options={options}
-        placeholder={'What\'s your riding experience?'}
-        headerText='Select trail difficulty'
-        footerText={'Choose difficulty you\'re generally comfortable riding. It will be displayed on yor profile.'}
-        title='Riding experience'
+        placeholder={this.props.placeholder || 'What\'s your riding experience?'}
+        headerText={this.props.headerText || 'Select trail difficulty'}
+        footerText={this.props.footerText || 'Choose difficulty you\'re generally comfortable riding. It will be displayed on yor profile.'}
+        title={this.props.title || 'Riding experience'}
         icon={(value) =>
           <OutlineIcon outlineStyle={styles.iconOutline}>
             <DifficultyIcon d={value} size={Layout.window.hp(6)} />
