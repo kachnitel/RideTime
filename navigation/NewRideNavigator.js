@@ -11,7 +11,9 @@ const NewRideStack = createStackNavigator(
   },
   {
     initialRouteName: 'SelectLocation',
-    headerMode: 'none'
+    navigationOptions: {
+      header: null
+    }
   }
 )
 
