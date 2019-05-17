@@ -4,8 +4,6 @@ import Layout from '../../constants/Layout'
 import LocationList from '../lists/LocationList'
 import { inject, observer } from 'mobx-react/native'
 import SearchInput from '../form/SearchInput'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import Colors from '../../constants/Colors'
 import { MapView } from 'expo'
 import { UrlTile, Marker } from 'react-native-maps'
 
@@ -74,16 +72,8 @@ class LocationPicker extends Component {
           style={styles.searchInput}
           onChangeText={this.handleSearchOnChange}
         />
-        <Icon.Button
-          name='map-search-outline'
-          style={styles.mapButton}
-          size={Layout.window.hp(4.5)}
-          onPress={() => this.setState((prevState) => ({ map: !prevState.map }))}
-        >
-          <Text style={styles.mapButtonText}>Map</Text>
-        </Icon.Button>
       </View>
-      { this.state.map ? this.renderMap() : this.renderList() }
+      { this.props.displayMap ? this.renderMap() : this.renderList() }
     </View>
   }
 
@@ -151,14 +141,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: Layout.window.hp(3),
     padding: Layout.window.hp(1.5)
-  },
-  mapButton: {
-    backgroundColor: Colors.tintColor,
-    color: '#fff'
-  },
-  mapButtonText: {
-    fontSize: Layout.window.hp(3),
-    color: '#fff'
   },
   map: {
     flex: 1
