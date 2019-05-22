@@ -1,5 +1,4 @@
 /* global fetch, FormData */
-import AppError from './AppError'
 import NetworkError from './NetworkError'
 import Mime from 'mime/lite'
 import qs from 'qs'
@@ -92,31 +91,41 @@ export class Connection {
 
   validateResponse = async (res) => {
     if (!res.ok) {
-      let error = new NetworkError('Network error')
-      error.setStatusCode(res.status)
-      error.setBody(await res.json())
-
-      this.#logError(error.body)
-      throw error
+      // let error = new NetworkError('Network error') // TODO: DEPRECATE
+      this.handleError(
+        'Network error',
+        await res.json(),
+        res.status,
+        res
+      )
     }
   }
 
+  /**
+   * @param {string} message
+   * @param {*} err
+   * @param {integer} status
+   *
+   * @memberof Connection
+   */
   handleError = (message, err, status, result) => {
     // Do not catch own error
     if (err instanceof NetworkError) {
       throw err
     }
-
-    let error = new AppError(message)
+    let error = new NetworkError(message)
     error.setData({
-      error: JSON.stringify(err),
+      error: err,
       response: {
         status: status,
         body: result
       }
     })
 
-    this.#logError(error.data)
+    this.#logError({
+      message: message,
+      data: error.data
+    })
     throw error
   }
 
@@ -143,6 +152,6 @@ export class Connection {
    * Needed until an error handler is implemented
    */
   #logError = (data) => {
-    console.warn('Connection error data', data)
+    console.warn('Connection error', data)
   }
 }

@@ -67,7 +67,9 @@ class SignInScreen extends React.Component {
    * Redirect to SignUp if user not found
    * Otherwise throw an Error
    *
-   * @param NetworkError error
+   * @param {NetworkError} error
+   * @param {object} userInfo
+   * @param {string} token
    *
    * @memberof SignInScreen
    */
@@ -76,7 +78,10 @@ class SignInScreen extends React.Component {
       throw error
     }
 
-    if (error.body !== undefined && error.statusCode === 404) {
+    if (
+      error.data?.error?.message?.startsWith('User with email') &&
+      error.data?.response?.status === 404
+    ) {
       // Must sign up
       console.info(`Signing up user`, userInfo)
 
