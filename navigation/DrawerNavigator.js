@@ -3,6 +3,7 @@ import ProfileStack from './ProfileNavigator'
 import HomeStack from './HomeNavigator'
 import Colors from '../constants/Colors'
 import FriendStack from './FriendNavigator'
+import DrawerContent from './DrawerContent'
 
 const DrawerStack = createDrawerNavigator(
   {
@@ -18,7 +19,8 @@ const DrawerStack = createDrawerNavigator(
         backgroundColor: '#ffffff'
       },
       headerTintColor: Colors.tintColor
-    })
+    }),
+    contentComponent: DrawerContent
   }
 )
 
