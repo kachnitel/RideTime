@@ -21,7 +21,7 @@ export default class UserStore extends BaseCollectionStore {
     this.applicationStore = applicationStore
 
     autorun((reaction) => {
-      if (this.applicationStore.accessToken) {
+      if (this.applicationStore.accessToken && this.applicationStore.userId) {
         this.loadDashboard()
 
         let notifications = new PushNotifications()
