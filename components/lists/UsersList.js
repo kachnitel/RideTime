@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from 'react-native'
 import AlternatingStyleList from './AlternatingStyleList'
 import UserItem from '../list_items/UserItem'
 import navigationService from '../../src/NavigationService'
+import PropTypes from 'prop-types'
 
 /**
  * fixme Pretty well duplicated from RidersList
@@ -29,6 +30,12 @@ export default class UsersList extends Component {
       </View>
     )
   }
+}
+
+UsersList.propTypes = {
+  actions: PropTypes.array,
+  style: PropTypes.any,
+  users: PropTypes.array
 }
 
 const styles = StyleSheet.create({

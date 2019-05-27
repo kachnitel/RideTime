@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 import Header from '../Header'
 import TouchableRiderItem from '../list_items/TouchableRiderItem'
+import PropTypes from 'prop-types'
 
 export class RidersList extends Component {
   riderItemTouchable = ({ item }) => (
@@ -24,6 +25,10 @@ export class RidersList extends Component {
       </View>
     )
   }
+}
+
+RidersList.propTypes = {
+  riders: PropTypes.array
 }
 
 const styles = StyleSheet.create({
