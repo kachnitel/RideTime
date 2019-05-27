@@ -13,53 +13,78 @@ export default
 @inject('Event')
 @observer
 class CreateRide extends React.Component {
+  title = () => <TextInputWithTitle
+    placeholder='Fun ride'
+    value={this.props.Event.title}
+    onChangeText={(text) => this.props.Event.updateTitle(text)}
+    containerStyle={styles.itemContainer}
+    title='Ride title'
+  />
+
+  difficulty = () => <SelectDifficulty
+    onValueChange={(d) => this.props.Event.updateDifficulty(d.value)}
+    style={{ ...styles.itemContainer, ...styles.selectDifficulty }}
+    selected={this.props.Event.difficulty}
+    title='Select difficulty'
+    placeholder='Overall ride difficulty'
+    footerText='Select level to indicate to others how difficult trails you plan on riding.'
+  />
+
+  datetime = () => <EditDateTime
+    // FIXME: shouldn't need to recreate new Moment to display
+    value={this.props.Event.datetime && new Moment(this.props.Event.datetime).format('llll')}
+    onSelect={(dt) => this.props.Event.updateDatetime(new Moment(dt))}
+    title='Select date and time'
+    containerStyle={styles.itemContainer}
+    placeholder='Tap to select'
+  />
+
+  terrain = () => <SelectBike
+    onValueChange={(t) => this.props.Event.updateTerrain(t.value)}
+    style={{ ...styles.itemContainer, ...styles.selectTerrain }}
+    selected={this.props.Event.terrain}
+    title='What kind of bike?'
+    placeholder='Select most appropriate bike for the ride'
+  />
+
+  description = () => <TextInputWithTitle
+    title='Description'
+    placeholder='Ride description'
+    value={this.props.Event.description}
+    containerStyle={styles.itemContainer}
+    onChangeText={(desc) => this.props.Event.updateDescription(desc)}
+  />
+
+  /**
+   * TODO:
+   *  |     search     |
+   *  |----------------|
+   *  | popular rides  |
+   *  |----------------|
+   *  |                |
+   *  | popular trails |
+   *  |                |
+   *  |----------------|
+   *
+   * @memberof CreateRide
+   */
+  route = () => <TextInputWithTitle
+    title='Planned route'
+    placeholder='Mashiter, 50 more shades, Rupert'
+    value={this.props.Event.route}
+    containerStyle={styles.itemContainer}
+    onChangeText={(route) => this.props.Event.updateRoute(route)}
+  />
+
   render () {
     return (
       <View {...this.props}>
-        <TextInputWithTitle
-          placeholder='Fun ride'
-          value={this.props.Event.title}
-          onChangeText={(text) => this.props.Event.updateTitle(text)}
-          containerStyle={styles.itemContainer}
-          title='Ride name'
-        />
-        <SelectDifficulty
-          onValueChange={(d) => this.props.Event.updateDifficulty(d.value)}
-          style={{ ...styles.itemContainer, ...styles.selectDifficulty }}
-          selected={this.props.Event.difficulty}
-          title='Select difficulty'
-          placeholder='Overall ride difficulty'
-          footerText='Select level to indicate to others how difficult trails you plan on riding.'
-        />
-        <EditDateTime
-          // FIXME: shouldn't need to recreate new Moment to display
-          value={this.props.Event.datetime && new Moment(this.props.Event.datetime).format('llll')}
-          onSelect={(dt) => this.props.Event.updateDatetime(new Moment(dt))}
-          title='Select date and time'
-          containerStyle={styles.itemContainer}
-          placeholder='Tap to select'
-        />
-        <SelectBike
-          onValueChange={(t) => this.props.Event.updateTerrain(t.value)}
-          style={{ ...styles.itemContainer, ...styles.selectTerrain }}
-          selected={this.props.Event.terrain}
-          title='What kind of bike?'
-          placeholder='Select most appropriate bike for the ride'
-        />
-        <TextInputWithTitle
-          title='Description'
-          placeholder='Ride description'
-          value={this.props.Event.description}
-          containerStyle={styles.itemContainer}
-          onChangeText={(desc) => this.props.Event.updateDescription(desc)}
-        />
-        <TextInputWithTitle
-          title='Planned route'
-          placeholder='Mashiter, 50 more shades, Rupert'
-          value={this.props.Event.route}
-          containerStyle={styles.itemContainer}
-          onChangeText={(route) => this.props.Event.updateRoute(route)}
-        />
+        {this.title()}
+        {this.difficulty()}
+        {this.datetime()}
+        {this.terrain()}
+        {this.description()}
+        {this.route()}
       </View>
     )
   }
