@@ -3,6 +3,7 @@ import RideDetail from '../components/RideDetail'
 import { observer, inject, Provider } from 'mobx-react/native'
 import { Event } from '../stores/EventStore.mobx'
 import { ActivityIndicator } from 'react-native'
+import Button from '../components/Button'
 
 export default
 @inject('EventStore')
@@ -10,7 +11,14 @@ export default
 class RideDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam('title')
+      title: navigation.getParam('title'),
+      headerRight: (
+        // TODO: if not member already
+        <Button
+          title='Join'
+          onPress={() => console.log('join' + navigation.getParam('id'))}
+        />
+      )
     }
   }
 
