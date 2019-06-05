@@ -38,6 +38,7 @@ export class Event extends BaseEntity {
   @observable _title = null
   @observable _description = null
   _members = observable.array([])
+  _invited = observable.array([])
   @observable _difficulty = null
   @observable _location = null // Location.id
   @observable _terrain = null
@@ -56,8 +57,21 @@ export class Event extends BaseEntity {
   @action updateDescription (newValue: String) { this._description = newValue }
   @computed get description () { return this._description }
 
+  @action updateInvited (newValue: Array) { this._invited.replace(newValue) }
+  @computed get invited () { return this._invited }
+
   @action updateMembers (newValue: Array) { this._members.replace(newValue) }
   @computed get members () { return this._members }
+
+  @action async invite (id: Number) {
+    // this.store.provider.invite(this.id, id) // TODO:
+    this._invited.push(id)
+  }
+
+  @action async join (id: Number) {
+    // this.store.provider.join(this.id, id)
+    this._members.push(id)
+  }
 
   @action updateDifficulty (newValue: Number) { this._difficulty = newValue }
   @computed get difficulty () { return this._difficulty }
