@@ -57,7 +57,10 @@ class CreateRide extends React.Component {
 
   /**
    * TODO:
-   *  |     search     |
+   * Autocomplete from either router and trails
+   * - Select either a route, or trails which can be added
+   * with autocomplete from the area
+   *  |  Autocomplete  |
    *  |----------------|
    *  | popular rides  |
    *  |----------------|
@@ -80,11 +83,13 @@ class CreateRide extends React.Component {
     return (
       <View {...this.props}>
         {this.title()}
+        {this.route()}
+        {/* Private / public */}
+        {/* {this.invite()} NEXT PAGE (RideDetail) */}
         {this.difficulty()}
         {this.datetime()}
         {this.terrain()}
         {this.description()}
-        {this.route()}
       </View>
     )
   }
