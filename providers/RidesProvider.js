@@ -16,4 +16,12 @@ export default class RidesProvider {
   addRide = (data) => {
     return ApiConnection.post('api/events', data)
   }
+
+  join = (id) => {
+    return ApiConnection.post('api/events/' + id + '/join')
+  }
+
+  invite = (id: Number, userId: Number) => {
+    return ApiConnection.post('api/events/' + id + '/invite/' + userId)
+  }
 }
