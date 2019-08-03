@@ -15,8 +15,7 @@ class RidesList extends Component {
   onItemPress = (item) => this.props.navigation.push(
     'RideDetail',
     {
-      id: item.id,
-      title: item.name
+      event: item
     }
   )
 

@@ -49,7 +49,7 @@ class CreateRideScreen extends React.Component {
       index: 0,
       actions: [NavigationActions.navigate({
         routeName: 'RideDetail',
-        params: { id: this.event.id }
+        params: { event: this.event }
       })]
     })
     this.props.navigation.dispatch(resetAction)

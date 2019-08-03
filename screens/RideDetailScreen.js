@@ -10,24 +10,24 @@ export default
 @observer
 class RideDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
+    let event = navigation.getParam('event')
     return {
-      title: navigation.getParam('title'),
+      title: event.title,
       headerRight: (
         // TODO: if not member already
         <Button
-          title='Join'
+            title='Join'
           onPress={() => console.log('join' + navigation.getParam('id'))}
-        />
+          />
       )
     }
   }
 
   event: Event
-  state = { loading: true }
+  state = { loading: true } // TODO: pull to refresh
 
   async componentDidMount () {
-    let eventId = this.props.navigation.getParam('id')
-    this.event = await this.props.EventStore.get(eventId)
+    this.event = this.props.navigation.getParam('event')
     this.setState({ loading: false })
   }
 

@@ -44,6 +44,7 @@ export class Event extends BaseEntity {
   @observable _createdBy = null // User.id
   @observable _title = null
   @observable _description = null
+  // Array of objects { id, name, picture } FIXME: should be array of users
   _members = observable.array([])
   _invited = observable.array([])
   @observable _difficulty = null
@@ -115,6 +116,6 @@ export class Event extends BaseEntity {
     if (userId === undefined) {
       userId = this.store.userStore.currentUser.id
     }
-    return this.members.includes(userId)
+    return this.members.findIndex((item) => item.id === userId) !== -1
   }
 }
