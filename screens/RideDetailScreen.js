@@ -36,7 +36,7 @@ class RideDetailScreen extends React.Component {
       this.state.loading
         ? <ActivityIndicator />
         : <Provider Event={this.event}>
-          <RideDetail navigation={this.props.navigation} />
+          <RideDetail />
         </Provider>
     )
   }

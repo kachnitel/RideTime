@@ -27,7 +27,7 @@ class RideDetail extends Component {
           <RideItem ride={this.props.Event} />
         </View>
         <View style={styles.detailListItem} >
-          <RidersList riders={this.props.Event.members} navigation={this.props.navigation} />
+          <RidersList riders={this.props.Event.members} />
         </View>
         <View style={styles.detailListItem} >
           {/* TODO: click to show confirmation to navigate
