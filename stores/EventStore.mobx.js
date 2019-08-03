@@ -2,9 +2,16 @@ import { observable, action, computed } from 'mobx'
 import RidesProvider from '../providers/RidesProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
+import UserStore from './UserStore.mobx'
 
 export default class EventStore extends BaseCollectionStore {
   provider: RidesProvider
+  @observable userStore: UserStore
+
+  constructor (provider, EntityClass, userStore: UserStore) {
+    super(provider, EntityClass)
+    this.userStore = userStore
+  }
 }
 
 export class Event extends BaseEntity {
@@ -63,14 +70,14 @@ export class Event extends BaseEntity {
   @action updateMembers (newValue: Array) { this._members.replace(newValue) }
   @computed get members () { return this._members }
 
-  @action async invite (id: Number) {
-    // this.store.provider.invite(this.id, id) // TODO:
-    this._invited.push(id)
+  @action async invite (userId: Number) {
+    this.store.provider.invite(this.id, userId)
+    this._invited.push(userId)
   }
 
-  @action async join (id: Number) {
-    // this.store.provider.join(this.id, id)
-    this._members.push(id)
+  @action async join () {
+    this.store.provider.join(this.id)
+    this._members.push(this.store.userStore.currentUser.id)
   }
 
   @action updateDifficulty (newValue: Number) { this._difficulty = newValue }
@@ -94,5 +101,20 @@ export class Event extends BaseEntity {
     this.populateFromApiResponse(userResponse)
 
     this.store.add(this)
+  }
+
+  /**
+   * Returns whether user id a member of event
+   * if no userId is provided, current user is used
+   *
+   * @param {?Number} userId
+   * @returns
+   * @memberof Event
+   */
+  isMember (userId: ?Number) {
+    if (userId === undefined) {
+      userId = this.store.userStore.currentUser.id
+    }
+    return this.members.includes(userId)
   }
 }
