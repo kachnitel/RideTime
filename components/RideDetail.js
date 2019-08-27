@@ -7,15 +7,35 @@ import { AreaMap } from './AreaMap'
 import RideItem from './list_items/RideItem'
 import { RideDescription } from './RideDescription'
 import { observer, inject } from 'mobx-react/native'
+import ModalView from './ModalView'
+import UsersList from './lists/UsersList'
 
 /**
  * Ride Detail screen content
  */
 export default
-@inject('Event')
+@inject('Event', 'UserStore')
 @observer
 class RideDetail extends Component {
   locationText = JSON.stringify(this.props.Event.location.gps);
+
+  state = {
+    modalVisible: false
+  }
+
+  showModal = (id: Number) => {
+    this.setState({
+      modalId: id,
+      modalVisible: true
+    })
+  }
+
+  hideModal = () => {
+    this.setState({
+      modalId: null,
+      modalVisible: false
+    })
+  }
 
   render () {
     return (
@@ -44,13 +64,14 @@ class RideDetail extends Component {
         <View style={styles.detailListItem} >
           <RideDescription title='Description' text={this.props.Event.description} />
         </View>
+        {this.inviteModal()}
       </ScrollView>
     )
   }
 
   inviteButton = () => <View style={styles.inviteButton}>
     <TouchableNativeFeedback
-      onPress={() => console.log('invite')}
+      onPress={() => this.showModal(this.props.Event.id)}
     >
       <View>
         <Text style={styles.actionButtonIcon}>+</Text>
@@ -58,6 +79,28 @@ class RideDetail extends Component {
       </View>
     </TouchableNativeFeedback>
   </View>
+
+  /**
+   * TODO: Make a component
+   *
+   * @memberof RideDetail
+   */
+  inviteModal = () => <ModalView
+    isVisible={this.state.modalVisible}
+    onBackButtonPress={this.hideModal}
+    onBackdropPress={this.hideModal}
+  >
+    <ScrollView style={styles.modalContainer}>
+      <UsersList
+        users={this.props.UserStore.currentUser.friends}
+        actions={[{
+          icon: 'add-circle-outline',
+          action: (id) => this.props.Event.invite(id), // TODO: Toast, disable?
+          disabled: (id) => this.props.Event.members.find((item) => item.id === id) ? true : false
+        }]}
+      />
+    </ScrollView>
+  </ModalView>
 }
 
 const styles = StyleSheet.create({
@@ -102,5 +145,8 @@ const styles = StyleSheet.create({
     paddingTop: Layout.window.hp(1),
     flex: 1,
     color: '#fff'
+  },
+  modalContainer: {
+    width: '100%'
   }
 })
