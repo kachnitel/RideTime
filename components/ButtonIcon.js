@@ -23,7 +23,7 @@ export default class ButtonIcon extends Component {
             color={'#fff'}
             size={Layout.window.hp(4)}
           />}
-          <Text style={styles.text}>{this.props.text.toUpperCase()}</Text>
+          {this.props.text && <Text style={styles.text}>{this.props.text.toUpperCase()}</Text>}
         </View>
       </TouchableOpacity>
     )
