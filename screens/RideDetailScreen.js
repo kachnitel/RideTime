@@ -4,6 +4,7 @@ import { observer, inject, Provider } from 'mobx-react/native'
 import { Event } from '../stores/EventStore.mobx'
 import { ActivityIndicator } from 'react-native'
 import Button from '../components/Button'
+import ButtonIcon from '../components/ButtonIcon'
 
 export default
 @inject('EventStore')
@@ -14,10 +15,14 @@ class RideDetailScreen extends React.Component {
     return {
       title: event.title,
       headerRight: (
-        // TODO: if not member already
-        <Button
+        event.isMember()
+          ? <ButtonIcon // TODO: Three dot menu here (Leave, edit, ...?)
+            icon='more-vert'
+            onPress={() => console.log('invite users to' + event.id)}
+          />
+          : <Button
             title='Join'
-          onPress={() => console.log('join' + navigation.getParam('id'))}
+            onPress={() => console.log('join' + event.id)} // event.join() + toast
           />
       )
     }
