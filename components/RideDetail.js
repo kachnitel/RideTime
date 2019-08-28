@@ -95,8 +95,11 @@ class RideDetail extends Component {
         users={this.props.UserStore.currentUser.friends}
         actions={[{
           icon: 'add-circle-outline',
-          action: (id) => this.props.Event.invite(id), // TODO: Toast, disable?
-          disabled: (id) => this.props.Event.members.find((item) => item.id === id) ? true : false
+          action: (id) => this.props.Event.invite(id), // TODO: Toast
+          disabled: (id) => (
+            this.props.Event.members.find((item) => item.id === id) !== undefined ||
+            this.props.Event.invited.indexOf(id) !== -1
+          )
         }]}
       />
     </ScrollView>
