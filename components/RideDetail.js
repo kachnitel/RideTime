@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, StyleSheet, View, Text, TouchableNativeFeedback } from 'react-native'
+import { ScrollView, StyleSheet, View, Text } from 'react-native'
 import { RidersList } from '../components/lists/RidersList'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
@@ -7,8 +7,8 @@ import { AreaMap } from './AreaMap'
 import RideItem from './list_items/RideItem'
 import { RideDescription } from './RideDescription'
 import { observer, inject } from 'mobx-react/native'
-import ModalView from './ModalView'
 import UsersList from './lists/UsersList'
+import TouchableWithModal from './TouchableWithModal'
 
 /**
  * Ride Detail screen content
@@ -18,22 +18,6 @@ export default
 @observer
 class RideDetail extends Component {
   locationText = JSON.stringify(this.props.Event.location.gps);
-
-  state = {
-    modalVisible: false
-  }
-
-  showModal = () => {
-    this.setState({
-      modalVisible: true
-    })
-  }
-
-  hideModal = () => {
-    this.setState({
-      modalVisible: false
-    })
-  }
 
   render () {
     return (
@@ -67,41 +51,32 @@ class RideDetail extends Component {
     )
   }
 
-  inviteButton = () => <View style={styles.inviteButton}>
-    <TouchableNativeFeedback
-      onPress={() => this.showModal()}
-    >
-      <View>
-        <Text style={styles.actionButtonIcon}>+</Text>
-        <Text style={styles.inviteText}>Invite</Text>
-      </View>
-    </TouchableNativeFeedback>
-  </View>
+  inviteButton = () => <TouchableWithModal
+    modalContent={this.inviteModal()}
+    containerStyle={styles.inviteButton}
+  >
+    <View>
+      <Text style={styles.actionButtonIcon}>+</Text>
+      <Text style={styles.inviteText}>Invite</Text>
+    </View>
+  </TouchableWithModal>
 
   /**
-   * TODO: Make a component
-   *
    * @memberof RideDetail
    */
-  inviteModal = () => <ModalView
-    isVisible={this.state.modalVisible}
-    onBackButtonPress={this.hideModal}
-    onBackdropPress={this.hideModal}
-  >
-    <ScrollView style={styles.modalContainer}>
-      <UsersList
-        users={this.props.UserStore.currentUser.friends}
-        actions={[{
-          icon: 'add-circle-outline',
-          action: (id) => this.props.Event.invite(id), // TODO: Toast
-          disabled: (id) => (
-            this.props.Event.members.find((item) => item.id === id) !== undefined ||
-            this.props.Event.invited.indexOf(id) !== -1
-          )
-        }]}
-      />
-    </ScrollView>
-  </ModalView>
+  inviteModal = () => <ScrollView style={styles.modalContainer}>
+    <UsersList
+      users={this.props.UserStore.currentUser.friends}
+      actions={[{
+        icon: 'add-circle-outline',
+        action: (id) => this.props.Event.invite(id), // TODO: Toast
+        disabled: (id) => (
+          this.props.Event.members.find((item) => item.id === id) !== undefined ||
+          this.props.Event.invited.indexOf(id) !== -1
+        )
+      }]}
+    />
+  </ScrollView>
 }
 
 const styles = StyleSheet.create({
@@ -121,16 +96,15 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkBackground
   },
   membersListContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   inviteButton: {
     flexDirection: 'column',
-    marginLeft: 'auto',
     width: Layout.window.hp(11),
     height: Layout.window.hp(12.5),
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: Layout.window.hp(4.75) // REVIEW:
+    marginTop: Layout.window.hp(5) // REVIEW:
   },
   actionButtonIcon: {
     fontSize: Layout.window.hp(5),
