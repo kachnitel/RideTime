@@ -25,14 +25,12 @@ class RideDetail extends Component {
 
   showModal = (id: Number) => {
     this.setState({
-      modalId: id,
       modalVisible: true
     })
   }
 
   hideModal = () => {
     this.setState({
-      modalId: null,
       modalVisible: false
     })
   }
