@@ -23,7 +23,7 @@ class RideDetail extends Component {
     modalVisible: false
   }
 
-  showModal = (id: Number) => {
+  showModal = () => {
     this.setState({
       modalVisible: true
     })
@@ -69,7 +69,7 @@ class RideDetail extends Component {
 
   inviteButton = () => <View style={styles.inviteButton}>
     <TouchableNativeFeedback
-      onPress={() => this.showModal(this.props.Event.id)}
+      onPress={() => this.showModal()}
     >
       <View>
         <Text style={styles.actionButtonIcon}>+</Text>
