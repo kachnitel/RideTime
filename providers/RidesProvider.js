@@ -24,4 +24,8 @@ export default class RidesProvider {
   invite = (id: Number, userId: Number) => {
     return ApiConnection.post('api/events/' + id + '/invite/' + userId)
   }
+
+  listInvites = () => {
+    return ApiConnection.get('api/events/invites')
+  }
 }

@@ -5,6 +5,9 @@ import { CreateRideButton } from '../components/CreateRideButton'
 import RidesList from '../components/lists/RidesList'
 import DrawerButton from '../components/DrawerButton'
 import { observer, inject } from 'mobx-react/native'
+import TouchableWithModal from '../components/TouchableWithModal'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import InvitesList from '../components/lists/InvitesList'
 
 /**
  * TODO:
@@ -24,7 +27,12 @@ class RidesScreen extends React.Component {
       // https://reactnavigation.org/docs/en/stack-navigator.html#navigationoptions-for-screens-inside-of-the-navigator
       title: 'RideTime',
       drawerLabel: 'Home',
-      headerLeft: <DrawerButton navigation={navigation} />
+      headerLeft: <DrawerButton navigation={navigation} />,
+      headerRight: <TouchableWithModal
+        modalContent={<InvitesList />} // TODO: Component showing notifications
+      >
+        <Icon name='event' />
+      </TouchableWithModal>
     }
   }
 
@@ -37,6 +45,7 @@ class RidesScreen extends React.Component {
   }
 
   async componentDidMount () {
+    // TODO: Actually load nearby rides(REVIEW: why populate location store here?)
     this.props.LocationStore.populate()
     await this.loadRides()
   }

@@ -12,6 +12,34 @@ export default class EventStore extends BaseCollectionStore {
     super(provider, EntityClass)
     this.userStore = userStore
   }
+
+  _invites = observable.array([])
+
+  @action updateInvites (newValue: Array) { this._invites.replace(newValue) }
+  @computed get invites () { return this._invites }
+  @action addInvite (event: Event) { this._invites.indexOf(event) === -1 && this._invites.push(event) }
+  @action removeInvite (event: Event) { this._invites.remove(event) }
+
+  /**
+   * TODO: async loadInvites = () => { ...provider.listInvites() }
+   * - populate store w/ events from response and add to _invites
+   *  - IDs or complete object(reference)?
+   *    - if object reference, access to everything is smoother and easier
+   *      - requires knowing the referenced object - recursion might be difficult
+   *    - IDs used in USer (either way, ensure consistency)
+   * - add to autorun (see UserStore dashboard for example )
+   */
+
+  async loadInvites () {
+    let invites = await this.provider.listInvites()
+    invites.map((item) => {
+      let event = this._findInCollection(item.id) || new Event(this)
+
+      event.populateFromApiResponse(item, true)
+      this.add(event)
+      this.addInvite(event)
+    })
+  }
 }
 
 export class Event extends BaseEntity {
@@ -44,7 +72,8 @@ export class Event extends BaseEntity {
   @observable _createdBy = null // User.id
   @observable _title = null
   @observable _description = null
-  // Array of objects { id, name, picture } FIXME: should be array of users
+  // Array of objects { id, name, picture }
+  // FIXME: should be array of users|IDs, not "in between"
   _members = observable.array([])
   _invited = observable.array([])
   @observable _difficulty = null
