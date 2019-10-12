@@ -30,15 +30,15 @@ export default class RidersProvider {
   }
 
   requestFriend = (friendId: Number) => {
-    return ApiConnection.post(`dashboard/friends/${friendId}`)
+    return ApiConnection.post(`api/users/friends/${friendId}`)
   }
 
   acceptFriend = (requesterId: Number) => {
-    return ApiConnection.put(`dashboard/friends/${requesterId}/accept`)
+    return ApiConnection.put(`api/users/friends/${requesterId}/accept`)
   }
 
   removeFriend = (requesterId: Number) => {
-    return ApiConnection.delete(`dashboard/friends/${requesterId}`)
+    return ApiConnection.delete(`api/users/friends/${requesterId}`)
   }
 
   search = (name: String) => {
