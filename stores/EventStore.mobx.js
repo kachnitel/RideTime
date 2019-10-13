@@ -147,4 +147,24 @@ export class Event extends BaseEntity {
     }
     return this.members.findIndex((item) => item.id === userId) !== -1
   }
+
+  /**
+   * TODO:
+   * Send request to POST events/{eventId}/join
+   * Add user to members
+   * Remove event from invites
+   *
+   * @memberof Event
+   */
+  @action async acceptInvite () {
+    await this.store.provider.join(this.id)
+    this._members.push(this.store.userStore.currentUser)
+    // TODO: Remove from this._invited, sync with store.invites
+    this.store.removeInvite(this)
+  }
+
+  @action async declineInvite () {
+    await this.store.provider.declineInvite(this.id)
+    this.store.removeInvite(this)
+  }
 }

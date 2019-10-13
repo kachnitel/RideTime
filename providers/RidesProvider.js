@@ -28,4 +28,12 @@ export default class RidesProvider {
   listInvites = () => {
     return ApiConnection.get('api/events/invites')
   }
+
+  declineInvite = (id) => {
+    return ApiConnection.delete('api/events/' + id + '/invite')
+  }
+
+  leave = (id) => {
+    return ApiConnection.delete('api/events/' + id + '/leave')
+  }
 }

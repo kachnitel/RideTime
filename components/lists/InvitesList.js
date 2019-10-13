@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { ScrollView, FlatList, StyleSheet, Text } from 'react-native'
+import { ScrollView, FlatList, StyleSheet, Text, View } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import RideItem from '../list_items/RideItem'
+import ButtonIcon from '../ButtonIcon'
+import Header from '../Header'
 
 export default
 @inject('EventStore')
@@ -16,16 +18,30 @@ class InvitesList extends Component {
   }
 
   itemComponent = (item) => {
-    // let event = this.props.EventStore.get(item)
     let event = item.item
-    return <RideItem ride={event} />
-    // console.log(Object.keys(item.item))
-    // return <Text>{item.title}</Text>
+    return <View>
+      <RideItem ride={event} />
+      <View style={styles.choicesContainer}>
+        <ButtonIcon
+          icon='add-circle-outline'
+          text='Join'
+          style={styles.respondButton}
+          onPress={() => event.acceptInvite()}
+        />
+        <ButtonIcon
+          icon='highlight-off'
+          text='Dismiss'
+          style={{ ...styles.respondButton, ...styles.dismissButton }}
+          onPress={() => event.declineInvite()}
+        />
+      </View>
+    </View>
   }
 
   render () {
     return (
       <ScrollView style={styles.scroll}>
+        <Header style={styles.header}>Invites</Header>
         <FlatList
           data={this.props.EventStore.invites}
           renderItem={this.itemComponent}
@@ -42,5 +58,19 @@ class InvitesList extends Component {
 const styles = StyleSheet.create({
   scroll: {
     width: '100%'
+  },
+  choicesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  respondButton: {
+    width: '40%',
+    textAlign: 'center'
+  },
+  dismissButton: {
+    backgroundColor: 'gray'
+  },
+  header: {
+    textAlign: 'center'
   }
 })
