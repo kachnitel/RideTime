@@ -52,14 +52,6 @@ export default class RideItemDetail extends React.Component {
       {/* TODO shuttle/chairlift icon */}
       <View style={{
         ...styles.lowerRowIconContainer,
-        ...styles.durationContainer
-      }}>
-        {/* TODO once it's optional, the startTime has to be marginLeft: auto
-        with this attached to it? */}
-        <Text style={styles.duration}>2h</Text>
-      </View>
-      <View style={{
-        ...styles.lowerRowIconContainer,
         ...styles.startTimeContainer
       }}>
         <Text style={{
@@ -87,18 +79,8 @@ const styles = StyleSheet.create({
     fontSize: Layout.window.hp(3.25)
   },
   startTimeContainer: {
-    width: 'auto'
-  },
-  durationContainer: {
-    borderRadius: 6,
-    backgroundColor: '#E1E1E1',
-    height: Layout.window.hp(3),
-    width: Layout.window.wp(15),
     marginLeft: 'auto',
-    marginRight: 10
-  },
-  duration: {
-    fontSize: Layout.window.hp(2)
+    width: 'auto'
   },
   diffIconBg: {
     color: 'white'
