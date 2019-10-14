@@ -6,8 +6,8 @@ import RidesList from '../components/lists/RidesList'
 import DrawerButton from '../components/DrawerButton'
 import { observer, inject } from 'mobx-react/native'
 import TouchableWithModal from '../components/TouchableWithModal'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import InvitesList from '../components/lists/InvitesList'
+import InvitesIconBadged from '../components/InvitesIconBadged'
 
 /**
  * TODO:
@@ -29,9 +29,9 @@ class RidesScreen extends React.Component {
       drawerLabel: 'Home',
       headerLeft: <DrawerButton navigation={navigation} />,
       headerRight: <TouchableWithModal
-        modalContent={<InvitesList />} // TODO: Component showing notifications
+        modalContent={<InvitesList />}
       >
-        <Icon name='event' />
+        <InvitesIconBadged />
       </TouchableWithModal>
     }
   }
