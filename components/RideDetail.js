@@ -17,8 +17,6 @@ export default
 @inject('Event', 'UserStore')
 @observer
 class RideDetail extends Component {
-  locationText = JSON.stringify(this.props.Event.location.gps);
-
   render () {
     return (
       <ScrollView style={styles.container}>
