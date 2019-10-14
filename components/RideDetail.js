@@ -46,7 +46,6 @@ class RideDetail extends Component {
         <View style={styles.detailListItem} >
           <RideDescription title='Description' text={this.props.Event.description} />
         </View>
-        {this.inviteModal()}
       </ScrollView>
     )
   }
