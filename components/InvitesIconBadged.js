@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ActivityIndicator } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { observer, inject } from 'mobx-react/native'
 import CountBadge from './CountBadge'
@@ -10,15 +10,34 @@ export default
 @inject('EventStore')
 @observer
 class InvitesIconBadged extends Component {
+  state = {
+    loading: true
+  }
+
+  async componentDidMount () {
+    await this.props.EventStore.loadInvites()
+    this.setState({ loading: false })
+    // TODO: Increase timer once notifications are implemented
+    this.interval = setInterval(() => this.props.EventStore.loadInvites(), 5000)
+  }
+
+  componentWillUnmount () {
+    clearInterval(this.interval)
+  }
+
   render () {
     return (
       <View>
-        <Icon
-          name='event'
-          size={Layout.window.hp(4)}
-          color={Colors.tintColor}
-          style={styles.icon}
-        />
+        {
+          this.state.loading
+            ? <ActivityIndicator size={Layout.window.hp(3)} />
+            : <Icon
+              name='event'
+              size={Layout.window.hp(4)}
+              color={Colors.tintColor}
+              style={styles.icon}
+            />
+        }
         { this.props.EventStore.invites.length > 0 && <CountBadge
           count={this.props.EventStore.invites.length}
           style={styles.badge}
