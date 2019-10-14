@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { View, TouchableNativeFeedback } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import ModalView from './ModalView'
 
 /**
@@ -32,11 +32,11 @@ export default class TouchableWithModal extends Component {
     return (
       <View>
         <View style={this.props.containerStyle}>
-          <TouchableNativeFeedback
+          <TouchableOpacity
             onPress={() => this.showModal()}
           >
             {this.props.children}
-          </TouchableNativeFeedback>
+          </TouchableOpacity>
         </View>
         <ModalView
           isVisible={this.state.modalVisible}
