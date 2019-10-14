@@ -49,6 +49,7 @@ class InvitesList extends Component {
           keyExtractor={(item, index) => 'index_' + index.toString()}
           onRefresh={this.refresh}
           refreshing={false}
+          extraData={this.props.EventStore.invites.length}
         />
       </ScrollView>
     )
