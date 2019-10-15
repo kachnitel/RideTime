@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { View, TouchableOpacity } from 'react-native'
 import ModalView from './ModalView'
+import { Provider } from 'mobx-react/native'
 
 /**
  * Uses "children" to render a component that displays
@@ -43,7 +44,9 @@ export default class TouchableWithModal extends Component {
           onBackButtonPress={this.hideModal}
           onBackdropPress={this.hideModal}
         >
-          {this.props.modalContent}
+          <Provider HideModal={this.hideModal}>
+            {this.props.modalContent}
+          </Provider>
         </ModalView>
       </View>
     )
