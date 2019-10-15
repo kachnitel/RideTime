@@ -96,15 +96,18 @@ class InvitesList extends Component {
     text={this.state.detail ? 'Back' : 'Close'}
     onPress={this.state.detail ? () => this.setState({ detail: null }) : this.props.HideModal}
     style={styles.headerButton}
+    color={Colors.tintColor}
   />
 
   render () {
     return (
       <View style={styles.container}>
-        {this.headerButton()}
-        <Header style={styles.header}>
-          {this.state.detail === null ? 'Invites' : this.state.detail.title}
-        </Header>
+        <View style={styles.headerContainer}>
+          {this.headerButton()}
+          <Header style={styles.header}>
+            {this.state.detail === null ? 'Invites' : this.state.detail.title}
+          </Header>
+        </View>
         {this.state.detail !== null
           ? this.itemDetailModal(this.state.detail)
           : this.listComponent()
@@ -144,7 +147,8 @@ const styles = StyleSheet.create({
   header: {
     textAlign: 'center',
     color: Colors.tintColor,
-    paddingBottom: Layout.window.hp(2)
+    paddingBottom: Layout.window.hp(2),
+    flex: 1
   },
   itemContainer: {
     borderTopColor: Colors.tintColor,
@@ -152,9 +156,11 @@ const styles = StyleSheet.create({
     paddingBottom: Layout.window.hp(2)
   },
   headerButton: {
-    position: 'absolute',
-    zIndex: 1,
-    paddingVertical: -Layout.window.hp(1),
-    left: Layout.window.wp(2)
+    paddingVertical: Layout.window.hp(0),
+    backgroundColor: 'rgba(255,255,255,0);',
+    opacity: 0.75
+  },
+  headerContainer: {
+    flexDirection: 'row'
   }
 })
