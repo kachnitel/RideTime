@@ -27,7 +27,7 @@ export default class EventStore extends BaseCollectionStore {
    *    - if object reference, access to everything is smoother and easier
    *      - requires knowing the referenced object - recursion might be difficult
    *    - IDs used in USer (either way, ensure consistency)
-   * - add to autorun (see UserStore dashboard for example )
+   * - add to autorun (see UserStore dashboard for example ) ?
    */
 
   async loadInvites () {
@@ -107,6 +107,7 @@ export class Event extends BaseEntity {
 
   @action async join () {
     this.store.provider.join(this.id)
+    // REVIEW: Shouldn't work! This ent. uses some weird user format
     this._members.push(this.store.userStore.currentUser.id)
   }
 
