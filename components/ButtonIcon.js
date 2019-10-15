@@ -20,10 +20,10 @@ export default class ButtonIcon extends Component {
         <View style={styles.innerContainer}>
           {this.props.iconComponent || <Icon
             name={this.props.icon || 'adb'}
-            color={'#fff'}
+            color={this.props.color || '#fff'}
             size={Layout.window.hp(4)}
           />}
-          {this.props.text && <Text style={styles.text}>{this.props.text.toUpperCase()}</Text>}
+          {this.props.text && <Text style={{ ...styles.text, color: this.props.color || '#fff' }}>{this.props.text.toUpperCase()}</Text>}
         </View>
       </TouchableOpacity>
     )
