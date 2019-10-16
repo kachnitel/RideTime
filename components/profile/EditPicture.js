@@ -9,7 +9,8 @@ import {
 import ProfilePicture from './ProfilePicture'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Layout from '../../constants/Layout'
-import { ImagePicker, ImageManipulator } from 'expo'
+import * as ImageManipulator from 'expo-image-manipulator'
+import * as ImagePicker from 'expo-image-picker'
 
 export default class EditPicture extends React.Component {
   /**

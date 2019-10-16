@@ -4,8 +4,7 @@ import Layout from '../../constants/Layout'
 import LocationList from '../lists/LocationList'
 import { inject, observer } from 'mobx-react/native'
 import SearchInput from '../form/SearchInput'
-import { MapView } from 'expo'
-import { UrlTile, Marker } from 'react-native-maps'
+import MapView, { Marker, UrlTile } from 'react-native-maps'
 
 export default
 @inject('LocationStore')

@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { DrawerItems } from 'react-navigation'
 import { ScrollView, Text, View, StyleSheet } from 'react-native'
-import { Constants } from 'expo'
+import Constants from 'expo-constants'
 import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
 

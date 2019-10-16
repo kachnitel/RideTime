@@ -8,7 +8,7 @@ import {
 import Authentication from '../src/Authentication'
 import { observer, inject } from 'mobx-react'
 import ApiConnection from '../src/ApiConnection'
-import { SecureStore } from 'expo'
+import * as SecureStore from 'expo-secure-store'
 import BulletList from '../components/lists/BulletList'
 import TerrainIcon from '../components/icons/TerrainIcon'
 import Colors from '../constants/Colors'

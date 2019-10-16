@@ -1,5 +1,5 @@
 /* global __DEV__ */
-import { Constants } from 'expo'
+import Constants from 'expo-constants'
 
 const getLocalUrl = () => {
   const { manifest } = Constants

@@ -14,7 +14,7 @@ import DetailsForm from '../components/sign_up/DetailsForm'
 import Colors from '../constants/Colors'
 import Button from '../components/Button'
 import Layout from '../constants/Layout'
-import { SecureStore } from 'expo'
+import * as SecureStore from 'expo-secure-store'
 import { User } from '../stores/UserStore.mobx'
 
 export default

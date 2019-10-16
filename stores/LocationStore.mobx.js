@@ -2,7 +2,8 @@ import { observable, action, computed } from 'mobx'
 import LocationsProvider from '../providers/LocationsProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
-import { Location as ExpoLocation, Permissions } from 'expo'
+import * as Permissions from 'expo-permissions'
+import * as ExpoLocation from 'expo-location'
 import { persist } from 'mobx-persist'
 
 export default class LocationStore extends BaseCollectionStore {

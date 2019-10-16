@@ -1,4 +1,5 @@
-import { AppLoading, Font } from 'expo'
+import { AppLoading } from 'expo'
+import * as Font from 'expo-font'
 import React from 'react'
 import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
 import Layout from './constants/Layout'

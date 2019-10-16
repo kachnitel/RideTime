@@ -1,6 +1,6 @@
 import { observable, action, computed } from 'mobx'
 import { persist } from 'mobx-persist'
-import { SecureStore } from 'expo'
+import * as SecureStore from 'expo-secure-store'
 import Authentication from '../src/Authentication'
 
 export default class ApplicationStore {

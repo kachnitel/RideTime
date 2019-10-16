@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from 'react-native'
-import { SecureStore } from 'expo'
+import * as SecureStore from 'expo-secure-store'
 import { observer, inject } from 'mobx-react'
 import Button from './Button'
 
