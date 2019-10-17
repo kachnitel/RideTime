@@ -40,6 +40,19 @@ export default class EventStore extends BaseCollectionStore {
       this.addInvite(event)
     })
   }
+
+  /**
+   * Update or insert an Event to store from JSON object
+   *
+   * @param {*} eventObject
+   * @memberof EventStore
+   */
+  upsertEvent (eventObject) {
+    let event = this._findInCollection(eventObject.id) || new Event(this)
+
+    event.populateFromApiResponse(eventObject, true)
+    this.add(event)
+  }
 }
 
 export class Event extends BaseEntity {
