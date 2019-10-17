@@ -42,5 +42,12 @@ export default class PushNotifications {
       badge: true,
       vibrate: true
     })
+    Notifications.createChannelAndroidAsync('eventMember', {
+      name: 'Event memberships',
+      description: 'Invites, join requests',
+      sound: true,
+      badge: true,
+      vibrate: true
+    })
   }
 }
