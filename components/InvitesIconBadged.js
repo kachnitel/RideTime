@@ -17,8 +17,7 @@ class InvitesIconBadged extends Component {
   async componentDidMount () {
     await this.props.EventStore.loadInvites()
     this.setState({ loading: false })
-    // TODO: Increase timer once notifications are implemented
-    this.interval = setInterval(() => this.props.EventStore.loadInvites(), 5000)
+    this.interval = setInterval(() => this.props.EventStore.loadInvites(), 30000)
   }
 
   componentWillUnmount () {
