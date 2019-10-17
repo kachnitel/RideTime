@@ -81,13 +81,13 @@ class InvitesList extends Component {
       icon='add-circle-outline'
       text='Join'
       style={styles.respondButton}
-      onPress={this.acceptInvite}
+      onPress={() => this.acceptInvite(event)}
     />
     <ButtonIcon
       icon='highlight-off'
       text='Dismiss'
       style={{ ...styles.respondButton, ...styles.dismissButton }}
-      onPress={() => event.declineInvite()}
+      onPress={() => this.declineInvite(event)}
     />
   </View>
 
