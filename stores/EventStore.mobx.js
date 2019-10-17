@@ -33,10 +33,7 @@ export default class EventStore extends BaseCollectionStore {
   async loadInvites () {
     let invites = await this.provider.listInvites()
     invites.map((item) => {
-      let event = this._findInCollection(item.id) || new Event(this)
-
-      event.populateFromApiResponse(item, true)
-      this.add(event)
+      let event = this.upsertEvent(item)
       this.addInvite(event)
     })
   }
@@ -52,6 +49,8 @@ export default class EventStore extends BaseCollectionStore {
 
     event.populateFromApiResponse(eventObject, true)
     this.add(event)
+
+    return event
   }
 }
 
