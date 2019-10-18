@@ -26,8 +26,8 @@ class AreaMap extends React.Component {
     description={Object.values(latLng).toString()}
   >
     <Icon
-      name='directions-bike'
-      size={Layout.window.hp(3)}
+      name='gps-fixed'
+      size={Layout.window.hp(2)}
       style={styles.selfMarkerIcon}
     />
   </Marker>
@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   selfMarkerIcon: {
-    borderRadius: Layout.window.hp(2),
-    padding: Layout.window.hp(0.75),
+    borderRadius: Layout.window.hp(1.5),
+    padding: Layout.window.hp(0.5),
     backgroundColor: Colors.tintColor,
     color: '#fff',
     opacity: 0.75
