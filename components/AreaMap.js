@@ -1,7 +1,10 @@
 import React from 'react'
-import MapView, { UrlTile } from 'react-native-maps'
+import MapView, { Marker, UrlTile } from 'react-native-maps'
 import { inject, observer } from 'mobx-react/native'
 import { StyleSheet, ActivityIndicator } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import Layout from '../constants/Layout'
+import Colors from '../constants/Colors'
 
 export default
 @inject('LocationStore')
@@ -16,20 +19,37 @@ class AreaMap extends React.Component {
     }
   }
 
+  ownLocationMarker = (latLng) => <Marker
+    coordinate={latLng}
+    key={'currentUser'}
+    title={'Your location'}
+    description={Object.values(latLng).toString()}
+  >
+    <Icon
+      name='directions-bike'
+      size={Layout.window.hp(3)}
+      style={styles.selfMarkerIcon}
+    />
+  </Marker>
+
   render () {
     let tileUrl = 'http://c.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    let latLng = {
+      latitude: this.state.currentLocation.latitude,
+      longitude: this.state.currentLocation.longitude
+    }
     return this.state.currentLocation
       ? <MapView
         initialRegion={{
-          latitude: this.state.currentLocation.latitude,
-          longitude: this.state.currentLocation.longitude,
+          ...latLng,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.04231
         }}
         style={styles.map}
       >
         <UrlTile urlTemplate={tileUrl} maximumZ={19} />
-        {/* TODO: Own location marker */}
+        {/* Own location marker */}
+        {this.ownLocationMarker(latLng)}
         {this.props.markers}
       </MapView>
       : <ActivityIndicator />
@@ -39,5 +59,12 @@ class AreaMap extends React.Component {
 const styles = StyleSheet.create({
   map: {
     flex: 1
+  },
+  selfMarkerIcon: {
+    borderRadius: Layout.window.hp(2),
+    padding: Layout.window.hp(0.75),
+    backgroundColor: Colors.tintColor,
+    color: '#fff',
+    opacity: 0.75
   }
 })
