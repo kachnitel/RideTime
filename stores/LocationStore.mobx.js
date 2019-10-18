@@ -28,7 +28,6 @@ export default class LocationStore extends BaseCollectionStore {
   }
 
   @action updateCurrentLocation (location) {
-    console.log('Location update', JSON.stringify(location))
     this._currentLocation.merge(location)
   }
   @computed get currentLocation () { return this._currentLocation }
