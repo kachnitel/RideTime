@@ -46,11 +46,16 @@ class CreateRideScreen extends React.Component {
     ToastAndroid.show('Ride created.', ToastAndroid.SHORT)
 
     const resetAction = StackActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({
-        routeName: 'RideDetail',
-        params: { event: this.event }
-      })]
+      index: 1,
+      actions: [
+        NavigationActions.navigate({
+          routeName: 'Rides'
+        }),
+        NavigationActions.navigate({
+          routeName: 'RideDetail',
+          params: { event: this.event }
+        })
+      ]
     })
     this.props.navigation.dispatch(resetAction)
   }
