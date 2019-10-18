@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, ActivityIndicator } from 'react-native'
-import { AreaMap } from '../components/AreaMap'
+// import { AreaMap } from '../components/AreaMap'
 import { CreateRideButton } from '../components/CreateRideButton'
 import RidesList from '../components/lists/RidesList'
 import DrawerButton from '../components/DrawerButton'
@@ -45,8 +45,6 @@ class RidesScreen extends React.Component {
   }
 
   async componentDidMount () {
-    // TODO: Actually load nearby rides(REVIEW: why populate location store here?)
-    this.props.LocationStore.populate()
     await this.loadRides()
   }
 
@@ -63,11 +61,10 @@ class RidesScreen extends React.Component {
   render () {
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
-        <View style={{ flex: 35 }}>
-          <AreaMap
-            // locations={this.props.LocationStore.list()}
-          />
-        </View>
+        {/* <View style={{ flex: 35 }}> */}
+          {/* <AreaMap
+          /> */}
+        {/* </View> */}
 
         <View style={{ flex: 65 }}>
           {this.state.loading ? <ActivityIndicator /> : <RidesList

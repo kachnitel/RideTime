@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, View, Text } from 'react-native'
 import { RidersList } from '../components/lists/RidersList'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
-import { AreaMap } from './AreaMap'
+// import { AreaMap } from './AreaMap'
 import RideItem from './list_items/RideItem'
 import { RideDescription } from './RideDescription'
 import { observer, inject } from 'mobx-react/native'
@@ -20,9 +20,9 @@ class RideDetail extends Component {
   render () {
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.map} >
+        {/* <View style={styles.map} >
           <AreaMap currentLocation={this.props.Event.location.gps} />
-        </View>
+        </View> */}
         <View style={styles.rideItem} >
           <RideItem ride={this.props.Event} />
         </View>

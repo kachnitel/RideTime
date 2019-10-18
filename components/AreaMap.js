@@ -1,5 +1,5 @@
 import React from 'react'
-import WebViewLeaflet from 'react-native-webview-leaflet'
+import WebViewLeaflet from 'react-native-webview-leaflet' // FIXME: Here's the culprit pretty sure, sort out the map finally!
 import mapLayers from '../mockMapLayers'
 
 /*
