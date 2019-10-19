@@ -12,6 +12,8 @@ import { Marker, Callout } from 'react-native-maps'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 import Header from '../components/Header'
+import DifficultyIcon from '../components/icons/DifficultyIcon'
+import CountBadge from '../components/CountBadge'
 
 /**
  * TODO:
@@ -47,7 +49,9 @@ class RidesScreen extends React.Component {
     this.state = {
       loading: true,
       bbox: null,
-      visibleLocations: []
+      visibleLocations: [],
+      ridesInArea: [],
+      selectedLocation: null
     }
   }
 
@@ -55,8 +59,13 @@ class RidesScreen extends React.Component {
     await this.loadRides()
   }
 
+  /**
+   * TODO:
+   *
+   * @memberof RidesScreen
+   */
   onRidesRefresh () {
-    this.loadRides()
+    // this.loadRides()
   }
 
   /**
@@ -94,23 +103,40 @@ class RidesScreen extends React.Component {
     this.setState({ loading: false })
   }
 
+  selectLocation (locationInfo) {
+    this.setState({ selectedLocation: locationInfo })
+  }
+
+  /**
+   * FIXME: this.setState is not a function when clearig location..
+   *
+   * @memberof RidesScreen
+   */
+  clearLocation () {
+    this.setState({ selectedLocation: null })
+  }
+
   mapMarkers () {
-    return this.state.visibleLocations.map((locationInfo) => <Marker
-      coordinate={{
-        latitude: locationInfo.coords[0],
-        longitude: locationInfo.coords[1]
-      }}
-      key={locationInfo.id}
-      title={locationInfo.name}
-    >
-      <Text style={styles.locMarker}>
-        {/* REVIEW: event.location SHOULD be just ID ??? */}
-        {this.props.EventStore.list().filter((event) => event.location.id === locationInfo.id).length}
-      </Text>
-      <Callout>
-        {this.locationCallout(locationInfo)}
-      </Callout>
-    </Marker>)
+    return this.state.visibleLocations.map((locationInfo) => {
+      /* REVIEW: event.location SHOULD be just ID ??? */
+      let ridesInArea = this.props.EventStore.list().filter((event) => event.location.id === locationInfo.id)
+      return <Marker
+        coordinate={{
+          latitude: locationInfo.coords[0],
+          longitude: locationInfo.coords[1]
+        }}
+        key={locationInfo.id}
+        title={locationInfo.name}
+        onPress={() => this.selectLocation(locationInfo)}
+      >
+        <Text style={ridesInArea.length ? styles.locMarker : { ...styles.locMarker, ...styles.emptyMarker }}>
+          {ridesInArea.length}
+        </Text>
+        <Callout>
+          {this.locationCallout(locationInfo)}
+        </Callout>
+      </Marker>
+    })
   }
 
   locationCallout (locationInfo) {
@@ -122,19 +148,39 @@ class RidesScreen extends React.Component {
       >
         {locationInfo.name}
       </Header>
-      <View>
-        {/* TODO: levels&counts */}
+      <Text>Rides in area</Text>
+      <View style={styles.calloutDetailContainer}>
+        {Object.keys(DifficultyIcon.icons).map(Number).map((difficultyLevel) => {
+          let ridesByLevel = this.props.EventStore.list().filter(
+            (event) =>
+              event.location.id === locationInfo.id &&
+              event.difficulty === difficultyLevel
+          ).length
+          if (ridesByLevel > 0) {
+            return <View style={styles.calloutDiffIcon} key={locationInfo.id + '_' + difficultyLevel}>
+              <DifficultyIcon d={difficultyLevel} size={Layout.window.hp(3)} />
+              <CountBadge count={ridesByLevel} style={styles.calloutDiffIconBadge} />
+            </View>
+          }
+        })}
       </View>
     </View>
   }
 
   render () {
+    let filteredEventList = this.state.selectedLocation === null
+      ? this.props.EventStore.list()
+      : this.props.EventStore.list().filter((event) => event.location.id === this.state.selectedLocation.id)
+
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <View style={{ flex: 35 }}>
+          {/* FIXME: Loading indicator doesn't show up when loading locations */}
+          {this.state.loading && <ActivityIndicator style={styles.mapLoading} />}
           <AreaMap
             markers={this.mapMarkers()}
             onRegionChangeComplete={this.onRegionChange}
+            onPress={this.clearLocation}
           />
         </View>
 
@@ -142,6 +188,7 @@ class RidesScreen extends React.Component {
           {this.state.loading ? <ActivityIndicator /> : <RidesList
             navigation={this.props.navigation}
             onRefresh={this.onRidesRefresh}
+            rides={filteredEventList}
           />}
         </View>
 
@@ -163,6 +210,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold'
   },
+  emptyMarker: {
+    opacity: 0.25,
+    backgroundColor: Colors.darkBackground
+  },
   callout: {
     width: Layout.window.wp(40),
     alignContent: 'center',
@@ -170,5 +221,25 @@ const styles = StyleSheet.create({
   },
   calloutTitle: {
     color: Colors.tintColor
+  },
+  calloutDetailContainer: {
+    flexDirection: 'row'
+  },
+  calloutDiffIcon: {
+    alignItems: 'center',
+    borderColor: '#DFDFDF',
+    borderRadius: Layout.window.hp(1),
+    borderWidth: 1,
+    padding: Layout.window.hp(0.75),
+    margin: 1
+  },
+  calloutDiffIconBadge: {
+    position: 'absolute',
+    right: 0,
+    fontSize: Layout.window.hp(1.5)
+  },
+  mapLoading: {
+    position: 'absolute',
+    zIndex: 10
   }
 })

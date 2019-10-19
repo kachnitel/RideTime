@@ -23,7 +23,7 @@ class RidesList extends Component {
     return (
       <View style={styles.container}>
         <AlternatingStyleList
-          items={this.props.EventStore.list()}
+          items={this.props.rides}
           itemComponent={this.itemComponent}
           emptyComponent={<Text>No rides nearby, start one!</Text>}
           onItemPress={this.onItemPress}
