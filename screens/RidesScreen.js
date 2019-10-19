@@ -103,16 +103,11 @@ class RidesScreen extends React.Component {
     this.setState({ loading: false })
   }
 
-  selectLocation (locationInfo) {
+  selectLocation = (locationInfo) => {
     this.setState({ selectedLocation: locationInfo })
   }
 
-  /**
-   * FIXME: this.setState is not a function when clearig location..
-   *
-   * @memberof RidesScreen
-   */
-  clearLocation () {
+  clearLocation = () => {
     this.setState({ selectedLocation: null })
   }
 
