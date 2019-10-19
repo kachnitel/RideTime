@@ -46,6 +46,7 @@ class AreaMap extends React.Component {
           longitudeDelta: 0.04231
         }}
         style={styles.map}
+        {...this.props}
       >
         <UrlTile urlTemplate={tileUrl} maximumZ={19} />
         {/* Own location marker */}
