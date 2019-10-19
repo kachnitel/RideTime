@@ -114,7 +114,7 @@ class RidesScreen extends React.Component {
   mapMarkers () {
     return this.state.visibleLocations.map((locationInfo) => {
       /* REVIEW: event.location SHOULD be just ID ??? */
-      let ridesInArea = this.props.EventStore.list().filter((event) => event.location.id === locationInfo.id)
+      let ridesInArea = this.props.EventStore.futureEvents.filter((event) => event.location.id === locationInfo.id)
       return <Marker
         coordinate={{
           latitude: locationInfo.coords[0],
@@ -146,7 +146,7 @@ class RidesScreen extends React.Component {
       <Text>Rides in area</Text>
       <View style={styles.calloutDetailContainer}>
         {Object.keys(DifficultyIcon.icons).map(Number).map((difficultyLevel) => {
-          let ridesByLevel = this.props.EventStore.list().filter(
+          let ridesByLevel = this.props.EventStore.futureEvents.filter(
             (event) =>
               event.location.id === locationInfo.id &&
               event.difficulty === difficultyLevel
@@ -164,8 +164,8 @@ class RidesScreen extends React.Component {
 
   render () {
     let filteredEventList = this.state.selectedLocation === null
-      ? this.props.EventStore.list()
-      : this.props.EventStore.list().filter((event) => event.location.id === this.state.selectedLocation.id)
+      ? this.props.EventStore.futureEvents
+      : this.props.EventStore.futureEvents.filter((event) => event.location.id === this.state.selectedLocation.id)
 
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
