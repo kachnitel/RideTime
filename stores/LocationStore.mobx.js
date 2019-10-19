@@ -17,6 +17,24 @@ export default class LocationStore extends BaseCollectionStore {
     /**
      * TODO: check permissions
      */
+    this.watchPosition()
+  }
+
+  getLocationPermissions = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION)
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied'
+      })
+
+      return false
+    }
+
+    return status
+  }
+
+  watchPosition = async () => {
+    await this.getLocationPermissions()
     ExpoLocation.watchPositionAsync(
       {
         accuracy: ExpoLocation.Accuracy.Balanced,

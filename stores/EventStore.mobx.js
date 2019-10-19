@@ -52,6 +52,17 @@ export default class EventStore extends BaseCollectionStore {
 
     return event
   }
+
+  /**
+   * TODO: Test & use in RidesScreen to filter out past events
+   * Shows events with `datetime > 1 hour ago`
+   *
+   * @returns
+   * @memberof EventStore
+   */
+  @computed get listFutureEvents () {
+    return this.list().filter((event: Event) => (event.datetime + 3600) > Math.floor(Date.now() / 1000))
+  }
 }
 
 export class Event extends BaseEntity {

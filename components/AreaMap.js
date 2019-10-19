@@ -33,27 +33,29 @@ class AreaMap extends React.Component {
   </Marker>
 
   render () {
+    if (!this.state.currentLocation) {
+      return <ActivityIndicator />
+    }
+
     let tileUrl = 'http://c.tile.openstreetmap.org/{z}/{x}/{y}.png'
     let latLng = {
       latitude: this.state.currentLocation.latitude,
       longitude: this.state.currentLocation.longitude
     }
-    return this.state.currentLocation
-      ? <MapView
-        initialRegion={{
-          ...latLng,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.04231
-        }}
-        style={styles.map}
-        {...this.props}
-      >
-        <UrlTile urlTemplate={tileUrl} maximumZ={19} />
-        {/* Own location marker */}
-        {this.ownLocationMarker(latLng)}
-        {this.props.markers}
-      </MapView>
-      : <ActivityIndicator />
+    return <MapView
+      initialRegion={{
+        ...latLng,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.04231
+      }}
+      style={styles.map}
+      {...this.props}
+    >
+      <UrlTile urlTemplate={tileUrl} maximumZ={19} />
+      {/* Own location marker */}
+      {this.ownLocationMarker(latLng)}
+      {this.props.markers}
+    </MapView>
   }
 }
 
