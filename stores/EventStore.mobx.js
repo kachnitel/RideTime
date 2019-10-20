@@ -129,8 +129,7 @@ export class Event extends BaseEntity {
 
   @action async join () {
     this.store.provider.join(this.id)
-    // REVIEW: Shouldn't work! This ent. uses some weird user format
-    this._members.push(this.store.userStore.currentUser.id)
+    this._members.push(this.store.userStore.currentUser)
   }
 
   @action updateDifficulty (newValue: Number) { this._difficulty = newValue }

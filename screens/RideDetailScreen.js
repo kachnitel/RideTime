@@ -18,11 +18,11 @@ class RideDetailScreen extends React.Component {
         event.isMember()
           ? <ButtonIcon // TODO: Three dot menu here (Leave, edit, ...?)
             icon='more-vert'
-            onPress={() => console.log('invite users to' + event.id)}
+            onPress={() => console.log('leave etc..id: ' + event.id)}
           />
           : <Button
             title='Join'
-            onPress={() => console.log('join' + event.id)} // event.join() + toast
+            onPress={() => event.join()} // event.join() + toast
           />
       )
     }
