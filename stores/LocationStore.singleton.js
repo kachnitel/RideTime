@@ -1,9 +1,9 @@
-import LocationStore, { Location } from './LocationStore.mobx'
+import LocationStore from './LocationStore.mobx'
 import LocationsProvider from '../providers/LocationsProvider'
 import { create } from 'mobx-persist'
 import { AsyncStorage } from 'react-native'
 
-const locationStore = new LocationStore(new LocationsProvider(), Location)
+const locationStore = new LocationStore(new LocationsProvider())
 
 const hydrate = create({
   storage: AsyncStorage,

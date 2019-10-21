@@ -8,8 +8,8 @@ export default class EventStore extends BaseCollectionStore {
   provider: RidesProvider
   @observable userStore: UserStore
 
-  constructor (provider, EntityClass, userStore: UserStore) {
-    super(provider, EntityClass)
+  constructor (provider, userStore: UserStore) {
+    super(provider, Event)
     this.userStore = userStore
   }
 

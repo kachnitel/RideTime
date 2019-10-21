@@ -11,12 +11,9 @@ export default class LocationStore extends BaseCollectionStore {
 
   @persist('map') @observable _currentLocation = new Map()
 
-  constructor (...args) {
-    super(...args)
+  constructor (provider) {
+    super(provider, Location)
 
-    /**
-     * TODO: check permissions
-     */
     this.watchPosition()
   }
 
