@@ -3,8 +3,10 @@ import ApiConnection from '../src/ApiConnection'
 export default class RidesProvider {
   list = (ids: ?Number[]) => {
     return ApiConnection.get('api/events', ids)
-    }
+  }
 
+  filter = (filters: Object) => {
+    return ApiConnection.get('api/events/filter', filters)
   }
 
   get = (id) => {

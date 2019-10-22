@@ -55,12 +55,29 @@ export default class EventStore extends BaseCollectionStore {
 
   /**
    * Shows events with `datetime > 1 hour ago`
+   * TODO: make the start date configurable, turn into a method
    *
    * @returns
    * @memberof EventStore
    */
   @computed get futureEvents () {
-    return this.list().filter((event: Event) => (event.datetime + 3600) > Math.floor(Date.now() / 1000))
+    return this.list()
+      // TODO: dedupe
+      .filter((event: Event) => (event.datetime + 3600) > Math.floor(Date.now() / 1000))
+  }
+
+  async filter (filters: Object) {
+    let result = await this.provider.filter(filters)
+    return result.map((item) => this.upsertEvent(item))
+    // TODO: dedupe
+      .filter((event: Event) => (event.datetime + 3600) > Math.floor(Date.now() / 1000))
+  }
+
+  async myEvents () {
+    let result = await this.provider.list(this.userStore.currentUser.events)
+    return result.map((item) => this.upsertEvent(item))
+    // TODO: dedupe
+      .filter((event: Event) => (event.datetime + 3600) > Math.floor(Date.now() / 1000))
   }
 }
 

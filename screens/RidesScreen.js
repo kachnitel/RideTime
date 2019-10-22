@@ -18,8 +18,6 @@ import CountBadge from '../components/CountBadge'
 /**
  * TODO:
  * - get rides for user - public(*) + friends/groups allowed (* - once privacy is implemented)
- * - filter by location (when a location is selected/Callout is open in map)
- * - display future rides in view when map is moved (see LocationsPicker)
  *
  * @export
  * @class RidesScreen
@@ -50,8 +48,8 @@ class RidesScreen extends React.Component {
       loading: true,
       bbox: null,
       visibleLocations: [],
-      ridesInArea: [],
-      selectedLocation: null
+      selectedLocation: null,
+      visibleEvents: []
     }
   }
 
@@ -60,12 +58,10 @@ class RidesScreen extends React.Component {
   }
 
   /**
-   * TODO:
-   *
    * @memberof RidesScreen
    */
   onRidesRefresh () {
-    // this.loadRides()
+    this.loadRides()
   }
 
   /**
@@ -89,12 +85,21 @@ class RidesScreen extends React.Component {
       visibleLocations: locations,
       bbox: bbox
     })
+
+    this.loadRides()
   }
 
   async loadRides () {
     this.setState({ loading: true })
-    await this.props.EventStore.populate()
-    this.setState({ loading: false })
+    let results = this.state.bbox == null
+      ? await this.props.EventStore.myEvents()
+      : await this.props.EventStore.filter({
+        'location': this.state.visibleLocations.map(({ id }) => id)
+      })
+    this.setState({
+      loading: false,
+      visibleEvents: results
+    })
   }
 
   async loadMapLocations () {
@@ -113,8 +118,8 @@ class RidesScreen extends React.Component {
 
   mapMarkers () {
     return this.state.visibleLocations.map((locationInfo) => {
-      /* REVIEW: event.location SHOULD be just ID ??? */
-      let ridesInArea = this.props.EventStore.futureEvents.filter((event) => event.location.id === locationInfo.id)
+      /* REVIEW: event.location SHOULD be just ID ??? // uses the "thumbnail" object - TODO: */
+      let ridesInLocation = this.state.visibleEvents.filter((event) => event.location.id === locationInfo.id)
       return <Marker
         coordinate={{
           latitude: locationInfo.coords[0],
@@ -124,8 +129,8 @@ class RidesScreen extends React.Component {
         title={locationInfo.name}
         onPress={() => this.selectLocation(locationInfo)}
       >
-        <Text style={ridesInArea.length ? styles.locMarker : { ...styles.locMarker, ...styles.emptyMarker }}>
-          {ridesInArea.length}
+        <Text style={ridesInLocation.length ? styles.locMarker : { ...styles.locMarker, ...styles.emptyMarker }}>
+          {ridesInLocation.length}
         </Text>
         <Callout>
           {this.locationCallout(locationInfo)}
@@ -164,8 +169,8 @@ class RidesScreen extends React.Component {
 
   render () {
     let filteredEventList = this.state.selectedLocation === null
-      ? this.props.EventStore.futureEvents
-      : this.props.EventStore.futureEvents.filter((event) => event.location.id === this.state.selectedLocation.id)
+      ? this.state.visibleEvents
+      : this.state.visibleEvents.filter((event) => event.location.id === this.state.selectedLocation.id)
 
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
