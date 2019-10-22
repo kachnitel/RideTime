@@ -3,10 +3,13 @@ import ApiConnection from '../src/ApiConnection'
 export default class RidesProvider {
   list = (ids: ?Number[]) => {
     let q = ''
-    if (ids) {
-      q = '?ids=' + ids.join(',')
-    }
+    ids.map((id) => {
+      q += q === '' ? '?' : '&'
+      q += 'ids[]=' + id
+    })
     return ApiConnection.get('api/events' + q)
+    }
+
   }
 
   get = (id) => {
