@@ -2,12 +2,7 @@ import ApiConnection from '../src/ApiConnection'
 
 export default class RidesProvider {
   list = (ids: ?Number[]) => {
-    let q = ''
-    ids.map((id) => {
-      q += q === '' ? '?' : '&'
-      q += 'ids[]=' + id
-    })
-    return ApiConnection.get('api/events' + q)
+    return ApiConnection.get('api/events', ids)
     }
 
   }
