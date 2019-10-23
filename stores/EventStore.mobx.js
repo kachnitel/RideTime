@@ -61,6 +61,8 @@ export default class EventStore extends BaseCollectionStore {
    * @memberof EventStore
    */
   @computed get futureEvents () {
+    // TODO: call provider.filter with dateStart
+    // see https://web.postman.co/collections/177751-ad5454f3-b957-421d-9063-dfc64109e494?workspace=03277615-80d2-441a-8d27-e6d7b722d87f#7fb3f985-1008-4a52-9750-dd2b80b11843
     return this.list()
       // TODO: dedupe
       .filter((event: Event) => (event.datetime + 3600) > Math.floor(Date.now() / 1000))
@@ -74,7 +76,8 @@ export default class EventStore extends BaseCollectionStore {
   }
 
   async myEvents () {
-    let result = await this.provider.list(this.userStore.currentUser.events)
+    let currentUser = await this.userStore.getCurrentUserAsync()
+    let result = await this.provider.list(currentUser.events)
     return result.map((item) => this.upsertEvent(item))
     // TODO: dedupe
       .filter((event: Event) => (event.datetime + 3600) > Math.floor(Date.now() / 1000))

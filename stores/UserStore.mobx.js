@@ -39,6 +39,10 @@ export default class UserStore extends BaseCollectionStore {
     return this.getSync(this.applicationStore.userId)
   }
 
+  getCurrentUserAsync () {
+    return this.get(this.applicationStore.userId)
+  }
+
   _friendRequests = observable.array([])
   _sentRequests = observable.array([])
 
@@ -57,6 +61,7 @@ export default class UserStore extends BaseCollectionStore {
 
   async loadDashboard () {
     let dashboard = await this.provider.dashboard()
+    // REVIEW: Use upsert from EventStore (using BaseCollectionStore)
     let currentUser = this._findInCollection(dashboard.currentUser.id) || new User(this)
     currentUser.populateFromApiResponse(dashboard.currentUser)
     this.add(currentUser)
