@@ -46,21 +46,21 @@ class SignInScreen extends React.Component {
    * @memberof SignInScreen
    */
   handleSignIn = (signInResponse, token) => {
-    if (Number.isInteger(signInResponse.id)) {
-      // On successful login save tokens
-      SecureStore.setItemAsync('refreshToken', token.refresh_token)
-
-      this.props.ApplicationStore.updateUserId(signInResponse.id)
-      // Signed in
-      console.info(`User ${signInResponse.id} signed in`)
-      this.props.navigation.navigate('App')
-    } else {
+    if (!Number.isInteger(signInResponse.id)) {
       console.log('Authentication error:', {
         signInResponse: signInResponse,
         token: token
       })
       throw new Error('Invalid user ID:' + signInResponse.id)
     }
+
+    // On successful login save tokens
+    SecureStore.setItemAsync('refreshToken', token.refresh_token)
+
+    this.props.ApplicationStore.updateUserId(signInResponse.id)
+    // Signed in
+    console.info(`User ${signInResponse.id} signed in`)
+    this.props.navigation.navigate('App')
   }
 
   /**
