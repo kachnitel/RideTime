@@ -98,7 +98,9 @@ class HomeLocationsPicker extends React.Component {
           visible={this.state.visible}
           onSelect={this.onSelect}
           onCancel={this.onCancel}
-          options={this.state.locations}
+          options={this.state.locations.filter(
+            (location) => !this.state.picked.includes(location)
+          )}
           renderOption={this.renderOption}
           placeholderText='Search locations'
           autoFocus
