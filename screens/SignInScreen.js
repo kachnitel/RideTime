@@ -14,7 +14,6 @@ import TerrainIcon from '../components/icons/TerrainIcon'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 import Button from '../components/Button'
-import NetworkError from '../src/NetworkError'
 
 export default
 @inject('UserStore')
@@ -33,16 +32,17 @@ class SignInScreen extends React.Component {
     this.props.ApplicationStore.updateAccessToken(token.access_token)
 
     let userInfo = await auth.getUserInfo(token.access_token)
+    let signInResult = await ApiConnection.post('signin', userInfo)
 
-    ApiConnection.post('signin', userInfo)
-      .then((responseBody) => this.handleSignIn(responseBody, token))
-      // navigate to SignUpScreen if User not found
-      .catch((error) => this.maybeSignUpOrError(error, userInfo, token))
+    if (signInResult.success) {
+      this.handleSignIn(signInResult.user, token)
+    } else {
+      this.props.navigation.navigate('SignUp', { user: userInfo, token: token })
+    }
   }
 
   /**
-   * TODO: deprecate /signin, use /dashboard
-   *
+   * Set current user ID in ApplicationStore and redirect to App
    * @memberof SignInScreen
    */
   handleSignIn = (signInResponse, token) => {
@@ -61,41 +61,6 @@ class SignInScreen extends React.Component {
     // Signed in
     console.info(`User ${signInResponse.id} signed in`)
     this.props.navigation.navigate('App')
-  }
-
-  /**
-   * Redirect to SignUp if user not found
-   * Otherwise throw an Error
-   *
-   * @param {NetworkError} error
-   * @param {object} userInfo
-   * @param {string} token
-   *
-   * @memberof SignInScreen
-   */
-  maybeSignUpOrError = (error, userInfo, token) => {
-    if (!(error instanceof NetworkError)) {
-      throw error
-    }
-
-    if (
-      error.data?.error?.message?.startsWith('User with email') &&
-      error.data?.response?.status === 404
-    ) {
-      // Must sign up
-      console.info(`Signing up user`, userInfo)
-
-      this.props.navigation.navigate('SignUp', { user: userInfo, token: token })
-    } else {
-      console.log('Sign in failed:', {
-        token: token,
-        errorMessage: error.message,
-        errorCode: error.statusCode,
-        errorBody: error.body
-      })
-      this.setState({ loading: false })
-      throw new Error('Error signing in')
-    }
   }
 
   render () {
