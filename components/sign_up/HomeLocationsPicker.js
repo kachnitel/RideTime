@@ -17,13 +17,17 @@ class HomeLocationsPicker extends React.Component {
     this.state = {
       visible: false,
       picked: this.props.value || [],
-      loading: true
+      loading: true,
+      locations: []
     }
   }
 
   componentDidMount = async () => {
-    await this.props.LocationStore.populate()
-    this.setState({ loading: false })
+    let locations = await this.props.LocationStore.nearby(50)
+    this.setState({
+      loading: false,
+      locations: locations
+    })
   }
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -94,7 +98,7 @@ class HomeLocationsPicker extends React.Component {
           visible={this.state.visible}
           onSelect={this.onSelect}
           onCancel={this.onCancel}
-          options={this.props.LocationStore.list()}
+          options={this.state.locations}
           renderOption={this.renderOption}
           placeholderText='Search locations'
           autoFocus
