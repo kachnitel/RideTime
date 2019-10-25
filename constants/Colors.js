@@ -12,5 +12,6 @@ export default {
   noticeBackground: tintColor,
   noticeText: '#fff',
   iconColor: '#85c131',
-  darkBackground: '#222629'
+  darkBackground: '#222629',
+  confirmation: '#f90'
 }
