@@ -121,7 +121,7 @@ class LocationPicker extends Component {
           title={location.name}
           key={location.id}
           // description={marker.description}
-          onCalloutPress={() => this.goToRideConfig(location.id)}
+          onCalloutPress={() => this.props.onLocationPress(location.id)}
         />
       })}
     </MapView>
