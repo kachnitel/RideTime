@@ -1,11 +1,15 @@
 import React from 'react'
+import { inject, observer } from 'mobx-react/native'
 import { StyleSheet, View } from 'react-native'
-import LocationPicker from '../components/new_ride/LocationPicker'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import Layout from '../constants/Layout'
 import ButtonIcon from '../components/ButtonIcon'
+import LocationPicker from '../components/new_ride/LocationPicker'
+import Layout from '../constants/Layout'
 
-export default class SelectLocationScreen extends React.Component {
+export default
+@inject('LocationStore')
+@observer
+class SelectLocationScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     // FIXME: button doesn't change
     let displayMap = navigation.getParam('displayMap')
