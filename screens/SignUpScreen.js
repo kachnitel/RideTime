@@ -121,7 +121,7 @@ class SignUpScreen extends React.Component {
               this.state.formPosition === 2 && <Button
                 title='Sign Up!'
                 onPress={this.submit}
-                color={Colors.confirmation}
+                color={Colors.confirmationHighlight}
               />
             }
           </View>
