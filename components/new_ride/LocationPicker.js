@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
-import { StyleSheet, View, ActivityIndicator, Text, Platform } from 'react-native'
-import Layout from '../../constants/Layout'
-import LocationList from '../lists/LocationList'
 import { inject, observer } from 'mobx-react/native'
-import SearchInput from '../form/SearchInput'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native'
 import MapView, { Marker, UrlTile } from 'react-native-maps'
+import Layout from '../../constants/Layout'
+import SearchInput from '../form/SearchInput'
+import LocationList from '../lists/LocationList'
 
 export default
 @inject('LocationStore')
@@ -23,15 +24,6 @@ class LocationPicker extends Component {
       locationIds: locations.map((location) => location.id),
       loading: false
     })
-  }
-
-  goToRideConfig = async (locationId) => {
-    let location = await this.props.LocationStore.get(locationId)
-
-    this.props.navigation.push(
-      'CreateRide',
-      location
-    )
   }
 
   /**
@@ -65,6 +57,12 @@ class LocationPicker extends Component {
 
   render () {
     return <View {...this.props}>
+      { this.props.displayMap ? this.renderMap() : this.renderList() }
+    </View>
+  }
+
+  renderList = () => {
+    return <>
       <View style={styles.inputRow}>
         <SearchInput
           placeholder='Type Location...'
@@ -72,19 +70,17 @@ class LocationPicker extends Component {
           onChangeText={this.handleSearchOnChange}
         />
       </View>
-      { this.props.displayMap ? this.renderMap() : this.renderList() }
-    </View>
-  }
-
-  renderList = () => {
-    return this.state.loading
-      ? <ActivityIndicator />
-      : this.state.typing
-        ? <Text>Type three or more letters to search...</Text>
-        : <LocationList
-          locations={this.state.locationIds}
-          onLocationPress={this.goToRideConfig}
-        />
+      {
+        this.state.typing
+          ? <Text>Type three or more letters to search...</Text>
+          : this.state.loading
+            ? <ActivityIndicator />
+            : <LocationList
+              locations={this.state.locationIds}
+              onLocationPress={this.props.onLocationPress}
+            />
+      }
+      </>
   }
 
   renderMap = () => {
@@ -130,6 +126,12 @@ class LocationPicker extends Component {
       })}
     </MapView>
   }
+}
+
+LocationPicker.propTypes = {
+  LocationStore: PropTypes.any,
+  displayMap: PropTypes.bool,
+  onLocationPress: PropTypes.func
 }
 
 const styles = StyleSheet.create({

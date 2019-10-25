@@ -27,16 +27,25 @@ export default class SelectLocationScreen extends React.Component {
     displayMap: false
   }
 
-  toggleDisplayMap = () => {
-    this.setState((prevState) => ({ displayMap: !prevState.displayMap }))
+  toggleDisplayMap = async () => {
+    await this.setState((prevState) => ({ displayMap: !prevState.displayMap }))
+    this.props.navigation.setParams({ displayMap: this.state.displayMap })
   }
 
   componentDidMount () {
     this.props.navigation.setParams({
       toggleDisplayMap: this.toggleDisplayMap,
-      // state: this.state
       displayMap: this.state.displayMap
     })
+  }
+
+  goToRideConfig = (locationId) => {
+    let location = this.props.LocationStore.getSync(locationId)
+
+    this.props.navigation.push(
+      'CreateRide',
+      location
+    )
   }
 
   render () {
@@ -44,8 +53,8 @@ export default class SelectLocationScreen extends React.Component {
       <View style={styles.container}>
         <LocationPicker
           style={styles.locationPicker}
-          navigation={this.props.navigation}
           displayMap={this.state.displayMap}
+          onLocationPress={this.goToRideConfig}
         />
         {/* Next button? */}
       </View>
