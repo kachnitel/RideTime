@@ -60,7 +60,7 @@ class RidesScreen extends React.Component {
   /**
    * @memberof RidesScreen
    */
-  onRidesRefresh () {
+  onRidesRefresh = () => {
     this.loadRides()
   }
 
