@@ -33,24 +33,9 @@ export default class EventStore extends BaseCollectionStore {
   async loadInvites () {
     let invites = await this.provider.listInvites()
     invites.map((item) => {
-      let event = this.upsertEvent(item)
+      let event = this.upsert(item)
       this.addInvite(event)
     })
-  }
-
-  /**
-   * Update or insert an Event to store from JSON object
-   *
-   * @param {*} eventObject
-   * @memberof EventStore
-   */
-  upsertEvent (eventObject) {
-    let event = this._findInCollection(eventObject.id) || new Event(this)
-
-    event.populateFromApiResponse(eventObject, true)
-    this.add(event)
-
-    return event
   }
 
   /**
@@ -70,7 +55,7 @@ export default class EventStore extends BaseCollectionStore {
 
   async filter (filters: Object) {
     let result = await this.provider.filter(filters)
-    return result.map((item) => this.upsertEvent(item))
+    return result.map((item) => this.upsert(item))
     // TODO: dedupe
       .filter((event: Event) => (event.datetime + 3600) > Math.floor(Date.now() / 1000))
   }
@@ -78,7 +63,7 @@ export default class EventStore extends BaseCollectionStore {
   async myEvents () {
     let currentUser = await this.userStore.getCurrentUserAsync()
     let result = await this.provider.list(currentUser.events)
-    return result.map((item) => this.upsertEvent(item))
+    return result.map((item) => this.upsert(item))
     // TODO: dedupe
       .filter((event: Event) => (event.datetime + 3600) > Math.floor(Date.now() / 1000))
   }

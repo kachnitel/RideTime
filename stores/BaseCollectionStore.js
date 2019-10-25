@@ -74,16 +74,33 @@ export class BaseCollectionStore {
     entity.update(updatedEntity)
   }
 
+  /**
+   * Update or insert an entity to store from JSON object
+   *
+   * @param {*} object API Response formatted object
+   * @memberof EventStore
+   */
+  upsert (object) {
+    let entity = this._findInCollection(object.id) || new this.EntityClass(this)
+
+    entity.populateFromApiResponse(object, true)
+    this.add(entity)
+
+    return entity
+  }
+
   list = () => {
     return this._collection
   }
 
+  /**
+   * @param {?Number[]} ids
+   * @memberof BaseCollectionStore
+   */
   async populateEntities (ids: ?Number[]) {
     let results = await this.provider.list(ids)
     results.map((result) => {
-      let entity = new this.EntityClass(this)
-      entity.populateFromApiResponse(result)
-      this.add(entity)
+      this.upsert(result)
     })
   }
 

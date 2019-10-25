@@ -72,8 +72,6 @@ export default class LocationStore extends BaseCollectionStore {
   }
 
   /**
-   * TODO:
-   *
    * @memberof LocationStore
    */
   search = async (name: String) => {
@@ -83,11 +81,14 @@ export default class LocationStore extends BaseCollectionStore {
     return results
   }
 
+  /**
+   * FIXME: duplicates populateEntities from parent
+   *
+   * @memberof LocationStore
+   */
   populateResults = (results: Array) => {
     results.forEach((result) => {
-      let location = this._findInCollection(result.id) || new Location(this)
-      location.populateFromApiResponse(result, true)
-      this.add(location)
+      this.upsert(result)
     })
   }
 
