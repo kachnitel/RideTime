@@ -55,6 +55,10 @@ class LocationPicker extends Component {
     })
   }
 
+  getLocationIds () {
+    return this.props.filter ? this.state.locationIds.filter(this.props.filter) : this.state.locationIds
+  }
+
   render () {
     return <View {...this.props}>
       { this.props.displayMap ? this.renderMap() : this.renderList() }
@@ -77,7 +81,7 @@ class LocationPicker extends Component {
           : this.state.loading
             ? <ActivityIndicator />
             : <LocationList
-              locations={this.state.locationIds}
+              locations={this.getLocationIds()}
               onLocationPress={this.props.onLocationPress}
             />
       }
@@ -111,7 +115,7 @@ class LocationPicker extends Component {
       }}
     >
       <UrlTile urlTemplate={tileUrl} maximumZ={19} />
-      {this.state.locationIds.map((id) => {
+      {this.getLocationIds().map((id) => {
         let location = this.props.LocationStore.getSync(id)
         let latlng = {
           latitude: location.coords[0],
@@ -132,7 +136,8 @@ class LocationPicker extends Component {
 LocationPicker.propTypes = {
   LocationStore: PropTypes.any,
   displayMap: PropTypes.bool,
-  onLocationPress: PropTypes.func
+  onLocationPress: PropTypes.func,
+  filter: PropTypes.func
 }
 
 const styles = StyleSheet.create({

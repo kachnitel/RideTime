@@ -1,11 +1,12 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native'
-import ModalFilterPicker from 'react-native-modal-filter-picker'
 import InputTitle from '../form/InputTitle'
 import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { observer, inject } from 'mobx-react/native'
+import ModalView from '../ModalView'
+import LocationPicker from '../new_ride/LocationPicker'
 
 export default
 @inject('LocationStore')
@@ -94,17 +95,15 @@ class HomeLocationsPicker extends React.Component {
             </TouchableNativeFeedback>
           }
         </View>
-        <ModalFilterPicker
-          visible={this.state.visible}
-          onSelect={this.onSelect}
-          onCancel={this.onCancel}
-          options={this.state.locations.filter(
-            (location) => !this.state.picked.includes(location)
-          )}
-          renderOption={this.renderOption}
-          placeholderText='Search locations'
-          autoFocus
-        />
+        <ModalView
+          isVisible={this.state.visible}
+        >
+          <LocationPicker
+            style={styles.locationPicker}
+            onLocationPress={this.onSelect}
+            filter={(location) => !this.state.picked.includes(location)} // Filters out already selected
+          />
+        </ModalView>
       </View>
     )
   }
@@ -139,9 +138,9 @@ class HomeLocationsPicker extends React.Component {
     }))
   }
 
-  onCancel = () => {
-    this.setState({ visible: false })
-  }
+  // onCancel = () => {
+  //   this.setState({ visible: false })
+  // }
 }
 
 const styles = StyleSheet.create({
@@ -188,5 +187,9 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: Layout.window.hp(2.5),
     padding: Layout.window.hp(1)
+  },
+  locationPicker: {
+    width: '100%',
+    height: '100%' // REVIEW: Should be flexible
   }
 })
