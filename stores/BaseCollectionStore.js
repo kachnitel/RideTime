@@ -80,7 +80,7 @@ export class BaseCollectionStore {
    * @param {*} object API Response formatted object
    * @memberof EventStore
    */
-  upsert (object) {
+  upsert = (object) => {
     let entity = this._findInCollection(object.id) || new this.EntityClass(this)
 
     entity.populateFromApiResponse(object, true)
