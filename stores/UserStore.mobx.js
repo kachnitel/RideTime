@@ -61,10 +61,7 @@ export default class UserStore extends BaseCollectionStore {
 
   async loadDashboard () {
     let dashboard = await this.provider.dashboard()
-    // REVIEW: Use upsert from EventStore (using BaseCollectionStore)
-    let currentUser = this._findInCollection(dashboard.currentUser.id) || new User(this)
-    currentUser.populateFromApiResponse(dashboard.currentUser)
-    this.add(currentUser)
+    this.upsert(dashboard.currentUser)
     this.updateFriendRequests(dashboard.requests)
     this.updateSentRequests(dashboard.sentRequests)
     this.updateLoaded(true)
@@ -79,13 +76,7 @@ export default class UserStore extends BaseCollectionStore {
    */
   async search (name: String) {
     let result = await this.provider.search(name)
-    result.map((item) => {
-      let user = this._findInCollection(item.id) || new User(this)
-
-      // TODO: Incomplete info (missing relations); use ID only
-      user.populateFromApiResponse(item, true)
-      this.add(user)
-    })
+    result.map(this.upsert)
 
     return result
   }
