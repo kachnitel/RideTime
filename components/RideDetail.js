@@ -68,7 +68,7 @@ class RideDetail extends Component {
         icon: 'add-circle-outline',
         action: (id) => this.props.Event.invite(id), // TODO: Toast
         disabled: (id) => (
-          this.props.Event.members.find((item) => item.id === id) !== undefined ||
+          this.props.Event.isMember(id) ||
           this.props.Event.invited.indexOf(id) !== -1
         )
       }]}
