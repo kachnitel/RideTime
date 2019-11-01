@@ -13,5 +13,6 @@ export default {
   noticeText: '#fff',
   iconColor: '#85c131',
   darkBackground: '#222629',
+  darkBackgroundText: '#fff',
   confirmationHighlight: '#f90'
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, StyleSheet, View, Text } from 'react-native'
-import { RidersList } from '../components/lists/RidersList'
+import RidersList from '../components/lists/RidersList'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 // import { AreaMap } from './AreaMap'
@@ -27,7 +27,7 @@ class RideDetail extends Component {
           <RideItem ride={this.props.Event} />
         </View>
         <View style={{ ...styles.detailListItem, ...styles.membersListContainer }} >
-          <RidersList riders={this.props.Event.members} />
+          <RidersList userIDs={this.props.Event.members} headerText='Members' textColor={Colors.darkBackgroundText} />
           {/* Only show invite button if member */}
           {this.props.Event.isMember() && this.inviteButton()}
         </View>

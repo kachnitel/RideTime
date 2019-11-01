@@ -2,16 +2,21 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Layout from '../../constants/Layout'
 import ProfilePicture from '../profile/ProfilePicture'
+import { observer, inject } from 'mobx-react/native'
 
-export default class RiderItem extends React.Component {
+export default
+@inject('User', 'TextColor')
+@observer
+class RiderItem extends React.Component {
   render () {
+    let textStyle = this.props.TextColor
+      ? { ...styles.name, color: this.props.TextColor }
+      : styles.name
     return (
-      // Rider should contain his details fetched in list
-      // To render eg. little exp. icon in corner of image
       <View style={styles.listItem}>
-        <ProfilePicture picture={this.props.rider.picture} size={Layout.window.hp(7)} />
-        <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
-          {this.props.rider.name}
+        <ProfilePicture picture={this.props.User.picture} size={Layout.window.hp(7)} />
+        <Text style={textStyle} numberOfLines={1} >
+          {this.props.User.name}
         </Text>
       </View>
     )

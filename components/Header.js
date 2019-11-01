@@ -10,6 +10,8 @@ export default class Header extends Component {
   }
 }
 
+Header.propTypes = Text.propTypes
+
 const styles = StyleSheet.create({
   header: {
     fontSize: Layout.window.hp(2.5),

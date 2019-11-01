@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
-import { RidersList } from '../components/lists/RidersList'
-import { FriendList } from '../components/profile/FriendList'
+import RidersList from '../components/lists/RidersList'
 import UsersList from '../components/lists/UsersList'
+import Colors from '../constants/Colors'
 
 /**
  * TODO: Show a menu and have views for:
@@ -25,9 +25,16 @@ class DevScreen extends React.Component {
     return (
       <View>
         <Text>RidersList</Text>
-        <RidersList riders={this.props.UserStore.currentUser.friends} />
-        <Text>FriendList</Text>
-        <FriendList friends={this.props.UserStore.currentUser.friends} />
+        <RidersList
+          userIDs={this.props.UserStore.currentUser.friends}
+          headerText='Riders'
+        />
+        <RidersList
+          userIDs={this.props.UserStore.currentUser.friends}
+          headerText='Riders dark'
+          textColor='white'
+          style={{ backgroundColor: Colors.darkBackground }}
+        />
         <Text>UsersList</Text>
         <UsersList users={this.props.UserStore.currentUser.friends} />
       </View>
