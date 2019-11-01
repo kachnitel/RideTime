@@ -107,6 +107,19 @@ export default class UserStore extends BaseCollectionStore {
     this.provider.removeFriend(id)
     this.currentUser.removeFriend(id)
   }
+
+  populateRelated = (related: Object) => {
+    Object.keys(related).map((key) => {
+      switch (key) {
+        case 'user':
+          related[key].map(this.upsert)
+          break
+        default:
+          console.warn('Received `relatedEntities` of an unknown type: ' + key)
+          break
+      }
+    })
+  }
 }
 
 export class User extends BaseEntity {

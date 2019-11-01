@@ -6,9 +6,16 @@ export class BaseEntity {
   }
 
   async populateFromApi (id: Number) {
-    let entity = await this.store.provider.get(id)
+    let { result, relatedEntities } = await this.store.provider.get(id)
+    this.populateFromApiResponse(result)
 
-    this.populateFromApiResponse(entity)
+    if (relatedEntities) {
+      if (typeof this.store.populateRelated !== 'function') {
+        console.warn('Received objects to populate relations but Store has no method to do so')
+      } else {
+        this.store.populateRelated(relatedEntities)
+      }
+    }
   }
 
   populateFromApiResponse (responseData: Object, skipNullValues: Boolean) {
