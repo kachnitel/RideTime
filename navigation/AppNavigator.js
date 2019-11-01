@@ -2,6 +2,7 @@ import { createSwitchNavigator, createAppContainer } from 'react-navigation'
 import DrawerNavigator from './DrawerNavigator'
 import AuthLoadingScreen from '../screens/AuthLoadingScreen'
 import AuthStack from './AuthNavigator'
+import DevScreen from '../screens/DevScreen'
 
 const MainNavigator = createSwitchNavigator({
   // You could add another route here for authentication.
@@ -9,7 +10,8 @@ const MainNavigator = createSwitchNavigator({
   // Main: MainTabNavigator,
   AuthLoading: AuthLoadingScreen,
   App: DrawerNavigator,
-  Auth: AuthStack
+  Auth: AuthStack,
+  Dev: DevScreen
 },
 {
   initialRouteName: 'AuthLoading'

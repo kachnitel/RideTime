@@ -5,6 +5,8 @@ import { ScrollView, Text, View, StyleSheet } from 'react-native'
 import Constants from 'expo-constants'
 import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
+import { getEnvVars } from '../constants/Env'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 class DrawerContent extends Component {
   render () {
@@ -13,6 +15,9 @@ class DrawerContent extends Component {
         <DrawerItems {...this.props} />
       </ScrollView>
       <View style={styles.footerContainer}>
+        { getEnvVars().dev && <TouchableOpacity onPress={() => this.props.navigation.navigate('Dev')}>
+          <Text>Dev</Text>
+        </TouchableOpacity>}
         <Text style={styles.versionText}>
           Version: { Constants.manifest.version }
         </Text>
@@ -30,7 +35,6 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     backgroundColor: '#f50057',
-    height: Layout.window.hp(2.5),
     alignItems: 'center',
     justifyContent: 'center'
   },
