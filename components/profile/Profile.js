@@ -1,8 +1,7 @@
 import React from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
-import Colors from '../../constants/Colors'
 import CountHeader from '../CountHeader'
-import { FriendList } from './FriendList'
+import RidersList from '../lists/RidersList'
 import ProfileHeader from './ProfileHeader'
 import { Favourites } from './Favourites'
 import Layout from '../../constants/Layout'
@@ -16,26 +15,17 @@ class Profile extends React.Component {
     return (
       <ScrollView>
         <ProfileHeader user={this.props.User} />
-        <FriendList friends={this.props.User.friends} style={styles.friendList} />
-        <CountHeader number={this.props.User.events.length} style={styles.title}>Upcoming Rides</CountHeader>
-        <Favourites text={this.props.User.favourites} style={styles.title} />
+        <RidersList userIDs={this.props.User.friends} style={styles.detailItem} headerText='Friends' />
+        <CountHeader number={this.props.User.events.length} style={styles.detailItem}>Upcoming Rides</CountHeader>
+        <Favourites text={this.props.User.favourites} style={styles.detailItem} />
       </ScrollView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  friendList: {
-    paddingTop: Layout.window.hp(2),
-    color: '#000'
-  },
-  title: {
+  detailItem: {
     paddingHorizontal: Layout.window.wp(4),
-    paddingVertical: Layout.window.hp(2)
-  },
-  rideItemContainer: {
-    borderColor: Colors.iconColor,
-    borderTopWidth: 1,
-    borderBottomWidth: 1
+    paddingVertical: Layout.window.hp(1)
   }
 })
