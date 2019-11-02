@@ -5,10 +5,12 @@ export class BaseCollectionStore {
   _collection = observable.array([])
   provider // REVIEW: Need some sort of interface
   EntityClass: BaseEntity
+  stores: Object
 
-  constructor (provider, EntityClass) {
+  constructor (provider, EntityClass, stores) {
     this.provider = provider
     this.EntityClass = EntityClass
+    this.stores = stores
 
     this.add = this.add.bind(this)
     this.getEntity = this.getEntity.bind(this)

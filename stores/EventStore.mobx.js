@@ -8,9 +8,9 @@ export default class EventStore extends BaseCollectionStore {
   provider: RidesProvider
   @observable userStore: UserStore
 
-  constructor (provider, userStore: UserStore) {
-    super(provider, Event)
-    this.userStore = userStore
+  constructor (provider, stores) {
+    super(provider, Event, stores)
+    this.userStore = stores.user // REVIEW: redundant with stores object?
   }
 
   _invites = observable.array([])

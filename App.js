@@ -6,10 +6,8 @@ import Layout from './constants/Layout'
 import AppContainer from './navigation/AppNavigator'
 import PropTypes from 'prop-types'
 import { Provider, observer } from 'mobx-react'
-import userStore from './stores/UserStore.singleton'
 import applicationStore from './stores/ApplicationStore.singleton'
-import eventStore from './stores/EventStore.singleton'
-import locationStore from './stores/LocationStore.singleton'
+import stores from './stores/CollectionStores.singleton'
 import PushNotifications from './src/PushNotifications'
 import navigationService from './src/NavigationService'
 import NotificationsHandler from './src/NotificationsHandler'
@@ -47,9 +45,9 @@ class App extends React.Component {
           {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
           <Provider
             ApplicationStore={applicationStore}
-            UserStore={userStore}
-            EventStore={eventStore}
-            LocationStore={locationStore}
+            UserStore={stores.user}
+            EventStore={stores.event}
+            LocationStore={stores.location}
           >
             <AppContainer
               ref={(navigatorRef) => {
@@ -69,8 +67,8 @@ class App extends React.Component {
      * it can initialize and call the handler before
      * loading is completed
      */
-    if (!userStore.loaded) {
-      await userStore.loading
+    if (!stores.user.loaded) {
+      await stores.user.loading
     }
     let notifications = new PushNotifications()
     let handler = new NotificationsHandler()

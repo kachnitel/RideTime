@@ -1,6 +1,5 @@
 import navigationService from './NavigationService'
-import userStore from '../stores/UserStore.singleton'
-import eventStore from '../stores/EventStore.singleton'
+import stores from '../stores/CollectionStores.singleton'
 
 export default class NotificationsHandler {
   listener = (notification: Object) => {
@@ -20,23 +19,23 @@ export default class NotificationsHandler {
   }
 
   handleFriendRequestReceived = (data, selected) => {
-    userStore.addFriendRequest(data.from)
+    stores.user.addFriendRequest(data.from)
     if (selected) {
       navigationService.navigate('Friends')
     }
   }
 
   handleFriendRequestAccepted = (data, selected) => {
-    userStore.removeSentRequest(data.from)
-    userStore.currentUser.addFriend(data.from)
+    stores.user.removeSentRequest(data.from)
+    stores.user.currentUser.addFriend(data.from)
     if (selected) {
       navigationService.navigate('PublicProfile', { id: data.from })
     }
   }
 
   handleEventInviteReceived = (data, selected) => {
-    let event = eventStore.upsertEvent(data.event)
-    eventStore.addInvite(event)
+    let event = stores.event.upsertEvent(data.event)
+    stores.event.addInvite(event)
 
     if (selected) {
       navigationService.navigate('RideDetail', { event: event })

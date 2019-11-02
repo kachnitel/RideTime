@@ -16,8 +16,8 @@ export default class UserStore extends BaseCollectionStore {
   @observable _loaded = false
   @observable applicationStore: ApplicationStore
 
-  constructor (provider, applicationStore: ApplicationStore) {
-    super(provider, User)
+  constructor (provider, stores, applicationStore: ApplicationStore) {
+    super(provider, User, stores)
     this.applicationStore = applicationStore
 
     autorun((reaction) => {
