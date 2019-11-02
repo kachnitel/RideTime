@@ -118,8 +118,7 @@ class RidesScreen extends React.Component {
 
   mapMarkers () {
     return this.state.visibleLocations.map((locationInfo) => {
-      /* REVIEW: event.location SHOULD be just ID ??? // uses the "thumbnail" object - TODO: */
-      let ridesInLocation = this.state.visibleEvents.filter((event) => event.location.id === locationInfo.id)
+      let ridesInLocation = this.state.visibleEvents.filter((event) => event.location === locationInfo.id)
       return <Marker
         coordinate={{
           latitude: locationInfo.coords[0],
@@ -153,7 +152,7 @@ class RidesScreen extends React.Component {
         {Object.keys(DifficultyIcon.icons).map(Number).map((difficultyLevel) => {
           let ridesByLevel = this.props.EventStore.futureEvents.filter(
             (event) =>
-              event.location.id === locationInfo.id &&
+              event.location === locationInfo.id &&
               event.difficulty === difficultyLevel
           ).length
           if (ridesByLevel > 0) {
@@ -170,7 +169,7 @@ class RidesScreen extends React.Component {
   render () {
     let filteredEventList = this.state.selectedLocation === null
       ? this.state.visibleEvents
-      : this.state.visibleEvents.filter((event) => event.location.id === this.state.selectedLocation.id)
+      : this.state.visibleEvents.filter((event) => event.location === this.state.selectedLocation.id)
 
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
