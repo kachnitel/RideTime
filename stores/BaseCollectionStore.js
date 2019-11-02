@@ -106,6 +106,17 @@ export class BaseCollectionStore {
     })
   }
 
+  populateRelated = (related: Object) => {
+    Object.keys(related).map((type) => {
+      if (this.stores[type] === undefined) {
+        console.warn('Received `relatedEntities` of an unknown type: ' + type)
+        return
+      }
+
+      related[type].map(this.stores[type].upsert)
+    })
+  }
+
   _findInCollection (id) {
     return this._collection.find(entity => entity.id === id)
   }
