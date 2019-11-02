@@ -4,7 +4,7 @@ import ApplicationStore from '../ApplicationStore.mobx'
 
 /* eslint-env jest */
 test('should add user to store', async () => {
-  let store = new UserStore(new RidersProvider(), new ApplicationStore())
+  let store = new UserStore(new RidersProvider(), {}, new ApplicationStore())
   let user = new User(store)
 
   user.updateId(1)
@@ -49,7 +49,7 @@ test('should populate user from json', () => {
 
 test('should return currentUser using applicationStore.userId', () => {
   let applicationStore = new ApplicationStore()
-  let store = new UserStore(new RidersProvider(), applicationStore)
+  let store = new UserStore(new RidersProvider(), {}, applicationStore)
   let user = new User(store)
   user.updateId(1)
   store.add(user)
@@ -60,7 +60,7 @@ test('should return currentUser using applicationStore.userId', () => {
 
 test('should move ID from requests to friends', () => {
   let applicationStore = new ApplicationStore()
-  let store = new UserStore(new RidersProvider(), applicationStore)
+  let store = new UserStore(new RidersProvider(), {}, applicationStore)
   let user = new User(store)
   user.updateId(1)
   store.add(user)

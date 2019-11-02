@@ -2,8 +2,9 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import LocationItem from '../LocationItem'
-import locationStore from '../../../stores/LocationStore.singleton'
-import { Location } from '../../../stores/LocationStore.mobx'
+// import locationStore from '../../../stores/LocationStore.singleton'
+import LocationStore, { Location } from '../../../stores/LocationStore.mobx'
+import LocationsProvider from '../../../providers/LocationsProvider'
 
 jest.mock('../../location/LocationDifficulties', () => 'LocationDifficulties')
 jest.mock('../../RiderCount', () => 'RiderCount')
@@ -18,6 +19,8 @@ it('renders correctly', async () => {
     name: 'Place',
     difficulties: [1, 2]
   }
+
+  let locationStore = new LocationStore(new LocationsProvider(), {})
 
   let location = new Location(locationStore)
   location.populateFromApiResponse(testLocation)
