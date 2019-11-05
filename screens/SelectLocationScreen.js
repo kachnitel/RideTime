@@ -47,7 +47,7 @@ class SelectLocationScreen extends React.Component {
     let location = this.props.LocationStore.getSync(locationId)
 
     this.props.navigation.push(
-      'CreateRide',
+      'SelectRouteTrails',
       location
     )
   }
