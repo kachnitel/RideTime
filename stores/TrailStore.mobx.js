@@ -27,11 +27,10 @@ export class Trail extends BaseEntity {
   @observable _title = null
   @observable _description = null
   @observable _difficulty = null
-  @observable _profile = {
-    distance: undefined,
-    alt_climb: undefined,
-    alt_descent: undefined
-  }
+  /**
+   * _profile = { distance, alt_climb, alt_descent }
+   */
+  @observable _profile = new Map()
   @observable _location = null
 
   @action updateId (newValue: Number) { this._id = newValue }
@@ -50,7 +49,7 @@ export class Trail extends BaseEntity {
   @computed get location () { return this._location }
 
   @action updateProfile (newValue: Object) {
-    Object.keys(this.profile).map((key) => { this._profile[key] = newValue[key] })
+    this._profile.merge(newValue)
   }
   @computed get profile () { return this._profile }
 }
