@@ -127,6 +127,11 @@ export class Location extends BaseEntity {
     3: 0,
     4: 0
   }
+  // _trails = observable.array([])
+  _trailsLoaded = {
+    completed: false,
+    loaded: 0
+  }
 
   @action updateId (newValue: Number) { this._id = newValue }
   @computed get id () { return this._id }
@@ -142,4 +147,19 @@ export class Location extends BaseEntity {
 
   @action updateImagemap (newValue: String) { this._imagemap = newValue }
   @computed get imagemap () { return this._imagemap }
+
+  @computed get trails () {
+    this.loadTrails()
+    return this.store.stores.trail.list().filter((item) => item.location === this.id)
+  }
+
+  loadTrails = async () => {
+    while (!this._trailsLoaded.completed) {
+      let data = await this.store.provider.trailsByLocation(this.id)
+      this.store.populateRelated({ trail: data })
+      this._trailsLoaded.loaded += data.length
+
+      break // TODO: need to find a way to tell all is loaded
+    }
+  }
 }

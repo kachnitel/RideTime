@@ -39,4 +39,8 @@ export default class LocationsProvider {
       name: val
     })
   }
+
+  trailsByLocation = (id: Number) => {
+    return ApiConnection.get('api/locations/' + id + '/trails')
+  }
 }
