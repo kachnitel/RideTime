@@ -6,6 +6,8 @@ import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
 import AlternatingStyleList from '../components/lists/AlternatingStyleList'
 import { Location } from '../stores/LocationStore.mobx'
+import TrailItem from '../components/list_items/TrailItem'
+import { SafeAreaView } from 'react-navigation'
 
 export default
 @observer
@@ -42,14 +44,12 @@ class SelectRouteTrailsScreen extends Component {
 
   // TODO: Component
   trailsComponent = () => <View>
-    <Text>Some fancy list here, propagates a created `trails list` (array of Trail objects)</Text>
-    <ScrollView style={{ backgroundColor: 'red' }}>
+    <Text>TODO: Filter</Text>
+    <ScrollView>
       <AlternatingStyleList
         items={this.location.trails}
         onItemPress={(item) => console.log(item.title)}
-        itemComponent={(item, style) => <View>
-          <Text>{item.title}</Text>
-        </View>}
+        itemComponent={(item, style) => <TrailItem trail={item} style={style} />}
       />
     </ScrollView>
   </View>
@@ -69,7 +69,7 @@ class SelectRouteTrailsScreen extends Component {
    * @memberof SelectRouteTrailsScreen
    */
   render () {
-    return <View>
+    return <SafeAreaView>
       {this.tabToggle()}
       {
         this.state.trailsTab
@@ -78,7 +78,7 @@ class SelectRouteTrailsScreen extends Component {
           // ? <TrailsPicker location={location} /> // Allow selecting multiple trails in area
           // : <RoutePicker location={location} /> // Select route, add trails to list (which shall be a part of route object in event)
       }
-    </View>
+    </SafeAreaView>
   }
 }
 
