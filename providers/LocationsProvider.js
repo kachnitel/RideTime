@@ -2,15 +2,6 @@
 import ApiConnection from '../src/ApiConnection'
 
 export default class LocationsProvider {
-  /*
-     * TODO: Define ranges of lat/lon if map provides corners
-     * otherwise let server figure it out
-     * @param latMin
-     * @param latMax
-     * @param lonMin
-     * @param lonMax
-     *
-     */
   list = () => {
     return ApiConnection.get('api/locations')
   }
@@ -27,6 +18,16 @@ export default class LocationsProvider {
     })
   }
 
+  /*
+   * bbox filter is in the format of
+   * top-left lat/lon and bottom-right lat/lon
+   * @param {Array} coords [
+   *  latMin
+   *  lonMin
+   *  latMax
+   *  lonMax
+   * ]
+   */
   bbox = (coords: Array) => {
     return ApiConnection.get('api/locations/bbox', {
       coords: coords
