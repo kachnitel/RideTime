@@ -23,7 +23,14 @@ class AuthLoadingScreen extends React.Component {
     let signedInUserId = this.props.ApplicationStore.userId
 
     if (signedInUserId) {
-      await this.props.ApplicationStore.refreshAccessToken()
+      try {
+        await this.props.ApplicationStore.refreshAccessToken()
+      } catch (error) {
+        console.warn(await error.body)
+        Alert.alert('Error refreshing token')
+        this.resetAuth()
+        return
+      }
 
       let user = await this.props.UserStore.get(signedInUserId)
         .catch(async (error) => {
@@ -41,8 +48,17 @@ class AuthLoadingScreen extends React.Component {
         return
       }
     }
-    // This will switch to the Auth screen and this loading
-    // screen will be unmounted and thrown away.
+
+    this.resetAuth()
+  }
+
+  /**
+   * This will switch to the Auth screen and this loading
+   * screen will be unmounted and thrown away.
+   *
+   * @memberof AuthLoadingScreen
+   */
+  resetAuth = () => {
     this.props.ApplicationStore.reset()
     this.props.navigation.navigate('Auth')
   }
