@@ -5,12 +5,20 @@ import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
 import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
 import AlternatingStyleList from '../components/lists/AlternatingStyleList'
+import { Location } from '../stores/LocationStore.mobx'
 
 export default
 @observer
 class SelectRouteTrailsScreen extends Component {
   state = {
     trailsTab: false
+  }
+
+  location: Location
+
+  componentDidMount = () => {
+    this.location = this.props.navigation.getParam('location')
+    this.location.loadTrails()
   }
 
   tabToggle = () => <View style={styles.toggleContainer}>
@@ -37,8 +45,8 @@ class SelectRouteTrailsScreen extends Component {
     <Text>Some fancy list here, propagates a created `trails list` (array of Trail objects)</Text>
     <ScrollView style={{ backgroundColor: 'red' }}>
       <AlternatingStyleList
-        items={this.props.navigation.getParam('trails')}
-        onItemPress={(item) => console.log(item)}
+        items={this.location.trails}
+        onItemPress={(item) => console.log(item.title)}
         itemComponent={(item, style) => <View>
           <Text>{item.title}</Text>
         </View>}

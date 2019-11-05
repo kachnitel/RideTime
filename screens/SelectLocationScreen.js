@@ -48,7 +48,7 @@ class SelectLocationScreen extends React.Component {
 
     this.props.navigation.push(
       'SelectRouteTrails',
-      location
+      { location }
     )
   }
 
