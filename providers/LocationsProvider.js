@@ -1,4 +1,3 @@
-// TODO: filter by visible frame https://github.com/reggie3/react-native-webview-leaflet/blob/8e5830fc23d121db19f51d7dea872d553c253ba5/web/mapComponent.js#L307
 import ApiConnection from '../src/ApiConnection'
 
 export default class LocationsProvider {
@@ -19,6 +18,8 @@ export default class LocationsProvider {
   }
 
   /*
+   * Bounding box - list locations within a map
+   *
    * bbox filter is in the format of
    * top-left lat/lon and bottom-right lat/lon
    * @param {Array} coords [
