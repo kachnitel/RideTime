@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
+import { observer } from 'mobx-react/native'
 import { View, Text, StyleSheet } from 'react-native'
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
 import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
 import AlternatingStyleList from '../components/lists/AlternatingStyleList'
 
-export default class SelectRouteTrailsScreen extends Component {
+export default
+@observer
+class SelectRouteTrailsScreen extends Component {
   state = {
     trailsTab: false
   }
@@ -35,7 +38,7 @@ export default class SelectRouteTrailsScreen extends Component {
     <ScrollView style={{ backgroundColor: 'red' }}>
       <AlternatingStyleList
         items={this.props.navigation.getParam('trails')}
-        onItemPress={(item) => console.log(item.toJs())}
+        onItemPress={(item) => console.log(item)}
         itemComponent={(item, style) => <View>
           <Text>{item.title}</Text>
         </View>}
@@ -58,9 +61,6 @@ export default class SelectRouteTrailsScreen extends Component {
    * @memberof SelectRouteTrailsScreen
    */
   render () {
-    // let location = this.props.navigation.getParam('location')
-    console.log(this.props.navigation.getParam('trails').map((item) => { return { title: item.title, profile: item.profile } }))
-
     return <View>
       {this.tabToggle()}
       {
