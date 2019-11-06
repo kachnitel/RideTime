@@ -16,40 +16,44 @@ class TrailItem extends Component {
     let distance = this.props.trail.profile.get('distance') < 1000
       ? Math.round(this.props.trail.profile.get('distance')) + 'm'
       : (this.props.trail.profile.get('distance') / 1000).toFixed(2) + 'km'
+    let climb = Math.round(this.props.trail.profile.get('alt_climb'))
+    let descent = Math.round(this.props.trail.profile.get('alt_descent'))
+
     return <View style={styles.profileContainer}>
       <Icon name='map-marker-distance' style={this.props.style} />
-      <Text style={this.props.style}>{distance}</Text>
+      <Text style={{ ...this.props.style, ...styles.profileText }}>{distance}</Text>
       <Icon name='arrow-up-bold' color='red' />
-      <Text style={this.props.style}>{Math.round(this.props.trail.profile.get('alt_climb'))} m</Text>
+      <Text style={{ ...this.props.style, ...styles.profileText }}>{climb} m</Text>
       <Icon name='arrow-down-bold' color='green' />
-      <Text style={this.props.style}>{Math.round(this.props.trail.profile.get('alt_descent'))} m</Text>
+      <Text style={{ ...this.props.style, ...styles.profileText }}>{descent} m</Text>
     </View>
   }
+
+  description = () => this.props.trail.description && this.props.trail.description.length !== 0
+    ? <Text numberOfLines={2} style={this.props.style}>
+      {this.props.trail.description}
+    </Text>
+    : null
+
+  difficultyIcon = () => this.props.trail.difficulty >= 0 && <OutlineIcon
+    outlineStyle={styles.iconOutline}
+    thickness={1.1}
+  >
+    <DifficultyIcon
+      d={this.props.trail.difficulty}
+      size={Layout.window.hp(3)}
+      style={styles.difficultyIcon}
+    />
+  </OutlineIcon>
 
   render () {
     return (
       <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
         <View style={styles.titleContainer}>
-          {this.props.trail.difficulty >= 0 && <OutlineIcon
-            outlineStyle={styles.iconOutline}
-            thickness={1.1}
-          >
-            <DifficultyIcon
-              d={this.props.trail.difficulty}
-              size={Layout.window.hp(3)}
-              style={styles.difficultyIcon}
-            />
-          </OutlineIcon>
-          }
+          {this.difficultyIcon()}
           <Header style={{ ...styles.title, ...this.props.style }}>{this.props.trail.title}</Header>
         </View>
-        {
-          this.props.trail.description !== null &&
-          this.props.trail.description !== '' &&
-          <Text numberOfLines={2} style={this.props.style}>
-            {this.props.trail.description}
-          </Text>
-        }
+        {this.description()}
         {this.profile()}
       </View>
     )
@@ -82,5 +86,8 @@ const styles = StyleSheet.create({
   },
   iconOutline: {
     color: '#fff'
+  },
+  profileText: {
+    paddingHorizontal: Layout.window.wp(1)
   }
 })

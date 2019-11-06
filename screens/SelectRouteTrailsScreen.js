@@ -14,6 +14,7 @@ export default
 class SelectRouteTrailsScreen extends Component {
   state = {
     trailsTab: false
+    // route: undefined
   }
 
   location: Location
