@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { observer } from 'mobx-react/native'
 import { View, Text, StyleSheet } from 'react-native'
-import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
-import AlternatingStyleList from '../components/lists/AlternatingStyleList'
 import { Location } from '../stores/LocationStore.mobx'
-import TrailItem from '../components/list_items/TrailItem'
 import { SafeAreaView } from 'react-navigation'
+import SelectTrails from '../components/new_ride/SelectTrails'
 
 export default
 @observer
@@ -43,17 +42,7 @@ class SelectRouteTrailsScreen extends Component {
 
   handleTabToggle = () => this.setState((prevState) => ({ trailsTab: !prevState.trailsTab }))
 
-  // TODO: Component
-  trailsComponent = () => <View>
-    <Text>TODO: Filter</Text>
-    <ScrollView>
-      <AlternatingStyleList
-        items={this.location.trails}
-        onItemPress={(item) => console.log(item.title)}
-        itemComponent={(item, style) => <TrailItem trail={item} style={style} />}
-      />
-    </ScrollView>
-  </View>
+  trailsComponent = () => <SelectTrails location={this.location} />
 
   routesComponent = () => <View>
     <Text>Other fancy list here, propagates a created `route` (actual Route object)</Text>
@@ -70,7 +59,7 @@ class SelectRouteTrailsScreen extends Component {
    * @memberof SelectRouteTrailsScreen
    */
   render () {
-    return <SafeAreaView>
+    return <SafeAreaView style={styles.container}>
       {this.tabToggle()}
       {
         this.state.trailsTab
@@ -84,6 +73,9 @@ class SelectRouteTrailsScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   toggleContainer: {
     flexDirection: 'row',
     alignItems: 'stretch',

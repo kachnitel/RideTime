@@ -29,7 +29,7 @@ class TrailItem extends Component {
     </View>
   }
 
-  description = () => this.props.trail.description && this.props.trail.description.length !== 0
+  description = () => this.props.trail.description
     ? <Text numberOfLines={2} style={this.props.style}>
       {this.props.trail.description}
     </Text>
@@ -38,11 +38,11 @@ class TrailItem extends Component {
   difficultyIcon = () => this.props.trail.difficulty >= 0 && <OutlineIcon
     outlineStyle={styles.iconOutline}
     thickness={1.1}
+    style={styles.difficultyIcon}
   >
     <DifficultyIcon
       d={this.props.trail.difficulty}
       size={Layout.window.hp(3)}
-      style={styles.difficultyIcon}
     />
   </OutlineIcon>
 
@@ -52,6 +52,7 @@ class TrailItem extends Component {
         <View style={styles.titleContainer}>
           {this.difficultyIcon()}
           <Header style={{ ...styles.title, ...this.props.style }}>{this.props.trail.title}</Header>
+          {this.props.badge !== undefined && this.props.badge}
         </View>
         {this.description()}
         {this.profile()}
@@ -61,7 +62,8 @@ class TrailItem extends Component {
 }
 
 TrailItem.propTypes = {
-  trail: PropTypes.instanceOf(Trail).isRequired
+  trail: PropTypes.instanceOf(Trail).isRequired,
+  badge: PropTypes.element
 }
 
 const styles = StyleSheet.create({
@@ -74,10 +76,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   title: {
-    // paddingLeft: Layout.window.wp(2)
+    paddingLeft: Layout.window.wp(2)
   },
   difficultyIcon: {
-    margin: Layout.window.wp(1)
+    // paddingRight: Layout.window.wp(1)
   },
   profileContainer: {
     flexDirection: 'row',
