@@ -13,6 +13,7 @@ import { Trail } from '../../stores/TrailStore.mobx'
 import { FlatList, TouchableNativeFeedback } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import DifficultyIcon from '../icons/DifficultyIcon'
+import Header from '../Header'
 
 export default class SelectTrails extends Component {
   state = {
@@ -48,6 +49,7 @@ export default class SelectTrails extends Component {
   </ScrollView>
 
   selectedList = () => <ScrollView>
+    <Header style={styles.selectedListHeader}>Selected trails</Header>
     <FlatList
       data={this.state.selected}
       extraData={this.state.selected}
@@ -112,8 +114,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.tintColor,
     padding: Layout.window.hp(2)
   },
+  selectedListHeader: {
+    color: '#fff'
+  },
   selectedItemText: {
-    padding: Layout.window.hp(1)
+    padding: Layout.window.hp(1),
+    color: '#fff'
   },
   selectedItemRemoveIcon: {
     padding: Layout.window.hp(0.5),
