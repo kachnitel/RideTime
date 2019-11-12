@@ -14,6 +14,7 @@ import { FlatList, TouchableNativeFeedback } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import DifficultyIcon from '../icons/DifficultyIcon'
 import Header from '../Header'
+import Button from '../Button'
 
 export default class SelectTrails extends Component {
   state = {
@@ -76,6 +77,30 @@ export default class SelectTrails extends Component {
     </TouchableNativeFeedback>
   </View>
 
+  bottomButtons = () => <View style={styles.bottomButtons}>
+    {
+      this.state.selected.length > 0
+        ? <>
+          <Button
+            title='Clear'
+            onPress={() => { this.setState({ selected: [] }) }}
+            color='gray'
+            style={styles.bottomButton}
+          />
+          <Button
+            title='Next'
+            onPress={() => {}}
+            style={styles.bottomButton}
+          />
+          </>
+        : <Button
+          title='Skip'
+          onPress={() => {}}
+          style={styles.bottomButton}
+        />
+    }
+  </View>
+
   render () {
     return (
       <View style={styles.container}>
@@ -83,9 +108,10 @@ export default class SelectTrails extends Component {
         <View style={styles.trailsList}>
           {this.trailsList()}
         </View>
-        <View style={styles.selectedList}>
+        {this.state.selected.length > 0 && <View style={styles.selectedList}>
           {this.selectedList()}
-        </View>
+        </View>}
+        {this.bottomButtons()}
       </View>
     )
   }
@@ -140,5 +166,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlignVertical: 'center',
     marginBottom: Layout.window.hp(0.25)
+  },
+  bottomButtons: {
+    // FIXME: Fill width...getting sick of this stupid flex
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  bottomButton: {
+    flex: 1
   }
 })
