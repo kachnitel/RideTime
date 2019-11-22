@@ -49,24 +49,29 @@ export default class EventStore extends BaseCollectionStore {
     // TODO: call provider.filter with dateStart
     // see https://web.postman.co/collections/177751-ad5454f3-b957-421d-9063-dfc64109e494?workspace=03277615-80d2-441a-8d27-e6d7b722d87f#7fb3f985-1008-4a52-9750-dd2b80b11843
     return this.list()
-      // TODO: dedupe
-      .filter((event: Event) => (event.datetime + 3600) > Math.floor(Date.now() / 1000))
+      .filter(this.filterFutureEvent)
   }
 
   async filter (filters: Object) {
     let result = await this.provider.filter(filters)
     return result.map((item) => this.upsert(item))
-    // TODO: dedupe
-      .filter((event: Event) => (event.datetime + 3600) > Math.floor(Date.now() / 1000))
+      .filter(this.filterFutureEvent)
   }
 
   async myEvents () {
     let currentUser = await this.userStore.getCurrentUserAsync()
     let result = await this.provider.list(currentUser.events)
-    return result.map((item) => this.upsert(item))
-    // TODO: dedupe
-      .filter((event: Event) => (event.datetime + 3600) > Math.floor(Date.now() / 1000))
+    return result.results.map((item) => this.upsert(item))
+      .filter(this.filterFutureEvent)
   }
+
+  /**
+   * Filter events that started from an hour ago forward
+   * Just so that events happening now are still visible
+   *
+   * @memberof EventStore
+   */
+  filterFutureEvent = (event: Event) => event.datetime > (Math.floor(Date.now() / 1000) - 3600)
 }
 
 export class Event extends BaseEntity {
