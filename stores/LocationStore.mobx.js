@@ -54,18 +54,20 @@ export default class LocationStore extends BaseCollectionStore {
         accuracy: ExpoLocation.Accuracy.Lowest,
         maximumAge: 300000
       })).coords
-    let results = await this.provider.near(
+    let response = await this.provider.near(
       coords.latitude,
       coords.longitude,
       distance
     )
+    let results = response.results
     this.populateResults(results)
 
     return results
   }
 
   bbox = async (bbox: Array) => {
-    let results = await this.provider.bbox(bbox)
+    let response = await this.provider.bbox(bbox)
+    let results = response.results
     this.populateResults(results)
 
     return results
@@ -75,7 +77,8 @@ export default class LocationStore extends BaseCollectionStore {
    * @memberof LocationStore
    */
   search = async (name: String) => {
-    let results = await this.provider.search(name)
+    let response = await this.provider.search(name)
+    let results = response.results
     this.populateResults(results)
 
     return results
@@ -154,7 +157,8 @@ export class Location extends BaseEntity {
 
   loadTrails = async () => {
     while (!this._trailsLoaded.completed) {
-      let data = await this.store.provider.trailsByLocation(this.id)
+      let response = await this.store.provider.trailsByLocation(this.id)
+      let data = response.results
       this.store.populateRelated({ trail: data })
       this._trailsLoaded.loaded += data.length
 

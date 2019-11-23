@@ -32,7 +32,7 @@ export default class EventStore extends BaseCollectionStore {
 
   async loadInvites () {
     let invites = await this.provider.listInvites()
-    invites.map((item) => {
+    invites.results.map((item) => {
       let event = this.upsert(item)
       this.addInvite(event)
     })
@@ -54,7 +54,7 @@ export default class EventStore extends BaseCollectionStore {
 
   async filter (filters: Object) {
     let result = await this.provider.filter(filters)
-    return result.map((item) => this.upsert(item))
+    return result.results.map((item) => this.upsert(item))
       .filter(this.filterFutureEvent)
   }
 

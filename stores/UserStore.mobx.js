@@ -75,10 +75,11 @@ export default class UserStore extends BaseCollectionStore {
    * @memberof UserStore
    */
   async search (name: String) {
-    let result = await this.provider.search(name)
-    result.map(this.upsert)
+    let response = await this.provider.search(name)
+    let results = response.results
+    results.map(this.upsert)
 
-    return result
+    return results
   }
 
   /**

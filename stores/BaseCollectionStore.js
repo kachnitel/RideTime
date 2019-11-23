@@ -100,8 +100,8 @@ export class BaseCollectionStore {
    * @memberof BaseCollectionStore
    */
   async populateEntities (ids: ?Number[]) {
-    let results = await this.provider.list(ids)
-    results.map((result) => {
+    let response = await this.provider.list(ids)
+    response.results.map((result) => {
       this.upsert(result)
     })
   }
