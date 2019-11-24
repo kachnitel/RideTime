@@ -91,8 +91,30 @@ export class BaseCollectionStore {
     return entity
   }
 
-  list = () => {
-    return this._collection
+  /**
+   * @param {Array} ids List of Entity IDs to return
+   * @param {Boolean} forceRefresh Whether to fetch missing items only or all ids
+   *
+   * @memberof BaseCollectionStore
+   */
+  list = (ids: Array = [], forceRefresh: Boolean = false) => {
+    if (ids === []) {
+      return this._collection
+    }
+
+    // Filter known items by [ids]
+    let result = this._collection.filter((item) => ids.includes(item.id))
+
+    let loadIds = forceRefresh
+      // Get all IDs
+      ? ids
+      // Check for any ids that are not included in result
+      : ids.filter((id) => !result.map((entity) => entity.id).includes(id))
+    if (loadIds !== []) {
+      this.populateEntities(loadIds)
+    }
+
+    return result
   }
 
   /**
