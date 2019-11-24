@@ -102,11 +102,7 @@ export class Location extends BaseEntity {
   store: LocationStore
 
   /**
-   * API object parameter mapping
-   * [{
-   *  apiParam: 'key',
-   *  getter: getter method in this class
-   * }]
+   * Object parameters returned by API
    *
    * @static
    * @memberof Location

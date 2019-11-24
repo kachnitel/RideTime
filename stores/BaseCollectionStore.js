@@ -98,7 +98,7 @@ export class BaseCollectionStore {
    * @memberof BaseCollectionStore
    */
   list = (ids: Array = [], forceRefresh: Boolean = false) => {
-    if (ids === []) {
+    if (!ids || ids.length === 0) {
       return this._collection
     }
 
