@@ -15,7 +15,7 @@ export default class OutlineDifficultyIcon extends Component {
         >
           <DifficultyIcon
             d={this.props.difficulty}
-            size={Layout.window.hp(3)}
+            size={this.props.size || Layout.window.hp(3)}
           />
         </OutlineIcon>
       )
