@@ -50,6 +50,7 @@ class SelectTrails extends Component {
         badge={this.badge(item)}
       />}
       windowSize={9}
+      initialNumToRender={7}
     />
   </ScrollView>
 

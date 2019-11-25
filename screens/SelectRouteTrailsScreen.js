@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { observer } from 'mobx-react/native'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
@@ -13,7 +13,9 @@ export default
 @observer
 class SelectRouteTrailsScreen extends Component {
   state = {
-    trailsTab: false
+    trailsTab: true,
+    loadingTrails: true,
+    loadingRoutes: true
     // route: undefined
   }
 
@@ -23,8 +25,18 @@ class SelectRouteTrailsScreen extends Component {
     super(props)
 
     this.location = props.navigation.getParam('location')
+  }
+
+  componentDidMount = () => {
+    this.loadData()
+  }
+
+  loadData = async () => {
+    this.setState({ loadingTrails: true })
     this.location.loadTrails()
+    this.setState({ loadingTrails: false, loadingRoutes: true })
     this.location.loadRoutes()
+    this.setState({ loadingRoutes: false })
   }
 
   tabToggle = () => <View style={styles.toggleContainer}>
@@ -47,7 +59,21 @@ class SelectRouteTrailsScreen extends Component {
   handleTabToggle = () => this.setState((prevState) => ({ trailsTab: !prevState.trailsTab }))
 
   /**
-   * REVIEW: Create Event entity here, set location and create Route entity as its property
+   * Allow selecting multiple trails in area and create Route
+   */
+  selectTrails = () => (this.state.loadingTrails
+    ? <ActivityIndicator />
+    : <SelectTrails location={this.location} />)
+
+  /**
+   * Select route from Trailforks
+   */
+  selectRoute = () => (this.state.loadingRoutes
+    ? <ActivityIndicator />
+    : <SelectRoute location={this.location} />)
+
+  /**
+   * TODO: Create Event entity here, set location and create Route entity as its property
    * (move from CreateRideScreen constructor)
    * Update Route using TrailsPicker/RoutePicker (or skip) and navigate to CreateRideScreen
    *   - which will display this route detail, tapping (edit icon?) goes back to this screen
@@ -60,8 +86,8 @@ class SelectRouteTrailsScreen extends Component {
       {this.tabToggle()}
       {
         this.state.trailsTab
-          ? <SelectTrails location={this.location} /> // Allow selecting multiple trails in area and create Route
-          : <SelectRoute location={this.location} /> // Select route from Trailforks
+          ? this.selectTrails()
+          : this.selectRoute()
       }
     </SafeAreaView>
   }

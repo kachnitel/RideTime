@@ -14,6 +14,7 @@ class SelectRoute extends Component {
       onItemPress={(item) => console.log(item)}
       itemComponent={(item, style) => <RouteItem route={item} style={style} />}
       windowSize={6}
+      initialNumToRender={6}
     />
   </ScrollView>
 
