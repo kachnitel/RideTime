@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import AlternatingStyleList from '../lists/AlternatingStyleList'
 import { observer } from 'mobx-react/native'
+import RouteItem from '../list_items/RouteItem'
 
 export default
 @observer
@@ -11,7 +12,7 @@ class SelectRoute extends Component {
     <AlternatingStyleList
       items={this.props.location.routes}
       onItemPress={(item) => console.log(item)}
-      itemComponent={(item, style) => <Text>{item.title}</Text>}
+      itemComponent={(item, style) => <RouteItem route={item} style={style} />}
     />
   </ScrollView>
 
