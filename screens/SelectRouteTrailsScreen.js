@@ -40,18 +40,18 @@ class SelectRouteTrailsScreen extends Component {
   }
 
   tabToggle = () => <View style={styles.toggleContainer}>
-    <TouchableOpacity onPress={this.handleTabToggle} disabled={!this.state.trailsTab}>
-      <Text
-        style={!this.state.trailsTab ? styles.tabToggle : { ...styles.tabToggle, ...styles.tabToggleActive }}
-      >
-        Routes
-      </Text>
-    </TouchableOpacity>
     <TouchableOpacity onPress={this.handleTabToggle} disabled={this.state.trailsTab}>
       <Text
         style={this.state.trailsTab ? styles.tabToggle : { ...styles.tabToggle, ...styles.tabToggleActive }}
       >
         Trails
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={this.handleTabToggle} disabled={!this.state.trailsTab}>
+      <Text
+        style={!this.state.trailsTab ? styles.tabToggle : { ...styles.tabToggle, ...styles.tabToggleActive }}
+      >
+        Routes
       </Text>
     </TouchableOpacity>
   </View>
