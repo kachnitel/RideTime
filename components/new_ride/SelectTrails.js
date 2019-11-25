@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   badge: {
     backgroundColor: Colors.tintColor,
     color: '#fff',
-    marginLeft: 'auto',
+    // marginLeft: 'auto',
     height: '100%',
     textAlignVertical: 'center',
     textAlign: 'center',

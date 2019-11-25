@@ -20,7 +20,8 @@ export class Trail extends BaseEntity {
     'description',
     'difficulty',
     'location', // ID of parent Location
-    'profile'
+    'profile',
+    'alias'
   ]
 
   @observable _id = false
@@ -47,6 +48,9 @@ export class Trail extends BaseEntity {
 
   @action updateLocation (newValue: Number) { this._location = newValue }
   @computed get location () { return this._location }
+
+  @action updateAlias (newValue: Number) { this._alias = newValue }
+  @computed get alias () { return this._alias }
 
   @action updateProfile (newValue: Object) {
     this._profile.merge(newValue)

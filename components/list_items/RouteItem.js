@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Linking, Image } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import { Route } from '../../stores/RouteStore.mobx'
 import Layout from '../../constants/Layout'
 import Header from '../Header'
 import TerrainProfile from '../TerrainProfile'
 import OutlineDifficultyIcon from '../icons/OutlineDifficultyIcon'
-import { TouchableNativeFeedback } from 'react-native-gesture-handler'
+import TrailforksLink from '../TrailforksLink'
 
 export default
 @inject('TrailStore')
@@ -36,23 +36,8 @@ class RouteItem extends Component {
   </View>
 
   trailforksLink = () => <View style={styles.tfLinkContainer}>
-    <TouchableNativeFeedback onPress={this.handleTrailforksLink}>
-      <Image
-        source={{ uri: 'https://es.pinkbike.org/246/sprt/i/trailforks/logos/trailforks-logo-vert_notext.png' }}
-        style={styles.tfIcon}
-      />
-    </TouchableNativeFeedback>
+    <TrailforksLink relativeUrl={'route/' + this.props.route.alias + '/'} />
   </View>
-
-  handleTrailforksLink = async () => {
-    let url = 'https://www.trailforks.com/route/' + this.props.route.alias + '/'
-    let supported = await Linking.canOpenURL(url)
-    if (supported) {
-      Linking.openURL(url)
-      return null
-    }
-    console.log('Cannot open URL: ' + url)
-  }
 
   render () {
     return (
@@ -102,10 +87,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     flexDirection: 'row'
-  },
-  tfIcon: {
-    width: Layout.window.hp(3.5),
-    height: Layout.window.hp(3)
   },
   tfLinkContainer: {
     marginLeft: 'auto'

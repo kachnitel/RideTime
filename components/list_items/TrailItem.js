@@ -7,6 +7,7 @@ import Layout from '../../constants/Layout'
 import Header from '../Header'
 import TerrainProfile from '../TerrainProfile'
 import OutlineDifficultyIcon from '../icons/OutlineDifficultyIcon'
+import TrailforksLink from '../TrailforksLink'
 
 export default
 @observer
@@ -23,7 +24,10 @@ class TrailItem extends Component {
         <View style={styles.titleContainer}>
           <OutlineDifficultyIcon difficulty={this.props.trail.difficulty} />
           <Header style={{ ...styles.title, ...this.props.style }}>{this.props.trail.title}</Header>
-          {this.props.badge !== undefined && this.props.badge}
+          <View style={styles.headerIcons}>
+            {this.props.badge !== undefined && this.props.badge}
+            <TrailforksLink relativeUrl={'trails/' + this.props.trail.alias + '/'} />
+          </View>
         </View>
         {this.description()}
         <TerrainProfile profile={this.props.trail.profile} style={this.props.style} />
@@ -48,5 +52,9 @@ const styles = StyleSheet.create({
   },
   title: {
     paddingLeft: Layout.window.wp(2)
+  },
+  headerIcons: {
+    marginLeft: 'auto',
+    flexDirection: 'row'
   }
 })
