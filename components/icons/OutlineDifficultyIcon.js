@@ -20,7 +20,7 @@ export default class OutlineDifficultyIcon extends Component {
         </OutlineIcon>
       )
     }
-    console.warn('Difficulty icon ' + this.props.difficulty + ' is not defined.')
+    console.log('FIXME: Difficulty icon ' + this.props.difficulty + ' is not defined.')
     return null
   }
 }

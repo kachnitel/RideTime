@@ -49,6 +49,7 @@ class SelectTrails extends Component {
         style={style}
         badge={this.badge(item)}
       />}
+      windowSize={9}
     />
   </ScrollView>
 

@@ -13,12 +13,8 @@ import PropTypes from 'prop-types'
  * @extends {Component}
  */
 export default class AlternatingStyleList extends Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      refreshing: false
-    }
+  state = {
+    refreshing: false
   }
 
   touchableItem = ({ item, index }) => (
@@ -38,6 +34,7 @@ export default class AlternatingStyleList extends Component {
     return (
       <View style={styles.container}>
         <FlatList
+          {...this.props}
           data={this.props.items}
           renderItem={this.touchableItem}
           ListEmptyComponent={this.props.emptyComponent}

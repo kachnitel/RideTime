@@ -13,6 +13,7 @@ class SelectRoute extends Component {
       items={this.props.location.routes}
       onItemPress={(item) => console.log(item)}
       itemComponent={(item, style) => <RouteItem route={item} style={style} />}
+      windowSize={6}
     />
   </ScrollView>
 
