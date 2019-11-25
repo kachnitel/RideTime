@@ -21,7 +21,8 @@ export class Route extends BaseEntity {
     'difficulty',
     'location',
     'profile',
-    'trails'
+    'trails',
+    'alias'
   ]
 
   @observable _id = false
@@ -34,6 +35,7 @@ export class Route extends BaseEntity {
   @observable _profile = new Map()
   @observable _location = null
   _trails = observable.array([])
+  @observable _alias = null
 
   @action updateId (newValue: Number) { this._id = newValue }
   @computed get id () { return this._id }
@@ -49,6 +51,9 @@ export class Route extends BaseEntity {
 
   @action updateLocation (newValue: Number) { this._location = newValue }
   @computed get location () { return this._location }
+
+  @action updateAlias (newValue: Number) { this._alias = newValue }
+  @computed get alias () { return this._alias }
 
   @action updateProfile (newValue: Object) {
     this._profile.merge(newValue)
