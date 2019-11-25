@@ -15,8 +15,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import DifficultyIcon from '../icons/DifficultyIcon'
 import Header from '../Header'
 import Button from '../Button'
+import { observer } from 'mobx-react/native'
 
-export default class SelectTrails extends Component {
+export default
+@observer
+class SelectTrails extends Component {
   state = {
     selected: []
   }

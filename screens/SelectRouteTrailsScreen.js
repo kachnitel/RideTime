@@ -7,6 +7,7 @@ import Colors from '../constants/Colors'
 import { Location } from '../stores/LocationStore.mobx'
 import { SafeAreaView } from 'react-navigation'
 import SelectTrails from '../components/new_ride/SelectTrails'
+import SelectRoute from '../components/new_ride/SelectRoute'
 
 export default
 @observer
@@ -18,9 +19,12 @@ class SelectRouteTrailsScreen extends Component {
 
   location: Location
 
-  componentDidMount = () => {
-    this.location = this.props.navigation.getParam('location')
+  constructor (props) {
+    super(props)
+
+    this.location = props.navigation.getParam('location')
     this.location.loadTrails()
+    this.location.loadRoutes()
   }
 
   tabToggle = () => <View style={styles.toggleContainer}>
@@ -42,16 +46,9 @@ class SelectRouteTrailsScreen extends Component {
 
   handleTabToggle = () => this.setState((prevState) => ({ trailsTab: !prevState.trailsTab }))
 
-  trailsComponent = () => <SelectTrails location={this.location} />
-
-  routesComponent = () => <View>
-    <Text>Other fancy list here, propagates a created `route` (actual Route object)</Text>
-  </View>
-
   /**
    * REVIEW: Create Event entity here, set location and create Route entity as its property
    * (move from CreateRideScreen constructor)
-   * Route contains ID (trailforks, url?), trails[], description, title
    * Update Route using TrailsPicker/RoutePicker (or skip) and navigate to CreateRideScreen
    *   - which will display this route detail, tapping (edit icon?) goes back to this screen
    *
@@ -63,10 +60,8 @@ class SelectRouteTrailsScreen extends Component {
       {this.tabToggle()}
       {
         this.state.trailsTab
-          ? this.trailsComponent()
-          : this.routesComponent()
-          // ? <TrailsPicker location={location} /> // Allow selecting multiple trails in area
-          // : <RoutePicker location={location} /> // Select route, add trails to list (which shall be a part of route object in event)
+          ? <SelectTrails location={this.location} /> // Allow selecting multiple trails in area and create Route
+          : <SelectRoute location={this.location} /> // Select route from Trailforks
       }
     </SafeAreaView>
   }

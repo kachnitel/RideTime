@@ -126,8 +126,13 @@ export class Location extends BaseEntity {
     3: 0,
     4: 0
   }
-  // _trails = observable.array([])
+
   _trailsLoaded = {
+    completed: false,
+    loaded: 0
+  }
+
+  _routesLoaded = {
     completed: false,
     loaded: 0
   }
@@ -151,6 +156,10 @@ export class Location extends BaseEntity {
     return this.store.stores.trail.list().filter((item) => item.location === this.id)
   }
 
+  @computed get routes () {
+    return this.store.stores.route.list().filter((item) => item.location === this.id)
+  }
+
   loadTrails = async () => {
     while (!this._trailsLoaded.completed) {
       let response = await this.store.provider.trailsByLocation(this.id)
@@ -160,6 +169,18 @@ export class Location extends BaseEntity {
 
       // TODO: need to find a way to tell all is loaded
       this._trailsLoaded.completed = true
+    }
+  }
+
+  loadRoutes = async () => {
+    while (!this._routesLoaded.completed) {
+      let response = await this.store.provider.routesByLocation(this.id)
+      let data = response.results
+      this.store.populateRelated({ route: data })
+      this._routesLoaded.loaded += data.length
+
+      // TODO: need to find a way to tell all is loaded
+      this._routesLoaded.completed = true
     }
   }
 }
