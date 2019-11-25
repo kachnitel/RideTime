@@ -179,6 +179,8 @@ export class Location extends BaseEntity {
       this.store.populateRelated({ route: data })
       this._routesLoaded.loaded += data.length
 
+      this.store.populateRelated(response.relatedEntities)
+
       // TODO: need to find a way to tell all is loaded
       this._routesLoaded.completed = true
     }
