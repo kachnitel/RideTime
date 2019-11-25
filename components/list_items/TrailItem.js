@@ -6,28 +6,13 @@ import { Trail } from '../../stores/TrailStore.mobx'
 import DifficultyIcon from '../icons/DifficultyIcon'
 import Layout from '../../constants/Layout'
 import Header from '../Header'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import OutlineIcon from '../icons/OutlineIcon'
+import TerrainProfile from '../TerrainProfile'
 
 export default
 @observer
 class TrailItem extends Component {
-  profile = () => {
-    let distance = this.props.trail.profile.get('distance') < 1000
-      ? Math.round(this.props.trail.profile.get('distance')) + 'm'
-      : (this.props.trail.profile.get('distance') / 1000).toFixed(2) + 'km'
-    let climb = Math.round(this.props.trail.profile.get('alt_climb'))
-    let descent = Math.round(this.props.trail.profile.get('alt_descent'))
-
-    return <View style={styles.profileContainer}>
-      <Icon name='map-marker-distance' style={this.props.style} />
-      <Text style={{ ...this.props.style, ...styles.profileText }}>{distance}</Text>
-      <Icon name='arrow-up-bold' color='red' />
-      <Text style={{ ...this.props.style, ...styles.profileText }}>{climb} m</Text>
-      <Icon name='arrow-down-bold' color='green' />
-      <Text style={{ ...this.props.style, ...styles.profileText }}>{descent} m</Text>
-    </View>
-  }
+  profile = () => <TerrainProfile profile={this.props.trail.profile} style={this.props.style} />
 
   description = () => this.props.trail.description
     ? <Text numberOfLines={2} style={this.props.style}>
