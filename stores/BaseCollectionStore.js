@@ -110,7 +110,7 @@ export class BaseCollectionStore {
       ? ids
       // Check for any ids that are not included in result
       : ids.filter((id) => !result.map((entity) => entity.id).includes(id))
-    if (loadIds !== []) {
+    if (loadIds.length !== 0) {
       this.populateEntities(loadIds)
     }
 
@@ -129,7 +129,7 @@ export class BaseCollectionStore {
   }
 
   populateRelated = (related: Object) => {
-    Object.keys(related).map((type) => {
+    Object.keys(related).forEach((type) => {
       if (this.stores[type] === undefined) {
         console.warn('Received `relatedEntities` of an unknown type: ' + type)
         return

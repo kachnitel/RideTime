@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, View, ActivityIndicator, StyleSheet } from 'react-native'
+import { FlatList, View, ActivityIndicator } from 'react-native'
 import Header from '../Header'
 import TouchableRiderItem from '../list_items/TouchableRiderItem'
 import PropTypes from 'prop-types'
