@@ -94,7 +94,7 @@ class SelectTrails extends Component {
           />
           <Button
             title='Next'
-            onPress={() => {}}
+            onPress={() => { this.props.onSubmit(this.state.selected) }}
             style={styles.bottomButton}
           />
           </>

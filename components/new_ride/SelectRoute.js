@@ -11,7 +11,7 @@ class SelectRoute extends Component {
   routesList = () => <ScrollView>
     <AlternatingStyleList
       items={this.props.location.routes}
-      onItemPress={(item) => console.log(item)}
+      onItemPress={(route) => this.props.onSubmit(route)}
       itemComponent={(item, style) => <RouteItem route={item} style={style} />}
       windowSize={6}
       initialNumToRender={6}

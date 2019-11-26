@@ -8,6 +8,7 @@ import { Location } from '../stores/LocationStore.mobx'
 import { SafeAreaView } from 'react-navigation'
 import SelectTrails from '../components/new_ride/SelectTrails'
 import SelectRoute from '../components/new_ride/SelectRoute'
+import { Route } from '../stores/RouteStore.mobx'
 
 export default
 @observer
@@ -63,14 +64,39 @@ class SelectRouteTrailsScreen extends Component {
    */
   selectTrails = () => (this.state.loadingTrails
     ? <ActivityIndicator />
-    : <SelectTrails location={this.location} />)
+    : <SelectTrails
+      location={this.location}
+      onSubmit={(trails) => this.createRouteFromTrails(trails)}
+    />)
 
   /**
    * Select route from Trailforks
    */
   selectRoute = () => (this.state.loadingRoutes
     ? <ActivityIndicator />
-    : <SelectRoute location={this.location} />)
+    : <SelectRoute
+      location={this.location}
+      onSubmit={(route) => this.submit(route)}
+    />)
+
+  createRouteFromTrails = (trails: Array) => {
+    let trailIds = trails.map((trail) => trail.id)
+    let route = new Route()
+    route.updateTrails(trailIds)
+    route.updateTitle(this.location.name + ' ride')
+    route.updateDifficulty(Math.max(...trails.map((trail) => trail.difficulty)))
+
+    this.submit(route)
+  }
+
+  /**
+   * TODO: create an object to store in event? Or pass in Route(+location) to the next screen?
+   *
+   * @memberof SelectRouteTrailsScreen
+   */
+  submit = (route: Route) => {
+    console.log(route.trails, route.title)
+  }
 
   /**
    * TODO: Create Event entity here, set location and create Route entity as its property

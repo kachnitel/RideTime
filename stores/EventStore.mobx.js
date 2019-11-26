@@ -53,15 +53,15 @@ export default class EventStore extends BaseCollectionStore {
   }
 
   async filter (filters: Object) {
-    let result = await this.provider.filter(filters)
-    return result.results.map((item) => this.upsert(item))
+    let response = await this.provider.filter(filters)
+    return response.results.map((item) => this.upsert(item))
       .filter(this.filterFutureEvent)
   }
 
   async myEvents () {
     let currentUser = await this.userStore.getCurrentUserAsync()
-    let result = await this.provider.list(currentUser.events)
-    return result.results.map((item) => this.upsert(item))
+    let response = await this.provider.list(currentUser.events)
+    return response.results.map((item) => this.upsert(item))
       .filter(this.filterFutureEvent)
   }
 
