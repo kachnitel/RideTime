@@ -1,10 +1,6 @@
 import ApiConnection from '../src/ApiConnection'
 
 export default class LocationsProvider {
-  list = () => {
-    return ApiConnection.get('api/locations')
-  }
-
   get = (id) => {
     return ApiConnection.get('api/locations/' + id)
   }
