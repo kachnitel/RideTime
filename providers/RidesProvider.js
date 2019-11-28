@@ -1,7 +1,7 @@
 import ApiConnection from '../src/ApiConnection'
 
 export default class RidesProvider {
-  list = (ids: ?Number[]) => {
+  list = (ids: Number[]) => {
     return ApiConnection.get('api/events', { ids })
   }
 

@@ -22,7 +22,7 @@ export class BaseCollectionStore {
     return result
   }
 
-  populate = async (ids: ?Number[]) => {
+  populate = async (ids: Number[]) => {
     await this.populateEntities(ids)
   }
 
@@ -121,7 +121,7 @@ export class BaseCollectionStore {
    * @param {?Number[]} ids
    * @memberof BaseCollectionStore
    */
-  async populateEntities (ids: ?Number[]) {
+  async populateEntities (ids: Number[]) {
     let response = await this.provider.list(ids)
     response.results.map((result) => {
       this.upsert(result)
