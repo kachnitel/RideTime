@@ -72,7 +72,7 @@ class LocationPicker extends Component {
           placeholder='Type Location...'
           style={styles.searchInput}
           onChangeText={this.handleSearchOnChange}
-          autoFocus
+          // autoFocus
         />
       </View>
       {
