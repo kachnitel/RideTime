@@ -17,6 +17,11 @@ export default class FormTextInput extends React.Component {
     this.setState({ focused: false })
   }
 
+  /**
+   * REVIEW: Style prop is used at first and then at last, overwriting previous logic
+   *   - seems to make most sense as
+   *      { ...styles.input, ...this.props.style, borderBottomColor: 'red' }
+   */
   render () {
     let inputStyle = this.props.required && !this.props.value
       ? { ...this.props.style, ...styles.input, borderBottomColor: 'red' }

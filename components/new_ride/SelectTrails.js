@@ -22,7 +22,29 @@ export default
 @observer
 class SelectTrails extends Component {
   state = {
-    selected: []
+    selected: [],
+    trails: []
+  }
+
+  componentDidMount = () => {
+    this.setState({
+      trails: this.props.location.trails
+    })
+  }
+
+  handleFilterUpdate = (filter) => {
+    let trails = this.props.location.trails
+    if (filter.difficulties.length > 0) {
+      trails = trails.filter((trail) =>
+        filter.difficulties.includes(trail.difficulty))
+    }
+    if (filter.search.length > 0) {
+      trails = trails.filter((trail) =>
+        trail.title.includes(filter.search.trim()))
+    }
+    this.setState({
+      trails: trails
+    })
   }
 
   selectTrail = (trail: Trail) => {
@@ -43,7 +65,7 @@ class SelectTrails extends Component {
 
   trailsList = () => <ScrollView>
     <AlternatingStyleList
-      items={this.props.location.trails}
+      items={this.state.trails}
       onItemPress={this.selectTrail}
       itemComponent={(item, style) => <TrailItem
         trail={item}
@@ -110,7 +132,10 @@ class SelectTrails extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <TrailFilter style={styles.filter} />
+        <TrailFilter
+          style={styles.filter}
+          onFilterUpdate={this.handleFilterUpdate}
+        />
         <View style={styles.trailsList}>
           {this.trailsList()}
         </View>
@@ -140,7 +165,8 @@ const styles = StyleSheet.create({
     borderRadius: Layout.window.hp(1)
   },
   filter: {
-    // flex: 10
+    width: '100%',
+    padding: Layout.window.wp(5)
   },
   trailsList: {
     flex: 65

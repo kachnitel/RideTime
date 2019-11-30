@@ -24,28 +24,30 @@ export default class DifficultyRangeSlider extends Component {
     }
   }
 
-  handleValuesChange = (values) => {
-    console.log(values)
-    this.setState({
+  handleValuesChange = async (values) => {
+    await this.setState({
       selectedMin: values[0],
       selectedMax: values[1]
     })
 
-    /**
-     * TODO: Fill all values between min & max and provide result[] to a callback
-     */
+    this.props.onValuesChange(this.difficulties.filter(this.isSelected))
   }
 
   sliderBackgroundIcon = (difficulty: Number) => <OutlineDifficultyIcon
     difficulty={difficulty}
     size={this.iconSize}
     key={'d' + difficulty}
-    outlineColor={(difficulty >= this.state.selectedMin && difficulty <= this.state.selectedMax)
+    outlineColor={this.isSelected(difficulty)
       ? Colors.iconColor
       : Colors.darkBackground
     }
     thickness={1.15}
   />
+
+  isSelected = (difficulty) => (
+    difficulty >= this.state.selectedMin &&
+    difficulty <= this.state.selectedMax
+  )
 
   renderIcons = () => <View
     style={{
@@ -72,7 +74,6 @@ export default class DifficultyRangeSlider extends Component {
     return (
       <View style={{
         ...styles.container,
-        // paddingHorizontal: this.touchSize / 2,
         height: this.touchSize
       }}>
         {this.renderIcons()}
@@ -106,7 +107,8 @@ export default class DifficultyRangeSlider extends Component {
 
 DifficultyRangeSlider.propTypes = {
   single: PropTypes.bool,
-  width: PropTypes.number.isRequired
+  width: PropTypes.number.isRequired,
+  onValuesChange: PropTypes.func
 }
 
 const styles = StyleSheet.create({
