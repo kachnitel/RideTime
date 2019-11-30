@@ -28,7 +28,12 @@ export default class SelectWithIcon extends React.Component {
 
   renderField = ({ selectedItem, defaultText, getLabel }) => {
     return (
-      <View style={styles.container}>
+      <View style={{
+        ...styles.container,
+        borderBottomColor: this.props.required && !this.props.value
+          ? 'red'
+          : Colors.tintColor
+      }}>
         {selectedItem
           ? <View style={styles.innerContainer}>
             {this.props.icon(selectedItem.value)}
@@ -82,7 +87,6 @@ SelectWithIcon.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomColor: Colors.tintColor,
     borderBottomWidth: 1,
     padding: Layout.window.wp(1),
     width: Layout.window.wp(65),
