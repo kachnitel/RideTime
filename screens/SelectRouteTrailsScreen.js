@@ -95,7 +95,7 @@ class SelectRouteTrailsScreen extends Component {
    * @memberof SelectRouteTrailsScreen
    */
   submit = (route: Route) => {
-    console.log(route.trails, route.title)
+    console.log(route.trails, route.title, route.id)
   }
 
   /**

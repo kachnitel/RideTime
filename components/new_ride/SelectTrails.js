@@ -16,6 +16,7 @@ import DifficultyIcon from '../icons/DifficultyIcon'
 import Header from '../Header'
 import Button from '../Button'
 import { observer } from 'mobx-react/native'
+import TrailFilter from './TrailFilter'
 
 export default
 @observer
@@ -109,7 +110,7 @@ class SelectTrails extends Component {
   render () {
     return (
       <View style={styles.container}>
-        {/* <Text>TODO: Filter</Text> */}
+        <TrailFilter style={styles.filter} />
         <View style={styles.trailsList}>
           {this.trailsList()}
         </View>
@@ -124,7 +125,8 @@ class SelectTrails extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    alignItems: 'center'
   },
   badge: {
     backgroundColor: Colors.tintColor,
@@ -136,6 +138,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     width: Layout.window.wp(6),
     borderRadius: Layout.window.hp(1)
+  },
+  filter: {
+    // flex: 10
   },
   trailsList: {
     flex: 65

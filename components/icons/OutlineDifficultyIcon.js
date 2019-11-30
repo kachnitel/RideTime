@@ -1,5 +1,5 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
 import OutlineIcon from './OutlineIcon'
 import DifficultyIcon from './DifficultyIcon'
 import Layout from '../../constants/Layout'
@@ -9,9 +9,8 @@ export default class OutlineDifficultyIcon extends Component {
     if (Object.keys(DifficultyIcon.icons).map(Number).includes(this.props.difficulty)) {
       return (
         <OutlineIcon
-          outlineStyle={styles.iconOutline}
-          thickness={1.1}
-          style={styles.difficultyIcon}
+          outlineStyle={{ color: this.props.outlineColor || '#fff' }}
+          thickness={this.props.thickness || 1.1}
         >
           <DifficultyIcon
             d={this.props.difficulty}
@@ -25,11 +24,7 @@ export default class OutlineDifficultyIcon extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  difficultyIcon: {
-    // paddingRight: Layout.window.wp(1)
-  },
-  iconOutline: {
-    color: '#fff'
-  }
-})
+OutlineDifficultyIcon.propTypes = {
+  difficulty: PropTypes.number,
+  size: PropTypes.number
+}
