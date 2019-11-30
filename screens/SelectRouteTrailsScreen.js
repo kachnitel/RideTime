@@ -101,7 +101,13 @@ class SelectRouteTrailsScreen extends Component {
    * @memberof SelectRouteTrailsScreen
    */
   submit = (route: Route) => {
-    console.log(route.trails, route.title, route.id)
+    this.props.navigation.push(
+      'CreateRide',
+      {
+        location: this.location,
+        route: route
+      }
+    )
   }
 
   /**

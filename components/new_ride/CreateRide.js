@@ -24,7 +24,7 @@ class CreateRide extends React.Component {
   difficulty = () => <SelectDifficulty
     onValueChange={(d) => this.props.Event.updateDifficulty(d.value)}
     style={{ ...styles.itemContainer, ...styles.selectDifficulty }}
-    selected={this.props.Event.difficulty}
+    value={this.props.Event.difficulty}
     title='Select difficulty'
     placeholder='Overall ride difficulty'
     footerText='Select level to indicate to others how difficult trails you plan on riding.'
@@ -42,9 +42,10 @@ class CreateRide extends React.Component {
   terrain = () => <SelectBike
     onValueChange={(t) => this.props.Event.updateTerrain(t.value)}
     style={{ ...styles.itemContainer, ...styles.selectTerrain }}
-    selected={this.props.Event.terrain}
-    title='What kind of bike?'
+    value={this.props.Event.terrain || undefined}
+    title='Bike type'
     placeholder='Select most appropriate bike for the ride'
+    required
   />
 
   description = () => <TextInputWithTitle
@@ -55,22 +56,6 @@ class CreateRide extends React.Component {
     onChangeText={(desc) => this.props.Event.updateDescription(desc)}
   />
 
-  /**
-   * TODO:
-   * Autocomplete from either router and trails
-   * - Select either a route, or trails which can be added
-   * with autocomplete from the area
-   *  |  Autocomplete  |
-   *  |----------------|
-   *  | popular rides  |
-   *  |----------------|
-   *  |                |
-   *  | popular trails |
-   *  |                |
-   *  |----------------|
-   *
-   * @memberof CreateRide
-   */
   route = () => <TextInputWithTitle
     title='Planned route'
     placeholder='Mashiter, 50 more shades, Rupert'
@@ -85,7 +70,6 @@ class CreateRide extends React.Component {
         {this.title()}
         {this.route()}
         {/* Private / public */}
-        {/* {this.invite()} NEXT PAGE (RideDetail) */}
         {this.difficulty()}
         {this.datetime()}
         {this.terrain()}

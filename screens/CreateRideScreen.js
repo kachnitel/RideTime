@@ -5,6 +5,8 @@ import { Header, StackActions, NavigationActions } from 'react-navigation'
 import { observer, inject, Provider } from 'mobx-react'
 import Button from '../components/Button'
 import { Event } from '../stores/EventStore.mobx'
+import { Route } from '../stores/RouteStore.mobx'
+import { Trail } from '../stores/TrailStore.mobx'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 
@@ -18,12 +20,12 @@ import Layout from '../constants/Layout'
  * @extends {React.Component}
  */
 export default
-@inject('UserStore', 'EventStore')
+@inject('UserStore', 'EventStore', 'TrailStore')
 @observer
 class CreateRideScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: 'New ride at ' + navigation.getParam('name')
+      title: 'New ride at ' + navigation.getParam('location').name
       // TODO: headerRight save
     }
   }
@@ -33,10 +35,17 @@ class CreateRideScreen extends React.Component {
   constructor (props) {
     super(props)
 
+    let route: Route = this.props.navigation.getParam('route')
     this.event = new Event(this.props.EventStore)
-    this.event.updateTitle(this.props.navigation.getParam('name') + ' ride')
-    this.event.updateLocation(this.props.navigation.getParam('id'))
+    this.event.updateTitle(route.title + ' ride')
+    this.event.updateLocation(this.props.navigation.getParam('location').id)
     this.event.updateCreatedBy(this.props.UserStore.currentUser.id)
+    this.event.updateDifficulty(route.difficulty)
+    this.event.updateDescription(route.description &&
+      route.description.substr(0, 2045) + '...')
+    this.event.updateRoute(route.trails.map( // TODO: discards actual route
+      (trail: Trail) => this.props.TrailStore.getSync(trail).title
+    ).join(' ⟫ ')) // ⟫ / ⫸ / ⇨ / → / ▶
   }
 
   saveRide = async () => {
@@ -60,6 +69,8 @@ class CreateRideScreen extends React.Component {
     this.props.navigation.dispatch(resetAction)
   }
 
+  isValid = () => !!this.event.terrain && !!this.event.title && !!this.event.difficulty
+
   render () {
     return (
       <KeyboardAvoidingView
@@ -78,6 +89,7 @@ class CreateRideScreen extends React.Component {
         <Button
           title='Create ride'
           onPress={this.saveRide}
+          disabled={!this.isValid()}
         />
       </KeyboardAvoidingView>
     )
