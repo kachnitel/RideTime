@@ -50,7 +50,9 @@ FormTextInput.propTypes = {
 const styles = StyleSheet.create({
   input: {
     fontSize: Layout.window.hp(2.5),
-    borderColor: Colors.tintColor,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0);',
+    borderBottomColor: Colors.tintColor,
     borderBottomWidth: 1,
     color: '#fff',
     padding: Layout.window.hp(1),
@@ -60,6 +62,7 @@ const styles = StyleSheet.create({
   inputFocused: {
     borderRadius: Layout.window.hp(0.5),
     borderWidth: 1,
+    borderColor: Colors.tintColor,
     backgroundColor: '#fff2'
   }
 })
