@@ -13,7 +13,9 @@ export default class SelectDifficulty extends React.Component {
         value: index,
         ...DifficultyIcon.icons[index]
       })
-    }).filter((level) => this.props.max === undefined ? true : level.value <= this.props.max)
+    }).filter((level) => this.props.max === undefined
+      ? true
+      : level.value <= this.props.max)
 
     let value = this.props.value != null
       ? {
