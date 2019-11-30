@@ -89,7 +89,7 @@ class SelectRouteTrailsScreen extends Component {
     let trailIds = trails.map((trail) => trail.id)
     let route = new Route()
     route.updateTrails(trailIds)
-    route.updateTitle(this.location.name + ' ride')
+    route.updateTitle(this.location.name)
     route.updateDifficulty(Math.max(...trails.map((trail) => trail.difficulty)))
 
     this.submit(route)
