@@ -34,9 +34,9 @@ class SelectRouteTrailsScreen extends Component {
 
   loadData = async () => {
     this.setState({ loadingTrails: true })
-    this.location.loadTrails()
+    await this.location.loadTrails()
     this.setState({ loadingTrails: false, loadingRoutes: true })
-    this.location.loadRoutes()
+    await this.location.loadRoutes()
     this.setState({ loadingRoutes: false })
   }
 
@@ -63,7 +63,10 @@ class SelectRouteTrailsScreen extends Component {
    * Allow selecting multiple trails in area and create Route
    */
   selectTrails = () => (this.state.loadingTrails
-    ? <ActivityIndicator />
+    ? <View style={styles.loadingContainer}>
+      <ActivityIndicator />
+      <Text>Loading trails...</Text>
+    </View>
     : <SelectTrails
       location={this.location}
       onSubmit={(trails) => this.createRouteFromTrails(trails)}
@@ -73,7 +76,10 @@ class SelectRouteTrailsScreen extends Component {
    * Select route from Trailforks
    */
   selectRoute = () => (this.state.loadingRoutes
-    ? <ActivityIndicator />
+    ? <View style={styles.loadingContainer}>
+      <ActivityIndicator />
+      <Text>Loading routes...</Text>
+    </View>
     : <SelectRoute
       location={this.location}
       onSubmit={(route) => this.submit(route)}
@@ -140,5 +146,10 @@ const styles = StyleSheet.create({
   tabToggleActive: {
     backgroundColor: '#fff',
     color: Colors.tintColor
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1
   }
 })
