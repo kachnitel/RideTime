@@ -22,6 +22,7 @@ export default class DifficultyRangeSlider extends Component {
       selectedMin: this.min,
       selectedMax: this.max
     }
+    this.sliderTimeoutId = null
   }
 
   handleValuesChange = async (values) => {
@@ -29,8 +30,10 @@ export default class DifficultyRangeSlider extends Component {
       selectedMin: values[0],
       selectedMax: values[1]
     })
-
-    this.props.onValuesChange(this.difficulties.filter(this.isSelected))
+    clearTimeout(this.sliderTimeoutId)
+    this.sliderTimeoutId = setTimeout(() => {
+      this.props.onValuesChange(this.difficulties.filter(this.isSelected))
+    }, 100)
   }
 
   sliderBackgroundIcon = (difficulty: Number) => <OutlineDifficultyIcon
