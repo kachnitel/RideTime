@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
   View,
   Text,
-  ScrollView,
   StyleSheet
 } from 'react-native'
 import AlternatingStyleList from '../lists/AlternatingStyleList'
@@ -63,21 +62,19 @@ class SelectTrails extends Component {
     }
   }
 
-  trailsList = () => <ScrollView>
-    <AlternatingStyleList
-      items={this.state.trails}
-      onItemPress={this.selectTrail}
-      itemComponent={(item, style) => <TrailItem
-        trail={item}
-        style={style}
-        badge={this.badge(item)}
-      />}
-      windowSize={9}
-      initialNumToRender={7}
-    />
-  </ScrollView>
+  trailsList = () => <AlternatingStyleList
+    items={this.state.trails}
+    onItemPress={this.selectTrail}
+    itemComponent={(item, style) => <TrailItem
+      trail={item}
+      style={style}
+      badge={this.badge(item)}
+    />}
+    windowSize={6}
+    initialNumToRender={7}
+  />
 
-  selectedList = () => <ScrollView>
+  selectedList = () => <View>
     <Header style={styles.selectedListHeader}>Selected trails</Header>
     <FlatList
       data={this.state.selected}
@@ -89,7 +86,7 @@ class SelectTrails extends Component {
         {this.removeSelectedIcon(item)}
       </View>}
     />
-  </ScrollView>
+  </View>
 
   removeSelectedIcon = (item) => <View style={styles.selectedItemRemoveIconContainer}>
     <TouchableNativeFeedback
@@ -174,7 +171,8 @@ const styles = StyleSheet.create({
   selectedList: {
     flex: 35,
     backgroundColor: Colors.tintColor,
-    padding: Layout.window.hp(2)
+    padding: Layout.window.hp(2),
+    width: '100%'
   },
   selectedListHeader: {
     color: '#fff'
