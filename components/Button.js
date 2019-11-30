@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button as RNButton } from 'react-native'
+import { Button as RNButton, ButtonProps } from 'react-native'
 import Colors from '../constants/Colors'
 
 export default class Button extends Component {
@@ -9,3 +9,5 @@ export default class Button extends Component {
     )
   }
 }
+
+Button.propTypes = ButtonProps
