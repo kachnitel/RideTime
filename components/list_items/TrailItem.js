@@ -12,6 +12,10 @@ import TrailforksLink from '../TrailforksLink'
 export default
 @observer
 class TrailItem extends Component {
+  shouldComponentUpdate = (nextProps, nextState, nextContext) => {
+    return (this.props.badge !== nextProps.badge) || (this.props.trail !== nextProps.trail)
+  }
+
   description = () => this.props.trail.description
     ? <Text numberOfLines={2} style={this.props.style}>
       {this.props.trail.description}
