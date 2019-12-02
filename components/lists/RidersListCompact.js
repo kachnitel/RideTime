@@ -35,6 +35,7 @@ class RidersListCompact extends Component {
         ...styles.itemContainer,
         zIndex: this.state.users.length - index
       }}
+      key={'user_' + user.id}
     />
   }
 
