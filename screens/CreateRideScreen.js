@@ -48,10 +48,15 @@ class CreateRideScreen extends React.Component {
     this.event.updateRoute(route.trails.map( // TODO: discards actual route
       (trail: Trail) => this.props.TrailStore.getSync(trail).title
     ).join(' ⟫ ')) // ⟫ / ⫸ / ⇨ / → / ▶
+
+    this.state = {
+      saving: false
+    }
   }
 
   saveRide = async () => {
     // TODO: Validate
+    this.setState({ saving: true })
     await this.event.saveNew()
 
     ToastAndroid.show('Ride created.', ToastAndroid.SHORT)
@@ -89,9 +94,9 @@ class CreateRideScreen extends React.Component {
           </Provider>
         </ScrollView>
         <Button
-          title='Create ride'
+          title={this.state.saving ? 'Saving...' : 'Create ride'}
           onPress={this.saveRide}
-          disabled={!this.isValid()}
+          disabled={this.state.saving || !this.isValid()}
         />
       </KeyboardAvoidingView>
     )
