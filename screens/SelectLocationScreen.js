@@ -11,7 +11,6 @@ export default
 @observer
 class SelectLocationScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    // FIXME: button doesn't change
     let displayMap = navigation.getParam('displayMap')
     return {
       title: 'Select location',
