@@ -58,7 +58,9 @@ export default class Authentication {
       let token = await this.getOAuthToken(codeVerifier, result.params.code)
 
       return token
-    } // FIXME: handle fail https://docs.expo.io/versions/latest/sdk/auth-session/#returns
+    }
+    console.error('Login failed', result)
+    throw new Error('Error signing in')
   }
 
   /**

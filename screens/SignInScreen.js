@@ -32,7 +32,15 @@ class SignInScreen extends React.Component {
     this.props.ApplicationStore.updateAccessToken(token.access_token)
 
     let userInfo = await auth.getUserInfo(token.access_token)
-    let signInResult = await ApiConnection.post('signin', userInfo)
+    try {
+      var signInResult = await ApiConnection.post('signin', userInfo)
+    } catch (error) {
+      console.error('POST to signin failed', {
+        userInfo: userInfo,
+        error: error
+      })
+      throw new Error('Sign in failed')
+    }
 
     if (signInResult.success) {
       this.handleSignIn(signInResult.user, token)
