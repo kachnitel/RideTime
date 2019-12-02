@@ -41,18 +41,21 @@ class CreateRideScreen extends React.Component {
     this.event.updateLocation(this.props.navigation.getParam('location').id)
     this.event.updateCreatedBy(this.props.UserStore.currentUser.id)
     this.event.updateDifficulty(route.difficulty)
-    this.event.updateDescription(route.description &&
-      route.description.length > 2048
-      ? route.description.substr(0, 2045) + '...'
-      : route.description)
-    this.event.updateRoute(route.trails.map( // TODO: discards actual route
+    this.event.updateDescription(route.description && this.trimString(route.description, 2048))
+
+    let routeString = route.trails.map( // TODO: discards actual route
       (trail: Trail) => this.props.TrailStore.getSync(trail).title
-    ).join(' ⟫ ')) // ⟫ / ⫸ / ⇨ / → / ▶
+    ).join(' ⟫ ') // ⟫ / ⫸ / ⇨ / → / ▶
+    this.event.updateRoute(this.trimString(routeString, 2048))
 
     this.state = {
       saving: false
     }
   }
+
+  trimString = (string: String, length: Number) => string.length > length
+    ? string.substr(0, 2045) + '...'
+    : string
 
   saveRide = async () => {
     // TODO: Validate
