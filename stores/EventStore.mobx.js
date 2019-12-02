@@ -104,7 +104,7 @@ export class Event extends BaseEntity {
   @observable _createdBy = null // User.id
   @observable _title = null
   @observable _description = null
-  _members = observable.array([])
+  _members = observable.array([]) // Number[]
   _invited = observable.array([])
   @observable _difficulty = null
   @observable _location = null // Location.id
@@ -137,7 +137,7 @@ export class Event extends BaseEntity {
 
   @action async join () {
     this.store.provider.join(this.id)
-    this._members.push(this.store.userStore.currentUser)
+    this._members.push(this.store.userStore.currentUser.id)
   }
 
   @action updateDifficulty (newValue: Number) { this._difficulty = newValue }
@@ -178,14 +178,6 @@ export class Event extends BaseEntity {
     return this.members.includes(userId)
   }
 
-  /**
-   * TODO:
-   * Send request to POST events/{eventId}/join
-   * Add user to members
-   * Remove event from invites
-   *
-   * @memberof Event
-   */
   @action async acceptInvite () {
     await this.store.provider.join(this.id)
     this._members.push(this.store.userStore.currentUser)

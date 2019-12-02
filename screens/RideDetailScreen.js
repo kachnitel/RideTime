@@ -11,7 +11,7 @@ export default
 @observer
 class RideDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    let event = navigation.getParam('event')
+    let event: Event = navigation.getParam('event')
     return {
       title: event.title,
       headerRight: (

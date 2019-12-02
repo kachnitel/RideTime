@@ -20,14 +20,14 @@ class RideDetail extends Component {
   render () {
     return (
       <ScrollView style={styles.container}>
-        {/* <View style={styles.map} >
-          <AreaMap currentLocation={this.props.Event.location.gps} />
-        </View> */}
         <View style={styles.rideItem} >
           <RideItem ride={this.props.Event} />
         </View>
         <View style={{ ...styles.detailListItem, ...styles.membersListContainer }} >
-          <RidersList userIDs={this.props.Event.members} headerText='Members' textColor={Colors.darkBackgroundText} />
+          <RidersList
+            userIDs={this.props.Event.members.slice()}
+            headerText='Members' textColor={Colors.darkBackgroundText}
+          />
           {/* Only show invite button if member */}
           {this.props.Event.isMember() && this.inviteButton()}
         </View>
