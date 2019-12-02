@@ -41,6 +41,7 @@ export default class EditDateTime extends React.Component {
             value={this.props.value}
             onTouchStart={() => this.showDateTimePicker} // iOS
             editable={false}
+            required
           />
         </TouchableOpacity>
       </View>

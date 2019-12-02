@@ -76,7 +76,10 @@ class CreateRideScreen extends React.Component {
     this.props.navigation.dispatch(resetAction)
   }
 
-  isValid = () => !!this.event.terrain && !!this.event.title && !!this.event.difficulty
+  isValid = () => !!this.event.terrain &&
+    !!this.event.title &&
+    !!this.event.difficulty &&
+    !!this.event.datetime
 
   render () {
     return (
