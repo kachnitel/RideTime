@@ -124,7 +124,10 @@ class SelectTrails extends Component {
           onFilterUpdate={this.handleFilterUpdate}
         />
         <View style={styles.trailsList}>
-          {this.trailsList()}
+          {this.state.trails.length > 0
+            ? this.trailsList()
+            : <Text>No trails found in location.</Text>
+          }
         </View>
         {this.state.selected.length > 0 && <View style={styles.selectedList}>
           {this.selectedList()}

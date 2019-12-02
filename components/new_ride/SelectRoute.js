@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import AlternatingStyleList from '../lists/AlternatingStyleList'
 import { observer } from 'mobx-react/native'
 import RouteItem from '../list_items/RouteItem'
@@ -49,7 +49,10 @@ class SelectRoute extends Component {
           style={styles.filter}
           onFilterUpdate={this.handleFilterUpdate}
         />
-        {this.routesList()}
+        {this.state.routes.length > 0
+          ? this.routesList()
+          : <Text>No routes found in location.</Text>
+        }
       </View>
     )
   }

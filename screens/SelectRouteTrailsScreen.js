@@ -19,6 +19,7 @@ class SelectRouteTrailsScreen extends Component {
     let route = new Route()
     route.updateTitle(location.name)
     return {
+      title: location.name,
       headerRight: (
         <Button
           title='Skip'
