@@ -94,7 +94,8 @@ class RidesScreen extends React.Component {
     let results = this.state.bbox == null
       ? await this.props.EventStore.myEvents()
       : await this.props.EventStore.filter({
-        'location': this.state.visibleLocations.map(({ id }) => id)
+        'location': this.state.visibleLocations.map(({ id }) => id),
+        'dateStart': (Math.floor(Date.now() / 1000) - 3600)
       })
     this.setState({
       loading: false,
