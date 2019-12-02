@@ -54,7 +54,8 @@ export default class DifficultyIcon extends RideTimeIcon {
     let difficultyLevel = this.props.d
 
     if (DifficultyIcon.icons[difficultyLevel] === undefined) {
-      throw new Error('Difficulty Icon ' + this.props.d + ' is not defined')
+      console.log('Difficulty Icon ' + this.props.d + ' is not defined')
+      return null
     }
 
     let iconColor = DifficultyIcon.icons[difficultyLevel].color
