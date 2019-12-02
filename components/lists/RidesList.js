@@ -25,7 +25,9 @@ class RidesList extends Component {
         <AlternatingStyleList
           items={this.props.rides}
           itemComponent={this.itemComponent}
-          emptyComponent={<Text>No rides nearby, start one!</Text>}
+          emptyComponent={<Text>
+            No rides nearby, start one or move the map to see rides in the visible area!
+          </Text>}
           onItemPress={this.onItemPress}
           onRefresh={this.props.onRefresh}
         />
