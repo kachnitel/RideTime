@@ -9,15 +9,35 @@ import { SafeAreaView } from 'react-navigation'
 import SelectTrails from '../components/new_ride/SelectTrails'
 import SelectRoute from '../components/new_ride/SelectRoute'
 import { Route } from '../stores/RouteStore.mobx'
+import Button from '../components/Button'
 
 export default
 @observer
 class SelectRouteTrailsScreen extends Component {
+  static navigationOptions = ({ navigation }) => {
+    let location = navigation.getParam('location')
+    let route = new Route()
+    route.updateTitle(location.name)
+    return {
+      headerRight: (
+        <Button
+          title='Skip'
+          onPress={() => navigation.push(
+            'CreateRide',
+            {
+              location: location,
+              route: route
+            }
+          )}
+        />
+      )
+    }
+  }
+
   state = {
     trailsTab: true,
     loadingTrails: true,
     loadingRoutes: true
-    // route: undefined
   }
 
   location: Location

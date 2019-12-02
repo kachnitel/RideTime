@@ -103,27 +103,17 @@ class SelectTrails extends Component {
   </View>
 
   bottomButtons = () => <View style={styles.bottomButtons}>
-    {
-      this.state.selected.length > 0
-        ? <>
-          <Button
-            title='Clear'
-            onPress={() => { this.setState({ selected: [] }) }}
-            color='gray'
-            style={styles.bottomButton}
-          />
-          <Button
-            title='Next'
-            onPress={() => { this.props.onSubmit(this.state.selected) }}
-            style={styles.bottomButton}
-          />
-          </>
-        : <Button
-          title='Skip'
-          onPress={() => {}}
-          style={styles.bottomButton}
-        />
-    }
+    <Button
+      title='Clear'
+      onPress={() => { this.setState({ selected: [] }) }}
+      color='gray'
+      style={styles.bottomButton}
+    />
+    <Button
+      title='Next'
+      onPress={() => { this.props.onSubmit(this.state.selected) }}
+      style={styles.bottomButton}
+    />
   </View>
 
   render () {
@@ -139,7 +129,7 @@ class SelectTrails extends Component {
         {this.state.selected.length > 0 && <View style={styles.selectedList}>
           {this.selectedList()}
         </View>}
-        {this.bottomButtons()}
+        {this.state.selected.length > 0 && this.bottomButtons()}
       </View>
     )
   }
@@ -148,7 +138,7 @@ class SelectTrails extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'stretch'
   },
   badge: {
     backgroundColor: Colors.tintColor,
@@ -172,7 +162,8 @@ const styles = StyleSheet.create({
     flex: 35,
     backgroundColor: Colors.tintColor,
     padding: Layout.window.hp(2),
-    width: '100%'
+    width: '100%',
+    paddingBottom: Layout.window.hp(3.5)
   },
   selectedListHeader: {
     color: '#fff'
@@ -202,7 +193,6 @@ const styles = StyleSheet.create({
     marginBottom: Layout.window.hp(0.25)
   },
   bottomButtons: {
-    // FIXME: Fill width...getting sick of this stupid flex
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-evenly'
