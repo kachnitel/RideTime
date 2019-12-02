@@ -38,7 +38,6 @@ class RidesList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 2
+    flex: 1
   }
 })

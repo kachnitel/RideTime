@@ -9,11 +9,12 @@ export default class ProfilePicture extends React.Component {
     return (
       <Image
         source={{ uri: this.props.picture }}
-        style={{ // FIXME https://github.com/kachnitel/RideTime/commit/f4caf5f95245d182ec86d21bd5faf721197d3ef5#diff-61a4930816190520f9babe8250ecacd8
+        style={{
           ...styles.image,
           width: size,
           height: size,
-          borderRadius: size / 2
+          borderRadius: size / 2,
+          ...this.props.style
         }}
       />
     )
@@ -22,7 +23,8 @@ export default class ProfilePicture extends React.Component {
 
 ProfilePicture.propTypes = {
   picture: PropTypes.string,
-  size: PropTypes.number
+  size: PropTypes.number,
+  style: PropTypes.any
 }
 
 const styles = StyleSheet.create({
