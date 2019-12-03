@@ -46,9 +46,7 @@ export default class EventStore extends BaseCollectionStore {
    * @memberof EventStore
    */
   @computed get futureEvents () {
-    // TODO: call provider.filter with dateStart
-    // see https://web.postman.co/collections/177751-ad5454f3-b957-421d-9063-dfc64109e494?workspace=03277615-80d2-441a-8d27-e6d7b722d87f#7fb3f985-1008-4a52-9750-dd2b80b11843
-    return this.list()
+    return this._collection
       .filter(this.filterFutureEvent)
   }
 
@@ -128,16 +126,17 @@ export class Event extends BaseEntity {
   @computed get invited () { return this._invited }
 
   @action updateMembers (newValue: Array) { this._members.replace(newValue) }
+  @action addMember (newValue: Number) { !this._members.includes(newValue) && this._members.push(newValue) }
   @computed get members () { return this._members }
 
   @action async invite (userId: Number) {
     this.store.provider.invite(this.id, userId)
-    this._invited.push(userId)
+    this.addMember(userId) // FIXME: call addMember action?
   }
 
   @action async join () {
     this.store.provider.join(this.id)
-    this._members.push(this.store.userStore.currentUser.id)
+    this.addMember(this.store.userStore.currentUser.id) // FIXME: call addMember action?
   }
 
   @action updateDifficulty (newValue: Number) { this._difficulty = newValue }
@@ -180,7 +179,7 @@ export class Event extends BaseEntity {
 
   @action async acceptInvite () {
     await this.store.provider.join(this.id)
-    this._members.push(this.store.userStore.currentUser.id)
+    this.addMember(this.store.userStore.currentUser.id)
     this.store.removeInvite(this)
   }
 
