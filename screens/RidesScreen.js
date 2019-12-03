@@ -53,10 +53,6 @@ class RidesScreen extends React.Component {
     }
   }
 
-  async componentDidMount () {
-    await this.loadRides()
-  }
-
   /**
    * @memberof RidesScreen
    */
@@ -89,24 +85,22 @@ class RidesScreen extends React.Component {
     this.loadRides()
   }
 
-  async loadRides () {
+  loadRides () {
     this.setState({ loading: true })
-    let results = this.state.bbox == null
-      ? await this.props.EventStore.myEvents()
-      : await this.props.EventStore.filter({
-        'location': this.state.visibleLocations.map(({ id }) => id),
-        'dateStart': (Math.floor(Date.now() / 1000) - 3600)
-      })
+    if (!this.state.bbox) {
+      console.warn('Attempting to load rides without bbox set!')
+      return
+    }
+    this.props.EventStore.filter({ // async
+      'location': this.state.visibleLocations.map(({ id }) => id),
+      'dateStart': (Math.floor(Date.now() / 1000) - 3600)
+    })
     this.setState({
       loading: false,
-      visibleEvents: results
+      visibleEvents: this.props.EventStore.futureEvents.filter(({ location: locationId }) => {
+        return this.state.visibleLocations.find(({ id }) => id === locationId)
+      })
     })
-  }
-
-  async loadMapLocations () {
-    this.setState({ loading: true })
-    await this.props.LocationStore.bbox(this.state.bbox)
-    this.setState({ loading: false })
   }
 
   selectLocation = (locationInfo) => {
@@ -175,23 +169,31 @@ class RidesScreen extends React.Component {
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <View style={{ flex: 35 }}>
-          {/* FIXME: Loading indicator doesn't show up when loading locations */}
           {this.state.loading && <ActivityIndicator style={styles.mapLoading} />}
           <AreaMap
             markers={this.mapMarkers()}
             onRegionChangeComplete={this.onRegionChange}
             onPress={this.clearLocation}
+            showsUserLocation
+            loadingEnabled
           />
         </View>
 
         <View style={{ flex: 65 }}>
-          {this.state.loading ? <ActivityIndicator /> : <RidesList
-            navigation={this.props.navigation}
-            onRefresh={this.onRidesRefresh}
-            rides={filteredEventList}
-          />}
+          {filteredEventList.length > 0
+            ? <RidesList
+              navigation={this.props.navigation}
+              onRefresh={this.onRidesRefresh}
+              rides={filteredEventList}
+            />
+            : !this.state.loading && <Text style={styles.noRidesText}>
+              No rides nearby, start one or move the map to see rides in the visible area!
+            </Text>}
+          {this.state.loading && <View style={styles.listLoading}>
+            <ActivityIndicator color={'#fff'} />
+            <Text>Loading rides in visible area...</Text>
+          </View>}
         </View>
-
         <CreateRideButton navigation={this.props.navigation} />
       </View>
     )
@@ -241,5 +243,15 @@ const styles = StyleSheet.create({
   mapLoading: {
     position: 'absolute',
     zIndex: 10
+  },
+  listLoading: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.25);'
+  },
+  noRidesText: {
+    textAlign: 'center',
+    paddingHorizontal: Layout.window.wp(4),
+    flex: 1,
+    justifyContent: 'center'
   }
 })
