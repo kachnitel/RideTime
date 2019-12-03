@@ -1,8 +1,7 @@
 import React from 'react'
-import MapView, { Marker, UrlTile } from 'react-native-maps'
+import MapView, { UrlTile } from 'react-native-maps'
 import { inject, observer } from 'mobx-react/native'
 import { StyleSheet, ActivityIndicator } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
 
@@ -18,19 +17,6 @@ class AreaMap extends React.Component {
       locations: []
     }
   }
-
-  ownLocationMarker = (latLng) => <Marker
-    coordinate={latLng}
-    key={'currentUser'}
-    title={'Your location'}
-    description={Object.values(latLng).toString()}
-  >
-    <Icon
-      name='gps-fixed'
-      size={Layout.window.hp(2)}
-      style={styles.selfMarkerIcon}
-    />
-  </Marker>
 
   render () {
     if (!this.state.currentLocation) {
@@ -52,8 +38,6 @@ class AreaMap extends React.Component {
       {...this.props}
     >
       <UrlTile urlTemplate={tileUrl} maximumZ={19} />
-      {/* Own location marker */}
-      {this.ownLocationMarker(latLng)}
       {this.props.markers}
     </MapView>
   }
