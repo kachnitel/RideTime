@@ -33,12 +33,12 @@ class InvitesList extends Component {
 
   acceptInvite = (event) => {
     event.acceptInvite()
-    this.detail = null
+    this.setState({ detail: null })
   }
 
   declineInvite = (event) => {
     event.declineInvite()
-    this.detail = null
+    this.setState({ detail: null })
   }
 
   listComponent = () => <ScrollView style={styles.scroll}>
