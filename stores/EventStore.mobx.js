@@ -180,8 +180,7 @@ export class Event extends BaseEntity {
 
   @action async acceptInvite () {
     await this.store.provider.join(this.id)
-    this._members.push(this.store.userStore.currentUser)
-    // TODO: Remove from this._invited, sync with store.invites
+    this._members.push(this.store.userStore.currentUser.id)
     this.store.removeInvite(this)
   }
 
