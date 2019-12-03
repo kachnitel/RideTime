@@ -17,7 +17,7 @@ class InvitesIconBadged extends Component {
   async componentDidMount () {
     await this.props.EventStore.loadInvites()
     this.setState({ loading: false })
-    this.interval = setInterval(() => this.props.EventStore.loadInvites(), 30000)
+    this.interval = setInterval(() => this.props.EventStore.loadInvites(), 300000)
   }
 
   componentWillUnmount () {
