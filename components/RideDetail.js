@@ -69,7 +69,7 @@ class RideDetail extends Component {
         action: (id) => this.props.Event.invite(id), // TODO: Toast
         disabled: (id) => (
           this.props.Event.isMember(id) ||
-          this.props.Event.invited.indexOf(id) !== -1
+          this.props.Event.invited.includes(id)
         )
       }]}
     />

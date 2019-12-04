@@ -91,6 +91,7 @@ export class Event extends BaseEntity {
     'title',
     'description',
     'members',
+    'invited',
     'difficulty',
     'location',
     'terrain',
@@ -122,21 +123,21 @@ export class Event extends BaseEntity {
   @action updateDescription (newValue: String) { this._description = newValue }
   @computed get description () { return this._description }
 
-  @action updateInvited (newValue: Array) { this._invited.replace(newValue) }
+  @action updateInvited (newValue: Number[]) { this._invited.replace(newValue) }
   @computed get invited () { return this._invited }
 
-  @action updateMembers (newValue: Array) { this._members.replace(newValue) }
+  @action updateMembers (newValue: Number[]) { this._members.replace(newValue) }
   @action addMember (newValue: Number) { !this._members.includes(newValue) && this._members.push(newValue) }
   @computed get members () { return this._members }
 
-  @action async invite (userId: Number) {
+  @action invite (userId: Number) {
     this.store.provider.invite(this.id, userId)
-    this.addMember(userId) // FIXME: call addMember action?
+    this._invited.push(userId)
   }
 
-  @action async join () {
+  @action join () {
     this.store.provider.join(this.id)
-    this.addMember(this.store.userStore.currentUser.id) // FIXME: call addMember action?
+    this.addMember(this.store.userStore.currentUser.id)
   }
 
   @action updateDifficulty (newValue: Number) { this._difficulty = newValue }
@@ -180,6 +181,7 @@ export class Event extends BaseEntity {
   @action async acceptInvite () {
     await this.store.provider.join(this.id)
     this.addMember(this.store.userStore.currentUser.id)
+    this.invited.remove(this.store.userStore.currentUser.id)
     this.store.removeInvite(this)
   }
 
