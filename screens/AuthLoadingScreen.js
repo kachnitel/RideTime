@@ -1,11 +1,13 @@
+import { inject, observer } from 'mobx-react'
 import React from 'react'
 import {
   ActivityIndicator,
+  Alert,
   StyleSheet,
-  View,
-  Alert
+  Text,
+  View
 } from 'react-native'
-import { observer, inject } from 'mobx-react'
+import Colors from '../constants/Colors'
 import NetworkError from '../src/NetworkError'
 
 export default
@@ -15,6 +17,13 @@ export default
 class AuthLoadingScreen extends React.Component {
   constructor (props) {
     super(props)
+
+    this.state = {
+      loadingText: 'Loading...'
+    }
+  }
+
+  componentDidMount = () => {
     this._bootstrapAsync()
   }
 
@@ -22,6 +31,7 @@ class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     let signedInUserId = this.props.ApplicationStore.userId
 
+    this.setState({ loadingText: 'Refreshing token...' })
     if (signedInUserId) {
       try {
         await this.props.ApplicationStore.refreshAccessToken()
@@ -32,6 +42,7 @@ class AuthLoadingScreen extends React.Component {
         return
       }
 
+      this.setState({ loadingText: 'Loading user...' })
       let user = await this.props.UserStore.get(signedInUserId)
         .catch(async (error) => {
           // Custom catch to allow redirect
@@ -67,7 +78,8 @@ class AuthLoadingScreen extends React.Component {
   render () {
     return (
       <View style={styles.container}>
-        <ActivityIndicator />
+        <Text style={styles.loadingText}>{this.state.loadingText}</Text>
+        <ActivityIndicator color={Colors.tintColor} />
       </View>
     )
   }
@@ -76,8 +88,11 @@ class AuthLoadingScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.darkBackground,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  loadingText: {
+    color: '#fff'
   }
 })
