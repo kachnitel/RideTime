@@ -7,7 +7,6 @@ import {
   ActivityIndicator
 } from 'react-native'
 import EditProfileHeader from '../components/profile/EditProfileHeader'
-import ProfileHeader from '../components/profile/ProfileHeader'
 import Layout from '../constants/Layout'
 import { observer, inject, Provider } from 'mobx-react/native'
 import Button from '../components/Button'
@@ -28,9 +27,9 @@ class OwnProfileScreen extends React.Component {
         <View style={styles.buttonContainer}>
           <View style={styles.navBarButton}>
             <Button
-              title={navigation.getParam('editing') ? 'Save' : 'Edit'}
+              title={'Save'}
               // default value suppresses warning thrown before param is obtained
-              onPress={navigation.getParam('editProfile', () => {})}
+              onPress={navigation.getParam('saveProfile', () => {})}
               disabled={navigation.getParam('loadingUser', true)}
             />
           </View>
@@ -48,20 +47,7 @@ class OwnProfileScreen extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      editing: false
-    }
-
     this.user = new User(props.UserStore)
-  }
-
-  _editProfile = () => {
-    // Done editing
-    if (this.state.editing) {
-      // TODO: this will need to be changed once I add cancel
-      this.saveProfile()
-    }
-    this.setState((prevState, props) => ({ editing: !prevState.editing }))
   }
 
   saveProfile = async () => {
@@ -72,8 +58,7 @@ class OwnProfileScreen extends React.Component {
 
   async componentDidMount () {
     this.props.navigation.setParams({
-      editProfile: this._editProfile,
-      editing: this.state.editing,
+      saveProfile: this.saveProfile,
       loadingUser: true
     })
 
@@ -82,14 +67,6 @@ class OwnProfileScreen extends React.Component {
     this.user.populateFromApiResponse(originalUser.createApiJson())
 
     this.props.navigation.setParams({ loadingUser: false })
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    if (prevState.editing !== this.state.editing) {
-      this.props.navigation.setParams({
-        editing: this.state.editing
-      })
-    }
   }
 
   render () {
@@ -102,9 +79,7 @@ class OwnProfileScreen extends React.Component {
             keyboardVerticalOffset={Header.HEIGHT + 24}
             behavior='padding'
           >
-            { this.state.editing
-              ? <EditProfileHeader />
-              : <ProfileHeader user={user} /> }
+            <EditProfileHeader />
           </KeyboardAvoidingView>
         </Provider>
         : <ActivityIndicator />
