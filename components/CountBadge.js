@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet } from 'react-native'
 import Layout from '../constants/Layout'
+import Colors from '../constants/Colors'
 
 export default class CountBadge extends Component {
   render () {
@@ -12,10 +13,9 @@ const styles = StyleSheet.create({
   badge: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    backgroundColor: 'red',
+    backgroundColor: Colors.confirmationHighlight,
     paddingHorizontal: Layout.window.wp(1),
     borderRadius: Layout.window.hp(2),
-    color: '#fff',
     fontWeight: 'bold',
     minWidth: Layout.window.wp(5)
   }
