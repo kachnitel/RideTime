@@ -31,7 +31,6 @@ class RidesScreen extends React.Component {
     return {
       // https://reactnavigation.org/docs/en/stack-navigator.html#navigationoptions-for-screens-inside-of-the-navigator
       title: 'RideTime',
-      drawerLabel: 'Home',
       headerLeft: <DrawerButton navigation={navigation} />,
       headerRight: <TouchableWithModal
         modalContent={<InvitesList />}

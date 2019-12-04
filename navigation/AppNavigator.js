@@ -3,14 +3,13 @@ import DrawerNavigator from './DrawerNavigator'
 import AuthLoadingScreen from '../screens/AuthLoadingScreen'
 import AuthStack from './AuthNavigator'
 import DevScreen from '../screens/DevScreen'
+import ProfileStack from './ProfileNavigator'
 
 const MainNavigator = createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  // Main: MainTabNavigator,
   AuthLoading: AuthLoadingScreen,
   App: DrawerNavigator,
   Auth: AuthStack,
+  EditProfile: ProfileStack,
   Dev: DevScreen
 },
 {

@@ -13,7 +13,7 @@ import { observer, inject, Provider } from 'mobx-react/native'
 import Button from '../components/Button'
 import SignOutButton from '../components/SignOutButton'
 import { Header } from 'react-navigation'
-import DrawerButton from '../components/DrawerButton'
+import BackButton from '../components/BackButton'
 import { User } from '../stores/UserStore.mobx'
 
 export default
@@ -39,7 +39,7 @@ class OwnProfileScreen extends React.Component {
           </View>
         </View>
       ),
-      headerLeft: <DrawerButton navigation={navigation} />
+      headerLeft: <BackButton navigation={navigation} />
     }
   }
 

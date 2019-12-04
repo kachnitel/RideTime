@@ -1,15 +1,33 @@
+import React from 'react'
 import { createDrawerNavigator } from 'react-navigation'
-import ProfileStack from './ProfileNavigator'
 import HomeStack from './HomeNavigator'
 import Colors from '../constants/Colors'
 import FriendStack from './FriendNavigator'
 import DrawerContent from './DrawerContent'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import Layout from '../constants/Layout'
+
+let getIcon = (name: String, color) => <Icon
+  name={name}
+  style={{ color: color }}
+  size={Layout.window.hp(3.5)}
+/>
 
 const DrawerStack = createDrawerNavigator(
   {
-    Home: HomeStack,
-    Friends: FriendStack,
-    Profile: ProfileStack
+    Home: {
+      screen: HomeStack,
+      navigationOptions: {
+        drawerLabel: 'Rides',
+        drawerIcon: ({ tintColor }) => getIcon('view-list', tintColor)
+      }
+    },
+    Friends: {
+      screen: FriendStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => getIcon('people-outline', tintColor)
+      }
+    }
   },
   {
     initialRouteName: 'Home',

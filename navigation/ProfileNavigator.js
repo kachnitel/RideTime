@@ -6,13 +6,12 @@ import Colors from '../constants/Colors'
 
 const ProfileStack = createStackNavigator(
   {
-    Profile: OwnProfileScreen,
-    // EditProfile: EditProfileScreen,
+    EditProfile: OwnProfileScreen,
     PublicProfile: { screen: PublicProfileScreen },
     RideDetail: { screen: RideDetailScreen }
   },
   {
-    initialRouteName: 'Profile',
+    initialRouteName: 'EditProfile',
     defaultNavigationOptions: ({ navigation }) => ({
       headerStyle: {
         backgroundColor: '#ffffff'
