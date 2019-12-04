@@ -21,17 +21,20 @@ export default
 @observer
 class SignInScreen extends React.Component {
   state = {
-    loading: false
+    loading: false,
+    loadingMessage: 'Loading...'
   }
 
   authenticate = async () => {
-    this.setState({ loading: true })
+    this.setState({ loading: true, loadingMessage: 'Getting token...' })
 
     let auth = new Authentication()
     let token = await auth.loginWithAuth0()
     this.props.ApplicationStore.updateAccessToken(token.access_token)
 
+    this.setState({ loadingMessage: 'Getting user info...' })
     let userInfo = await auth.getUserInfo(token.access_token)
+    this.setState({ loadingMessage: 'Signing in...' })
     try {
       var signInResult = await ApiConnection.post('signin', userInfo)
     } catch (error) {
@@ -75,7 +78,7 @@ class SignInScreen extends React.Component {
     return (
       this.state.loading
         ? <View style={styles.container}>
-          <Text style={styles.loadingText}>Loading...</Text>
+          <Text style={styles.loadingText}>{ this.state.loadingMessage }</Text>
           <ActivityIndicator size='small' color={Colors.tintColor} />
         </View>
         : <View style={styles.container}>
