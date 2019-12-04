@@ -40,7 +40,7 @@ export default class AlternatingStyleList extends Component {
           ListEmptyComponent={this.props.emptyComponent}
           keyExtractor={typeof this.props.keyExtractor === 'function'
             ? this.props.keyExtractor
-            : (item, index) => 'index_' + item.id ?? index.toString()}
+            : (item, index) => 'index_' + (item.id ?? index.toString())}
           onRefresh={this.props.onRefresh}
           refreshing={this.state.refreshing}
         />
