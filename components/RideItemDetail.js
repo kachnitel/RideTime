@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   lowerRowIconContainer: {
     width: Layout.window.wp(12),
-    alignItems: 'center'
+    alignItems: 'flex-start'
   },
   startTime: {
     fontSize: Layout.window.hp(3.25)
