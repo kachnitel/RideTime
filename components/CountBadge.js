@@ -11,10 +11,12 @@ export default class CountBadge extends Component {
 const styles = StyleSheet.create({
   badge: {
     textAlign: 'center',
+    textAlignVertical: 'center',
     backgroundColor: 'red',
     paddingHorizontal: Layout.window.wp(1),
     borderRadius: Layout.window.hp(2),
     color: '#fff',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    minWidth: Layout.window.wp(5)
   }
 })
