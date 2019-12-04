@@ -12,6 +12,7 @@ import Layout from '../constants/Layout'
 import Button from '../components/Button'
 import CountHeader from '../components/CountHeader'
 import FriendMenuModal from '../components/friends/FriendMenuModal'
+import DrawerButton from '../components/DrawerButton'
 
 export default
 @inject('UserStore', 'ApplicationStore')
@@ -21,6 +22,7 @@ class FriendListScreen extends Component {
     return {
       // w/ little name under in drawer eventually
       title: 'Friends',
+      headerLeft: <DrawerButton navigation={navigation} />,
       headerRight: (
         <Button
           title='Add'
