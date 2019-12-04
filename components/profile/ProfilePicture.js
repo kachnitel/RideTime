@@ -3,18 +3,32 @@ import React from 'react'
 import { Image, StyleSheet } from 'react-native'
 
 export default class ProfilePicture extends React.Component {
-  render () {
-    let size = this.props.size || 50
+  state = {
+    size: null
+  }
 
+  componentDidMount = () => {
+    this.updateSize()
+  }
+
+  updateSize = (width: ?Number = false) => {
+    this.setState({ size: width ?? this.props.size })
+  }
+
+  render () {
     return (
       <Image
         source={{ uri: this.props.picture }}
         style={{
           ...styles.image,
-          width: size,
-          height: size,
-          borderRadius: size / 2,
+          width: this.props.size ?? '100%',
+          aspectRatio: 1,
+          borderRadius: this.state.size / 2,
           ...this.props.style
+        }}
+        onLayout={(event) => {
+          let width = event.nativeEvent.layout.width
+          this.updateSize(width)
         }}
       />
     )
