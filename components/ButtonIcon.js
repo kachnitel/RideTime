@@ -21,7 +21,7 @@ export default class ButtonIcon extends Component {
           {this.props.iconComponent || <Icon
             name={this.props.icon || 'adb'}
             color={this.props.color || '#fff'}
-            size={Layout.window.hp(4)}
+            size={Layout.window.hp(3)}
           />}
           {this.props.text && <Text style={{ ...styles.text, color: this.props.color || '#fff' }}>{this.props.text.toUpperCase()}</Text>}
         </View>

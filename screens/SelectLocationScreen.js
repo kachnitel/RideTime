@@ -19,7 +19,7 @@ class SelectLocationScreen extends React.Component {
         iconComponent={<Icon
           name={displayMap ? 'file-search-outline' : 'map-search-outline'}
           color='#fff'
-          size={Layout.window.hp(4.5)}
+          size={Layout.window.hp(3)}
         />}
         onPress={navigation.getParam('toggleDisplayMap')}
       />
