@@ -124,7 +124,7 @@ class RidesScreen extends React.Component {
         onPress={() => this.selectLocation(locationInfo)}
       >
         <Text style={ridesInLocation.length ? styles.locMarker : { ...styles.locMarker, ...styles.emptyMarker }}>
-          {ridesInLocation.length}
+          {ridesInLocation.length || '⊘'}
         </Text>
         <Callout>
           {this.locationCallout(locationInfo)}
@@ -142,7 +142,7 @@ class RidesScreen extends React.Component {
       >
         {locationInfo.name}
       </Header>
-      <Text>Rides in area</Text>
+      <Text>Rides in area:</Text>
       <View style={styles.calloutDetailContainer}>
         {Object.keys(DifficultyIcon.icons).map(Number).map((difficultyLevel) => {
           let ridesByLevel = this.props.EventStore.futureEvents.filter(
@@ -207,8 +207,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     borderColor: '#fff',
     borderWidth: 1,
-    paddingHorizontal: Layout.window.hp(2),
-    paddingVertical: Layout.window.hp(1),
+    paddingHorizontal: Layout.window.hp(1),
+    paddingVertical: Layout.window.hp(0.5),
     textAlign: 'center',
     fontWeight: 'bold'
   },

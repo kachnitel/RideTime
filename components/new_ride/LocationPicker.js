@@ -95,8 +95,8 @@ class LocationPicker extends Component {
       initialRegion={{
         latitude: coords.latitude,
         longitude: coords.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421
+        latitudeDelta: 0.2,
+        longitudeDelta: 0.1
       }}
       style={styles.map}
       provider={null}
@@ -125,7 +125,7 @@ class LocationPicker extends Component {
           coordinate={latlng}
           title={location.name}
           key={location.id}
-          // description={marker.description}
+          description={'Tap to select'}
           onCalloutPress={() => this.props.onLocationPress(location.id)}
         />
       })}

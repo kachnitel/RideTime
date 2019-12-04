@@ -2,8 +2,6 @@ import React from 'react'
 import MapView, { UrlTile } from 'react-native-maps'
 import { inject, observer } from 'mobx-react/native'
 import { StyleSheet, ActivityIndicator } from 'react-native'
-import Layout from '../constants/Layout'
-import Colors from '../constants/Colors'
 
 export default
 @inject('LocationStore')
@@ -31,8 +29,8 @@ class AreaMap extends React.Component {
     return <MapView
       initialRegion={{
         ...latLng,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.04231
+        latitudeDelta: 0.2,
+        longitudeDelta: 0.1
       }}
       style={styles.map}
       {...this.props}
@@ -46,12 +44,5 @@ class AreaMap extends React.Component {
 const styles = StyleSheet.create({
   map: {
     flex: 1
-  },
-  selfMarkerIcon: {
-    borderRadius: Layout.window.hp(1.5),
-    padding: Layout.window.hp(0.5),
-    backgroundColor: Colors.tintColor,
-    color: '#fff',
-    opacity: 0.75
   }
 })
