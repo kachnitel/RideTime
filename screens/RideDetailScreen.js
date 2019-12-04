@@ -5,6 +5,7 @@ import { Event } from '../stores/EventStore.mobx'
 import { ActivityIndicator } from 'react-native'
 import Button from '../components/Button'
 import ButtonIcon from '../components/ButtonIcon'
+import HeaderRightView from '../components/HeaderRightView'
 
 export default
 @inject('EventStore')
@@ -14,8 +15,8 @@ class RideDetailScreen extends React.Component {
     let event: Event = navigation.getParam('event')
     return {
       title: event.title,
-      headerRight: (
-        event.isMember()
+      headerRight: <HeaderRightView>
+        {event.isMember()
           ? <ButtonIcon // TODO: Three dot menu here (Leave, edit, ...?)
             icon='more-vert'
             onPress={() => console.log('leave etc..id: ' + event.id)}
@@ -23,8 +24,8 @@ class RideDetailScreen extends React.Component {
           : <Button
             title='Join'
             onPress={() => event.join()} // event.join() + toast
-          />
-      )
+          />}
+      </HeaderRightView>
     }
   }
 

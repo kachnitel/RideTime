@@ -14,6 +14,7 @@ import Layout from '../constants/Layout'
 import Header from '../components/Header'
 import DifficultyIcon from '../components/icons/DifficultyIcon'
 import CountBadge from '../components/CountBadge'
+import HeaderRightView from '../components/HeaderRightView'
 
 /**
  * TODO:
@@ -32,11 +33,13 @@ class RidesScreen extends React.Component {
       // https://reactnavigation.org/docs/en/stack-navigator.html#navigationoptions-for-screens-inside-of-the-navigator
       title: 'RideTime',
       headerLeft: <DrawerButton navigation={navigation} />,
-      headerRight: <TouchableWithModal
-        modalContent={<InvitesList />}
-      >
-        <InvitesIconBadged />
-      </TouchableWithModal>
+      headerRight: <HeaderRightView>
+        <TouchableWithModal
+          modalContent={<InvitesList />}
+        >
+          <InvitesIconBadged />
+        </TouchableWithModal>
+      </HeaderRightView>
     }
   }
 

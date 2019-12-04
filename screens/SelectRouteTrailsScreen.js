@@ -10,6 +10,7 @@ import SelectTrails from '../components/new_ride/SelectTrails'
 import SelectRoute from '../components/new_ride/SelectRoute'
 import { Route } from '../stores/RouteStore.mobx'
 import Button from '../components/Button'
+import HeaderRightView from '../components/HeaderRightView'
 
 export default
 @observer
@@ -20,7 +21,7 @@ class SelectRouteTrailsScreen extends Component {
     route.updateTitle(location.name)
     return {
       title: location.name,
-      headerRight: (
+      headerRight: <HeaderRightView>
         <Button
           title='Skip'
           onPress={() => navigation.push(
@@ -31,7 +32,7 @@ class SelectRouteTrailsScreen extends Component {
             }
           )}
         />
-      )
+      </HeaderRightView>
     }
   }
 

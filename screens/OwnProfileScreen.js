@@ -14,6 +14,7 @@ import SignOutButton from '../components/SignOutButton'
 import { Header } from 'react-navigation'
 import BackButton from '../components/BackButton'
 import { User } from '../stores/UserStore.mobx'
+import HeaderRightView from '../components/HeaderRightView'
 
 export default
 @inject('UserStore')
@@ -24,7 +25,7 @@ class OwnProfileScreen extends React.Component {
       // w/ little name under in drawer eventually
       title: 'My Profile',
       headerRight: (
-        <View style={styles.buttonContainer}>
+        <HeaderRightView>
           <View style={styles.navBarButton}>
             <Button
               title={'Save'}
@@ -36,7 +37,7 @@ class OwnProfileScreen extends React.Component {
           <View style={styles.navBarButton}>
             <SignOutButton navigation={navigation} />
           </View>
-        </View>
+        </HeaderRightView>
       ),
       headerLeft: <BackButton navigation={navigation} />
     }
@@ -88,10 +89,6 @@ class OwnProfileScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    paddingRight: Layout.window.wp(1),
-    flexDirection: 'row'
-  },
   navBarButton: {
     margin: Layout.window.wp(1)
   }

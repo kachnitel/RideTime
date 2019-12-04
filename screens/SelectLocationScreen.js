@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ButtonIcon from '../components/ButtonIcon'
 import LocationPicker from '../components/new_ride/LocationPicker'
 import Layout from '../constants/Layout'
+import HeaderRightView from '../components/HeaderRightView'
 
 export default
 @inject('LocationStore')
@@ -14,15 +15,17 @@ class SelectLocationScreen extends React.Component {
     let displayMap = navigation.getParam('displayMap')
     return {
       title: 'Select location',
-      headerRight: <ButtonIcon
-        text={displayMap ? 'List' : 'Map'}
-        iconComponent={<Icon
-          name={displayMap ? 'file-search-outline' : 'map-search-outline'}
-          color='#fff'
-          size={Layout.window.hp(3)}
-        />}
-        onPress={navigation.getParam('toggleDisplayMap')}
-      />
+      headerRight: <HeaderRightView>
+        <ButtonIcon
+          text={displayMap ? 'List' : 'Map'}
+          iconComponent={<Icon
+            name={displayMap ? 'file-search-outline' : 'map-search-outline'}
+            color='#fff'
+            size={Layout.window.hp(3)}
+          />}
+          onPress={navigation.getParam('toggleDisplayMap')}
+        />
+      </HeaderRightView>
     }
   }
 
