@@ -6,14 +6,29 @@ import CountBadge from './CountBadge'
 import stores from '../stores/CollectionStores.singleton'
 
 export default class DrawerButton extends React.Component {
+  state = {
+    badgeCount: null
+  }
+
+  componentDidMount = () => {
+    this.updateBadge()
+    setTimeout(this.updateBadge, 5000)
+  }
+
+  updateBadge = () => {
+    let count = (stores.user.friendRequests.length + stores.event.invites.length)
+    this.setState({
+      badgeCount: count
+    })
+  }
+
   render () {
-    let badgeCount = stores.user.friendRequests.length + stores.event.invites.length
     return (
       <TouchableOpacity onPress={() => this.props.navigation.toggleDrawer()}>
         <View style={styles.headerMenuIconContainer}>
           <Icon style={styles.headerMenuIcon} name='menu' />
-          { badgeCount > 0 && <CountBadge
-            count={badgeCount}
+          { this.state.badgeCount > 0 && <CountBadge
+            count={this.state.badgeCount}
             style={styles.badge}
           /> }
         </View>
