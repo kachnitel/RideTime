@@ -6,6 +6,7 @@ import ButtonIcon from '../components/ButtonIcon'
 import LocationPicker from '../components/new_ride/LocationPicker'
 import Layout from '../constants/Layout'
 import HeaderRightView from '../components/HeaderRightView'
+import { HeaderBackButton } from 'react-navigation'
 
 export default
 @inject('LocationStore')
@@ -15,6 +16,7 @@ class SelectLocationScreen extends React.Component {
     let displayMap = navigation.getParam('displayMap')
     return {
       title: 'Select location',
+      headerLeft: <HeaderBackButton onPress={() => navigation.pop()} />,
       headerRight: <HeaderRightView>
         <ButtonIcon
           text={displayMap ? 'List' : 'Map'}
