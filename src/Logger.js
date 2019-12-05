@@ -28,7 +28,14 @@ class Logger {
 
   _addMessage = (level: String, message: String, context) => {
     if (getEnvVars().dev) {
-      console[level](message, context)
+      let method = console[level]
+      if (typeof method === 'function') {
+        console[level](message, context)
+      } else {
+        console.warn('Failed logging to console', {
+          level, message, context
+        })
+      }
     }
 
     this.db.transaction(
@@ -44,7 +51,7 @@ class Logger {
           // (_, results) => console.log(results)
         )
       },
-      (err) => logger.warn('Error saving log to SQLite', err)
+      (err) => console.warn('Error saving log to SQLite', err)
     )
   }
 
@@ -67,13 +74,13 @@ class Logger {
       (tx) => {
         tx.executeSql(sql, params, (_, { rows }) => resolve(rows._array), reject)
       },
-      (err) => logger.warn('Error running query: ' + sql, err)
+      (err) => console.warn('Error running query: ' + sql, err)
     ))
   }
 
   debug = (message: String, context) => this._addMessage('debug', message, context)
   info = (message: String, context) => this._addMessage('info', message, context)
-  warn = (message: String, context) => this._addMessage('warning', message, context)
+  warn = (message: String, context) => this._addMessage('warn', message, context)
   error = (message: String, context) => this._addMessage('error', message, context)
 }
 
