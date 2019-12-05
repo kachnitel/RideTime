@@ -17,7 +17,7 @@ export default class ProfileHeader extends React.Component {
           {/* <View style={styles.profilePicture}> */}
           <ProfilePicture picture={this.props.user.picture} style={styles.profilePicture} />
           {/* </View> */}
-          <Text style={styles.name}>{this.props.user.name}</Text>
+          <Text style={styles.name} numberOfLines={1}>{this.props.user.name}</Text>
           <Text style={styles.hometown}>{this.props.user.hometown}</Text>
           <ProfileSummary style={styles.profileSummary} user={this.props.user} />
         </View>
