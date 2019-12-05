@@ -8,6 +8,7 @@ import {
 import randomatic from 'randomatic'
 import { Connection } from './Connection'
 import { logger } from './Logger'
+import { alertAsync } from './AsyncAlert'
 
 /*
   TODO:
@@ -31,12 +32,12 @@ export default class Authentication {
    *
    * @memberof Authentication
    */
-  loginWithAuth0 = async () => {
-    const redirectUrl = AuthSession.getRedirectUrl()
-    const oAuthState = randomatic('Aa0', 7)
-    const codeVerifier = randomatic('Aa0', 50)
+  loginWithAuth0 = async (nest: Number = 0) => {
+    let redirectUrl = AuthSession.getRedirectUrl()
+    let oAuthState = randomatic('Aa0', 7)
+    let codeVerifier = randomatic('Aa0', 50)
 
-    const result = await AuthSession.startAsync({
+    let result = await AuthSession.startAsync({
       authUrl: `${auth0Domain}/authorize` + this.toQueryString({
         client_id: auth0ClientId,
         response_type: 'code',
@@ -48,6 +49,7 @@ export default class Authentication {
         audience: auth0Audience
       })
     })
+    logger.debug('AuthSession result', result)
 
     if (result.type === 'success') {
       if (oAuthState !== result.params.state) {
@@ -57,6 +59,18 @@ export default class Authentication {
       let token = await this.getOAuthToken(codeVerifier, result.params.code)
 
       return token
+    } else if (
+      result.type === 'dismiss' ||
+      (result.type === 'error' && result.errorCode === 'login-declined')
+    ) {
+      // FIXME: alert never pops up for 'login-declined', despite the if correctly evaluating true
+      let retry = await alertAsync(
+        'Authentication dismissed',
+        'Cancel signing in?',
+        'Try again',
+        'Exit'
+      )
+      return retry ? this.loginWithAuth0(nest + 1) : false
     }
     logger.error('Login failed', result)
     throw new Error('Error signing in')
@@ -72,7 +86,7 @@ export default class Authentication {
   getOAuthToken = async (codeVerifier, code) => {
     logger.info('Getting OAuth token')
 
-    const content = await this.connection.post('oauth/token', {
+    let content = await this.connection.post('oauth/token', {
       grant_type: 'authorization_code',
       client_id: auth0ClientId,
       code_verifier: codeVerifier,
@@ -101,7 +115,7 @@ export default class Authentication {
   refreshToken = async (refreshToken) => {
     logger.info('Refreshing token')
 
-    const content = await this.connection.post(
+    let content = await this.connection.post(
       'oauth/token',
       {
         grant_type: 'refresh_token',

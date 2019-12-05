@@ -15,6 +15,7 @@ import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 import Button from '../components/Button'
 import { logger } from '../src/Logger'
+import { alertAsync } from '../src/AsyncAlert'
 
 export default
 @inject('UserStore')
@@ -28,14 +29,23 @@ class SignInScreen extends React.Component {
 
   authenticate = async () => {
     this.setState({ loading: true, loadingMessage: 'Getting token...' })
-
+    logger.debug('Calling loginWithAuth0')
     let auth = new Authentication()
     let token = await auth.loginWithAuth0()
+    if (!token || !token.access_token) {
+      logger.error('Login failed', { token: token })
+      alertAsync('Login failed!')
+      this.setState({ loading: false })
+      return
+    }
+    logger.debug('Token received / updating ApplicationStore', token)
     this.setState({ loadingMessage: 'Token received, updating store...' })
-    this.props.ApplicationStore.updateAccessToken(token.access_token)
+    this.props.ApplicationStore.updateAccessToken(token.access_token) // token undefined!
 
+    logger.debug('Calling getUserInfo')
     this.setState({ loadingMessage: 'Getting user info...' })
     let userInfo = await auth.getUserInfo(token.access_token)
+    logger.debug('UserInfo received / Signing in', userInfo)
     this.setState({ loadingMessage: 'Signing in...' })
     try {
       var signInResult = await ApiConnection.post('signin', userInfo)
@@ -47,6 +57,7 @@ class SignInScreen extends React.Component {
       throw new Error('Sign in failed')
     }
 
+    logger.debug('Sign in result received', signInResult)
     if (signInResult.success) {
       this.handleSignIn(signInResult.user, token)
     } else {
