@@ -31,6 +31,7 @@ class SignInScreen extends React.Component {
 
     let auth = new Authentication()
     let token = await auth.loginWithAuth0()
+    this.setState({ loadingMessage: 'Token received, updating store...' })
     this.props.ApplicationStore.updateAccessToken(token.access_token)
 
     this.setState({ loadingMessage: 'Getting user info...' })
@@ -39,7 +40,7 @@ class SignInScreen extends React.Component {
     try {
       var signInResult = await ApiConnection.post('signin', userInfo)
     } catch (error) {
-      console.error('POST to signin failed', {
+      logger.error('POST to signin failed', {
         userInfo: userInfo,
         error: error
       })
@@ -59,7 +60,7 @@ class SignInScreen extends React.Component {
    */
   handleSignIn = (signInResponse, token) => {
     if (!Number.isInteger(signInResponse.id)) {
-      logger.log('Authentication error:', {
+      logger.info('Authentication error:', {
         signInResponse: signInResponse,
         token: token
       })
@@ -71,7 +72,7 @@ class SignInScreen extends React.Component {
 
     this.props.ApplicationStore.updateUserId(signInResponse.id)
     // Signed in
-    console.info(`User ${signInResponse.id} signed in`)
+    logger.info(`User ${signInResponse.id} signed in`)
     this.props.navigation.navigate('App')
   }
 

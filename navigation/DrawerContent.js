@@ -7,14 +7,36 @@ import Constants from 'expo-constants'
 import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
 import { getEnvVars } from '../constants/Env'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import ProfileHeader from '../components/profile/ProfileHeader'
 import Button from '../components/Button'
+import { logger } from '../src/Logger'
+import ModalView from '../components/ModalView'
 
 export default
 @inject('UserStore')
 @observer
 class DrawerContent extends Component {
+  lastPress = 0
+  state = {
+    logModalVisible: false,
+    logEntries: []
+  }
+
+  printLogs = async () => {
+    // Use double tap
+    let delta = new Date().getTime() - this.lastPress
+
+    if (delta < 200) {
+      let logs = await logger.getMessages(25)
+      this.setState({ logEntries: logs, logModalVisible: true })
+    }
+
+    this.lastPress = new Date().getTime()
+  }
+
+  hideLogModal = () => this.setState({ logModalVisible: false })
+
   render () {
     return <View style={styles.container}>
       {this.props.UserStore.loaded && <ProfileHeader user={this.props.UserStore.currentUser} />}
@@ -35,9 +57,22 @@ class DrawerContent extends Component {
         { getEnvVars().dev && <TouchableOpacity onPress={() => this.props.navigation.navigate('Dev')}>
           <Text>Dev</Text>
         </TouchableOpacity>}
-        <Text style={styles.versionText}>
-          Version: { Constants.manifest.version }
-        </Text>
+        <TouchableWithoutFeedback onPress={this.printLogs}>
+          <Text style={styles.versionText}>
+            Version: { Constants.manifest.version }
+          </Text>
+        </TouchableWithoutFeedback>
+        <ModalView
+          isVisible={this.state.logModalVisible}
+          onRequestClose={this.hideLogModal}
+        >
+          <ScrollView>
+            {this.state.logEntries.map((entry) => <>
+              <Text key={entry.id}>{JSON.stringify(entry)}</Text>
+              <View style={{ height: 1, backgroundColor: 'red' }} />
+            </>)}
+          </ScrollView>
+        </ModalView>
       </View>
     </View>
   }

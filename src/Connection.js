@@ -63,7 +63,7 @@ export class Connection {
       requestHeaders,
       (key, val) => key === 'Authorization' ? val.slice(0, 10) + '...' + val.slice(-3) : val
     )
-    logger.log('Request:', [method, url, data, logHeaders].join(' '))
+    logger.info('Request:', [method, url, data, logHeaders].join(' '))
 
     try {
       var response = await fetch(url, {
@@ -153,6 +153,6 @@ export class Connection {
    * Needed until an error handler is implemented
    */
   #logError = (data) => {
-    console.warn('Connection error', data)
+    logger.warn('Connection error', data)
   }
 }

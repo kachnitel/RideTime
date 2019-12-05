@@ -33,7 +33,7 @@ export default class EditPicture extends React.Component {
       return
     }
     if (picture.height > 600) {
-      logger.log('Picture is too large! Resizing...', picture)
+      logger.info('Picture is too large! Resizing...', picture)
       picture = await ImageManipulator.manipulateAsync(
         picture.uri,
         [

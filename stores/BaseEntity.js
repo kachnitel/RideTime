@@ -1,3 +1,5 @@
+import { logger } from '../src/Logger'
+
 export class BaseEntity {
   store
 
@@ -11,7 +13,7 @@ export class BaseEntity {
 
     if (relatedEntities) {
       if (typeof this.store.populateRelated !== 'function') {
-        console.warn('Received objects to populate relations but Store has no method to do so')
+        logger.warn('Received objects to populate relations but Store has no method to do so')
       } else {
         this.store.populateRelated(relatedEntities)
       }

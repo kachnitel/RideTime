@@ -17,13 +17,13 @@ export default class ApplicationStore {
   @action async refreshAccessToken () {
     let refreshToken = await SecureStore.getItemAsync('refreshToken')
     if (!refreshToken) {
-      console.warn('Error loading refresh token!')
+      logger.warn('Error loading refresh token!')
     }
     let auth = new Authentication()
     let token = await auth.refreshToken(refreshToken)
     if (token.error) {
-      console.warn('Error refreshing API token!')
-      logger.log(token)
+      logger.warn('Error refreshing API token!')
+      logger.info(token)
     }
     this.updateAccessToken(token.access_token)
   }

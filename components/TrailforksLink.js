@@ -15,7 +15,7 @@ export default class TrailforksLink extends Component {
       Linking.openURL(url)
       return null
     }
-    logger.log('Cannot open URL: ' + url)
+    logger.info('Cannot open URL: ' + url)
   }
 
   render () {

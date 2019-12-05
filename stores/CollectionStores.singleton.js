@@ -32,7 +32,7 @@ const hydrate = create({
 })
 
 hydrate('locationStore', stores.location).then((data) => {
-  logger.log(
+  logger.info(
     'Hydrated LocationStore',
     JSON.stringify(
       data,

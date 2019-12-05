@@ -11,6 +11,7 @@ import stores from './stores/CollectionStores.singleton'
 import PushNotifications from './src/PushNotifications'
 import navigationService from './src/NavigationService'
 import NotificationsHandler from './src/NotificationsHandler'
+import { logger } from './src/Logger'
 
 /**
  * Set default Text style
@@ -87,7 +88,7 @@ class App extends React.Component {
   _handleLoadingError = error => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
-    console.warn(error)
+    logger.warn(error)
   };
 
   _handleFinishLoading = () => {

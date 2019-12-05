@@ -15,6 +15,7 @@ import Header from '../components/Header'
 import DifficultyIcon from '../components/icons/DifficultyIcon'
 import CountBadge from '../components/CountBadge'
 import HeaderRightView from '../components/HeaderRightView'
+import { logger } from '../src/Logger'
 
 /**
  * TODO:
@@ -90,7 +91,7 @@ class RidesScreen extends React.Component {
   loadRides () {
     this.setState({ loading: true })
     if (!this.state.bbox) {
-      console.warn('Attempting to load rides without bbox set!')
+      logger.warn('Attempting to load rides without bbox set!')
       return
     }
     this.props.EventStore.filter({ // async

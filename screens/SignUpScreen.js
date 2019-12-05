@@ -16,6 +16,7 @@ import Button from '../components/Button'
 import Layout from '../constants/Layout'
 import * as SecureStore from 'expo-secure-store'
 import { User } from '../stores/UserStore.mobx'
+import { logger } from '../src/Logger'
 
 export default
 @inject('UserStore')
@@ -77,7 +78,7 @@ class SignUpScreen extends React.Component {
     SecureStore.setItemAsync('refreshToken', token.refresh_token)
     this.props.ApplicationStore.updateUserId(this.user.id)
     // Signed up
-    console.info(`User ${this.user.id} signed up`)
+    logger.info(`User ${this.user.id} signed up`)
     this.props.navigation.navigate('App')
   }
 

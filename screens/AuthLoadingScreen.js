@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import Colors from '../constants/Colors'
 import NetworkError from '../src/NetworkError'
+import { logger } from '../src/Logger'
 
 export default
 @inject('UserStore')
@@ -36,7 +37,7 @@ class AuthLoadingScreen extends React.Component {
       try {
         await this.props.ApplicationStore.refreshAccessToken()
       } catch (error) {
-        console.warn(await error.body)
+        logger.warn(await error.body)
         Alert.alert('Error refreshing token')
         this.resetAuth()
         return
@@ -48,7 +49,7 @@ class AuthLoadingScreen extends React.Component {
           // Custom catch to allow redirect
           Alert.alert('Error loading account ID: ' + signedInUserId)
           if (error instanceof NetworkError) {
-            console.warn(await error.body)
+            logger.warn(await error.body)
           } else {
             throw error
           }

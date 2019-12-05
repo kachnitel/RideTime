@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx'
 import { BaseEntity } from './BaseEntity'
+import { logger } from '../src/Logger'
 
 export class BaseCollectionStore {
   _collection = observable.array([])
@@ -131,7 +132,7 @@ export class BaseCollectionStore {
   populateRelated = (related: Object) => {
     Object.keys(related).forEach((type) => {
       if (this.stores[type] === undefined) {
-        console.warn('Received `relatedEntities` of an unknown type: ' + type)
+        logger.warn('Received `relatedEntities` of an unknown type: ' + type)
         return
       }
 

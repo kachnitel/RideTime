@@ -42,7 +42,7 @@ class FriendListScreen extends Component {
   // TODO: Soon (TM)
   // actions = [{
   //   icon: 'mail-outline',
-  //   action: () => logger.log('Message ' + this.props.UserStore.currentUser.id)
+  //   action: () => logger.info('Message ' + this.props.UserStore.currentUser.id)
   // }]
 
   actionsFriend = [

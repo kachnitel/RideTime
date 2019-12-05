@@ -7,6 +7,7 @@ import {
 } from '../secrets'
 import randomatic from 'randomatic'
 import { Connection } from './Connection'
+import { logger } from './Logger'
 
 /*
   TODO:
@@ -35,7 +36,6 @@ export default class Authentication {
     const oAuthState = randomatic('Aa0', 7)
     const codeVerifier = randomatic('Aa0', 50)
 
-    // logger.log(`Redirect URL (add this to Auth0): ${redirectUrl}`)
     const result = await AuthSession.startAsync({
       authUrl: `${auth0Domain}/authorize` + this.toQueryString({
         client_id: auth0ClientId,
@@ -49,7 +49,6 @@ export default class Authentication {
       })
     })
 
-    // logger.log('Result /authorize:', result)
     if (result.type === 'success') {
       if (oAuthState !== result.params.state) {
         throw new Error('OAuth state mismatch')
@@ -59,7 +58,7 @@ export default class Authentication {
 
       return token
     }
-    console.error('Login failed', result)
+    logger.error('Login failed', result)
     throw new Error('Error signing in')
   }
 
@@ -71,7 +70,7 @@ export default class Authentication {
    * @memberof Authentication
    */
   getOAuthToken = async (codeVerifier, code) => {
-    console.info('Getting OAuth token')
+    logger.info('Getting OAuth token')
 
     const content = await this.connection.post('oauth/token', {
       grant_type: 'authorization_code',
@@ -81,7 +80,6 @@ export default class Authentication {
       redirect_uri: auth0RedirectUri
     })
 
-    // logger.log('Result /oauth/token: ', content)
     return content
   }
 
@@ -101,7 +99,7 @@ export default class Authentication {
    * @memberof Authentication
    */
   refreshToken = async (refreshToken) => {
-    console.info('Refreshing token')
+    logger.info('Refreshing token')
 
     const content = await this.connection.post(
       'oauth/token',
@@ -112,7 +110,7 @@ export default class Authentication {
       }
     )
 
-    // logger.log('Result(refresh) /oauth/token: ', content)
+    // logger.info('Result(refresh) /oauth/token: ', content)
     return content
   }
 
@@ -124,7 +122,7 @@ export default class Authentication {
    * @memberof Authentication
    */
   getUserInfo = async (apiToken) => {
-    console.info('Getting user info')
+    logger.info('Getting user info')
     this.connection.addHeaders({
       'Authorization': 'Bearer ' + apiToken
     })

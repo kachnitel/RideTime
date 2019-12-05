@@ -4,20 +4,21 @@ import { Alert } from 'react-native'
 import * as SecureStore from 'expo-secure-store'
 import { observer, inject } from 'mobx-react'
 import Button from './Button'
+import { logger } from '../src/Logger'
 
 export default
 @inject('ApplicationStore')
 @observer
 class SignOutButton extends Component {
   _signOut = () => {
-    console.info(`User ${this.props.ApplicationStore.userId} signing out`)
+    logger.info(`User ${this.props.ApplicationStore.userId} signing out`)
     Alert.alert(
       'Sign out',
       'Are you sure?',
       [
         {
           text: 'Cancel',
-          onPress: () => console.info('Sign out cancelled'),
+          onPress: () => logger.info('Sign out cancelled'),
           style: 'cancel'
         },
         {
@@ -30,7 +31,7 @@ class SignOutButton extends Component {
           }
         }
       ],
-      { onDismiss: () => console.info('Sign out cancelled') }
+      { onDismiss: () => logger.info('Sign out cancelled') }
     )
   }
 
