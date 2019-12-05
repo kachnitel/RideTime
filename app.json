@@ -23,6 +23,9 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.kachnitel.ridetime"
+    },
     "ios": {
       "supportsTablet": false
     },
