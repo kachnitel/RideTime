@@ -2,6 +2,7 @@
 import NetworkError from './NetworkError'
 import Mime from 'mime/lite'
 import qs from 'qs'
+import { logger } from './Logger'
 
 export class Connection {
   baseUrl: String
@@ -62,7 +63,7 @@ export class Connection {
       requestHeaders,
       (key, val) => key === 'Authorization' ? val.slice(0, 10) + '...' + val.slice(-3) : val
     )
-    console.log(method, url, data, logHeaders)
+    logger.log('Request:', [method, url, data, logHeaders].join(' '))
 
     try {
       var response = await fetch(url, {

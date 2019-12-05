@@ -6,6 +6,7 @@ import { ActivityIndicator } from 'react-native'
 import Button from '../components/Button'
 import ButtonIcon from '../components/ButtonIcon'
 import HeaderRightView from '../components/HeaderRightView'
+import { logger } from '../src/Logger'
 
 export default
 @inject('EventStore')
@@ -19,7 +20,7 @@ class RideDetailScreen extends React.Component {
         {event.isMember()
           ? <ButtonIcon // TODO: Three dot menu here (Leave, edit, ...?)
             icon='more-vert'
-            onPress={() => console.log('leave etc..id: ' + event.id)}
+            onPress={() => logger.log('leave etc..id: ' + event.id)}
           />
           : <Button
             title='Join'

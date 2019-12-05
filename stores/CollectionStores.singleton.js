@@ -9,6 +9,7 @@ import { create } from 'mobx-persist'
 import { AsyncStorage } from 'react-native'
 import TrailStore from './TrailStore.mobx'
 import RouteStore from './RouteStore.mobx'
+import { logger } from '../src/Logger'
 
 const stores = {
   user: null,
@@ -31,7 +32,7 @@ const hydrate = create({
 })
 
 hydrate('locationStore', stores.location).then((data) => {
-  console.log(
+  logger.log(
     'Hydrated LocationStore',
     JSON.stringify(
       data,

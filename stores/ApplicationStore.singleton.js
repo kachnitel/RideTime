@@ -1,6 +1,7 @@
 import ApplicationStore from './ApplicationStore.mobx'
 import { create } from 'mobx-persist'
 import { AsyncStorage } from 'react-native'
+import { logger } from '../src/Logger'
 
 const applicationStore = new ApplicationStore()
 
@@ -10,7 +11,7 @@ const hydrate = create({
 })
 
 hydrate('applicationStore', applicationStore).then((data) => {
-  console.log('Hydrated ApplicationStore', JSON.stringify(data))
+  logger.log('Hydrated ApplicationStore', JSON.stringify(data))
 })
 
 export default applicationStore

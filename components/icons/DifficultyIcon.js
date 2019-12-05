@@ -6,6 +6,7 @@ import SvgSkiTrailRatingSymbolDoubleBlackDiamond from './difficulty_icons/SkiTra
 import SvgSkiTrailRatingSymbolTerrainPark from './difficulty_icons/SkiTrailRatingSymbolTerrainPark'
 import RideTimeIcon from './RideTimeIcon'
 import PropTypes from 'prop-types'
+import { logger } from '../../src/Logger'
 
 /**
  * @property d int 0-4
@@ -54,7 +55,7 @@ export default class DifficultyIcon extends RideTimeIcon {
     let difficultyLevel = this.props.d
 
     if (DifficultyIcon.icons[difficultyLevel] === undefined) {
-      console.log('Difficulty Icon ' + this.props.d + ' is not defined')
+      logger.log('Difficulty Icon ' + this.props.d + ' is not defined')
       return null
     }
 

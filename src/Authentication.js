@@ -35,7 +35,7 @@ export default class Authentication {
     const oAuthState = randomatic('Aa0', 7)
     const codeVerifier = randomatic('Aa0', 50)
 
-    // console.log(`Redirect URL (add this to Auth0): ${redirectUrl}`)
+    // logger.log(`Redirect URL (add this to Auth0): ${redirectUrl}`)
     const result = await AuthSession.startAsync({
       authUrl: `${auth0Domain}/authorize` + this.toQueryString({
         client_id: auth0ClientId,
@@ -49,7 +49,7 @@ export default class Authentication {
       })
     })
 
-    // console.log('Result /authorize:', result)
+    // logger.log('Result /authorize:', result)
     if (result.type === 'success') {
       if (oAuthState !== result.params.state) {
         throw new Error('OAuth state mismatch')
@@ -81,7 +81,7 @@ export default class Authentication {
       redirect_uri: auth0RedirectUri
     })
 
-    // console.log('Result /oauth/token: ', content)
+    // logger.log('Result /oauth/token: ', content)
     return content
   }
 
@@ -112,7 +112,7 @@ export default class Authentication {
       }
     )
 
-    // console.log('Result(refresh) /oauth/token: ', content)
+    // logger.log('Result(refresh) /oauth/token: ', content)
     return content
   }
 

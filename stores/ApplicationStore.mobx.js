@@ -2,6 +2,7 @@ import { observable, action, computed } from 'mobx'
 import { persist } from 'mobx-persist'
 import * as SecureStore from 'expo-secure-store'
 import Authentication from '../src/Authentication'
+import { logger } from '../src/Logger'
 
 export default class ApplicationStore {
   @persist @observable _userId = null
@@ -22,7 +23,7 @@ export default class ApplicationStore {
     let token = await auth.refreshToken(refreshToken)
     if (token.error) {
       console.warn('Error refreshing API token!')
-      console.log(token)
+      logger.log(token)
     }
     this.updateAccessToken(token.access_token)
   }

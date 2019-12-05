@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Layout from '../../constants/Layout'
 import * as ImageManipulator from 'expo-image-manipulator'
 import * as ImagePicker from 'expo-image-picker'
+import { logger } from '../../src/Logger'
 
 export default class EditPicture extends React.Component {
   /**
@@ -32,7 +33,7 @@ export default class EditPicture extends React.Component {
       return
     }
     if (picture.height > 600) {
-      console.log('Picture is too large! Resizing...', picture)
+      logger.log('Picture is too large! Resizing...', picture)
       picture = await ImageManipulator.manipulateAsync(
         picture.uri,
         [

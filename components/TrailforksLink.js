@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Image, StyleSheet, Linking } from 'react-native'
 import { TouchableNativeFeedback } from 'react-native-gesture-handler'
 import Layout from '../constants/Layout'
+import { logger } from '../src/Logger'
 
 /**
  * TODO: stop propagation of click
@@ -14,7 +15,7 @@ export default class TrailforksLink extends Component {
       Linking.openURL(url)
       return null
     }
-    console.log('Cannot open URL: ' + url)
+    logger.log('Cannot open URL: ' + url)
   }
 
   render () {

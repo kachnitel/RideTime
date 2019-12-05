@@ -14,6 +14,7 @@ import TerrainIcon from '../components/icons/TerrainIcon'
 import Colors from '../constants/Colors'
 import Layout from '../constants/Layout'
 import Button from '../components/Button'
+import { logger } from '../src/Logger'
 
 export default
 @inject('UserStore')
@@ -58,7 +59,7 @@ class SignInScreen extends React.Component {
    */
   handleSignIn = (signInResponse, token) => {
     if (!Number.isInteger(signInResponse.id)) {
-      console.log('Authentication error:', {
+      logger.log('Authentication error:', {
         signInResponse: signInResponse,
         token: token
       })
