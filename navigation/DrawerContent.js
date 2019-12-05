@@ -12,6 +12,7 @@ import ProfileHeader from '../components/profile/ProfileHeader'
 import Button from '../components/Button'
 import { logger } from '../src/Logger'
 import ModalView from '../components/ModalView'
+import { Linking } from 'expo'
 
 export default
 @inject('UserStore')
@@ -36,6 +37,30 @@ class DrawerContent extends Component {
   }
 
   hideLogModal = () => this.setState({ logModalVisible: false })
+
+  logModal = () => <ModalView
+    isVisible={this.state.logModalVisible}
+    onRequestClose={this.hideLogModal}
+  >
+    <ScrollView>
+      {this.state.logEntries.map((entry) => <View key={entry.id}>
+        <Text>{JSON.stringify(entry)}</Text>
+        <View style={{ height: 1, backgroundColor: 'red' }} />
+      </View>)}
+    </ScrollView>
+    <Button
+      onPress={this.sendMail}
+      title='Email log'
+    />
+  </ModalView>
+
+  sendMail = () => {
+    let mail = 'admin@ridebikes.today'
+    let body = encodeURIComponent(this.state.logEntries.map((entry) => JSON.stringify(entry)).join('\n'))
+    let subject = 'Application Log ' + new Date().toISOString() + ' / ' + this.props.UserStore.currentUser.id
+    let url = `mailto:${mail}?subject=${subject}&body=${body}`
+    Linking.openURL(url)
+  }
 
   render () {
     return <View style={styles.container}>
@@ -62,17 +87,7 @@ class DrawerContent extends Component {
             Version: { Constants.manifest.version }
           </Text>
         </TouchableWithoutFeedback>
-        <ModalView
-          isVisible={this.state.logModalVisible}
-          onRequestClose={this.hideLogModal}
-        >
-          <ScrollView>
-            {this.state.logEntries.map((entry) => <>
-              <Text key={entry.id}>{JSON.stringify(entry)}</Text>
-              <View style={{ height: 1, backgroundColor: 'red' }} />
-            </>)}
-          </ScrollView>
-        </ModalView>
+        {this.logModal()}
       </View>
     </View>
   }
