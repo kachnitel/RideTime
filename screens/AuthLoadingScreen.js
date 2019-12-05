@@ -10,6 +10,7 @@ import {
 import Colors from '../constants/Colors'
 import NetworkError from '../src/NetworkError'
 import { logger } from '../src/Logger'
+import VersionTag from '../components/VersionTag'
 
 export default
 @inject('UserStore')
@@ -81,6 +82,7 @@ class AuthLoadingScreen extends React.Component {
       <View style={styles.container}>
         <Text style={styles.loadingText}>{this.state.loadingText}</Text>
         <ActivityIndicator color={Colors.tintColor} />
+        <VersionTag style={styles.versionTag} />
       </View>
     )
   }
@@ -95,5 +97,9 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     color: '#fff'
+  },
+  versionTag: {
+    bottom: 0,
+    position: 'absolute'
   }
 })

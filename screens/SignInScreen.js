@@ -16,6 +16,7 @@ import Layout from '../constants/Layout'
 import Button from '../components/Button'
 import { logger } from '../src/Logger'
 import { alertAsync } from '../src/AsyncAlert'
+import VersionTag from '../components/VersionTag'
 
 export default
 @inject('UserStore')
@@ -93,6 +94,7 @@ class SignInScreen extends React.Component {
         ? <View style={styles.container}>
           <Text style={styles.loadingText}>{ this.state.loadingMessage }</Text>
           <ActivityIndicator size='small' color={Colors.tintColor} />
+          <VersionTag style={styles.versionTag} />
         </View>
         : <View style={styles.container}>
           <TerrainIcon terrain='trail' size={100} />
@@ -107,6 +109,7 @@ class SignInScreen extends React.Component {
             />
           </View>
           <Button title='Get started!' onPress={this.authenticate} />
+          <VersionTag style={styles.versionTag} />
         </View>
     )
   }
@@ -134,5 +137,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: Layout.window.hp(3),
     color: '#fff'
+  },
+  versionTag: {
+    bottom: 0,
+    position: 'absolute'
   }
 })
