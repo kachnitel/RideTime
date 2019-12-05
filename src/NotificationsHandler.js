@@ -34,7 +34,7 @@ export default class NotificationsHandler {
   }
 
   handleEventInviteReceived = (data, selected) => {
-    let event = stores.event.upsertEvent(data.event)
+    let event = stores.event.upsert(data.event)
     stores.event.addInvite(event)
 
     if (selected) {
