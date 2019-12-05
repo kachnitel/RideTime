@@ -8,7 +8,7 @@ export default class RideItem extends React.Component {
   render () {
     return (
       <View style={{ ...styles.listItem, ...this.props.style }}>
-        <Text style={{ ...styles.title, ...this.props.style }}>
+        <Text style={{ ...styles.title, ...this.props.style }} numberOfLines={1}>
           {this.props.ride.title}
         </Text>
         <RideItemDetail
