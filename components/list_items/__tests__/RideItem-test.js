@@ -3,6 +3,8 @@ import React from 'react'
 import 'react-native'
 import renderer from 'react-test-renderer'
 import RideItem from '../RideItem'
+import UserStore from '../../../stores/UserStore.mobx'
+import { Provider } from 'mobx-react/native'
 
 jest.mock('../../RideItemDetail', () => 'RideItemDetail')
 
@@ -17,19 +19,23 @@ let testRide = {
 }
 
 it('renders correctly', () => {
-  const tree = renderer.create(<RideItem ride={testRide} />).toJSON()
+  const tree = renderer.create(<Provider UserStore={new UserStore()}>
+    <RideItem ride={testRide} />
+  </Provider>).toJSON()
 
   expect(tree).toMatchSnapshot()
 })
 
 it('renders correctly with style', () => {
-  const tree = renderer.create(<RideItem
-    ride={testRide}
-    style={{
-      backgroundColor: 'black',
-      color: '#fff'
-    }}
-  />).toJSON()
+  const tree = renderer.create(<Provider UserStore={new UserStore()}>
+    <RideItem
+      ride={testRide}
+      style={{
+        backgroundColor: 'black',
+        color: '#fff'
+      }}
+    />
+  </Provider>).toJSON()
 
   expect(tree).toMatchSnapshot()
 })

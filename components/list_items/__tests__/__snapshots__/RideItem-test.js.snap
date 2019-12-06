@@ -4,13 +4,14 @@ exports[`renders correctly 1`] = `
 <View
   style={
     Object {
-      "height": 200,
+      "height": 227,
       "paddingHorizontal": 30,
-      "paddingVertical": 20,
+      "paddingTop": 20,
     }
   }
 >
   <Text
+    numberOfLines={1}
     style={
       Object {
         "fontSize": 36.5,
@@ -37,6 +38,14 @@ exports[`renders correctly 1`] = `
       }
     }
   />
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "paddingBottom": 13.5,
+      }
+    }
+  />
 </View>
 `;
 
@@ -46,13 +55,14 @@ exports[`renders correctly with style 1`] = `
     Object {
       "backgroundColor": "black",
       "color": "#fff",
-      "height": 200,
+      "height": 227,
       "paddingHorizontal": 30,
-      "paddingVertical": 20,
+      "paddingTop": 20,
     }
   }
 >
   <Text
+    numberOfLines={1}
     style={
       Object {
         "backgroundColor": "black",
@@ -84,6 +94,14 @@ exports[`renders correctly with style 1`] = `
       Object {
         "backgroundColor": "black",
         "color": "#fff",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "paddingBottom": 13.5,
       }
     }
   />
