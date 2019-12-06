@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
   View,
-  Text,
-  TouchableNativeFeedback,
   StyleSheet,
   Alert
 } from 'react-native'
@@ -11,6 +9,7 @@ import Modal from 'react-native-modal'
 import { inject, observer } from 'mobx-react/native'
 import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
+import MenuModalOption from '../MenuModalOption'
 
 export default
 @inject('UserStore')
@@ -47,16 +46,14 @@ class FriendMenuModal extends Component {
         onBackButtonPress={this.props.hide}
       >
         <View style={styles.container}>
-          <TouchableNativeFeedback onPress={this.handleRemoveFriend}>
-            <View style={styles.optionContainer}>
-              <Text>Remove friend</Text>
-            </View>
-          </TouchableNativeFeedback>
-          <TouchableNativeFeedback onPress={this.props.hide}>
-            <View style={styles.optionContainer}>
-              <Text>Close</Text>
-            </View>
-          </TouchableNativeFeedback>
+          <MenuModalOption
+            onPress={this.handleRemoveFriend}
+            label='Remove friend'
+          />
+          <MenuModalOption
+            onPress={this.props.hide}
+            label='Close'
+          />
         </View>
       </Modal>
     )
