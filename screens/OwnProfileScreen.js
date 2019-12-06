@@ -29,9 +29,8 @@ class OwnProfileScreen extends React.Component {
           <View style={styles.navBarButton}>
             <Button
               title={'Save'}
-              // default value suppresses warning thrown before param is obtained
-              onPress={navigation.getParam('saveProfile', () => {})}
-              disabled={navigation.getParam('loadingUser', true)}
+              onPress={navigation.getParam('saveProfile')}
+              disabled={navigation.getParam('loadingUser')}
             />
           </View>
           <View style={styles.navBarButton}>
@@ -49,6 +48,10 @@ class OwnProfileScreen extends React.Component {
     super(props)
 
     this.user = new User(props.UserStore)
+    props.navigation.setParams({
+      saveProfile: this.saveProfile,
+      loadingUser: true
+    })
   }
 
   saveProfile = async () => {
@@ -58,11 +61,6 @@ class OwnProfileScreen extends React.Component {
   }
 
   async componentDidMount () {
-    this.props.navigation.setParams({
-      saveProfile: this.saveProfile,
-      loadingUser: true
-    })
-
     let originalUser = await this.props.UserStore.currentUser
     // REVIEW: bit dirty trick to "clone" the user
     this.user.populateFromApiResponse(originalUser.createApiJson())
