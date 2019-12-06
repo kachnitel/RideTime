@@ -129,6 +129,7 @@ export class Event extends BaseEntity {
   @action updateMembers (newValue: Number[]) { this._members.replace(newValue) }
   @action addMember (newValue: Number) { !this._members.includes(newValue) && this._members.push(newValue) }
   @computed get members () { return this._members }
+  @action removeMember (id: Number) { this._members.remove(id) }
 
   @action invite (userId: Number) {
     this.store.provider.invite(this.id, userId)
@@ -138,6 +139,11 @@ export class Event extends BaseEntity {
   @action join () {
     this.store.provider.join(this.id)
     this.addMember(this.store.userStore.currentUser.id)
+  }
+
+  @action leave () {
+    this.store.provider.leave(this.id)
+    this.removeMember(this.store.userStore.currentUser.id)
   }
 
   @action updateDifficulty (newValue: Number) { this._difficulty = newValue }

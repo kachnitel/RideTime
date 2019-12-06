@@ -2,11 +2,12 @@ import React from 'react'
 import RideDetail from '../components/RideDetail'
 import { observer, inject, Provider } from 'mobx-react/native'
 import { Event } from '../stores/EventStore.mobx'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator, ToastAndroid, View } from 'react-native'
 import Button from '../components/Button'
 import ButtonIcon from '../components/ButtonIcon'
 import HeaderRightView from '../components/HeaderRightView'
-import { logger } from '../src/Logger'
+import ModalView from '../components/ModalView'
+import MenuModalOption from '../components/MenuModalOption'
 
 export default
 @inject('EventStore')
@@ -18,33 +19,73 @@ class RideDetailScreen extends React.Component {
       title: event.title,
       headerRight: <HeaderRightView>
         {event.isMember()
-          ? <ButtonIcon // TODO: Three dot menu here (Leave, edit, ...?)
+          ? <ButtonIcon
             icon='more-vert'
-            onPress={() => logger.info('leave etc..id: ' + event.id)}
+            onPress={navigation.getParam('showMenu')}
           />
           : <Button
             title='Join'
-            onPress={() => event.join()} // event.join() + toast
+            onPress={() => {
+              event.join()
+              navigation.setParams({ event: event }) // refresh
+              ToastAndroid.show('Joined ' + event.title, ToastAndroid.SHORT)
+            }}
           />}
       </HeaderRightView>
     }
   }
 
   event: Event
-  state = { loading: true } // TODO: pull to refresh
+  // TODO: pull to refresh
+  state = {
+    loading: false,
+    menuModalVisible: false
+  }
 
-  async componentDidMount () {
-    this.event = this.props.navigation.getParam('event')
-    this.setState({ loading: false })
+  constructor (props) {
+    super(props)
+
+    props.navigation.setParams({
+      showMenu: this.showMenuModal
+    })
+    this.event = props.navigation.getParam('event')
+  }
+
+  showMenuModal = () => {
+    this.setState({ menuModalVisible: true })
+  }
+
+  hideMenuModal = () => {
+    this.setState({ menuModalVisible: false })
   }
 
   render () {
     return (
       this.state.loading
         ? <ActivityIndicator />
-        : <Provider Event={this.event}>
-          <RideDetail />
-        </Provider>
+        : <View>
+          <Provider Event={this.event}>
+            <RideDetail />
+          </Provider>
+          <ModalView
+            isVisible={this.state.menuModalVisible}
+            onBackdropPress={this.hideMenuModal}
+            onBackButtonPress={this.hideMenuModal}
+          >
+            <MenuModalOption
+              onPress={() => {
+                this.event.leave()
+                this.props.navigation.setParams({ event: this.event })
+                this.hideMenuModal()
+              }}
+              label={'Leave'}
+            />
+            <MenuModalOption
+              onPress={this.hideMenuModal}
+              label={'Close'}
+            />
+          </ModalView>
+        </View>
     )
   }
 }
