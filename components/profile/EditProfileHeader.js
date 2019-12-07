@@ -50,7 +50,6 @@ class EditProfileHeader extends React.Component {
             <SelectDifficulty
               value={this.props.User.level}
               onValueChange={(val) => this.props.User.updateLevel(val.value)}
-              max={3}
               style={styles.textInput}
             />
             <SelectBike

@@ -8,10 +8,10 @@ import PropTypes from 'prop-types'
 
 export default class SelectDifficulty extends React.Component {
   render () {
-    let options = Object.keys(DifficultyIcon.icons).map((value, index) => {
+    let options = Object.keys(DifficultyIcon.icons).map(Number).map((value) => {
       return ({
-        value: index,
-        ...DifficultyIcon.icons[index]
+        value: value,
+        ...DifficultyIcon.icons[value]
       })
     }).filter((level) => this.props.max === undefined
       ? true
