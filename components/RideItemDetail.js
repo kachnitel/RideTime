@@ -31,13 +31,9 @@ export default class RideItemDetail extends React.Component {
 
     return <View style={styles.detail}>
       <View style={styles.lowerRowIconContainer}>
-        {
-          (ride.difficulty === 2 || ride.difficulty === 3)
-            ? <OutlineIcon outlineStyle={styles.diffIconBg}>
-              {difficultyIcon}
-            </OutlineIcon>
-            : difficultyIcon
-        }
+        <OutlineIcon outlineStyle={styles.diffIconBg}>
+          {difficultyIcon}
+        </OutlineIcon>
       </View>
       <View style={styles.lowerRowIconContainer}>
         <TerrainIcon size={Layout.window.hp(5)} terrain={ride.terrain} />
