@@ -6,7 +6,6 @@ import SvgSkiTrailRatingSymbolDoubleBlackDiamond from './difficulty_icons/SkiTra
 import SvgSkiTrailRatingSymbolTerrainPark from './difficulty_icons/SkiTrailRatingSymbolTerrainPark'
 import RideTimeIcon from './RideTimeIcon'
 import PropTypes from 'prop-types'
-import { logger } from '../../src/Logger'
 
 /**
  * @property d int 0-4
@@ -24,27 +23,27 @@ export default class DifficultyIcon extends RideTimeIcon {
   }
 
   static icons = {
-    0: {
+    3: {
       icon: SvgSkiTrailRatingSymbolGreenCircle,
       label: 'Beginner',
       color: DifficultyIcon.colors.green
     },
-    1: {
+    4: {
       icon: SvgSkiTrailRatingSymbolBlueSquare,
       label: 'Intermediate',
       color: DifficultyIcon.colors.blue
     },
-    2: {
+    5: {
       icon: SvgSkiTrailRatingSymbolBlackDiamond,
       label: 'Advanced',
       color: DifficultyIcon.colors.black
     },
-    3: {
+    6: {
       icon: SvgSkiTrailRatingSymbolDoubleBlackDiamond,
       label: 'Expert',
       color: DifficultyIcon.colors.black
     },
-    4: {
+    0: {
       icon: SvgSkiTrailRatingSymbolTerrainPark,
       label: 'Other',
       color: DifficultyIcon.colors.orange
@@ -55,8 +54,7 @@ export default class DifficultyIcon extends RideTimeIcon {
     let difficultyLevel = this.props.d
 
     if (DifficultyIcon.icons[difficultyLevel] === undefined) {
-      logger.info('Difficulty Icon ' + this.props.d + ' is not defined')
-      return null
+      difficultyLevel = 0
     }
 
     let iconColor = DifficultyIcon.icons[difficultyLevel].color
