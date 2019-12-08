@@ -1,4 +1,4 @@
-import { AppLoading } from 'expo'
+import { AppLoading, Updates } from 'expo'
 import * as Font from 'expo-font'
 import React from 'react'
 import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
@@ -12,6 +12,8 @@ import PushNotifications from './src/PushNotifications'
 import navigationService from './src/NavigationService'
 import NotificationsHandler from './src/NotificationsHandler'
 import { logger } from './src/Logger'
+import { alertAsync } from './src/AsyncAlert'
+import { getEnvVars } from './constants/Env'
 
 /**
  * Set default Text style
@@ -29,6 +31,10 @@ export default
 class App extends React.Component {
   state = {
     isLoadingComplete: false
+  }
+
+  componentDidMount = () => {
+    this._checkUpdate()
   }
 
   render () {
@@ -60,6 +66,29 @@ class App extends React.Component {
           </Provider>
         </View>
       )
+    }
+  }
+
+  async _checkUpdate () {
+    if (getEnvVars().dev === true) {
+      return
+    }
+    try {
+      let update = await Updates.checkForUpdateAsync()
+      if (update.isAvailable) {
+        let confirmDownload = await alertAsync('Update available', 'Download now?')
+        if (!confirmDownload) {
+          return
+        }
+        await Updates.fetchUpdateAsync()
+
+        let confirmReload = await alertAsync('Update downloaded', 'Reload app now?')
+        if (confirmReload) {
+          Updates.reloadFromCache()
+        }
+      }
+    } catch (e) {
+      logger.error('Update failed!', e)
     }
   }
 
