@@ -97,6 +97,8 @@ class HomeLocationsPicker extends React.Component {
         </View>
         <ModalView
           isVisible={this.state.visible}
+          onBackButtonPress={this.onCancel}
+          onBackdropPress={this.onCancel}
         >
           <LocationPicker
             style={styles.locationPicker}
@@ -138,9 +140,9 @@ class HomeLocationsPicker extends React.Component {
     }))
   }
 
-  // onCancel = () => {
-  //   this.setState({ visible: false })
-  // }
+  onCancel = () => {
+    this.setState({ visible: false })
+  }
 }
 
 const styles = StyleSheet.create({
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#fff2',
     borderRadius: Layout.window.hp(2.75),
-    alignItems: 'center'
+    maxWidth: '100%'
   },
   selectedItemText: {
     color: '#fff',
