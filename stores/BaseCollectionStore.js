@@ -72,9 +72,9 @@ export class BaseCollectionStore {
     }
   }
 
-  update = async (updatedEntity: BaseEntity) => {
+  update = (updatedEntity: BaseEntity) => {
     let entity = this._findInCollection(updatedEntity.id)
-    entity.update(updatedEntity)
+    return entity.update(updatedEntity)
   }
 
   /**
