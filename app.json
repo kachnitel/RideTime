@@ -1,6 +1,7 @@
 {
     "expo": {
         "name": "RideTime",
+        "scheme": "ridetime",
         "description": "Mountain bikes made social. Plan rides, join your friends or meet new people to ride with!",
         "slug": "RideTime",
         "privacy": "public",
