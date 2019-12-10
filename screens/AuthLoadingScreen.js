@@ -45,16 +45,18 @@ class AuthLoadingScreen extends React.Component {
       }
 
       this.setState({ loadingText: 'Loading user...' })
-      let user = await this.props.UserStore.get(signedInUserId)
-        .catch(async (error) => {
-          // Custom catch to allow redirect
-          Alert.alert('Error loading account ID: ' + signedInUserId)
-          if (error instanceof NetworkError) {
-            logger.warn(await error.body)
-          } else {
-            throw error
-          }
-        })
+      let user
+      try {
+        user = await this.props.UserStore.get(signedInUserId)
+      } catch (error) {
+        // Custom catch to allow redirect
+        Alert.alert('Error loading account ID: ' + signedInUserId)
+        if (error instanceof NetworkError) {
+          logger.warn(await error.body)
+        } else {
+          throw error
+        }
+      }
 
       if (user !== undefined) {
         this.props.navigation.navigate('App')
