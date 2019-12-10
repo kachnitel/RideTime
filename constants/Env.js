@@ -14,11 +14,13 @@ const getLocalUrl = () => {
 const env = {
   dev: {
     apiUrl: getLocalUrl(),
-    dev: true
+    dev: true,
+    version: Constants.manifest.version + '-dev'
   },
   staging: {
     apiUrl: 'https://ridebikes.today',
-    dev: false
+    dev: false,
+    version: Constants.manifest.version
   }
   // TODO: Use `Constants.manifest.releaseChannel` and
   // `exp publish --release-channel prod`

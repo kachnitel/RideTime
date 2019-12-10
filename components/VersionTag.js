@@ -3,11 +3,11 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import { logger } from '../src/Logger'
 import ModalView from '../components/ModalView'
 import { Linking } from 'expo'
-import Constants from 'expo-constants'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import Button from '../components/Button'
 import Layout from '../constants/Layout'
 import Colors from '../constants/Colors'
+import { getEnvVars } from '../constants/Env'
 
 export default class VersionTag extends Component {
   lastPress = 0
@@ -59,7 +59,7 @@ export default class VersionTag extends Component {
       <View {...this.props}>
         <TouchableWithoutFeedback onPress={this.printLogs}>
           <Text style={styles.versionText}>
-        Version: { Constants.manifest.version }
+            Version: { getEnvVars().version }
           </Text>
         </TouchableWithoutFeedback>
         {this.logModal()}
