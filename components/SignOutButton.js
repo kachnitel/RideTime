@@ -5,13 +5,15 @@ import * as SecureStore from 'expo-secure-store'
 import { observer, inject } from 'mobx-react'
 import Button from './Button'
 import { logger } from '../src/Logger'
+import Authentication from '../src/Authentication'
 
 export default
 @inject('ApplicationStore')
 @observer
 class SignOutButton extends Component {
   _signOut = () => {
-    logger.info(`User ${this.props.ApplicationStore.userId} signing out`)
+    logger.debug(`User ${this.props.ApplicationStore.userId} signing out`)
+
     Alert.alert(
       'Sign out',
       'Are you sure?',
@@ -23,7 +25,9 @@ class SignOutButton extends Component {
         },
         {
           text: 'OK',
-          onPress: () => {
+          onPress: async () => {
+            let auth = new Authentication()
+            await auth.logoutFromAuth0()
             this.props.navigation.navigate('Auth')
 
             SecureStore.deleteItemAsync('refreshToken')

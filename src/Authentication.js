@@ -77,6 +77,24 @@ export default class Authentication {
     throw new Error('Error signing in')
   }
 
+  logoutFromAuth0 = async () => {
+    let logoutUrl = AuthSession.getRedirectUrl()
+
+    let result = await AuthSession.startAsync({
+      authUrl: `${auth0Domain}/v2/logout?` + qs.stringify({
+        client_id: auth0ClientId,
+        returnTo: logoutUrl
+      })
+    })
+
+    if (result.type !== 'success') {
+      logger.error('Error logging out', result)
+      return false
+    }
+
+    return true
+  }
+
   /**
    * POST /oauth/token (JSON)
    *
