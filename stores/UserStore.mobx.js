@@ -21,11 +21,12 @@ export default class UserStore extends BaseCollectionStore {
     this.applicationStore = applicationStore
 
     autorun(async (reaction) => {
-      if (this.applicationStore.accessToken && this.applicationStore.userId) {
-        await this.loadDashboard()
-
+      if (this.applicationStore.accessToken && this.applicationStore.userId && !this.loaded) {
         let notifications = new PushNotifications()
         notifications.updateToken()
+        // FIXME: rather pointless since it no longer waits for user here
+        // See App._notificationsSubscribe depending on this but why?
+        this.updateLoaded(true)
       }
     })
   }
@@ -59,12 +60,16 @@ export default class UserStore extends BaseCollectionStore {
   @action updateLoaded (newValue: Boolean) { this._loaded = newValue }
   @computed get loaded () { return this._loaded }
 
-  async loadDashboard () {
-    let dashboard = await this.provider.dashboard()
-    this.upsert(dashboard.currentUser)
-    this.updateFriendRequests(dashboard.requests)
-    this.updateSentRequests(dashboard.sentRequests)
-    this.updateLoaded(true)
+  async loadFriends () {
+    let friends = await this.provider.loadFriends()
+    friends.confirmed.forEach(this.upsert)
+    this.currentUser.updateFriends(friends.confirmed.map((userData) => userData.id))
+
+    friends.requests.sent.forEach(this.upsert)
+    this.updateSentRequests(friends.requests.sent.map((userData) => userData.id))
+
+    friends.requests.received.forEach(this.upsert)
+    this.updateFriendRequests(friends.requests.received.map((userData) => userData.id))
   }
 
   /**
@@ -180,7 +185,7 @@ export class User extends BaseEntity {
   @action addEvent (newValue) { this._events.push(newValue) }
   @computed get events () { return this._events }
 
-  @action updateFriends (newValue: Array) { this._friends.replace(newValue) }
+  @action updateFriends (newValue: Number[]) { this._friends.replace(newValue) }
   @action addFriend (newValue: Number) { this._friends.indexOf(newValue) === -1 && this._friends.push(newValue) }
   @action removeFriend (id: Number) { this._friends.remove(id) }
   @computed get friends () { return this._friends }

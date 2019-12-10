@@ -82,6 +82,7 @@ class SignInScreen extends React.Component {
     // On successful login save tokens
     SecureStore.setItemAsync('refreshToken', token.refresh_token)
 
+    this.props.UserStore.upsert(signInResponse)
     this.props.ApplicationStore.updateUserId(signInResponse.id)
     // Signed in
     logger.info(`User ${signInResponse.id} signed in`)

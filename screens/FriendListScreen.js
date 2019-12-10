@@ -21,7 +21,6 @@ export default
 class FriendListScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      // w/ little name under in drawer eventually
       title: 'Friends',
       headerLeft: <DrawerButton navigation={navigation} />,
       headerRight: <HeaderRightView>
@@ -78,14 +77,7 @@ class FriendListScreen extends Component {
   }
 
   async componentDidMount () {
-    await this.props.UserStore.populate([
-      ...this.props.UserStore.currentUser.friends,
-      ...this.props.UserStore.friendRequests
-    ]) // Preload all friends at once
-
-    this.setState({
-      loading: false
-    })
+    this.refresh()
   }
 
   refreshControl () {
@@ -97,26 +89,25 @@ class FriendListScreen extends Component {
 
   refresh = async () => {
     this.setState({ loading: true })
-    await this.props.UserStore.loadDashboard()
+    await this.props.UserStore.loadFriends()
     this.setState({ loading: false })
   }
 
   render () {
     return (
-      this.state.loading
-        ? <ActivityIndicator />
-        : <ScrollView
-          style={styles.container}
-          refreshControl={this.refreshControl()}
-        >
-          {this.props.UserStore.friendRequests.length > 0 && this.friendRequestList()}
-          {this.friendList()}
-          <FriendMenuModal
-            visible={this.state.friendMenuModalVisible}
-            userId={this.state.friendMenuModalId}
-            hide={this.hideFriendMenuModal}
-          />
-        </ScrollView>
+      <ScrollView
+        style={styles.container}
+        refreshControl={this.refreshControl()}
+      >
+        {this.props.UserStore.friendRequests.length > 0 && this.friendRequestList()}
+        {this.friendList()}
+        <FriendMenuModal
+          visible={this.state.friendMenuModalVisible}
+          userId={this.state.friendMenuModalId}
+          hide={this.hideFriendMenuModal}
+        />
+        {this.state.loading && <ActivityIndicator />}
+      </ScrollView>
     )
   }
 
