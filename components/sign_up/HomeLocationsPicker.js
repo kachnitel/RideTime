@@ -24,7 +24,9 @@ class HomeLocationsPicker extends React.Component {
   }
 
   componentDidMount = async () => {
-    let locations = await this.props.LocationStore.nearby(50)
+    let locations = await Promise.all([
+      this.state.picked.map(async (id) => await this.props.LocationStore.get(id))
+    ])
     this.setState({
       loading: false,
       locations: locations
