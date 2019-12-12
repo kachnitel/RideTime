@@ -47,6 +47,11 @@ export default class LocationStore extends BaseCollectionStore {
   }
   @computed get currentLocation () { return this._currentLocation }
 
+  /**
+   * TODO: Use this.filter, deprecate provier methods
+   *
+   * @memberof LocationStore
+   */
   nearby = async (distance: Number) => {
     let coords =
       this.currentLocation.get('coords') ||
@@ -65,6 +70,9 @@ export default class LocationStore extends BaseCollectionStore {
     return results
   }
 
+  /**
+   * TODO: Use this.filter
+   */
   bbox = async (bbox: Array) => {
     let response = await this.provider.bbox(bbox)
     let results = response.results
@@ -74,7 +82,7 @@ export default class LocationStore extends BaseCollectionStore {
   }
 
   /**
-   * @memberof LocationStore
+   * TODO: Use this.filter
    */
   search = async (name: String) => {
     let response = await this.provider.search(name)
@@ -84,8 +92,17 @@ export default class LocationStore extends BaseCollectionStore {
     return results
   }
 
+  filter = async (filter: Object, params: Object = {}) => {
+    let response = await this.provider.filter(filter, params)
+    let results = response.results
+    this.populateResults(results)
+    response.relatedEntities && this.populateRelated(response.relatedEntities)
+
+    return results
+  }
+
   /**
-   * FIXME: duplicates populateEntities from parent
+   * FIXME: duplicates populateRelated from parent
    *
    * @memberof LocationStore
    */

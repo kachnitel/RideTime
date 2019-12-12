@@ -15,7 +15,8 @@ import Header from '../components/Header'
 import DifficultyIcon from '../components/icons/DifficultyIcon'
 import CountBadge from '../components/CountBadge'
 import HeaderRightView from '../components/HeaderRightView'
-import { logger } from '../src/Logger'
+import { Event } from '../stores/EventStore.mobx'
+import { Location } from '../stores/LocationStore.mobx'
 
 /**
  * TODO:
@@ -60,7 +61,7 @@ class RidesScreen extends React.Component {
    * @memberof RidesScreen
    */
   onRidesRefresh = () => {
-    this.loadRides()
+    this.onRegionChange()
   }
 
   /**
@@ -70,6 +71,7 @@ class RidesScreen extends React.Component {
    * @memberof RidesScreen
    */
   onRegionChange = async (region) => {
+    this.setState({ loading: true })
     let bbox = [
       region.latitude - region.latitudeDelta / 2, // southLat - min lat
       region.longitude - region.longitudeDelta / 2, // westLng - min lng
@@ -79,29 +81,23 @@ class RidesScreen extends React.Component {
     if (JSON.stringify(bbox) === JSON.stringify(this.state.bbox)) {
       return
     }
-    let locations = await this.props.LocationStore.bbox(bbox)
+    let locations = await this.props.LocationStore.filter(
+      { bbox: bbox },
+      {
+        related: 'event',
+        eventFilter: {
+          dateStart: (Math.floor(Date.now() / 1000) - 3600)
+        }
+      }
+    )
+
     this.setState({
       visibleLocations: locations,
-      bbox: bbox
-    })
-
-    this.loadRides()
-  }
-
-  loadRides () {
-    this.setState({ loading: true })
-    if (!this.state.bbox) {
-      logger.warn('Attempting to load rides without bbox set!')
-      return
-    }
-    this.props.EventStore.filter({ // async
-      'location': this.state.visibleLocations.map(({ id }) => id),
-      'dateStart': (Math.floor(Date.now() / 1000) - 3600)
-    })
-    this.setState({
+      bbox: bbox,
       loading: false,
-      visibleEvents: this.props.EventStore.futureEvents.filter(({ location: locationId }) => {
-        return this.state.visibleLocations.find(({ id }) => id === locationId)
+      visibleEvents: this.props.EventStore.list().filter((event: Event) => {
+        return locations.find((location: Location) => location.id === event.location) &&
+          event.datetime > (Math.floor(Date.now() / 1000) - 3600)
       })
     })
   }

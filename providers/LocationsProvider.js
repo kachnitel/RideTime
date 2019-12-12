@@ -37,6 +37,13 @@ export default class LocationsProvider {
     })
   }
 
+  filter = (filter: Object, params: Object) => {
+    return ApiConnection.get('api/locations', {
+      filter: filter,
+      ...params
+    })
+  }
+
   trailsByLocation = (id: Number) => {
     return ApiConnection.get('api/locations/trails', {
       filter: {
