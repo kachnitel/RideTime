@@ -6,8 +6,8 @@ import LocationItem from '../LocationItem'
 import LocationStore, { Location } from '../../../stores/LocationStore.mobx'
 import LocationsProvider from '../../../providers/LocationsProvider'
 
-jest.mock('../../location/LocationDifficulties', () => 'LocationDifficulties')
-jest.mock('../../RiderCount', () => 'RiderCount')
+jest.mock('../LocationDifficulties', () => 'LocationDifficulties')
+jest.mock('../../ride/RiderCount', () => 'RiderCount')
 
 const mockMath = Object.create(global.Math)
 mockMath.random = () => 0.5

@@ -6,7 +6,7 @@ import RideItem from '../RideItem'
 import UserStore from '../../../stores/UserStore.mobx'
 import { Provider } from 'mobx-react/native'
 
-jest.mock('../../RideItemDetail', () => 'RideItemDetail')
+jest.mock('../RideItemDetail', () => 'RideItemDetail')
 
 let testRide = {
   'title': "Joey's Alice lake lap",
