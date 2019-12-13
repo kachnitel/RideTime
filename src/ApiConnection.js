@@ -1,5 +1,5 @@
 import { Connection } from './Connection'
-import applicationStore from '../stores/ApplicationStore.singleton'
+import applicationStore from './stores/ApplicationStore.singleton'
 import { getEnvVars } from '../constants/Env'
 import Constants from 'expo-constants'
 import { Platform } from '@unimodules/core'

@@ -1,5 +1,5 @@
 import navigationService from './NavigationService'
-import stores from '../stores/CollectionStores.singleton'
+import stores from './stores/CollectionStores.singleton'
 
 export default class NotificationsHandler {
   listener = (notification: Object) => {
