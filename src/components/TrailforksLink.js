@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Image, StyleSheet, Linking } from 'react-native'
-import { TouchableNativeFeedback } from 'react-native-gesture-handler'
+import { Image, StyleSheet, Linking, TouchableNativeFeedback } from 'react-native'
 import Layout from '../../constants/Layout'
 import { logger } from '../Logger'
 
