@@ -4,13 +4,13 @@ import { createDrawerNavigator } from 'react-navigation'
 import HomeStack from './HomeNavigator'
 import FriendStack from './FriendNavigator'
 import DrawerContent from './DrawerContent'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { MaterialIcons } from '@expo/vector-icons'
 import Colors from '../../constants/Colors'
 import Layout from '../../constants/Layout'
 import CountBadge from '../components/CountBadge'
 import stores from '../stores/CollectionStores.singleton'
 
-let getIcon = (name: String, color) => <Icon
+let getIcon = (name: String, color) => <MaterialIcons
   name={name}
   style={{ color: color }}
   size={Layout.window.hp(3.5)}

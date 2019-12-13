@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { MaterialIcons } from '@expo/vector-icons'
 import { observer, inject } from 'mobx-react/native'
 import CountBadge from './CountBadge'
 import Layout from '../../constants/Layout'
@@ -13,7 +13,7 @@ class InvitesIconBadged extends Component {
   render () {
     return (
       <View>
-        <Icon
+        <MaterialIcons
           name='event'
           size={Layout.window.hp(4)}
           color={Colors.tintColor}

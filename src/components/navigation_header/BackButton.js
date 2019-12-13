@@ -1,6 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, View, StyleSheet } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { MaterialIcons } from '@expo/vector-icons'
 import Colors from '../../../constants/Colors'
 
 export default class BackButton extends React.Component {
@@ -8,7 +8,7 @@ export default class BackButton extends React.Component {
     return (
       <TouchableOpacity onPress={() => this.props.navigation.navigate('App')}>
         <View style={styles.headerMenuIconContainer}>
-          <Icon style={styles.headerMenuIcon} name='arrow-back' />
+          <MaterialIcons style={styles.headerMenuIcon} name='arrow-back' />
         </View>
       </TouchableOpacity>
     )

@@ -1,7 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, View, StyleSheet, ActivityIndicator } from 'react-native'
 import { inject, observer } from 'mobx-react/native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { MaterialIcons } from '@expo/vector-icons'
 import Colors from '../../../constants/Colors'
 import CountBadge from '../CountBadge'
 
@@ -35,7 +35,7 @@ class DrawerButton extends React.Component {
     return (
       <TouchableOpacity onPress={() => this.props.navigation.toggleDrawer()}>
         <View style={styles.headerMenuIconContainer}>
-          <Icon style={styles.headerMenuIcon} name='menu' />
+          <MaterialIcons style={styles.headerMenuIcon} name='menu' />
           { this.state.loading
             ? <ActivityIndicator style={styles.badge} />
             : this.state.badgeCount > 0 && <CountBadge

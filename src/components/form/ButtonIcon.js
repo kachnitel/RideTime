@@ -5,7 +5,7 @@ import {
   View,
   Text
 } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { MaterialIcons } from '@expo/vector-icons'
 import Colors from '../../../constants/Colors'
 import Layout from '../../../constants/Layout'
 
@@ -18,7 +18,7 @@ export default class ButtonIcon extends Component {
         onPress={this.props.onPress}
       >
         <View style={styles.innerContainer}>
-          {this.props.iconComponent || <Icon
+          {this.props.iconComponent || <MaterialIcons
             name={this.props.icon || 'adb'}
             color={this.props.color || '#fff'}
             size={Layout.window.hp(3)}

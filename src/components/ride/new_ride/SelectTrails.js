@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import { observer } from 'mobx-react/native'
 import { FlatList, TouchableNativeFeedback } from 'react-native-gesture-handler'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { MaterialIcons } from '@expo/vector-icons'
 import AlternatingStyleList from '../../lists/AlternatingStyleList'
 import TrailItem from './TrailItem'
 import Colors from '../../../../constants/Colors'
@@ -94,7 +94,7 @@ class SelectTrails extends Component {
         selected: prevState.selected.filter((current) => current !== item)
       }))}
     >
-      <Icon
+      <MaterialIcons
         name='clear'
         size={Layout.window.hp(3.5)}
         style={styles.selectedItemRemoveIcon}
