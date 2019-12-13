@@ -16,3 +16,55 @@ exports[`renders correctly 1`] = `
   }
 />
 `;
+
+exports[`renders correctly 2`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "height": 133.5,
+      "paddingHorizontal": 30,
+      "paddingVertical": 20,
+    }
+  }
+>
+  <Text
+    numberOfLines={1}
+    style={
+      Object {
+        "flex": 1,
+        "fontSize": 36.5,
+      }
+    }
+  >
+    Place
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <LocationDifficulties
+      difficulties={
+        Array [
+          1,
+          2,
+        ]
+      }
+      iconSize={53.5}
+      style={
+        Object {
+          "backgroundColor": "rgba(220, 220, 220, .5);",
+          "borderRadius": 11.5,
+          "flexDirection": "row",
+          "padding": 7.5,
+        }
+      }
+    />
+  </View>
+</View>
+`;

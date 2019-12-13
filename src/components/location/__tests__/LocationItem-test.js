@@ -2,16 +2,11 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import LocationItem from '../LocationItem'
-// import locationStore from '../../../stores/LocationStore.singleton'
 import LocationStore, { Location } from '../../../stores/LocationStore.mobx'
 import LocationsProvider from '../../../providers/LocationsProvider'
 
 jest.mock('../LocationDifficulties', () => 'LocationDifficulties')
 jest.mock('../../ride/RiderCount', () => 'RiderCount')
-
-const mockMath = Object.create(global.Math)
-mockMath.random = () => 0.5
-global.Math = mockMath
 
 it('renders correctly', async () => {
   let testLocation = {
@@ -34,7 +29,7 @@ it('renders correctly', async () => {
   )
   expect(component.toJSON()).toMatchSnapshot()
   let instance = component.getInstance()
-  await new Promise((resolve) => setTimeout(resolve, 10))
-  expect(await instance.location).toBe(location)
+  await new Promise(resolve => process.nextTick(resolve))
+  expect(instance.location).toBe(location)
   expect(component.toJSON()).toMatchSnapshot()
 })
