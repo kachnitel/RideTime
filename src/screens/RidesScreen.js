@@ -193,7 +193,11 @@ class RidesScreen extends React.Component {
             <Text>Loading rides in visible area...</Text>
           </View>}
         </View>
-        <CreateRideButton navigation={this.props.navigation} />
+        <CreateRideButton
+          navigation={this.props.navigation}
+          style={styles.createRideButton}
+          size={Layout.window.wp(22)}
+        />
       </View>
     )
   }
@@ -252,5 +256,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: Layout.window.wp(4),
     flex: 1,
     justifyContent: 'center'
+  },
+  createRideButton: {
+    position: 'absolute',
+    bottom: Layout.window.hp(4),
+    right: Layout.window.hp(4)
   }
 })
