@@ -59,8 +59,10 @@ class AuthLoadingScreen extends React.Component {
       }
 
       if (user !== undefined) {
-        this.props.navigation.navigate('App')
-        return
+        let onSuccessFunc = this.props.navigation.getParam('onSuccess')
+        return onSuccessFunc != null
+          ? onSuccessFunc()
+          : this.props.navigation.navigate('App')
       }
     }
 

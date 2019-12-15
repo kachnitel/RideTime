@@ -1,4 +1,4 @@
-import { observable, action, computed, toJS, autorun, when } from 'mobx'
+import { observable, action, computed, toJS, autorun } from 'mobx'
 import RidersProvider from '../providers/RidersProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
@@ -7,12 +7,6 @@ import PushNotifications from '../PushNotifications'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
-  loading = new Promise(async (resolve, reject) => {
-    when(
-      () => this.loaded,
-      () => resolve()
-    )
-  })
   @observable _loaded = false
   @observable applicationStore: ApplicationStore
 
@@ -25,7 +19,6 @@ export default class UserStore extends BaseCollectionStore {
         let notifications = new PushNotifications()
         notifications.updateToken()
         // FIXME: rather pointless since it no longer waits for user here
-        // See App._notificationsSubscribe depending on this but why?
         this.updateLoaded(true)
       }
     })
