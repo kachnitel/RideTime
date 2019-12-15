@@ -5,11 +5,15 @@ Plan a ride with your friends, meet new people to ride with or find a local to s
 
 ## TODO:
 - Event comments/messages
-- Private event - only visible to invited & members
+- Privacy
+  - private event - only visible to invited & members
+  - friends only - visible to friends & invited
+  - public - choose whether to allow anyone to join or add a join request
 - Shuttle planning
-  - Shuttle capacity! (like people count style)
-  - Calculate from people signed up with shuttle vehicles
+  - Shuttle capacity! Each member can set whether he has a vehicle / with rack & capacity for people / bikes
+  - Calculate a plan from people signed up with shuttle vehicles for big rides
+- Live tracking
+  - Track your friends / shuttle vehicle while out on a ride
 
 ## Known issues:
-- Tapping Trailforks icon in Trails / Routes list selects the item
-- Event menu is not implemented
+- Too many to list! It's very much a work in progress and many features aren't implemented yet, but the basic functionality is in and it's getting better!
