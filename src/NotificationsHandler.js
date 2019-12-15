@@ -21,11 +21,10 @@ export default class NotificationsHandler {
         break
     }
 
-    let selected = notification.origin === 'selected'
-
     this.runAuthenticated(() => {
       callback(notification.data)
-      if (selected) {
+
+      if (notification.origin === 'selected') {
         navigationService.navigate(screen, screenParams)
       }
     })
