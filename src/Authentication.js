@@ -9,6 +9,7 @@ import randomatic from 'randomatic'
 import { Connection } from './Connection'
 import { logger } from './Logger'
 import { alertAsync } from './AsyncAlert'
+import qs from 'qs'
 
 /*
   TODO:
@@ -38,7 +39,7 @@ export default class Authentication {
     let codeVerifier = randomatic('Aa0', 50)
 
     let result = await AuthSession.startAsync({
-      authUrl: `${auth0Domain}/authorize` + this.toQueryString({
+      authUrl: `${auth0Domain}/authorize?` + qs.stringify({
         client_id: auth0ClientId,
         response_type: 'code',
         scope: 'openid profile email offline_access',
@@ -74,6 +75,24 @@ export default class Authentication {
     }
     logger.error('Login failed', result)
     throw new Error('Error signing in')
+  }
+
+  logoutFromAuth0 = async () => {
+    let logoutUrl = AuthSession.getRedirectUrl()
+
+    let result = await AuthSession.startAsync({
+      authUrl: `${auth0Domain}/v2/logout?` + qs.stringify({
+        client_id: auth0ClientId,
+        returnTo: logoutUrl
+      })
+    })
+
+    if (result.type !== 'success') {
+      logger.error('Error logging out', result)
+      return false
+    }
+
+    return true
   }
 
   /**
@@ -143,14 +162,5 @@ export default class Authentication {
     let user = await this.connection.get('userinfo')
 
     return user
-  }
-
-  /**
-   * Converts an object to a query string.
-   */
-  toQueryString (params) {
-    return '?' + Object.entries(params)
-      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-      .join('&')
   }
 }

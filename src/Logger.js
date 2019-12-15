@@ -28,11 +28,15 @@ class Logger {
 
   _addMessage = (level: String, message: String, context) => {
     if (getEnvVars().dev) {
-      let method = console[level]
-      if (typeof method === 'function') {
-        console[level](message, context)
-      } else {
-        console.warn('Failed logging to console', {
+      try {
+        let method = console[level]
+        if (typeof method === 'function') {
+          console[level](message, context)
+        } else {
+          throw new Error(`Unsupported level "${level}"`)
+        }
+      } catch (error) {
+        console.warn('Failed logging to console: ' + error.message, {
           level, message, context
         })
       }
@@ -48,7 +52,6 @@ class Logger {
             JSON.stringify(context),
             (new Date()).getTime()
           ]
-          // (_, results) => console.log(results)
         )
       },
       (err) => console.warn('Error saving log to SQLite', err)

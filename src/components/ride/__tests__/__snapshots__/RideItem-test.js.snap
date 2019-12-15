@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "height": 227,
+      "paddingHorizontal": 30,
+      "paddingTop": 20,
+    }
+  }
+>
+  <Text
+    numberOfLines={1}
+    style={
+      Object {
+        "fontSize": 36.5,
+      }
+    }
+  >
+    Joey's Alice lake lap
+  </Text>
+  <RideItemDetail
+    ride={
+      Object {
+        "difficulty": 1,
+        "location": "Alice Lake",
+        "locationGps": Array [
+          49.775666,
+          -123.123307,
+        ],
+        "members": Array [
+          1,
+        ],
+        "route": "Some trails",
+        "terrain": "trail",
+        "title": "Joey's Alice lake lap",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "paddingBottom": 13.5,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`renders correctly with style 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "black",
+      "color": "#fff",
+      "height": 227,
+      "paddingHorizontal": 30,
+      "paddingTop": 20,
+    }
+  }
+>
+  <Text
+    numberOfLines={1}
+    style={
+      Object {
+        "backgroundColor": "black",
+        "color": "#fff",
+        "fontSize": 36.5,
+      }
+    }
+  >
+    Joey's Alice lake lap
+  </Text>
+  <RideItemDetail
+    ride={
+      Object {
+        "difficulty": 1,
+        "location": "Alice Lake",
+        "locationGps": Array [
+          49.775666,
+          -123.123307,
+        ],
+        "members": Array [
+          1,
+        ],
+        "route": "Some trails",
+        "terrain": "trail",
+        "title": "Joey's Alice lake lap",
+      }
+    }
+    style={
+      Object {
+        "backgroundColor": "black",
+        "color": "#fff",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "paddingBottom": 13.5,
+      }
+    }
+  />
+</View>
+`;
