@@ -1,37 +1,34 @@
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import DifficultyIcon from '../../icons/DifficultyIcon'
-import sharedStyles from './Style'
-import Title from './Title'
 import Colors from '../../../../constants/Colors'
 import Layout from '../../../../constants/Layout'
 import OutlineIcon from '../../icons/OutlineIcon'
+import SummaryItem from './SummaryItem'
 
 /**
  * TODO: Need to discuss design options
- * - iconBg size 28, icon on top
- * - iconBg size 24 ONLY
- * - iconBg size 28, icon on top in "real" color
+ * - iconOutline size 28, icon on top
+ * - iconOutline size 24 ONLY
+ * - iconOutline size 28, icon on top in "real" color
  */
 export default class RiderLevel extends Component {
   render () {
     return (
-      <View style={styles.summaryItem}>
-        <Title style={styles.title}>Level</Title>
-        <OutlineIcon outlineStyle={styles.iconBg} style={styles.content} thickness={1.15}>
+      <SummaryItem title='Level'>
+        <OutlineIcon outlineStyle={styles.iconOutline} thickness={1.15}>
           <DifficultyIcon d={this.props.level} size={Layout.window.hp(3.5)} style={styles.icon} />
         </OutlineIcon>
-      </View>
+      </SummaryItem>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  ...sharedStyles,
   icon: {
     color: Colors.darkBackground
   },
-  iconBg: {
+  iconOutline: {
     color: Colors.iconColor
   }
 })
