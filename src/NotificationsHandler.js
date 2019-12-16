@@ -17,7 +17,7 @@ export default class NotificationsHandler {
       case 'eventInvite':
         callback = this.handleEventInviteReceived
         screen = 'RideDetail'
-        screenParams = { event: notification.data.event } // FIXME: expects Event object
+        screenParams = { eventId: notification.data.event.id }
         break
       default:
         return

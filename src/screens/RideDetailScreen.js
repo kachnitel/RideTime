@@ -15,10 +15,9 @@ export default
 class RideDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     let event: Event = navigation.getParam('event')
-    let loaded = !!navigation.getParam('loaded')
     return {
-      title: event.title,
-      headerRight: loaded && <HeaderRightView>
+      title: event?.title ?? 'Loading event...',
+      headerRight: !!event && <HeaderRightView>
         {event.isMember()
           ? <ButtonIcon
             icon='more-vert'
@@ -52,11 +51,10 @@ class RideDetailScreen extends React.Component {
   }
 
   componentDidMount = async () => {
-    let { id } = this.props.navigation.getParam('event')
+    let id = this.props.navigation.getParam('eventId')
     this.event = await this.props.EventStore.get(id)
     this.setState({ loading: false })
     this.props.navigation.setParams({
-      loaded: true,
       event: this.event
     })
   }
