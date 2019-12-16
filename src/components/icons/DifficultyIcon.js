@@ -43,6 +43,11 @@ export default class DifficultyIcon extends RideTimeIcon {
       label: 'Expert',
       color: DifficultyIcon.colors.black
     },
+    8: {
+      icon: SvgSkiTrailRatingSymbolDoubleBlackDiamond,
+      label: 'Pro',
+      color: DifficultyIcon.colors.orange
+    },
     0: {
       icon: SvgSkiTrailRatingSymbolTerrainPark,
       label: 'Other',
