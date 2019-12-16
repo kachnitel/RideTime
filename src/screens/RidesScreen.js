@@ -58,13 +58,6 @@ class RidesScreen extends React.Component {
   }
 
   /**
-   * @memberof RidesScreen
-   */
-  onRidesRefresh = () => {
-    this.onRegionChange()
-  }
-
-  /**
    * REVIEW: Duplicated from LocationsPicker - use AreaMap?
    *
    * @param {*} region
@@ -81,8 +74,13 @@ class RidesScreen extends React.Component {
     if (JSON.stringify(bbox) === JSON.stringify(this.state.bbox)) {
       return
     }
+    await this.setState({ bbox: bbox })
+    this.refresh()
+  }
+
+  refresh = async () => {
     let locations = await this.props.LocationStore.filter(
-      { bbox: bbox },
+      { bbox: this.state.bbox },
       {
         related: 'event',
         eventFilter: {
@@ -93,7 +91,6 @@ class RidesScreen extends React.Component {
 
     this.setState({
       visibleLocations: locations,
-      bbox: bbox,
       loading: false,
       visibleEvents: this.props.EventStore.list().filter((event: Event) => {
         return locations.find((location: Location) => location.id === event.location) &&
@@ -182,7 +179,7 @@ class RidesScreen extends React.Component {
           {filteredEventList.length > 0
             ? <RidesList
               navigation={this.props.navigation}
-              onRefresh={this.onRidesRefresh}
+              onRefresh={this.refresh}
               rides={filteredEventList}
             />
             : !this.state.loading && <Text style={styles.noRidesText}>
