@@ -19,6 +19,11 @@ export default class NotificationsHandler {
         screen = 'RideDetail'
         screenParams = { eventId: notification.data.event.id }
         break
+      case 'eventMemberJoined':
+        callback = this.handleEventMemberJoined
+        screen = 'RideDetail'
+        screenParams = { eventId: notification.data.event.id }
+        break
       default:
         return
     }
@@ -44,6 +49,10 @@ export default class NotificationsHandler {
   handleEventInviteReceived = (data) => {
     let event = stores.event.upsert(data.event)
     stores.event.addInvite(event)
+  }
+
+  handleEventMemberJoined = (data) => {
+    stores.event.upsert(data.event)
   }
 
   /**
