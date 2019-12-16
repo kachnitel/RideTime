@@ -52,8 +52,7 @@ class RidesScreen extends React.Component {
       loading: true,
       bbox: null,
       visibleLocations: [],
-      selectedLocation: null,
-      visibleEvents: []
+      selectedLocation: null
     }
   }
 
@@ -91,11 +90,7 @@ class RidesScreen extends React.Component {
 
     this.setState({
       visibleLocations: locations,
-      loading: false,
-      visibleEvents: this.props.EventStore.list().filter((event: Event) => {
-        return locations.find((location: Location) => location.id === event.location) &&
-          event.datetime > (Math.floor(Date.now() / 1000) - 3600)
-      })
+      loading: false
     })
   }
 
@@ -109,7 +104,7 @@ class RidesScreen extends React.Component {
 
   mapMarkers () {
     return this.state.visibleLocations.map((locationInfo) => {
-      let ridesInLocation = this.state.visibleEvents.filter((event) => event.location === locationInfo.id)
+      let ridesInLocation = this.props.EventStore.futureEvents.filter((event) => event.location === locationInfo.id)
       return <Marker
         coordinate={{
           latitude: locationInfo.coords[0],
@@ -158,9 +153,14 @@ class RidesScreen extends React.Component {
   }
 
   render () {
-    let filteredEventList = this.state.selectedLocation === null
-      ? this.state.visibleEvents
-      : this.state.visibleEvents.filter((event) => event.location === this.state.selectedLocation.id)
+    let filteredEventList = this.props.EventStore.list()
+      .filter((event: Event) => {
+        return this.state.visibleLocations.find((location: Location) => location.id === event.location) &&
+          event.datetime > (Math.floor(Date.now() / 1000) - 3600)
+      })
+      .filter((event: Event) => {
+        return this.state.selectedLocation === null || event.location === this.state.selectedLocation.id
+      })
 
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
