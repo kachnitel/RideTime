@@ -14,6 +14,7 @@ import Header from '../Header'
 import Colors from '../../../constants/Colors'
 import Layout from '../../../constants/Layout'
 import RideDetail from './RideDetail'
+import { Event } from '../../stores/EventStore.mobx'
 
 export default
 @inject('EventStore', 'HideModal')
@@ -46,7 +47,7 @@ class InvitesList extends Component {
       data={this.props.EventStore.invites}
       renderItem={this.itemComponent}
       ListEmptyComponent={<Text>No pending invites</Text>}
-      keyExtractor={(item, index) => 'index_' + index.toString()}
+      keyExtractor={(item: Event) => 'event_' + item.id}
       onRefresh={this.refresh}
       refreshing={false}
       extraData={this.props.EventStore.invites.length}
