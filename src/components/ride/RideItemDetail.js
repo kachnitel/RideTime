@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
+import { observer } from 'mobx-react/native'
 import moment from 'moment'
 import DifficultyIcon from '../icons/DifficultyIcon'
 import TerrainIcon from '../icons/TerrainIcon'
@@ -7,7 +8,9 @@ import RiderCount from './RiderCount'
 import OutlineIcon from '../icons/OutlineIcon'
 import Layout from '../../../constants/Layout'
 
-export default class RideItemDetail extends React.Component {
+export default
+@observer
+class RideItemDetail extends React.Component {
   /**
    * @return string
    * @memberof RideItemDetail

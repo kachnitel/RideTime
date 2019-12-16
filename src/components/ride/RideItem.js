@@ -1,10 +1,13 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
+import { observer } from 'mobx-react/native'
 import RideItemDetail from './RideItemDetail'
 import Layout from '../../../constants/Layout'
 import RidersListCompact from '../ride/RidersListCompact'
 
-export default class RideItem extends React.Component {
+export default
+@observer
+class RideItem extends React.Component {
   render () {
     return (
       <View style={{ ...styles.listItem, ...this.props.style }}>
