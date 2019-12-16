@@ -4,7 +4,7 @@ import DifficultyRangeSlider from './DifficultyRangeSlider'
 import Colors from '../../../../constants/Colors'
 import Layout from '../../../../constants/Layout'
 import InputTitle from '../../form/InputTitle'
-import FormTextInput from '../../form/FormTextInput'
+import TextInputWithTitle from '../../form/TextInputWithTitle'
 
 export default class TrailFilter extends Component {
   filter = {
@@ -27,14 +27,13 @@ export default class TrailFilter extends Component {
             onValuesChange={(values) => this.updateFilter({ difficulties: values })}
           />
         </View>
-        <View style={styles.row}>
-          <InputTitle>Search: </InputTitle>
-          <FormTextInput
-            placeholder={'Search by name..'}
-            onChangeText={(text) => this.updateFilter({ search: text })}
-            style={styles.input}
-          />
-        </View>
+        <TextInputWithTitle
+          title='Search:'
+          placeholder={'Search by name..'}
+          onChangeText={(text) => this.updateFilter({ search: text })}
+          style={styles.input}
+          containerStyle={styles.row}
+        />
       </View>
     )
   }
@@ -47,7 +46,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    textAlignVertical: 'center',
     alignItems: 'center'
   },
   input: {
