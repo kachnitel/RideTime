@@ -17,8 +17,10 @@ export default class NotificationsHandler {
       case 'eventInvite':
         callback = this.handleEventInviteReceived
         screen = 'RideDetail'
-        screenParams = { event: notification.data.event }
+        screenParams = { event: notification.data.event } // FIXME: expects Event object
         break
+      default:
+        return
     }
 
     this.runAuthenticated(() => {
