@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
-import Title from './Title'
+import { View, StyleSheet, Text } from 'react-native'
 import Layout from '../../../../constants/Layout'
 
 export default class SummaryItem extends Component {
   render () {
     return <View style={styles.summaryItem}>
-      <Title style={styles.title}>{this.props.title}</Title>
+      <Text style={styles.title}>{this.props.title}</Text>
       <View style={styles.content}>
         {this.props.children}
       </View>
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#fff',
-    textTransform: 'uppercase', // Not supported on Android as per https://github.com/facebook/react-native/issues/2088
+    textTransform: 'uppercase',
     fontSize: Layout.window.hp(1.5)
   },
   content: {
