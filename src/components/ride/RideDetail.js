@@ -71,6 +71,7 @@ class RideDetail extends Component {
           this.props.Event.invited.includes(id)
         )
       }]}
+      disableItemPress
     />
   </ScrollView>
 }

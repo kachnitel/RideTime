@@ -18,13 +18,18 @@ export default class UsersList extends Component {
   }
 
   render () {
+    let onItemPress = this.props.disableItemPress
+      ? () => {}
+      : this.props.onItemPress === undefined
+        ? (item) => navigationService.navigate('PublicProfile', { id: item })
+        : this.props.onItemPress
     return (
       <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
         <AlternatingStyleList
           items={this.props.users}
           emptyComponent={<Text>No frenz</Text>}
           itemComponent={this.itemComponent}
-          onItemPress={(item) => navigationService.navigate('PublicProfile', { id: item })}
+          onItemPress={onItemPress}
           keyExtractor={(item) => 'user_' + item}
         />
       </View>
@@ -35,7 +40,9 @@ export default class UsersList extends Component {
 UsersList.propTypes = {
   actions: PropTypes.array,
   style: PropTypes.any,
-  users: PropTypes.array
+  users: PropTypes.arrayOf(PropTypes.number),
+  onItemPress: PropTypes.func,
+  disableItemPress: PropTypes.bool
 }
 
 const styles = StyleSheet.create({
