@@ -193,6 +193,7 @@ export class Event extends BaseEntity {
 
   @action async declineInvite () {
     await this.store.provider.declineInvite(this.id)
+    this.invited.remove(this.store.userStore.currentUser.id)
     this.store.removeInvite(this)
   }
 }
