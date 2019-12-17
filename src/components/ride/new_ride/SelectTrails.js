@@ -22,7 +22,10 @@ export default
 class SelectTrails extends Component {
   state = {
     selected: [],
-    trails: []
+    filter: {
+      difficulties: [],
+      search: ''
+    }
   }
 
   componentDidMount = () => {
@@ -32,17 +35,8 @@ class SelectTrails extends Component {
   }
 
   handleFilterUpdate = (filter) => {
-    let trails = this.props.location.trails
-    if (filter.difficulties.length > 0) {
-      trails = trails.filter((trail) =>
-        filter.difficulties.includes(trail.difficulty))
-    }
-    if (filter.search.length > 0) {
-      trails = trails.filter((trail) =>
-        trail.title.includes(filter.search.trim()))
-    }
     this.setState({
-      trails: trails
+      filter: filter
     })
   }
 
@@ -62,17 +56,29 @@ class SelectTrails extends Component {
     }
   }
 
-  trailsList = () => <AlternatingStyleList
-    items={this.state.trails}
-    onItemPress={this.selectTrail}
-    itemComponent={(item, style) => <TrailItem
-      trail={item}
-      style={style}
-      badge={this.badge(item)}
-    />}
-    windowSize={6}
-    initialNumToRender={7}
-  />
+  trailsList = () => {
+    let trails = this.props.location.trails
+    if (this.state.filter.difficulties.length > 0) {
+      trails = trails.filter((trail) =>
+        this.state.filter.difficulties.includes(trail.difficulty))
+    }
+    if (this.state.filter.search.length > 0) {
+      trails = trails.filter((trail) =>
+        trail.title.includes(this.state.filter.search.trim()))
+    }
+
+    return <AlternatingStyleList
+      items={trails}
+      onItemPress={this.selectTrail}
+      itemComponent={(item, style) => <TrailItem
+        trail={item}
+        style={style}
+        badge={this.badge(item)}
+      />}
+      windowSize={6}
+      initialNumToRender={7}
+    />
+  }
 
   selectedList = () => <View>
     <Header style={styles.selectedListHeader}>Selected trails</Header>
@@ -124,7 +130,7 @@ class SelectTrails extends Component {
           onFilterUpdate={this.handleFilterUpdate}
         />
         <View style={styles.trailsList}>
-          {this.state.trails.length > 0
+          {this.props.location.trails.length > 0
             ? this.trailsList()
             : <Text>No trails found in location.</Text>
           }
