@@ -17,11 +17,23 @@ class SelectRoute extends Component {
     }
   }
 
+  waitTime = 300
+  timeout = 0
+
+  componentWillUnmount () {
+    clearTimeout(this.timeout)
+  }
+
   handleFilterUpdate = (filter) => {
-    this.props.RouteStore.filter({ rid: this.props.location.id, ...filter })
     this.setState({
       filter: filter
     })
+
+    clearTimeout(this.timeout) // clears the old timer
+    this.timeout = setTimeout(
+      () => this.props.RouteStore.filter({ rid: this.props.location.id, ...filter }),
+      this.waitTime
+    )
   }
 
   routesList = () => {
