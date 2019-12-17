@@ -47,7 +47,7 @@ class InvitesList extends Component {
     <FlatList
       data={this.props.EventStore.invites}
       renderItem={this.itemComponent}
-      ListEmptyComponent={<Text>No pending invites</Text>}
+      ListEmptyComponent={<Text style={styles.listEmptyText}>No ride invites</Text>}
       keyExtractor={(item: Event) => 'event_' + item.id}
       onRefresh={this.refresh}
       refreshing={false}
@@ -97,7 +97,7 @@ class InvitesList extends Component {
         <View style={styles.headerContainer}>
           {this.headerButton()}
           <Header style={styles.header}>
-            {this.state.detail === null ? 'Invites' : this.state.detail.title}
+            {this.state.detail === null ? 'Ride Invites' : this.state.detail.title}
           </Header>
         </View>
         {this.state.detail !== null
@@ -143,5 +143,9 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row'
+  },
+  listEmptyText: {
+    textAlign: 'center',
+    color: 'grey'
   }
 })

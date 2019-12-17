@@ -11,15 +11,17 @@ export default
 @observer
 class InvitesIconBadged extends Component {
   render () {
+    let hasInvites = this.props.EventStore.invites.length > 0
+
     return (
       <View>
         <Icon
-          name='event'
+          name={hasInvites ? 'notifications' : 'notifications-none'}
           size={Layout.window.hp(4)}
           color={Colors.tintColor}
-          style={styles.icon}
+          style={{ ...styles.icon, opacity: hasInvites ? 1 : 0.5 }}
         />
-        { this.props.EventStore.invites.length > 0 && <CountBadge
+        { hasInvites && <CountBadge
           count={this.props.EventStore.invites.length}
           style={styles.badge}
         /> }
