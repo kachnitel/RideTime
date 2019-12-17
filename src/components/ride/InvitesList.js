@@ -15,6 +15,7 @@ import Colors from '../../../constants/Colors'
 import Layout from '../../../constants/Layout'
 import RideDetail from './RideDetail'
 import { Event } from '../../stores/EventStore.mobx'
+import InviteChoices from './InviteChoices'
 
 export default
 @inject('EventStore', 'HideModal')
@@ -77,20 +78,10 @@ class InvitesList extends Component {
     </View>
   </View>
 
-  choicesContainer = (event) => <View style={styles.choicesContainer}>
-    <ButtonIcon
-      icon='add-circle-outline'
-      text='Join'
-      style={styles.respondButton}
-      onPress={() => this.acceptInvite(event)}
-    />
-    <ButtonIcon
-      icon='highlight-off'
-      text='Dismiss'
-      style={{ ...styles.respondButton, ...styles.dismissButton }}
-      onPress={() => this.declineInvite(event)}
-    />
-  </View>
+  choicesContainer = (event) => <InviteChoices
+    acceptInvite={() => this.acceptInvite(event)}
+    declineInvite={() => this.declineInvite(event)}
+  />
 
   headerButton = () => <ButtonIcon
     icon={this.state.detail ? 'arrow-back' : 'close'}
@@ -125,10 +116,6 @@ const styles = StyleSheet.create({
   scroll: {
     maxHeight: Layout.window.hp(75)
   },
-  choicesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly'
-  },
   detailChoices: {
     bottom: 0,
     width: '100%',
@@ -137,13 +124,6 @@ const styles = StyleSheet.create({
   },
   detailScroll: {
     height: Layout.window.hp(65)
-  },
-  respondButton: {
-    width: '40%',
-    textAlign: 'center'
-  },
-  dismissButton: {
-    backgroundColor: 'gray'
   },
   header: {
     textAlign: 'center',
