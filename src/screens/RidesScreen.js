@@ -113,6 +113,7 @@ class RidesScreen extends React.Component {
         key={locationInfo.id}
         title={locationInfo.name}
         onPress={() => this.selectLocation(locationInfo)}
+        anchor={{ x: 0.5, y: 0.5 }}
       >
         <Text style={ridesInLocation.length ? styles.locMarker : { ...styles.locMarker, ...styles.emptyMarker }}>
           {ridesInLocation.length || '⊘'}
