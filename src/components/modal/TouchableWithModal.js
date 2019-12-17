@@ -43,6 +43,7 @@ export default class TouchableWithModal extends Component {
           isVisible={this.state.modalVisible}
           onBackButtonPress={this.hideModal}
           onBackdropPress={this.hideModal}
+          style={this.props.modalStyle}
         >
           <Provider HideModal={this.hideModal}>
             {this.props.modalContent}
@@ -56,5 +57,6 @@ export default class TouchableWithModal extends Component {
 TouchableWithModal.propTypes = {
   children: PropTypes.any,
   containerStyle: PropTypes.any,
+  modalStyle: PropTypes.any,
   modalContent: PropTypes.any
 }

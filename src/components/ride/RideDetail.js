@@ -9,6 +9,7 @@ import { RideDescription } from './RideDescription'
 import UsersList from '../user/UsersList'
 import TouchableWithModal from '../modal/TouchableWithModal'
 import SearchInput from '../form/SearchInput'
+import Header from '../Header'
 
 /**
  * Ride Detail screen content
@@ -55,6 +56,10 @@ class RideDetail extends Component {
   inviteButton = () => <TouchableWithModal
     modalContent={this.inviteModal()}
     containerStyle={styles.inviteButton}
+    modalStyle={{
+      justifyContent: 'flex-end',
+      margin: 0
+    }}
   >
     <View>
       <Text style={styles.actionButtonIcon}>+</Text>
@@ -63,11 +68,7 @@ class RideDetail extends Component {
   </TouchableWithModal>
 
   inviteModal = () => <ScrollView style={styles.modalContainer}>
-    <SearchInput
-      onChangeText={this.handleSearchOnChange}
-      style={styles.search}
-      placeholder='Search by name'
-    />
+    <Header style={styles.inviteHeader}>Invite friends to {this.props.Event.title}</Header>
     <UsersList
       users={this.getFilteredFriends()}
       actions={[{
@@ -79,6 +80,11 @@ class RideDetail extends Component {
         )
       }]}
       disableItemPress
+    />
+    <SearchInput
+      onChangeText={this.handleSearchOnChange}
+      style={styles.search}
+      placeholder='Search by name'
     />
   </ScrollView>
 
@@ -134,6 +140,10 @@ const styles = StyleSheet.create({
     paddingTop: Layout.window.hp(1),
     flex: 1,
     color: '#fff'
+  },
+  inviteHeader: {
+    color: Colors.tintColor,
+    textAlign: 'center'
   },
   modalContainer: {
     width: '100%'
