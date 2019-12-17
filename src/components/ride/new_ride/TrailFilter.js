@@ -30,7 +30,7 @@ export default class TrailFilter extends Component {
         <TextInputWithTitle
           title='Search:'
           placeholder={'Search by name..'}
-          onChangeText={(text) => this.updateFilter({ search: text })}
+          onChangeText={(text) => this.updateFilter({ search: text.trim() })}
           style={styles.input}
           containerStyle={styles.row}
         />
