@@ -19,7 +19,7 @@ class RideItem extends React.Component {
           style={this.props.style}
         />
         <RidersListCompact
-          userIDs={this.props.ride.members}
+          userIDs={this.props.ride.members.slice()}
           style={styles.ridersList}
         />
       </View>
