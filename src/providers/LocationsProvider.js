@@ -44,20 +44,20 @@ export default class LocationsProvider {
     })
   }
 
-  trailsByLocation = (id: Number) => {
+  trailsFilter = (filter: Object) => {
     return ApiConnection.get('api/locations/trails', {
       filter: {
-        rid: id,
-        activitytype: 1
+        activitytype: 1,
+        ...filter
       }
     })
   }
 
-  routesByLocation = (id: Number) => {
+  routesFilter = (filter: Object) => {
     return ApiConnection.get('api/locations/routes', {
       filter: {
-        rid: id,
-        activitytype: 1
+        activitytype: 1,
+        ...filter
       }
     })
   }

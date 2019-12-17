@@ -179,7 +179,7 @@ export class Location extends BaseEntity {
 
   loadTrails = async () => {
     while (!this._trailsLoaded.completed) {
-      let response = await this.store.provider.trailsByLocation(this.id)
+      let response = await this.store.provider.trailsFilter({ rid: this.id })
       let data = response.results
       this.store.populateRelated({ trail: data })
       this._trailsLoaded.loaded += data.length
@@ -191,7 +191,7 @@ export class Location extends BaseEntity {
 
   loadRoutes = async () => {
     while (!this._routesLoaded.completed) {
-      let response = await this.store.provider.routesByLocation(this.id)
+      let response = await this.store.provider.routesFilter({ rid: this.id })
       let data = response.results
       this.store.populateRelated({ route: data })
       this._routesLoaded.loaded += data.length

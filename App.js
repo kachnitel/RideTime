@@ -56,6 +56,7 @@ class App extends React.Component {
             EventStore={stores.event}
             LocationStore={stores.location}
             TrailStore={stores.trail}
+            RouteStore={stores.route}
           >
             <AppContainer
               ref={(navigatorRef) => {

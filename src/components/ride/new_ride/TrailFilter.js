@@ -8,7 +8,7 @@ import TextInputWithTitle from '../../form/TextInputWithTitle'
 
 export default class TrailFilter extends Component {
   filter = {
-    difficulties: [],
+    difficulty: [],
     search: ''
   }
 
@@ -24,7 +24,7 @@ export default class TrailFilter extends Component {
           <InputTitle>Difficulties: </InputTitle>
           <DifficultyRangeSlider
             width={Layout.window.wp(55)}
-            onValuesChange={(values) => this.updateFilter({ difficulties: values })}
+            onValuesChange={(values) => this.updateFilter({ difficulty: values })}
           />
         </View>
         <TextInputWithTitle

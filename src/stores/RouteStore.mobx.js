@@ -9,6 +9,13 @@ export default class RouteStore extends BaseCollectionStore {
   constructor (provider, stores) {
     super(provider, Route, stores)
   }
+
+  filter = async (filter: Object) => {
+    let response = await this.provider.routesFilter(filter)
+    response.relatedEntities && this.populateRelated(response.relatedEntities)
+    let results = response.results
+    return results.map(this.upsert)
+  }
 }
 
 export class Route extends BaseEntity {

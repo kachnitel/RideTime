@@ -4,7 +4,7 @@ import {
   Text,
   StyleSheet
 } from 'react-native'
-import { observer } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react/native'
 import { FlatList, TouchableNativeFeedback } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import AlternatingStyleList from '../../lists/AlternatingStyleList'
@@ -18,23 +18,19 @@ import Button from '../../form/Button'
 import TrailFilter from './TrailFilter'
 
 export default
+@inject('TrailStore')
 @observer
 class SelectTrails extends Component {
   state = {
     selected: [],
     filter: {
-      difficulties: [],
+      difficulty: [],
       search: ''
     }
   }
 
-  componentDidMount = () => {
-    this.setState({
-      trails: this.props.location.trails
-    })
-  }
-
   handleFilterUpdate = (filter) => {
+    this.props.TrailStore.filter({ rid: this.props.location.id, ...filter })
     this.setState({
       filter: filter
     })
@@ -58,9 +54,9 @@ class SelectTrails extends Component {
 
   trailsList = () => {
     let trails = this.props.location.trails
-    if (this.state.filter.difficulties.length > 0) {
+    if (this.state.filter.difficulty.length > 0) {
       trails = trails.filter((trail) =>
-        this.state.filter.difficulties.includes(trail.difficulty))
+        this.state.filter.difficulty.includes(trail.difficulty))
     }
     if (this.state.filter.search.length > 0) {
       trails = trails.filter((trail) =>
