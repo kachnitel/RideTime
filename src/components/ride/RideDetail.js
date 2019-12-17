@@ -8,6 +8,7 @@ import RideItem from './RideItem'
 import { RideDescription } from './RideDescription'
 import UsersList from '../user/UsersList'
 import TouchableWithModal from '../modal/TouchableWithModal'
+import SearchInput from '../form/SearchInput'
 
 /**
  * Ride Detail screen content
@@ -16,6 +17,10 @@ export default
 @inject('Event', 'UserStore')
 @observer
 class RideDetail extends Component {
+  state = {
+    inviteFilter: null
+  }
+
   render () {
     return (
       <ScrollView style={styles.container}>
@@ -57,12 +62,14 @@ class RideDetail extends Component {
     </View>
   </TouchableWithModal>
 
-  /**
-   * @memberof RideDetail
-   */
   inviteModal = () => <ScrollView style={styles.modalContainer}>
+    <SearchInput
+      onChangeText={this.handleSearchOnChange}
+      style={styles.search}
+      placeholder='Search by name'
+    />
     <UsersList
-      users={this.props.UserStore.currentUser.friends}
+      users={this.getFilteredFriends()}
       actions={[{
         icon: 'add-circle-outline',
         action: (id) => this.props.Event.invite(id), // TODO: Toast
@@ -74,6 +81,16 @@ class RideDetail extends Component {
       disableItemPress
     />
   </ScrollView>
+
+  handleSearchOnChange = (text) => {
+    this.setState({ inviteFilter: text })
+  }
+
+  getFilteredFriends = () => this.state.inviteFilter != null && this.state.inviteFilter.length > 0
+    ? this.props.UserStore.currentUser.friends.filter(
+      (id) => this.props.UserStore.getSync(id)
+        .name.includes(this.state.inviteFilter))
+    : this.props.UserStore.currentUser.friends
 }
 
 const styles = StyleSheet.create({
@@ -120,5 +137,8 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: '100%'
+  },
+  search: {
+    textAlign: 'center'
   }
 })
