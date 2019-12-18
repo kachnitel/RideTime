@@ -24,6 +24,12 @@ export default class NotificationsHandler {
         screen = 'RideDetail'
         screenParams = { eventId: notification.data.event.id }
         break
+      case 'eventCommentAdded':
+        // TODO: callback, open screem with `showMessages` param
+        callback = () => {}
+        screen = 'RideDetail'
+        screenParams = { eventId: notification.data.event.id }
+        break
       default:
         return
     }
