@@ -16,7 +16,7 @@ class InvitesIconBadged extends Component {
     return (
       <View>
         <Icon
-          name={hasInvites ? 'notifications' : 'notifications-none'}
+          name={'person-add'}
           size={Layout.window.hp(4)}
           color={Colors.tintColor}
           style={{ ...styles.icon, opacity: hasInvites ? 1 : 0.5 }}
