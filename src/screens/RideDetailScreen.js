@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer, inject, Provider } from 'mobx-react/native'
-import { ActivityIndicator, ToastAndroid, View } from 'react-native'
+import { ActivityIndicator, ToastAndroid, View, StyleSheet } from 'react-native'
 import { Event } from '../stores/EventStore.mobx'
 import RideDetail from '../components/ride/RideDetail'
 import Button from '../components/form/Button'
@@ -9,6 +9,7 @@ import HeaderRightView from '../components/navigation_header/HeaderRightView'
 import ModalView from '../components/modal/ModalView'
 import MenuModalOption from '../components/modal/MenuModalOption'
 import Comments from '../components/ride/Comments'
+import Colors from '../../constants/Colors'
 
 export default
 @inject('EventStore')
@@ -72,11 +73,13 @@ class RideDetailScreen extends React.Component {
     return (
       this.state.loading
         ? <ActivityIndicator />
-        : <View>
-          <Provider Event={this.event}>
-            <RideDetail />
-          </Provider>
-          <Comments event={this.event} />
+        : <View style={styles.container}>
+          <View style={styles.detail}>
+            <Provider Event={this.event}>
+              <RideDetail />
+            </Provider>
+          </View>
+          <Comments event={this.event} style={styles.comments} />
           <ModalView
             isVisible={this.state.menuModalVisible}
             onBackdropPress={this.hideMenuModal}
@@ -99,3 +102,19 @@ class RideDetailScreen extends React.Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  comments: {
+    flex: 3,
+    borderTopColor: Colors.tintColor,
+    borderTopWidth: 1
+  },
+  detail: {
+    // maxHeight: '75%',
+    flex: 7
+  },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.darkBackground
+  }
+})
