@@ -25,9 +25,9 @@ export default class NotificationsHandler {
         screenParams = { eventId: notification.data.event.id }
         break
       case 'eventCommentAdded':
-        // TODO: callback, open screem with `showMessages` param
-        callback = () => {}
+        callback = this.handleEventCommentAdded
         screen = 'RideDetail'
+        // TODO: open screen with `showMessages` param
         screenParams = { eventId: notification.data.event.id }
         break
       default:
@@ -59,6 +59,11 @@ export default class NotificationsHandler {
 
   handleEventMemberJoined = (data) => {
     stores.event.upsert(data.event)
+  }
+
+  handleEventCommentAdded = (data) => {
+    stores.event.upsert(data.event)
+    stores.comment.upsert(data.comment)
   }
 
   /**
