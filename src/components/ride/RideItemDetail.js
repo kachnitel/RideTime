@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { observer } from 'mobx-react/native'
 import moment from 'moment'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import DifficultyIcon from '../icons/DifficultyIcon'
 import TerrainIcon from '../icons/TerrainIcon'
 import RiderCount from './RiderCount'
@@ -27,30 +28,42 @@ class RideItemDetail extends React.Component {
     return startTime.format(format)
   }
 
+  messageCount = () => <View style={styles.messageCount}>
+    <Text>{this.props.ride.comments.length}</Text>
+    <Icon
+      size={Layout.window.hp(4)}
+      name='comment'
+      // TODO: style fontStyle={styles.riderCountStyle}
+    />
+  </View>
+
   render () {
     let ride = this.props.ride
     let difficultyIcon = <DifficultyIcon size={Layout.window.hp(4)} d={ride.difficulty} />
     let startTime = this.getStartTimeString()
 
     return <View style={styles.detail}>
-      <View style={styles.lowerRowIconContainer}>
+      <View style={styles.iconContainer}>
         <OutlineIcon outlineStyle={styles.diffIconBg}>
           {difficultyIcon}
         </OutlineIcon>
       </View>
-      <View style={styles.lowerRowIconContainer}>
+      <View style={styles.iconContainer}>
         <TerrainIcon size={Layout.window.hp(5)} terrain={ride.terrain} />
       </View>
-      <View style={styles.lowerRowIconContainer}>
+      <View style={styles.iconContainer}>
         <RiderCount
           size={Layout.window.hp(4)}
           fontStyle={styles.riderCountStyle}
           count={ride.members ? ride.members.length : 0}
         />
       </View>
+      <View style={styles.iconContainer}>
+        {this.messageCount()}
+      </View>
       {/* TODO shuttle/chairlift icon */}
       <View style={{
-        ...styles.lowerRowIconContainer,
+        ...styles.iconContainer,
         ...styles.startTimeContainer
       }}>
         <Text style={{
@@ -70,7 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  lowerRowIconContainer: {
+  iconContainer: {
     width: Layout.window.wp(12),
     alignItems: 'flex-start'
   },
@@ -86,5 +99,8 @@ const styles = StyleSheet.create({
   },
   riderCountStyle: {
     fontSize: Layout.window.hp(3)
+  },
+  messageCount: {
+    flexDirection: 'row'
   }
 })

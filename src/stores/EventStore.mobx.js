@@ -96,7 +96,8 @@ export class Event extends BaseEntity {
     'location',
     'terrain',
     'route',
-    'datetime'
+    'datetime',
+    'comments'
   ]
 
   @observable _id = false
@@ -110,6 +111,7 @@ export class Event extends BaseEntity {
   @observable _terrain = null
   @observable _route = null
   @observable _datetime = null
+  _comments = observable.array([])
 
   @action updateId (newValue: Number) { this._id = newValue }
   @computed get id () { return this._id }
@@ -196,4 +198,10 @@ export class Event extends BaseEntity {
     this.invited.remove(this.store.userStore.currentUser.id)
     this.store.removeInvite(this)
   }
+
+  @action updateComments (newValue: Number[]) { this._comments.replace(newValue) }
+  /** TODO: API call */
+  @action addComment (newValue: Number) { !this._comments.includes(newValue) && this._comments.push(newValue) }
+  @computed get comments () { return this._comments }
+  @action removeComment (id: Number) { this._comments.remove(id) }
 }

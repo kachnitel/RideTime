@@ -8,6 +8,7 @@ import ButtonIcon from '../components/form/ButtonIcon'
 import HeaderRightView from '../components/navigation_header/HeaderRightView'
 import ModalView from '../components/modal/ModalView'
 import MenuModalOption from '../components/modal/MenuModalOption'
+import Comments from '../components/ride/Comments'
 
 export default
 @inject('EventStore')
@@ -75,6 +76,7 @@ class RideDetailScreen extends React.Component {
           <Provider Event={this.event}>
             <RideDetail />
           </Provider>
+          <Comments event={this.event} />
           <ModalView
             isVisible={this.state.menuModalVisible}
             onBackdropPress={this.hideMenuModal}

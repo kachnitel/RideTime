@@ -36,4 +36,14 @@ export default class RidesProvider {
   leave = (id) => {
     return ApiConnection.delete('api/events/' + id + '/leave')
   }
+
+  getComments = (eventId) => {
+    return ApiConnection.get('api/events/' + eventId + '/comments')
+  }
+
+  addComment = (eventId, message: String) => {
+    return ApiConnection.post('api/events/' + eventId + '/comments', {
+      message: message
+    })
+  }
 }
