@@ -28,12 +28,17 @@ class RideItemDetail extends React.Component {
     return startTime.format(format)
   }
 
+  /**
+   * TODO: Use CountIcon, move font size there
+   */
   messageCount = () => <View style={styles.messageCount}>
-    <Text>{this.props.ride.comments.length}</Text>
+    <Text style={{ ...styles.messageCountText, ...this.props.style }}>
+      {this.props.ride.comments.length}
+    </Text>
     <Icon
       size={Layout.window.hp(4)}
       name='comment'
-      // TODO: style fontStyle={styles.riderCountStyle}
+      style={{ ...styles.messageCountIcon, ...this.props.style }}
     />
   </View>
 
@@ -101,6 +106,16 @@ const styles = StyleSheet.create({
     fontSize: Layout.window.hp(3)
   },
   messageCount: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    textAlignVertical: 'center'
+  },
+  messageCountText: {
+    fontWeight: 'bold',
+    fontSize: Layout.window.hp(3),
+    paddingRight: 2,
+    opacity: 0.7
+  },
+  messageCountIcon: {
+    opacity: 0.7
   }
 })
