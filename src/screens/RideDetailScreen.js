@@ -1,6 +1,13 @@
 import React from 'react'
 import { observer, inject, Provider } from 'mobx-react/native'
-import { ActivityIndicator, ToastAndroid, View, StyleSheet } from 'react-native'
+import {
+  ActivityIndicator,
+  ToastAndroid,
+  View,
+  StyleSheet,
+  KeyboardAvoidingView
+} from 'react-native'
+import { Header } from 'react-navigation'
 import { Event } from '../stores/EventStore.mobx'
 import RideDetail from '../components/ride/RideDetail'
 import Button from '../components/form/Button'
@@ -73,7 +80,11 @@ class RideDetailScreen extends React.Component {
     return (
       this.state.loading
         ? <ActivityIndicator />
-        : <View style={styles.container}>
+        : <KeyboardAvoidingView
+          style={styles.container}
+          behavior='padding'
+          keyboardVerticalOffset={Header.HEIGHT + 24}
+        >
           <View style={styles.detail}>
             <Provider Event={this.event}>
               <RideDetail />
@@ -98,7 +109,7 @@ class RideDetailScreen extends React.Component {
               label={'Close'}
             />
           </ModalView>
-        </View>
+        </KeyboardAvoidingView>
     )
   }
 }
