@@ -31,7 +31,7 @@ class RideItemDetail extends React.Component {
   /**
    * TODO: Use CountIcon, move font size there
    */
-  messageCount = () => <View style={styles.messageCount}>
+  messageCount = () => this.props.ride.comments.length > 0 && <View style={styles.messageCount}>
     <Text style={{ ...styles.messageCountText, ...this.props.style }}>
       {this.props.ride.comments.length}
     </Text>
