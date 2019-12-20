@@ -21,9 +21,9 @@ class Comments extends Component {
     this.loadComments()
   }
 
-  loadComments = () => {
+  loadComments = async () => {
     this.setState({ loading: true })
-    this.props.CommentStore.loadCommentsAsync(this.props.event)
+    await this.props.CommentStore.loadCommentsAsync(this.props.event)
     this.setState({ loading: false })
   }
 
@@ -33,8 +33,14 @@ class Comments extends Component {
       value={this.state.newComment}
       onChangeText={(val) => this.setState({ newComment: val })}
       disabled={this.state.loading}
+      style={styles.input}
     />
-    <ButtonIcon icon='send' onPress={this.submitComment} />
+    <ButtonIcon
+      icon='send'
+      onPress={this.submitComment}
+      style={styles.sendButton}
+      disabled={this.state.loading}
+    />
   </View>
 
   submitComment = async (message: String) => {
@@ -47,10 +53,6 @@ class Comments extends Component {
     let commentCount = this.props.CommentStore.getComments(this.props.event).length
     return (
       <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
-        <Text style={styles.title}>
-          Comments
-          <Text style={styles.commentCount}>{commentCount}</Text>
-        </Text>
         <FlatList
           data={this.props.CommentStore
             .getComments(this.props.event)
@@ -64,7 +66,11 @@ class Comments extends Component {
           refreshing={this.state.loading}
           extraData={commentCount}
         />
-        {this.addComment()}
+        {this.props.event.isMember() && this.addComment()}
+        <Text style={styles.title}>
+          Comments
+          (<Text style={styles.commentCount}>{commentCount}</Text>)
+        </Text>
       </View>
     )
   }
@@ -76,13 +82,14 @@ const styles = StyleSheet.create({
   },
   addCommentContainer: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   title: {
     position: 'absolute',
     top: Layout.window.hp(1),
     right: Layout.window.hp(1),
-    backgroundColor: '#fff2',
+    backgroundColor: '#6669',
     padding: Layout.window.hp(0.75),
     borderRadius: Layout.window.hp(1.5)
   },
@@ -92,7 +99,12 @@ const styles = StyleSheet.create({
     color: '#fff3'
   },
   commentCount: {
-    color: '#fff',
-    backgroundColor: '#fff3'
+    color: '#fff'
+  },
+  input: {
+    flex: 1
+  },
+  sendButton: {
+    margin: Layout.window.hp(1)
   }
 })
