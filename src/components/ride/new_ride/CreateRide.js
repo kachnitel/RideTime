@@ -28,6 +28,7 @@ class CreateRide extends React.Component {
     title='Select difficulty'
     placeholder='Overall ride difficulty'
     footerText='Select level to indicate to others how difficult trails you plan on riding.'
+    required
   />
 
   datetime = () => <EditDateTime
