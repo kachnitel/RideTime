@@ -17,16 +17,24 @@ class RideItemDetail extends React.Component {
    * @memberof RideItemDetail
    */
   getStartTimeString = () => {
-    let startTime = moment(this.props.ride.datetime * 1000)
+    // show date on past events, add relative strings: tomorrow, yesterday
+    let startTime = this.getStartTime()
 
-    let format = startTime.isBefore(moment().endOf('day'))
-      ? 'H:mm'
-      : startTime.isBefore(moment().add(7, 'days').startOf('day'))
-        ? 'ddd H:mm'
-        : 'ddd D/M H:mm'
-
-    return startTime.format(format)
+    return startTime.calendar(null, {
+      sameDay: '[Today at] H:mm',
+      nextDay: '[Tomorrow at] H:mm',
+      nextWeek: 'dddd [at] H:mm',
+      lastDay: '[Yesterday] H:mm',
+      lastWeek: '[Last] dddd',
+      sameElse: 'DD/MM/YY H:mm'
+    })
   }
+
+  /**
+   * Returns moment initialized with current timestamp
+   * @returns {moment}
+   */
+  getStartTime = () => moment(this.props.ride.datetime * 1000)
 
   /**
    * TODO: Use CountIcon, move font size there
@@ -68,6 +76,7 @@ class RideItemDetail extends React.Component {
       </View>
       {/* TODO shuttle/chairlift icon */}
       <View style={{
+        opacity: this.getStartTime().isBefore(moment()) ? 0.3 : 1,
         ...styles.iconContainer,
         ...styles.startTimeContainer
       }}>
@@ -93,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start'
   },
   startTime: {
-    fontSize: Layout.window.hp(3.25)
+    fontSize: Layout.window.hp(2.5)
   },
   startTimeContainer: {
     marginLeft: 'auto',
