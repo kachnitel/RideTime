@@ -17,6 +17,7 @@ import CountBadge from '../components/CountBadge'
 import HeaderRightView from '../components/navigation_header/HeaderRightView'
 import { Event } from '../stores/EventStore.mobx'
 import { Location } from '../stores/LocationStore.mobx'
+import TabBar from '../components/TabBar'
 
 /**
  * TODO:
@@ -27,7 +28,7 @@ import { Location } from '../stores/LocationStore.mobx'
  * @extends {React.Component}
  */
 export default
-@inject('EventStore', 'LocationStore')
+@inject('EventStore', 'LocationStore', 'UserStore')
 @observer
 class RidesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -52,7 +53,8 @@ class RidesScreen extends React.Component {
       loading: true,
       bbox: null,
       visibleLocations: [],
-      selectedLocation: null
+      selectedLocation: null,
+      tab: 'map'
     }
   }
 
@@ -95,56 +97,58 @@ class RidesScreen extends React.Component {
     })
   }
 
-  selectLocation = (locationInfo) => {
-    this.setState({ selectedLocation: locationInfo })
+  selectLocation = (location: Location) => {
+    this.setState({ selectedLocation: location })
   }
 
   clearLocation = () => {
     this.setState({ selectedLocation: null })
   }
 
-  mapMarkers () {
-    return this.state.visibleLocations.map((locationInfo) => {
-      let ridesInLocation = this.props.EventStore.futureEvents.filter((event) => event.location === locationInfo.id)
+  mapMarkers (events: Event[]) {
+    return this.state.visibleLocations.map((location: Location) => {
+      let badgeCount = location.events
+        .filter((event: Event) => events.includes(event)) // Filters currently filtered events (my, friends)
+        .length
       return <Marker
         coordinate={{
-          latitude: locationInfo.coords[0],
-          longitude: locationInfo.coords[1]
+          latitude: location.coords[0],
+          longitude: location.coords[1]
         }}
-        key={locationInfo.id}
-        title={locationInfo.name}
-        onPress={() => this.selectLocation(locationInfo)}
+        key={location.id}
+        title={location.name}
+        onPress={() => this.selectLocation(location)}
         anchor={{ x: 0.5, y: 0.5 }}
       >
-        <Text style={ridesInLocation.length ? styles.locMarker : { ...styles.locMarker, ...styles.emptyMarker }}>
-          {ridesInLocation.length || '⊘'}
+        <Text style={badgeCount ? styles.locMarker : { ...styles.locMarker, ...styles.emptyMarker }}>
+          {badgeCount || '⊘'}
         </Text>
         <Callout>
-          {this.locationCallout(locationInfo)}
+          {this.locationCallout(location)}
         </Callout>
       </Marker>
     })
   }
 
-  locationCallout (locationInfo) {
+  locationCallout (location: Location) {
     return <View style={styles.callout}>
       <Header
         numberOfLines={1}
         ellipsizeMode={'tail'}
         style={styles.calloutTitle}
       >
-        {locationInfo.name}
+        {location.name}
       </Header>
       <Text>Rides in area:</Text>
       <View style={styles.calloutDetailContainer}>
         {Object.keys(DifficultyIcon.icons).map(Number).map((difficultyLevel) => {
           let ridesByLevel = this.props.EventStore.futureEvents.filter(
             (event) =>
-              event.location === locationInfo.id &&
+              event.location === location.id &&
               event.difficulty === difficultyLevel
           ).length
           if (ridesByLevel > 0) {
-            return <View style={styles.calloutDiffIcon} key={locationInfo.id + '_' + difficultyLevel}>
+            return <View style={styles.calloutDiffIcon} key={location.id + '_' + difficultyLevel}>
               <DifficultyIcon d={difficultyLevel} size={Layout.window.hp(3)} />
               <CountBadge count={ridesByLevel} style={styles.calloutDiffIconBadge} />
             </View>
@@ -154,22 +158,37 @@ class RidesScreen extends React.Component {
     </View>
   }
 
+  getFriendsEvents = () => {
+    let ids = this.props.UserStore.currentUser.friends
+      .map((id) => this.props.UserStore.getSync(id).events)
+      .flat()
+
+    return this.props.EventStore.list(ids)
+  }
+
+  getMyEvents = () => this.props.EventStore.list(this.props.UserStore.currentUser.events)
+
+  getMapEvents = () => this.state.visibleLocations.map((location: Location) => location.events).flat()
+
+  futureEventFilter = (event: Event) => event.datetime > (Math.floor(Date.now() / 1000) - 3600)
+
   render () {
-    let filteredEventList = this.props.EventStore.list()
-      .filter((event: Event) => {
-        return this.state.visibleLocations.find((location: Location) => location.id === event.location) &&
-          event.datetime > (Math.floor(Date.now() / 1000) - 3600)
-      })
-      .filter((event: Event) => {
-        return this.state.selectedLocation === null || event.location === this.state.selectedLocation.id
-      })
+    let events = this.state.selectedLocation !== null
+      ? this.state.selectedLocation.events
+      : this.state.tab === 'map'
+        ? this.getMapEvents()
+        : this.state.tab === 'my'
+          ? this.getMyEvents()
+          : this.getFriendsEvents()
+
+    let filteredEvents = events.filter(this.futureEventFilter)
 
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <View style={{ flex: 35 }}>
           {this.state.loading && <ActivityIndicator style={styles.mapLoading} />}
           <AreaMap
-            markers={this.mapMarkers()}
+            markers={this.mapMarkers(filteredEvents)}
             onRegionChangeComplete={this.onRegionChange}
             onPress={this.clearLocation}
             showsUserLocation
@@ -178,21 +197,37 @@ class RidesScreen extends React.Component {
         </View>
 
         <View style={{ flex: 65 }}>
-          {filteredEventList.length > 0
+          {filteredEvents.length > 0
             ? <RidesList
               navigation={this.props.navigation}
               onRefresh={() => this.refresh(this.state.bbox)}
-              rides={filteredEventList}
+              rides={filteredEvents}
             />
             : !this.state.loading && <Text style={styles.noRidesText}>
               No rides nearby, start one or move the map to see rides in the visible area!
             </Text>}
           {this.state.loading && <View style={styles.listLoading}>
-            <ActivityIndicator color={'#fff'} />
+            <ActivityIndicator />
             <Text>Loading rides in visible area...</Text>
           </View>}
+          <CreateRideButton navigation={this.props.navigation} />
         </View>
-        <CreateRideButton navigation={this.props.navigation} />
+        <TabBar
+          options={[
+            {
+              title: 'Map',
+              onPress: () => this.setState({ tab: 'map' })
+            },
+            {
+              title: `My rides (${this.getMyEvents().filter(this.futureEventFilter).length})`,
+              onPress: () => this.setState({ tab: 'my' })
+            },
+            {
+              title: 'Friends\' rides',
+              onPress: () => this.setState({ tab: 'friends' })
+            }
+          ]}
+        />
       </View>
     )
   }
@@ -243,8 +278,7 @@ const styles = StyleSheet.create({
     zIndex: 10
   },
   listLoading: {
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.25);'
+    alignItems: 'center'
   },
   noRidesText: {
     textAlign: 'center',
