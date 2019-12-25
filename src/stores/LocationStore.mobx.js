@@ -83,8 +83,7 @@ export default class LocationStore extends BaseCollectionStore {
 
   filter = async (filter: Object, params: Object = {}) => {
     let response = await this.provider.filter(filter, params)
-    let results = response.results
-    this.populateResults(results)
+    let results = this.populateResults(response.results)
     response.relatedEntities && this.populateRelated(response.relatedEntities)
 
     return results
@@ -94,12 +93,9 @@ export default class LocationStore extends BaseCollectionStore {
    * FIXME: duplicates populateRelated from parent
    *
    * @memberof LocationStore
+   * @returns {Location[]}
    */
-  populateResults = (results: Array) => {
-    results.forEach((result) => {
-      this.upsert(result)
-    })
-  }
+  populateResults = (results: Array) => results.map(this.upsert)
 
   watchPosition
 }
