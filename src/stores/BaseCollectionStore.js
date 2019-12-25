@@ -124,9 +124,7 @@ export class BaseCollectionStore {
    */
   async populateEntities (ids: Number[]) {
     let response = await this.provider.list(ids)
-    response.results.map((result) => {
-      this.upsert(result)
-    })
+    return response.results.map(this.upsert)
   }
 
   populateRelated = (related: Object) => {
