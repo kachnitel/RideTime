@@ -142,9 +142,9 @@ export class User extends BaseEntity {
   @observable _hometown = null
   @observable _level = null
   @observable _bike = null
-  _locations = observable.array([])
-  _events = observable.array([])
-  _friends = observable.array([])
+  _locations = observable.array([]) // Location.id[]
+  _events = observable.array([]) // Event.id[]
+  _friends = observable.array([]) // User.id[]
 
   // Picture that hasn't been uploaded yet
   @observable _tempPicture = null
@@ -171,11 +171,11 @@ export class User extends BaseEntity {
   @computed get bike () { return this._bike }
 
   @action updateLocations (newValue: Array) { this._locations.replace(newValue) }
-  @action addLocation (newValue) { this._locations.push(newValue) }
+  @action addLocation (newValue: Number) { this._locations.push(newValue) }
   @computed get locations () { return this._locations }
 
   @action updateEvents (newValue: Array) { this._events.replace(newValue) }
-  @action addEvent (newValue) { this._events.push(newValue) }
+  @action addEvent (newValue: Number) { this._events.push(newValue) }
   @computed get events () { return this._events }
 
   @action updateFriends (newValue: Number[]) { this._friends.replace(newValue) }
