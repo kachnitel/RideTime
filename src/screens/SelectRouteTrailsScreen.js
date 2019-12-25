@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import { observer } from 'mobx-react/native'
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-navigation'
-import Layout from '../../constants/Layout'
-import Colors from '../../constants/Colors'
 import { Location } from '../stores/LocationStore.mobx'
+import { Route } from '../stores/RouteStore.mobx'
 import SelectTrails from '../components/ride/new_ride/SelectTrails'
 import SelectRoute from '../components/ride/new_ride/SelectRoute'
-import { Route } from '../stores/RouteStore.mobx'
 import Button from '../components/form/Button'
 import HeaderRightView from '../components/navigation_header/HeaderRightView'
+import TabBar from '../components/TabBar'
 
 export default
 @observer
@@ -62,22 +60,18 @@ class SelectRouteTrailsScreen extends Component {
     this.setState({ loadingRoutes: false })
   }
 
-  tabToggle = () => <View style={styles.toggleContainer}>
-    <TouchableOpacity onPress={this.handleTabToggle} disabled={this.state.trailsTab}>
-      <Text
-        style={this.state.trailsTab ? styles.tabToggle : { ...styles.tabToggle, ...styles.tabToggleActive }}
-      >
-        Trails
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={this.handleTabToggle} disabled={!this.state.trailsTab}>
-      <Text
-        style={!this.state.trailsTab ? styles.tabToggle : { ...styles.tabToggle, ...styles.tabToggleActive }}
-      >
-        Routes
-      </Text>
-    </TouchableOpacity>
-  </View>
+  tabToggle = () => <TabBar
+    options={[
+      {
+        title: 'Trails',
+        onPress: this.handleTabToggle
+      },
+      {
+        title: 'Routes',
+        onPress: this.handleTabToggle
+      }
+    ]}
+  />
 
   handleTabToggle = () => this.setState((prevState) => ({ trailsTab: !prevState.trailsTab }))
 
@@ -162,18 +156,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     width: '100%',
     display: 'flex'
-  },
-  tabToggle: {
-    backgroundColor: Colors.tintColor,
-    color: '#fff',
-    padding: Layout.window.hp(2),
-    fontWeight: 'bold',
-    textAlign: 'center',
-    width: Layout.window.wp(50) // Flex or what?!
-  },
-  tabToggleActive: {
-    backgroundColor: '#fff',
-    color: Colors.tintColor
   },
   loadingContainer: {
     alignItems: 'center',
