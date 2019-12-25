@@ -62,8 +62,7 @@ class RidesScreen extends React.Component {
    * @param {*} region
    * @memberof RidesScreen
    */
-  onRegionChange = async (region) => {
-    this.setState({ loading: true })
+  onRegionChange = (region) => {
     let bbox = [
       region.latitude - region.latitudeDelta / 2, // southLat - min lat
       region.longitude - region.longitudeDelta / 2, // westLng - min lng
@@ -73,13 +72,15 @@ class RidesScreen extends React.Component {
     if (JSON.stringify(bbox) === JSON.stringify(this.state.bbox)) {
       return
     }
-    await this.setState({ bbox: bbox })
-    this.refresh()
+    this.setState({ bbox: bbox })
+    this.refresh(bbox)
   }
 
-  refresh = async () => {
+  refresh = async (bbox: Array) => {
+    this.setState({ loading: true })
+
     let locations = await this.props.LocationStore.filter(
-      { bbox: this.state.bbox },
+      { bbox: bbox },
       {
         related: 'event',
         eventFilter: {
@@ -180,7 +181,7 @@ class RidesScreen extends React.Component {
           {filteredEventList.length > 0
             ? <RidesList
               navigation={this.props.navigation}
-              onRefresh={this.refresh}
+              onRefresh={() => this.refresh(this.state.bbox)}
               rides={filteredEventList}
             />
             : !this.state.loading && <Text style={styles.noRidesText}>
