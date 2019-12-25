@@ -166,6 +166,10 @@ export class Location extends BaseEntity {
     return this.store.stores.route.list().filter((item) => item.location === this.id)
   }
 
+  @computed get events () {
+    return this.store.stores.event.list().filter((item) => item.location === this.id)
+  }
+
   loadTrails = async () => {
     while (!this._trailsLoaded.completed) {
       let response = await this.store.provider.trailsFilter({ rid: this.id })
