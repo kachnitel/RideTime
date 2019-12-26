@@ -97,7 +97,9 @@ export class Event extends BaseEntity {
     'terrain',
     'route',
     'datetime',
-    'comments'
+    'comments',
+    'private',
+    'visibility'
   ]
 
   @observable _id = false
@@ -112,6 +114,8 @@ export class Event extends BaseEntity {
   @observable _route = null
   @observable _datetime = null
   _comments = observable.array([])
+  @observable _private = false
+  @observable _visibility = null
 
   @action updateId (newValue: Number) { this._id = newValue }
   @computed get id () { return this._id }
@@ -206,4 +210,10 @@ export class Event extends BaseEntity {
   @action addComment (newValue: Number) { !this._comments.includes(newValue) && this._comments.push(newValue) }
   @computed get comments () { return this._comments }
   @action removeComment (id: Number) { this._comments.remove(id) }
+
+  @action updatePrivate (newValue: Boolean) { this._private = newValue }
+  @computed get private () { return this._private }
+
+  @action updateVisibility (newValue: String) { this._visibility = newValue }
+  @computed get visibility () { return this._visibility }
 }

@@ -8,6 +8,7 @@ import TextInputWithTitle from '../../form/TextInputWithTitle'
 import EditDateTime from './EditDateTime'
 import SelectDifficulty from '../../form/SelectDifficulty'
 import SelectBike from '../../form/SelectBike'
+import SetPrivacy from './SetPrivacy'
 
 export default
 @inject('Event')
@@ -65,6 +66,13 @@ class CreateRide extends React.Component {
     onChangeText={(route) => this.props.Event.updateRoute(route)}
   />
 
+  privacy = () => <SetPrivacy
+    onPrivacyUpdate={(val) => this.props.Event.updatePrivate(val)}
+    onVisibilityUpdate={(val) => this.props.Event.updateVisibility(val)}
+    visibility={this.props.Event.visibility}
+    private={this.props.Event.private}
+  />
+
   render () {
     return (
       <View {...this.props}>
@@ -75,19 +83,13 @@ class CreateRide extends React.Component {
         {this.datetime()}
         {this.terrain()}
         {this.description()}
+        {this.privacy()}
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  rideTitleInput: {
-    alignSelf: 'stretch',
-    fontWeight: 'bold',
-    fontSize: Layout.window.hp(3.5),
-    padding: Layout.window.hp(1.5),
-    width: 'auto'
-  },
   itemContainer: {
     backgroundColor: Colors.darkBackground,
     paddingVertical: Layout.window.hp(1),
