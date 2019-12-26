@@ -37,14 +37,7 @@ class RideDetail extends Component {
           {/* Only show invite button if member */}
           {this.props.Event.isMember() && this.inviteButton()}
         </View>
-        {/* TODO: click to show confirmation to navigate
-        Should be different location than riding area */}
-        {/* <View style={styles.detailListItem} >
-          <RideDescription title='Meeting Point' text={this.locationText} />
-        </View> */}
         <View style={styles.detailListItem} >
-          {/* Could be a list with difficulty icons/colors if we obtain a trail database
-          or user could insert trail name and difficulty for each */}
           <RideDescription title='Planned Route' text={this.props.Event.route} />
         </View>
         <View style={styles.detailListItem} >
