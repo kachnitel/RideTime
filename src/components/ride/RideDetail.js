@@ -10,6 +10,7 @@ import UsersList from '../user/UsersList'
 import TouchableWithModal from '../modal/TouchableWithModal'
 import SearchInput from '../form/SearchInput'
 import Header from '../Header'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 /**
  * Ride Detail screen content
@@ -62,7 +63,7 @@ class RideDetail extends Component {
     }}
   >
     <View>
-      <Text style={styles.actionButtonIcon}>+</Text>
+      <Icon style={styles.actionButtonIcon} name='person-add' />
       <Text style={styles.inviteText}>Invite</Text>
     </View>
   </TouchableWithModal>
@@ -127,12 +128,13 @@ const styles = StyleSheet.create({
     marginTop: Layout.window.hp(5) // REVIEW:
   },
   actionButtonIcon: {
-    fontSize: Layout.window.hp(5),
+    fontSize: Layout.window.hp(4.5),
     color: '#fff',
+    textAlign: 'center',
+    textAlignVertical: 'center',
     backgroundColor: Colors.iconColor,
     width: Layout.window.hp(7.5),
     height: Layout.window.hp(7.5),
-    textAlign: 'center',
     borderRadius: Layout.window.hp(3.75)
   },
   inviteText: {
