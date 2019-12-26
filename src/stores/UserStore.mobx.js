@@ -176,6 +176,7 @@ export class User extends BaseEntity {
 
   @action updateEvents (newValue: Array) { this._events.replace(newValue) }
   @action addEvent (newValue: Number) { this._events.push(newValue) }
+  @action removeEvent (id: Number) { this._events.remove(id) }
   @computed get events () { return this._events }
 
   @action updateFriends (newValue: Number[]) { this._friends.replace(newValue) }

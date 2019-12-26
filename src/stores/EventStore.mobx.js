@@ -141,11 +141,13 @@ export class Event extends BaseEntity {
   @action join () {
     this.store.provider.join(this.id)
     this.addMember(this.store.userStore.currentUser.id)
+    this.store.stores.user.currentUser.addEvent(this.id)
   }
 
   @action leave () {
     this.store.provider.leave(this.id)
     this.removeMember(this.store.userStore.currentUser.id)
+    this.store.stores.user.currentUser.removeEvent(this.id)
   }
 
   @action updateDifficulty (newValue: Number) { this._difficulty = newValue }
