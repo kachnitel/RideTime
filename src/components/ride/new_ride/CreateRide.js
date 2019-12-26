@@ -23,7 +23,7 @@ class CreateRide extends React.Component {
 
   difficulty = () => <SelectDifficulty
     onValueChange={(d) => this.props.Event.updateDifficulty(d.value)}
-    style={{ ...styles.itemContainer, ...styles.selectDifficulty }}
+    style={styles.selectDifficulty}
     value={this.props.Event.difficulty}
     title='Select difficulty'
     placeholder='Overall ride difficulty'
@@ -42,7 +42,7 @@ class CreateRide extends React.Component {
 
   terrain = () => <SelectBike
     onValueChange={(t) => this.props.Event.updateTerrain(t.value)}
-    style={{ ...styles.itemContainer, ...styles.selectTerrain }}
+    style={styles.itemContainer}
     value={this.props.Event.terrain || undefined}
     title='Bike type'
     placeholder='Select most appropriate bike for the ride'
@@ -81,12 +81,6 @@ class CreateRide extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  selectDifficulty: {
-    height: Layout.window.wp(23)
-  },
-  selectTerrain: {
-    height: Layout.window.wp(28)
-  },
   rideTitleInput: {
     alignSelf: 'stretch',
     fontWeight: 'bold',
