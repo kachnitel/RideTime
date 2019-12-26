@@ -16,6 +16,7 @@ export default class ModalView extends Component {
             label={'Close'}
             icon='exit-to-app'
             description='Close this menu'
+            style={styles.closeItem}
           />}
         </View>
       </Modal>
@@ -36,5 +37,8 @@ const styles = StyleSheet.create({
     borderRadius: Layout.window.hp(2),
     alignItems: 'center',
     paddingVertical: Layout.window.hp(2)
+  },
+  closeItem: {
+    opacity: 0.5
   }
 })
