@@ -95,6 +95,7 @@ class RideDetailScreen extends React.Component {
             isVisible={this.state.menuModalVisible}
             onBackdropPress={this.hideMenuModal}
             onBackButtonPress={this.hideMenuModal}
+            onClose={this.hideMenuModal}
           >
             <MenuModalOption
               onPress={() => {
@@ -102,11 +103,9 @@ class RideDetailScreen extends React.Component {
                 this.props.navigation.setParams({ event: this.event })
                 this.hideMenuModal()
               }}
-              label={'Leave'}
-            />
-            <MenuModalOption
-              onPress={this.hideMenuModal}
-              label={'Close'}
+              label={'Leave ride'}
+              description={'Leave ' + this.event.title}
+              icon='event-busy'
             />
           </ModalView>
         </KeyboardAvoidingView>
