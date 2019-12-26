@@ -15,11 +15,13 @@ export default class MenuModalOption extends Component {
           {this.props.icon && <Icon
             name={this.props.icon}
             size={Layout.window.hp(4)}
-            style={styles.icon}
+            style={this.props.highlight
+              ? { ...styles.icon, ...styles.highlightIcon }
+              : styles.icon}
           />}
           <View style={styles.textContainer}>
             <Text style={styles.label}>{this.props.label}</Text>
-            {this.props.description && <Text style={styles.description} numberOfLines={1}>{this.props.description}</Text>}
+            {this.props.description && <Text style={styles.description}>{this.props.description}</Text>}
           </View>
         </View>
       </TouchableNativeFeedback>
@@ -32,7 +34,8 @@ MenuModalOption.propTypes = {
   icon: PropTypes.string,
   label: PropTypes.string,
   onPress: PropTypes.func,
-  style: PropTypes.any
+  style: PropTypes.any,
+  highlight: PropTypes.bool
 }
 
 const styles = StyleSheet.create({
@@ -44,8 +47,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   icon: {
-    opacity: 0.5,
-    color: Colors.tintColor
+    color: Colors.tintColor,
+    opacity: 0.66
+  },
+  highlightIcon: {
+    opacity: 1,
+    color: Colors.confirmationHighlight
   },
   label: {
     fontWeight: 'bold',
