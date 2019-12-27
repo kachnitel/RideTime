@@ -29,18 +29,16 @@ class RideDetailScreen extends React.Component {
       title: event?.title ?? 'Loading event...',
       headerRight: !!event && <HeaderRightView>
         {event.isMember()
-          ? <ButtonIcon
-            icon='more-vert'
-            onPress={navigation.getParam('showMenu')}
-          />
+          ? navigation.getParam('menuButton')()
           : <Button
             title='Join'
             onPress={async () => {
+              navigation.setParams({ loading: true })
               await event.join()
-              navigation.setParams({ event: event }) // refresh
+              navigation.setParams({ event: event, loading: false }) // refresh
               ToastAndroid.show('Joined ' + event.title, ToastAndroid.SHORT)
             }}
-            disabled={eventStore.sentRequests.includes(event)}
+            disabled={eventStore.sentRequests.includes(event) || navigation.getParam('loading')}
           />}
       </HeaderRightView>
     }
@@ -57,10 +55,17 @@ class RideDetailScreen extends React.Component {
     super(props)
 
     props.navigation.setParams({
-      showMenu: this.showMenuModal,
+      menuButton: this.headerMenuButton,
       eventStore: props.EventStore
     })
   }
+
+  headerMenuButton = () => <View>
+    <ButtonIcon
+      icon='more-vert'
+      onPress={this.showMenuModal}
+    />
+  </View>
 
   componentDidMount = async () => {
     let id = this.props.navigation.getParam('eventId')
