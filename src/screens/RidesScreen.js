@@ -56,6 +56,8 @@ class RidesScreen extends React.Component {
       selectedLocation: null,
       tab: 'map'
     }
+
+    props.EventStore.loadSentRequests()
   }
 
   /**

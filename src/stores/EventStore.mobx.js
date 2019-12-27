@@ -3,6 +3,7 @@ import RidesProvider from '../providers/RidesProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
 import UserStore from './UserStore.mobx'
+import { logger } from '../Logger'
 
 export default class EventStore extends BaseCollectionStore {
   provider: RidesProvider
@@ -14,27 +15,31 @@ export default class EventStore extends BaseCollectionStore {
   }
 
   _invites = observable.array([])
+  _sentRequests = observable.array([])
 
   @action updateInvites (newValue: Array) { this._invites.replace(newValue) }
   @computed get invites () { return this._invites }
   @action addInvite (event: Event) { this._invites.indexOf(event) === -1 && this._invites.push(event) }
   @action removeInvite (event: Event) { this._invites.remove(event) }
 
-  /**
-   * TODO: async loadInvites = () => { ...provider.listInvites() }
-   * - populate store w/ events from response and add to _invites
-   *  - IDs or complete object(reference)?
-   *    - if object reference, access to everything is smoother and easier
-   *      - requires knowing the referenced object - recursion might be difficult
-   *    - IDs used in USer (either way, ensure consistency)
-   * - add to autorun (see UserStore dashboard for example ) ?
-   */
+  @action updateSentRequests (newValue: Array) { this._sentRequests.replace(newValue) }
+  @computed get sentRequests () { return this._sentRequests }
+  @action addSentRequest (event: Event) { this._sentRequests.indexOf(event) === -1 && this._sentRequests.push(event) }
+  @action removeSentRequest (event: Event) { this._sentRequests.remove(event) }
 
   async loadInvites () {
     let invites = await this.provider.listInvites()
     invites.results.map((item) => {
       let event = this.upsert(item)
       this.addInvite(event)
+    })
+  }
+
+  async loadSentRequests () {
+    let response = await this.provider.listSentRequests()
+    response.results.map((item) => {
+      let event = this.upsert(item)
+      this.addSentRequest(event)
     })
   }
 
@@ -142,10 +147,22 @@ export class Event extends BaseEntity {
     this._invited.push(userId)
   }
 
-  @action join () {
-    this.store.provider.join(this.id)
-    this.addMember(this.store.userStore.currentUser.id)
-    this.store.stores.user.currentUser.addEvent(this.id)
+  @action async join () {
+    let result = await this.store.provider.join(this.id)
+    switch (result.status) {
+      case 'confirmed':
+        // runInAction(() => {
+        this.addMember(this.store.userStore.currentUser.id)
+        this.store.stores.user.currentUser.addEvent(this.id)
+        // })
+        break
+      case 'requested':
+        this.store.addSentRequest(this)
+        break
+      default:
+        logger.error('Error joining an event - unknown response', result)
+        break
+    }
   }
 
   @action leave () {

@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView
 } from 'react-native'
 import { Header } from 'react-navigation'
-import { Event } from '../stores/EventStore.mobx'
+import EventStore, { Event } from '../stores/EventStore.mobx'
 import RideDetail from '../components/ride/RideDetail'
 import Button from '../components/form/Button'
 import ButtonIcon from '../components/form/ButtonIcon'
@@ -24,6 +24,7 @@ export default
 class RideDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     let event: Event = navigation.getParam('event')
+    let eventStore: EventStore = navigation.getParam('eventStore')
     return {
       title: event?.title ?? 'Loading event...',
       headerRight: !!event && <HeaderRightView>
@@ -34,11 +35,12 @@ class RideDetailScreen extends React.Component {
           />
           : <Button
             title='Join'
-            onPress={() => {
-              event.join()
+            onPress={async () => {
+              await event.join()
               navigation.setParams({ event: event }) // refresh
               ToastAndroid.show('Joined ' + event.title, ToastAndroid.SHORT)
             }}
+            disabled={eventStore.sentRequests.includes(event)}
           />}
       </HeaderRightView>
     }
@@ -55,7 +57,8 @@ class RideDetailScreen extends React.Component {
     super(props)
 
     props.navigation.setParams({
-      showMenu: this.showMenuModal
+      showMenu: this.showMenuModal,
+      eventStore: props.EventStore
     })
   }
 

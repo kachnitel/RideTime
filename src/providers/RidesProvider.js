@@ -29,6 +29,14 @@ export default class RidesProvider {
     return ApiConnection.get('api/events/invites')
   }
 
+  listSentRequests = () => {
+    return ApiConnection.get('api/events/requests')
+  }
+
+  listRequests = (id: Number) => {
+    return ApiConnection.get('api/events/' + id + '/requests')
+  }
+
   declineInvite = (id) => {
     return ApiConnection.delete('api/events/' + id + '/invite')
   }
