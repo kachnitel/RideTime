@@ -1,57 +1,28 @@
 import ApiConnection from '../ApiConnection'
 
 export default class RidesProvider {
-  list = (ids: Number[]) => {
-    return ApiConnection.get('api/events', { ids })
-  }
+  addRide = (data) => ApiConnection.post('api/events', data)
+  list = (ids: Number[]) => ApiConnection.get('api/events', { ids })
+  filter = (filters: Object) => ApiConnection.get('api/events/filter', filters)
+  get = (id) => ApiConnection.get('api/events/' + id)
 
-  filter = (filters: Object) => {
-    return ApiConnection.get('api/events/filter', filters)
-  }
+  /** Membership */
+  join = (id) => ApiConnection.post('api/events/' + id + '/join')
+  leave = (id) => ApiConnection.delete('api/events/' + id + '/leave')
 
-  get = (id) => {
-    return ApiConnection.get('api/events/' + id)
-  }
+  invite = (id: Number, userId: Number) => ApiConnection.post('api/events/' + id + '/invite/' + userId)
+  listInvites = () => ApiConnection.get('api/events/invites')
+  declineInvite = (id) => ApiConnection.delete('api/events/' + id + '/invite')
 
-  addRide = (data) => {
-    return ApiConnection.post('api/events', data)
-  }
+  listSentRequests = () => ApiConnection.get('api/events/requests')
+  listRequests = (id: Number) => ApiConnection.get('api/events/' + id + '/requests')
+  acceptRequest = (id: Number, userId: Number) => ApiConnection.put('api/events/' + id + '/requests/' + userId)
+  declineRequest = (id: Number, userId: Number) => ApiConnection.delete('api/events/' + id + '/requests/' + userId)
 
-  join = (id) => {
-    return ApiConnection.post('api/events/' + id + '/join')
-  }
-
-  invite = (id: Number, userId: Number) => {
-    return ApiConnection.post('api/events/' + id + '/invite/' + userId)
-  }
-
-  listInvites = () => {
-    return ApiConnection.get('api/events/invites')
-  }
-
-  listSentRequests = () => {
-    return ApiConnection.get('api/events/requests')
-  }
-
-  listRequests = (id: Number) => {
-    return ApiConnection.get('api/events/' + id + '/requests')
-  }
-
-  declineInvite = (id) => {
-    return ApiConnection.delete('api/events/' + id + '/invite')
-  }
-
-  leave = (id) => {
-    return ApiConnection.delete('api/events/' + id + '/leave')
-  }
-
-  getComments = (eventId) => {
-    return ApiConnection.get('api/events/' + eventId + '/comments')
-  }
-
-  addComment = (eventId, message: String) => {
-    return ApiConnection.post('api/events/' + eventId + '/comments', {
-      message: message
-    })
-  }
+  /** Comments */
+  getComments = (eventId) => ApiConnection.get('api/events/' + eventId + '/comments')
+  addComment = (eventId, message: String) => ApiConnection.post(
+    'api/events/' + eventId + '/comments',
+    { message: message }
+  )
 }
