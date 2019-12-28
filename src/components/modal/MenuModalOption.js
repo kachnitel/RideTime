@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Colors from '../../../constants/Colors'
 import Layout from '../../../constants/Layout'
+import CountBadge from '../CountBadge'
 
 export default class MenuModalOption extends Component {
   render () {
@@ -12,13 +13,19 @@ export default class MenuModalOption extends Component {
         onPress={this.props.onPress}
       >
         <View style={{ ...styles.container, ...this.props.style }}>
-          {this.props.icon && <Icon
-            name={this.props.icon}
-            size={Layout.window.hp(4)}
-            style={this.props.highlight
-              ? { ...styles.icon, ...styles.highlightIcon }
-              : styles.icon}
-          />}
+          <View>
+            {this.props.icon && <Icon
+              name={this.props.icon}
+              size={Layout.window.hp(4)}
+              style={this.props.highlight
+                ? { ...styles.icon, ...styles.highlightIcon }
+                : styles.icon}
+            />}
+            {this.props.badge > 0 && <CountBadge
+              count={this.props.badge}
+              style={styles.badge}
+            />}
+          </View>
           <View style={styles.textContainer}>
             <Text style={styles.label}>{this.props.label}</Text>
             {this.props.description && <Text style={styles.description}>{this.props.description}</Text>}
@@ -30,12 +37,13 @@ export default class MenuModalOption extends Component {
 }
 
 MenuModalOption.propTypes = {
+  badge: PropTypes.number,
   description: PropTypes.string,
+  highlight: PropTypes.bool,
   icon: PropTypes.string,
-  label: PropTypes.string,
-  onPress: PropTypes.func,
-  style: PropTypes.any,
-  highlight: PropTypes.bool
+  label: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+  style: PropTypes.any
 }
 
 const styles = StyleSheet.create({
@@ -65,5 +73,10 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     alignItems: 'center'
+  },
+  badge: {
+    position: 'absolute',
+    right: -Layout.window.hp(1),
+    top: -Layout.window.hp(1)
   }
 })
