@@ -3,44 +3,48 @@ import React, { Component } from 'react'
 import { View, StyleSheet, ActivityIndicator } from 'react-native'
 import ButtonIcon from '../form/ButtonIcon'
 
+/**
+ * REVIEW: Use TabBar
+ * - changing style
+ * - adds the loading functionality
+ *   - can be useful in tab if only showing loading indicator
+ *     in place of the currently loaded tab/action
+ *   - optional to disable other buttons/tab while loading
+ */
 export default class InviteChoices extends Component {
   state = {
     loading: false
   }
 
-  acceptInvite = () => {
+  submit = (action: Function) => {
     this.setState({ loading: true })
-    this.props.acceptInvite()
-  }
-
-  declineInvite = () => {
-    this.setState({ loading: true })
-    this.props.declineInvite()
+    action()
   }
 
   render () {
     return this.state.loading
       ? <ActivityIndicator />
       : <View style={styles.choicesContainer}>
-        <ButtonIcon
-          icon='add-circle-outline'
-          text='Join'
-          style={styles.respondButton}
-          onPress={this.acceptInvite}
-        />
-        <ButtonIcon
-          icon='highlight-off'
-          text='Dismiss'
-          style={{ ...styles.respondButton, ...styles.dismissButton }}
-          onPress={this.declineInvite}
-        />
+        {this.props.options.map((option: Object, index) => <ButtonIcon
+          icon={option.icon}
+          text={option.label}
+          onPress={() => this.submit(option.action)}
+          style={option.fade
+            ? { ...styles.respondButton, ...styles.dismissButton }
+            : styles.respondButton}
+          key={'option_' + index + '_' + option.label}
+        />)}
       </View>
   }
 }
 
 InviteChoices.propTypes = {
-  acceptInvite: PropTypes.func,
-  declineInvite: PropTypes.func
+  options: PropTypes.arrayOf(PropTypes.shape({
+    icon: PropTypes.string,
+    label: PropTypes.string.isRequired,
+    action: PropTypes.func.isRequired,
+    fade: PropTypes.bool
+  })).isRequired
 }
 
 const styles = StyleSheet.create({

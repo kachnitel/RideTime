@@ -79,8 +79,19 @@ class InvitesList extends Component {
   </View>
 
   choicesContainer = (event) => <InviteChoices
-    acceptInvite={() => this.acceptInvite(event)}
-    declineInvite={() => this.declineInvite(event)}
+    options={[
+      {
+        icon: 'event-available',
+        label: 'Join',
+        action: () => this.acceptInvite(event)
+      },
+      {
+        icon: 'clear',
+        label: 'Dismiss',
+        fade: true,
+        action: () => this.declineInvite(event)
+      }
+    ]}
   />
 
   headerButton = () => <ButtonIcon
