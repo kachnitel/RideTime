@@ -248,4 +248,15 @@ export class Event extends BaseEntity {
       return event
     })
   }
+
+  async acceptRequest (userId: Number) {
+    await this.store.provider.acceptRequest(this.id, userId)
+    this.removeRequested(userId)
+    this.addMember(userId)
+  }
+
+  async declineRequest (userId: Number) {
+    await this.store.provider.declineRequest(this.id, userId)
+    this.removeRequested(userId)
+  }
 }
