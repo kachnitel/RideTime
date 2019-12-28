@@ -19,6 +19,7 @@ import Comments from '../components/ride/Comments'
 import Colors from '../../constants/Colors'
 import CountBadge from '../components/CountBadge'
 import Layout from '../../constants/Layout'
+import RequestList from '../components/ride/RequestList'
 
 export default
 @inject('EventStore')
@@ -50,7 +51,8 @@ class RideDetailScreen extends React.Component {
   // TODO: pull to refresh
   state = {
     loading: true,
-    menuModalVisible: false
+    menuModalVisible: false,
+    requestsModalVisible: false
   }
 
   constructor (props) {
@@ -82,13 +84,48 @@ class RideDetailScreen extends React.Component {
     this.props.navigation.setParams({ event: this.event }) // HACK: updates badge
   }
 
-  showMenuModal = () => {
-    this.setState({ menuModalVisible: true })
-  }
+  showMenuModal = () => this.setState({ menuModalVisible: true })
+  hideMenuModal = () => this.setState({ menuModalVisible: false })
 
-  hideMenuModal = () => {
-    this.setState({ menuModalVisible: false })
-  }
+  menuModal = () => <ModalView
+    isVisible={this.state.menuModalVisible}
+    onBackdropPress={this.hideMenuModal}
+    onBackButtonPress={this.hideMenuModal}
+    onClose={this.hideMenuModal}
+  >
+    {this.event.private && <MenuModalOption
+      onPress={() => {
+        this.hideMenuModal()
+        this.showRequestsModal()
+      }}
+      label='Join requests'
+      description='See and approve users who would like to join this ride'
+      icon='person-add'
+      badge={this.event.requested.length}
+    />}
+    <MenuModalOption
+      onPress={() => {
+        this.event.leave()
+        this.props.navigation.setParams({ event: this.event })
+        this.hideMenuModal()
+      }}
+      label={'Leave ride'}
+      description={'Leave ' + this.event.title}
+      icon='event-busy'
+    />
+  </ModalView>
+
+  showRequestsModal = () => this.setState({ requestsModalVisible: true })
+  hideRequestsModal = () => this.setState({ requestsModalVisible: false })
+
+  requestsModal = () => <ModalView
+    isVisible={this.state.requestsModalVisible}
+    onBackdropPress={this.hideRequestsModal}
+    onBackButtonPress={this.hideRequestsModal}
+    onClose={this.hideRequestsModal}
+  >
+    <RequestList event={this.event} />
+  </ModalView>
 
   render () {
     return (
@@ -105,30 +142,8 @@ class RideDetailScreen extends React.Component {
             </Provider>
           </View>
           <Comments event={this.event} style={styles.comments} />
-          <ModalView
-            isVisible={this.state.menuModalVisible}
-            onBackdropPress={this.hideMenuModal}
-            onBackButtonPress={this.hideMenuModal}
-            onClose={this.hideMenuModal}
-          >
-            {this.event.private && <MenuModalOption
-              onPress={() => console.log(this.event.requested)}
-              label='Join requests'
-              description='See and approve users who would like to join this ride'
-              icon='person-add'
-              badge={this.event.requested.length}
-            />}
-            <MenuModalOption
-              onPress={() => {
-                this.event.leave()
-                this.props.navigation.setParams({ event: this.event })
-                this.hideMenuModal()
-              }}
-              label={'Leave ride'}
-              description={'Leave ' + this.event.title}
-              icon='event-busy'
-            />
-          </ModalView>
+          {this.menuModal()}
+          {this.requestsModal()}
         </KeyboardAvoidingView>
     )
   }
