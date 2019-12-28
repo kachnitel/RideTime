@@ -17,6 +17,8 @@ import ModalView from '../components/modal/ModalView'
 import MenuModalOption from '../components/modal/MenuModalOption'
 import Comments from '../components/ride/Comments'
 import Colors from '../../constants/Colors'
+import CountBadge from '../components/CountBadge'
+import Layout from '../../constants/Layout'
 
 export default
 @inject('EventStore')
@@ -65,15 +67,19 @@ class RideDetailScreen extends React.Component {
       icon='more-vert'
       onPress={this.showMenuModal}
     />
+    {this.event?.requested.length > 0 && <CountBadge
+      count={this.event.requested.length}
+      style={styles.badge}
+    />}
   </View>
 
   componentDidMount = async () => {
     let id = this.props.navigation.getParam('eventId')
     this.event = await this.props.EventStore.get(id)
     this.setState({ loading: false })
-    this.props.navigation.setParams({
-      event: this.event
-    })
+    this.props.navigation.setParams({ event: this.event })
+    this.event.isMember() && await this.event.loadRequested()
+    this.props.navigation.setParams({ event: this.event }) // HACK: updates badge
   }
 
   showMenuModal = () => {
@@ -105,6 +111,13 @@ class RideDetailScreen extends React.Component {
             onBackButtonPress={this.hideMenuModal}
             onClose={this.hideMenuModal}
           >
+            {this.event.private && <MenuModalOption
+              onPress={() => console.log(this.event.requested)}
+              label='Join requests'
+              description='See and approve users who would like to join this ride'
+              icon='person-add'
+              badge={this.event.requested.length}
+            />}
             <MenuModalOption
               onPress={() => {
                 this.event.leave()
@@ -128,11 +141,15 @@ const styles = StyleSheet.create({
     borderTopWidth: 1
   },
   detail: {
-    // maxHeight: '75%',
     flex: 7
   },
   container: {
     flex: 1,
     backgroundColor: Colors.darkBackground
+  },
+  badge: {
+    position: 'absolute',
+    top: -Layout.window.hp(0.5),
+    right: -Layout.window.hp(0.5)
   }
 })

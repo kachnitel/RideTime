@@ -113,6 +113,7 @@ export class Event extends BaseEntity {
   @observable _description = null
   _members = observable.array([]) // Number[]
   _invited = observable.array([])
+  _requested = observable.array([])
   @observable _difficulty = null
   @observable _location = null // Location.id
   @observable _terrain = null
@@ -233,4 +234,18 @@ export class Event extends BaseEntity {
 
   @action updateVisibility (newValue: String) { this._visibility = newValue }
   @computed get visibility () { return this._visibility }
+
+  @action updateRequested (newValue: Number[]) { this._requested.replace(newValue) }
+  @action addRequested (newValue: Number) { !this._requested.includes(newValue) && this._requested.push(newValue) }
+  @computed get requested () { return this._requested }
+  @action removeRequested (id: Number) { this._requested.remove(id) }
+
+  async loadRequested () {
+    let response = await this.store.provider.listRequests(this.id)
+    return response.results.map((data) => {
+      let event = this.store.upsert(data)
+      this.addRequested(event.id)
+      return event
+    })
+  }
 }
