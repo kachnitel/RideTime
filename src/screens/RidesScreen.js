@@ -39,6 +39,7 @@ class RidesScreen extends React.Component {
       headerRight: <HeaderRightView>
         <TouchableWithModal
           modalContent={<InvitesList />}
+          modalStyle={styles.invitesModal}
         >
           <InvitesIconBadged />
         </TouchableWithModal>
@@ -287,5 +288,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: Layout.window.wp(4),
     flex: 1,
     justifyContent: 'center'
+  },
+  invitesModal: {
+    justifyContent: 'flex-end',
+    margin: 0
   }
 })

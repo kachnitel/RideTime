@@ -123,6 +123,7 @@ class RideDetailScreen extends React.Component {
     onBackdropPress={this.hideRequestsModal}
     onBackButtonPress={this.hideRequestsModal}
     onClose={this.hideRequestsModal}
+    style={styles.requestsModal}
   >
     <RequestList event={this.event} />
   </ModalView>
@@ -166,5 +167,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -Layout.window.hp(0.5),
     right: -Layout.window.hp(0.5)
+  },
+  requestsModal: {
+    justifyContent: 'flex-end',
+    margin: 0
   }
 })
