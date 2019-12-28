@@ -22,6 +22,7 @@ export default class InviteChoices extends Component {
   }
 
   render () {
+    let width = 90 / this.props.options.length + '%'
     return this.state.loading
       ? <ActivityIndicator />
       : <View style={styles.choicesContainer}>
@@ -30,8 +31,8 @@ export default class InviteChoices extends Component {
           text={option.label}
           onPress={() => this.submit(option.action)}
           style={option.fade
-            ? { ...styles.respondButton, ...styles.dismissButton }
-            : styles.respondButton}
+            ? { ...styles.respondButton, ...styles.dismissButton, width: width }
+            : { ...styles.respondButton, width: width }}
           key={'option_' + index + '_' + option.label}
         />)}
       </View>
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly'
   },
   respondButton: {
-    width: '40%',
+    // width: '40%',
     textAlign: 'center'
   },
   dismissButton: {
