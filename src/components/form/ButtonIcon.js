@@ -23,7 +23,7 @@ export default class ButtonIcon extends Component {
             color={this.props.color || '#fff'}
             size={Layout.window.hp(3)}
           />}
-          {this.props.text && <Text style={{ ...styles.text, color: this.props.color || '#fff' }}>{this.props.text.toUpperCase()}</Text>}
+          {this.props.text && <Text style={{ ...styles.text, color: this.props.color || '#fff' }}>{this.props.text}</Text>}
         </View>
       </TouchableOpacity>
     )
@@ -44,6 +44,6 @@ const styles = StyleSheet.create({
     fontSize: Layout.window.hp(2.5),
     fontWeight: 'bold',
     alignSelf: 'center',
-    paddingHorizontal: Layout.window.hp(0.5)
+    paddingHorizontal: Layout.window.hp(1)
   }
 })
