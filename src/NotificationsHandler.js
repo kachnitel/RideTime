@@ -1,5 +1,6 @@
 import navigationService from './NavigationService'
 import stores from './stores/CollectionStores.singleton'
+import { Event } from './stores/EventStore.mobx'
 
 export default class NotificationsHandler {
   listener = (notification: Object) => {
@@ -30,6 +31,16 @@ export default class NotificationsHandler {
         // TODO: open screen with `showMessages` param
         screenParams = { eventId: notification.data.event.id }
         break
+      case 'eventOwnRequestAccepted':
+        callback = this.handleEventOwnRequestAccepted
+        screen = 'RideDetail'
+        screenParams = { eventId: notification.data.event.id }
+        break
+      case 'eventJoinRequested':
+        callback = this.handleEventJoinRequested
+        screen = 'RideDetail'
+        screenParams = { eventId: notification.data.event.id }
+        break
       default:
         return
     }
@@ -58,12 +69,23 @@ export default class NotificationsHandler {
   }
 
   handleEventMemberJoined = (data) => {
-    stores.event.upsert(data.event)
+    let event: Event = stores.event.upsert(data.event)
+    event.members.map((id) => { event.requested.includes(id) && event.requested.remove(id) })
+  }
+
+  handleEventOwnRequestAccepted = (data) => {
+    let event: Event = stores.event.upsert(data.event)
+    stores.event.removeSentRequest(event.id)
   }
 
   handleEventCommentAdded = (data) => {
     stores.event.upsert(data.event)
     stores.comment.upsert(data.comment)
+  }
+
+  handleEventJoinRequested = (data) => {
+    let event: Event = stores.event.upsert(data.event)
+    event.addRequested(data.from)
   }
 
   /**
