@@ -65,14 +65,17 @@ class RideDetail extends Component {
     {/* REVIEW: 2 headers here */}
     <Header style={styles.inviteHeader}>Invite to {this.props.Event.title}</Header>
     <UsersList
-      sections={[{ title: 'Friends', data: this.getFilteredFriends() }]}
-      actions={[{
-        icon: 'add-circle-outline',
-        action: (id) => this.props.Event.invite(id), // TODO: Toast
-        disabled: (id) => (
-          this.props.Event.isMember(id) ||
-          this.props.Event.invited.includes(id)
-        )
+      sections={[{
+        title: 'Friends',
+        data: this.getFilteredFriends(),
+        actions: [{
+          icon: 'person-add',
+          action: (id) => this.props.Event.invite(id), // TODO: Toast
+          disabled: (id) => (
+            this.props.Event.isMember(id) ||
+            this.props.Event.invited.includes(id)
+          )
+        }]
       }]}
       disableItemPress
     />

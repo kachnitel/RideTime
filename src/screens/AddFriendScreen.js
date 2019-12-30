@@ -73,10 +73,10 @@ class AddFriendScreen extends Component {
           <UsersList
             sections={[{
               title: 'Users',
-              data: this.state.userIds
+              data: this.state.userIds,
+              actions: this.actions
             }]}
             style={styles.list}
-            actions={this.actions}
           />
         </ScrollView>
     )

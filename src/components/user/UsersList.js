@@ -13,9 +13,11 @@ import navigationService from '../../NavigationService'
  * @extends {Component}
  */
 export default class UsersList extends Component {
-  itemComponent = (id, style) => {
-    return <UserItem id={id} style={style} actions={this.props.actions} />
-  }
+  itemComponent = (id, style, section) => <UserItem
+    id={id}
+    style={style}
+    actions={section.actions}
+  />
 
   render () {
     let onItemPress = this.props.disableItemPress

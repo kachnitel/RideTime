@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, TouchableHighlight, View, SectionList } from 'react-native'
 import Colors from '../../../constants/Colors'
-import Header from '../Header'
 import Layout from '../../../constants/Layout'
+import CountHeader from '../CountHeader'
 
 /**
  * @property function itemComponent with "item" and "style" params
@@ -19,20 +19,27 @@ export default class AlternatingStyleList extends Component {
     refreshing: false
   }
 
-  touchableItem = ({ item, index }) => (
+  touchableItem = ({ item, index, section }) => (
     <TouchableHighlight onPress={() => this.props.onItemPress(item)}>
       {/* View here isolates TouchableHighlight's style from itemComponent
       https://github.com/facebook/react-native/issues/22751 */}
       <View>
         {this.props.itemComponent(
           item,
-          index % 2 === 0 ? styles.listItemWhite : styles.listItemBlack
+          index % 2 === 0 ? styles.listItemWhite : styles.listItemBlack,
+          section
         )}
       </View>
     </TouchableHighlight>
   )
 
-  sectionHeader = ({ section: { title } }) => title && <Header style={styles.header}>{title}</Header>
+  sectionHeader = ({ section: { title, data } }) => title && <CountHeader
+    containerStyle={styles.header}
+    style={styles.headerText}
+    number={data.length}
+  >
+    {title}
+  </CountHeader>
 
   render () {
     return (
@@ -77,9 +84,10 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: Colors.tintColor,
-    color: '#fff',
-    textAlign: 'center',
-    textAlignVertical: 'center',
+    justifyContent: 'center',
     padding: Layout.window.hp(0.75)
+  },
+  headerText: {
+    color: '#fff'
   }
 })

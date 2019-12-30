@@ -13,7 +13,6 @@ import Button from '../components/form/Button'
 import FriendMenuModal from '../components/friends/FriendMenuModal'
 import DrawerButton from '../components/navigation_header/DrawerButton'
 import HeaderRightView from '../components/navigation_header/HeaderRightView'
-import Header from '../components/Header'
 
 export default
 @inject('UserStore', 'ApplicationStore')
@@ -97,7 +96,7 @@ class FriendListScreen extends Component {
     return (
       <ScrollView
         style={styles.container}
-        refreshControl={this.refreshControl()}
+        refreshControl={this.refreshControl()} // TODO: move to list onRefresh
       >
         {this.props.UserStore.friendRequests.length > 0 && this.friendRequestList()}
         {this.friendList()}
@@ -113,26 +112,20 @@ class FriendListScreen extends Component {
 
   friendRequestList = () => <UsersList
     sections={[{
-      title: <Header>
-        Friend requests
-        <Header style={styles.headerCount}> {this.props.UserStore.friendRequests.length}</Header>
-      </Header>,
-      data: this.props.UserStore.friendRequests
+      title: 'Friend requests',
+      data: this.props.UserStore.friendRequests,
+      actions: this.actionsRequest
     }]}
     style={styles.list}
-    actions={this.actionsRequest}
   />
 
   friendList = () => <UsersList
     sections={[{
-      title: <Header>
-        Friends
-        <Header style={styles.headerCount}> {this.props.UserStore.currentUser.friends.length}</Header>
-      </Header>,
-      data: this.props.UserStore.currentUser.friends
+      title: 'Friends',
+      data: this.props.UserStore.currentUser.friends,
+      actions: this.actionsFriend
     }]}
     style={styles.list}
-    actions={this.actionsFriend}
   />
 }
 
