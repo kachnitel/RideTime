@@ -33,10 +33,11 @@ export default class AlternatingStyleList extends Component {
     </TouchableHighlight>
   )
 
-  sectionHeader = ({ section: { title, data } }) => title && <CountHeader
+  sectionHeader = ({ section: { title, data, countHighlight } }) => title && <CountHeader
     containerStyle={styles.header}
     style={styles.headerText}
     number={data.length}
+    countHighlight={countHighlight}
   >
     {title}
   </CountHeader>
@@ -64,7 +65,8 @@ AlternatingStyleList.propTypes = {
   onItemPress: PropTypes.func,
   sections: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string,
-    data: PropTypes.array
+    data: PropTypes.array,
+    countHighlight: PropTypes.bool
   })),
   emptyComponent: PropTypes.any,
   itemComponent: PropTypes.func,
