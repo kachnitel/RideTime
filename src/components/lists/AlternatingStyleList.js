@@ -19,19 +19,21 @@ export default class AlternatingStyleList extends Component {
     refreshing: false
   }
 
-  touchableItem = ({ item, index, section }) => (
-    <TouchableHighlight onPress={() => this.props.onItemPress(item)}>
+  touchableItem = ({ item, index, section }) => {
+    let style = index % 2 === 0 ? styles.listItemWhite : styles.listItemBlack
+
+    return <TouchableHighlight onPress={() => this.props.onItemPress(item)}>
       {/* View here isolates TouchableHighlight's style from itemComponent
       https://github.com/facebook/react-native/issues/22751 */}
       <View>
         {this.props.itemComponent(
           item,
-          index % 2 === 0 ? styles.listItemWhite : styles.listItemBlack,
+          style,
           section
         )}
       </View>
     </TouchableHighlight>
-  )
+  }
 
   sectionHeader = ({ section: { title, data, countHighlight } }) =>
     title && (data.length > 0 || this.props.showEmptyHeader) &&
