@@ -98,7 +98,6 @@ class FriendListScreen extends Component {
         style={styles.container}
         refreshControl={this.refreshControl()} // TODO: move to list onRefresh
       >
-        {this.props.UserStore.friendRequests.length > 0 && this.friendRequestList()}
         {this.friendList()}
         <FriendMenuModal
           visible={this.state.friendMenuModalVisible}
@@ -110,21 +109,20 @@ class FriendListScreen extends Component {
     )
   }
 
-  friendRequestList = () => <UsersList
-    sections={[{
-      title: 'Friend requests',
-      data: this.props.UserStore.friendRequests,
-      actions: this.actionsRequest
-    }]}
-    style={styles.list}
-  />
-
   friendList = () => <UsersList
-    sections={[{
-      title: 'Friends',
-      data: this.props.UserStore.currentUser.friends,
-      actions: this.actionsFriend
-    }]}
+    sections={[
+      {
+        title: 'Friend requests',
+        data: this.props.UserStore.friendRequests,
+        actions: this.actionsRequest,
+        countHighlight: this.props.UserStore.friendRequests.length > 0
+      },
+      {
+        title: 'Friends',
+        data: this.props.UserStore.currentUser.friends,
+        actions: this.actionsFriend
+      }
+    ]}
     style={styles.list}
   />
 }
