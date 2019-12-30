@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FlatList, StyleSheet, TouchableHighlight, View } from 'react-native'
+import { StyleSheet, TouchableHighlight, View, SectionList } from 'react-native'
 import Colors from '../../../constants/Colors'
+import Header from '../Header'
+import Layout from '../../../constants/Layout'
 
 /**
  * @property function itemComponent with "item" and "style" params
@@ -30,19 +32,21 @@ export default class AlternatingStyleList extends Component {
     </TouchableHighlight>
   )
 
+  sectionHeader = ({ section: { title } }) => title && <Header style={styles.header}>{title}</Header>
+
   render () {
     return (
       <View style={styles.container}>
-        <FlatList
+        <SectionList
           {...this.props}
-          data={this.props.items}
           renderItem={this.touchableItem}
+          renderSectionHeader={this.sectionHeader}
           ListEmptyComponent={this.props.emptyComponent}
           keyExtractor={typeof this.props.keyExtractor === 'function'
             ? this.props.keyExtractor
             : (item, index) => 'index_' + (item.id ?? index.toString())}
-          onRefresh={this.props.onRefresh}
           refreshing={this.state.refreshing}
+          stickySectionHeadersEnabled
         />
       </View>
     )
@@ -51,7 +55,10 @@ export default class AlternatingStyleList extends Component {
 
 AlternatingStyleList.propTypes = {
   onItemPress: PropTypes.func,
-  items: PropTypes.array,
+  sections: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    data: PropTypes.array
+  })),
   emptyComponent: PropTypes.any,
   itemComponent: PropTypes.func,
   keyExtractor: PropTypes.func
@@ -68,5 +75,12 @@ const styles = StyleSheet.create({
   listItemBlack: {
     backgroundColor: Colors.darkBackground,
     color: '#fff'
+  },
+  header: {
+    backgroundColor: Colors.tintColor,
+    color: '#fff',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    padding: Layout.window.hp(0.75)
   }
 })

@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import RideItem from './RideItem'
 import AlternatingStyleList from '../lists/AlternatingStyleList'
-import { Event } from '../../stores/EventStore.mobx'
 
 export default
 @inject('EventStore')
@@ -24,10 +23,9 @@ class RidesList extends Component {
     return (
       <View style={styles.container}>
         <AlternatingStyleList
-          items={this.props.rides.sort((a: Event, b: Event) => a.datetime - b.datetime)}
+          {...this.props}
           itemComponent={this.itemComponent}
           onItemPress={this.onItemPress}
-          onRefresh={this.props.onRefresh}
         />
       </View>
     )

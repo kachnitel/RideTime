@@ -158,32 +158,49 @@ class RidesScreen extends React.Component {
       .map((id) => this.props.UserStore.getSync(id).events)
       .flat()
 
-    return this.props.EventStore.list(ids)
+    return ({
+      title: 'My friends\' events',
+      data: this.props.EventStore.list(ids).filter(this.futureEventFilter)
+    })
   }
 
-  getMyEvents = () => this.props.EventStore.list(this.props.UserStore.currentUser.events)
+  getMyEvents = () => ({
+    title: 'My events',
+    data: this.props.EventStore
+      .list(this.props.UserStore.currentUser.events)
+      .filter(this.futureEventFilter)
+  })
 
-  getMapEvents = () => this.state.visibleLocations.map((location: Location) => location.events).flat()
+  getMapEvents = () => ({
+    title: 'Nearby events',
+    data: this.state.visibleLocations
+      .map((location: Location) => location.events).flat()
+      .filter(this.futureEventFilter)
+  })
+
+  getLocationEvents = () => ({
+    title: 'Events at ' + this.state.selectedLocation.name,
+    data: this.state.selectedLocation.events
+      .filter(this.futureEventFilter)
+  })
 
   futureEventFilter = (event: Event) => event.datetime > (Math.floor(Date.now() / 1000) - 3600)
 
   render () {
     let events = this.state.selectedLocation !== null
-      ? this.state.selectedLocation.events
+      ? this.getLocationEvents()
       : this.state.tab === 'map'
         ? this.getMapEvents()
         : this.state.tab === 'my'
           ? this.getMyEvents()
           : this.getFriendsEvents()
 
-    let filteredEvents = events.filter(this.futureEventFilter)
-
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <View style={{ flex: 35 }}>
           {this.state.loading && <ActivityIndicator style={styles.mapLoading} />}
           <AreaMap
-            markers={this.mapMarkers(filteredEvents)}
+            markers={this.mapMarkers(events.data)}
             onRegionChangeComplete={this.onRegionChange}
             onPress={this.clearLocation}
             showsUserLocation
@@ -192,11 +209,11 @@ class RidesScreen extends React.Component {
         </View>
 
         <View style={{ flex: 65 }}>
-          {filteredEvents.length > 0
+          {events.data.length > 0
             ? <RidesList
               navigation={this.props.navigation}
               onRefresh={() => this.refresh(this.state.bbox)}
-              rides={filteredEvents}
+              sections={[events]}
             />
             : !this.state.loading && <Text style={styles.noRidesText}>
               No rides nearby, start one or move the map to see rides in the visible area!
@@ -214,7 +231,7 @@ class RidesScreen extends React.Component {
               onPress: () => this.setState({ tab: 'map' })
             },
             {
-              title: `My rides (${this.getMyEvents().filter(this.futureEventFilter).length})`,
+              title: `My rides (${this.getMyEvents().data.length})`,
               onPress: () => this.setState({ tab: 'my' })
             },
             {

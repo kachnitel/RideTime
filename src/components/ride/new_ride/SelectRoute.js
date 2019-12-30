@@ -48,7 +48,7 @@ class SelectRoute extends Component {
     }
 
     return <AlternatingStyleList
-      items={routes}
+      sections={[{ title: 'Routes', data: routes }]}
       onItemPress={(route) => this.props.onSubmit(route)}
       itemComponent={(item, style) => <RouteItem route={item} style={style} />}
       windowSize={3}

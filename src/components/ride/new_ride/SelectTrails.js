@@ -76,7 +76,7 @@ class SelectTrails extends Component {
     }
 
     return <AlternatingStyleList
-      items={trails}
+      sections={[{ title: 'Trails', data: trails }]}
       onItemPress={this.selectTrail}
       itemComponent={(item, style) => <TrailItem
         trail={item}

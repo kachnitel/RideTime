@@ -26,7 +26,7 @@ export default class UsersList extends Component {
     return (
       <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
         <AlternatingStyleList
-          items={this.props.users}
+          sections={[{ data: this.props.users }]}
           emptyComponent={<Text>No frenz</Text>}
           itemComponent={this.itemComponent}
           onItemPress={onItemPress}
