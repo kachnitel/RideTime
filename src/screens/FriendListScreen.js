@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import {
-  ScrollView,
   StyleSheet,
   ActivityIndicator,
-  RefreshControl
+  View
 } from 'react-native'
 import { inject, observer } from 'mobx-react/native'
 import UsersList from '../components/user/UsersList'
@@ -79,13 +78,6 @@ class FriendListScreen extends Component {
     this.refresh()
   }
 
-  refreshControl () {
-    return <RefreshControl
-      refreshing={this.state.loading}
-      onRefresh={this.refresh}
-    />
-  }
-
   refresh = async () => {
     this.setState({ loading: true })
     await this.props.UserStore.loadFriends()
@@ -94,10 +86,7 @@ class FriendListScreen extends Component {
 
   render () {
     return (
-      <ScrollView
-        style={styles.container}
-        refreshControl={this.refreshControl()} // TODO: move to list onRefresh
-      >
+      <View style={styles.container}>
         {this.friendList()}
         <FriendMenuModal
           visible={this.state.friendMenuModalVisible}
@@ -105,7 +94,7 @@ class FriendListScreen extends Component {
           hide={this.hideFriendMenuModal}
         />
         {this.state.loading && <ActivityIndicator />}
-      </ScrollView>
+      </View>
     )
   }
 
@@ -124,6 +113,8 @@ class FriendListScreen extends Component {
       }
     ]}
     style={styles.list}
+    onRefresh={this.refresh}
+    refreshing={this.state.loading}
   />
 }
 
