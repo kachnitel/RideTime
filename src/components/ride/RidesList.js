@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
@@ -30,6 +31,11 @@ class RidesList extends Component {
       </View>
     )
   }
+}
+
+RidesList.propTypes = {
+  ...AlternatingStyleList.propTypes,
+  navigation: PropTypes.any
 }
 
 const styles = StyleSheet.create({
