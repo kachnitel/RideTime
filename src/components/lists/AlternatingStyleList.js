@@ -33,14 +33,16 @@ export default class AlternatingStyleList extends Component {
     </TouchableHighlight>
   )
 
-  sectionHeader = ({ section: { title, data, countHighlight } }) => title && <CountHeader
-    containerStyle={styles.header}
-    style={styles.headerText}
-    number={data.length}
-    countHighlight={countHighlight}
-  >
-    {title}
-  </CountHeader>
+  sectionHeader = ({ section: { title, data, countHighlight } }) =>
+    title && (data.length > 0 || this.props.showEmptyHeader) &&
+      <CountHeader
+        containerStyle={styles.header}
+        style={styles.headerText}
+        number={data.length}
+        countHighlight={countHighlight}
+      >
+        {title}
+      </CountHeader>
 
   render () {
     return (
@@ -70,7 +72,8 @@ AlternatingStyleList.propTypes = {
   })),
   emptyComponent: PropTypes.any,
   itemComponent: PropTypes.func,
-  keyExtractor: PropTypes.func
+  keyExtractor: PropTypes.func,
+  showEmptyHeader: PropTypes.bool
 }
 
 const styles = StyleSheet.create({
