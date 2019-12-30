@@ -83,7 +83,7 @@ UserItem.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.shape({
     icon: PropTypes.string,
     action: PropTypes.func,
-    disabled: PropTypes.bool
+    disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.func])
   })),
   id: PropTypes.number.isRequired,
   style: PropTypes.any

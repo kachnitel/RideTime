@@ -41,9 +41,9 @@ export default class UsersList extends Component {
 
 UsersList.propTypes = {
   ...AlternatingStyleList.propTypes,
-  actions: PropTypes.array,
   style: PropTypes.any,
   sections: PropTypes.arrayOf(PropTypes.shape({
+    actions: PropTypes.array,
     title: PropTypes.string,
     data: PropTypes.arrayOf(PropTypes.number)
   })),
