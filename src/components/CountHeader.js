@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
   countHighlight: {
     fontSize: Layout.window.hp(2.5),
     fontWeight: 'bold',
-    minWidth: Layout.window.wp(6)
+    minWidth: Layout.window.hp(3)
   }
 })
