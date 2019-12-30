@@ -26,7 +26,7 @@ export default class UsersList extends Component {
     return (
       <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
         <AlternatingStyleList
-          sections={[{ data: this.props.users }]}
+          sections={this.props.sections}
           emptyComponent={<Text>No frenz</Text>}
           itemComponent={this.itemComponent}
           onItemPress={onItemPress}
@@ -40,7 +40,10 @@ export default class UsersList extends Component {
 UsersList.propTypes = {
   actions: PropTypes.array,
   style: PropTypes.any,
-  users: PropTypes.arrayOf(PropTypes.number),
+  sections: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    data: PropTypes.arrayOf(PropTypes.number)
+  })),
   onItemPress: PropTypes.func,
   disableItemPress: PropTypes.bool
 }

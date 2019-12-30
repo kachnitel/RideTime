@@ -62,9 +62,10 @@ class RideDetail extends Component {
   </TouchableWithModal>
 
   inviteModal = () => <ScrollView style={styles.modalContainer}>
-    <Header style={styles.inviteHeader}>Invite friends to {this.props.Event.title}</Header>
+    {/* REVIEW: 2 headers here */}
+    <Header style={styles.inviteHeader}>Invite to {this.props.Event.title}</Header>
     <UsersList
-      users={this.getFilteredFriends()}
+      sections={[{ title: 'Friends', data: this.getFilteredFriends() }]}
       actions={[{
         icon: 'add-circle-outline',
         action: (id) => this.props.Event.invite(id), // TODO: Toast

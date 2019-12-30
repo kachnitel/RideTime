@@ -36,7 +36,10 @@ class DevScreen extends React.Component {
           style={{ backgroundColor: Colors.darkBackground }}
         />
         <Text>UsersList</Text>
-        <UsersList users={this.props.UserStore.currentUser.friends} />
+        <UsersList sections={[{
+          title: 'Section header',
+          data: this.props.UserStore.currentUser.friends
+        }]} />
       </View>
     )
   }

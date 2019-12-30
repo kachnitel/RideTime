@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
 import UsersList from '../components/user/UsersList'
 import { inject, observer } from 'mobx-react/native'
-import Header from '../components/Header'
 import Colors from '../../constants/Colors'
 import Layout from '../../constants/Layout'
 import SearchInput from '../components/form/SearchInput'
@@ -71,9 +70,11 @@ class AddFriendScreen extends Component {
             style={styles.search}
             placeholder='Search'
           />
-          <Header style={styles.header}>Users</Header>
           <UsersList
-            users={this.state.userIds}
+            sections={[{
+              title: 'Users',
+              data: this.state.userIds
+            }]}
             style={styles.list}
             actions={this.actions}
           />

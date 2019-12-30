@@ -120,7 +120,10 @@ class FriendListScreen extends Component {
       Requests
     </CountHeader>
     <UsersList
-      users={this.props.UserStore.friendRequests}
+      sections={[{
+        title: 'Friend requests',
+        data: this.props.UserStore.friendRequests
+      }]}
       style={styles.list}
       actions={this.actionsRequest}
     />
@@ -135,7 +138,10 @@ class FriendListScreen extends Component {
       Friends
     </CountHeader>
     <UsersList
-      users={this.props.UserStore.currentUser.friends}
+      sections={[{
+        title: 'Friends',
+        data: this.props.UserStore.currentUser.friends
+      }]}
       style={styles.list}
       actions={this.actionsFriend}
     />
