@@ -10,10 +10,10 @@ import UsersList from '../components/user/UsersList'
 import Colors from '../../constants/Colors'
 import Layout from '../../constants/Layout'
 import Button from '../components/form/Button'
-import CountHeader from '../components/CountHeader'
 import FriendMenuModal from '../components/friends/FriendMenuModal'
 import DrawerButton from '../components/navigation_header/DrawerButton'
 import HeaderRightView from '../components/navigation_header/HeaderRightView'
+import Header from '../components/Header'
 
 export default
 @inject('UserStore', 'ApplicationStore')
@@ -111,41 +111,29 @@ class FriendListScreen extends Component {
     )
   }
 
-  friendRequestList = () => <>
-    <CountHeader
-      number={this.props.UserStore.friendRequests.length}
-      style={styles.header}
-      textStyle={styles.headerText}
-    >
-      Requests
-    </CountHeader>
-    <UsersList
-      sections={[{
-        title: 'Friend requests',
-        data: this.props.UserStore.friendRequests
-      }]}
-      style={styles.list}
-      actions={this.actionsRequest}
-    />
-  </>
+  friendRequestList = () => <UsersList
+    sections={[{
+      title: <Header>
+        Friend requests
+        <Header style={styles.headerCount}> {this.props.UserStore.friendRequests.length}</Header>
+      </Header>,
+      data: this.props.UserStore.friendRequests
+    }]}
+    style={styles.list}
+    actions={this.actionsRequest}
+  />
 
-  friendList = () => <>
-    <CountHeader
-      number={this.props.UserStore.currentUser.friends.length}
-      style={styles.header}
-      textStyle={styles.headerText}
-    >
-      Friends
-    </CountHeader>
-    <UsersList
-      sections={[{
-        title: 'Friends',
-        data: this.props.UserStore.currentUser.friends
-      }]}
-      style={styles.list}
-      actions={this.actionsFriend}
-    />
-  </>
+  friendList = () => <UsersList
+    sections={[{
+      title: <Header>
+        Friends
+        <Header style={styles.headerCount}> {this.props.UserStore.currentUser.friends.length}</Header>
+      </Header>,
+      data: this.props.UserStore.currentUser.friends
+    }]}
+    style={styles.list}
+    actions={this.actionsFriend}
+  />
 }
 
 const styles = StyleSheet.create({
@@ -159,5 +147,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: '#fff'
+  },
+  headerCount: {
+    color: '#b8b8b8cc'
   }
 })
