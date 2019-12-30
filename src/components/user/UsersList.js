@@ -26,9 +26,9 @@ export default class UsersList extends Component {
         ? (item) => navigationService.navigate('PublicProfile', { id: item })
         : this.props.onItemPress
     return (
-      <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
+      <View style={{ ...styles.container, ...this.props.style }}>
         <AlternatingStyleList
-          sections={this.props.sections}
+          {...this.props}
           emptyComponent={<Text>No frenz</Text>}
           itemComponent={this.itemComponent}
           onItemPress={onItemPress}
@@ -40,6 +40,7 @@ export default class UsersList extends Component {
 }
 
 UsersList.propTypes = {
+  ...AlternatingStyleList.propTypes,
   actions: PropTypes.array,
   style: PropTypes.any,
   sections: PropTypes.arrayOf(PropTypes.shape({
