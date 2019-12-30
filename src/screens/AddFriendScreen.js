@@ -20,7 +20,7 @@ class AddFriendScreen extends Component {
       icon: 'person-add',
       action: (id) => this.props.UserStore.requestFriend(id),
       // disable already sent requests
-      disabled: (id) => (this.props.UserStore.sentRequests.indexOf(id) !== -1)
+      disabled: (id) => this.props.UserStore.sentRequests.includes(id)
     }
   ]
 
