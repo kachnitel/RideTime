@@ -18,6 +18,7 @@ import HeaderRightView from '../components/navigation_header/HeaderRightView'
 import { Event } from '../stores/EventStore.mobx'
 import { Location } from '../stores/LocationStore.mobx'
 import TabBar from '../components/TabBar'
+import InviteChoices from '../components/ride/InviteChoices'
 
 export default
 @inject('EventStore', 'LocationStore', 'UserStore')
@@ -158,39 +159,63 @@ class RidesScreen extends React.Component {
       .map((id) => this.props.UserStore.getSync(id).events)
       .flat()
 
-    return ({
+    return ([{
       title: 'My friends\' events',
       data: this.props.EventStore.list(ids).filter(this.futureEventFilter)
-    })
+    }])
   }
 
-  getMyEvents = () => ({
-    title: 'My events',
-    data: this.props.EventStore
-      .list(this.props.UserStore.currentUser.events)
-      .filter(this.futureEventFilter)
-      .sort((a: Event, b: Event) => a.datetime - b.datetime)
-  })
+  getMyEvents = () => ([
+    {
+      title: 'Invites',
+      countHighlight: true,
+      data: this.props.EventStore.invites
+        .filter(this.futureEventFilter)
+        .sort((a: Event, b: Event) => a.datetime - b.datetime),
+      footer: (event: Event) => <InviteChoices
+        options={[
+          {
+            icon: 'event-available',
+            label: 'Join',
+            action: () => event.acceptInvite()
+          },
+          {
+            icon: 'clear',
+            label: 'Dismiss',
+            fade: true,
+            action: () => event.declineInvite()
+          }
+        ]}
+      />
+    },
+    {
+      title: 'My rides',
+      data: this.props.EventStore
+        .list(this.props.UserStore.currentUser.events)
+        .filter(this.futureEventFilter)
+        .sort((a: Event, b: Event) => a.datetime - b.datetime)
+    }
+  ])
 
-  getMapEvents = () => ({
+  getMapEvents = () => ([{
     title: 'Nearby events',
     data: this.state.visibleLocations
       .map((location: Location) => location.events).flat()
       .filter(this.futureEventFilter)
       .sort((a: Event, b: Event) => a.datetime - b.datetime)
-  })
+  }])
 
-  getLocationEvents = () => ({
+  getLocationEvents = () => ([{
     title: 'Events at ' + this.state.selectedLocation.name,
     data: this.state.selectedLocation.events
       .filter(this.futureEventFilter)
       .sort((a: Event, b: Event) => a.datetime - b.datetime)
-  })
+  }])
 
   futureEventFilter = (event: Event) => event.datetime > (Math.floor(Date.now() / 1000) - 3600)
 
   render () {
-    let events = this.state.selectedLocation !== null
+    let sections = this.state.selectedLocation !== null
       ? this.getLocationEvents()
       : this.state.tab === 'map'
         ? this.getMapEvents()
@@ -198,12 +223,14 @@ class RidesScreen extends React.Component {
           ? this.getMyEvents()
           : this.getFriendsEvents()
 
+    let events = sections.map((section) => section.data).flat()
+
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <View style={{ flex: 35 }}>
           {this.state.loading && <ActivityIndicator style={styles.mapLoading} />}
           <AreaMap
-            markers={this.mapMarkers(events.data)}
+            markers={this.mapMarkers(events)}
             onRegionChangeComplete={this.onRegionChange}
             onPress={this.clearLocation}
             showsUserLocation
@@ -212,15 +239,14 @@ class RidesScreen extends React.Component {
         </View>
 
         <View style={{ flex: 65 }}>
-          {events.data.length > 0
-            ? <RidesList
-              navigation={this.props.navigation}
-              onRefresh={() => this.refresh(this.state.bbox)}
-              sections={[events]}
-            />
-            : !this.state.loading && <Text style={styles.noRidesText}>
+          <RidesList
+            navigation={this.props.navigation}
+            onRefresh={() => this.refresh(this.state.bbox)}
+            sections={sections}
+          />
+          {!this.state.loading && events.length === 0 && <Text style={styles.noRidesText}>
               No rides nearby, start one or move the map to see rides in the visible area!
-            </Text>}
+          </Text>}
           {this.state.loading && <View style={styles.listLoading}>
             <ActivityIndicator />
             <Text>Loading rides in visible area...</Text>
@@ -234,7 +260,7 @@ class RidesScreen extends React.Component {
               onPress: () => this.setState({ tab: 'map' })
             },
             {
-              title: `My rides (${this.getMyEvents().data.length})`,
+              title: `My rides (${this.getMyEvents().map((section) => section.data).flat().length})`,
               onPress: () => this.setState({ tab: 'my' })
             },
             {

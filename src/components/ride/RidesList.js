@@ -9,9 +9,10 @@ export default
 @inject('EventStore')
 @observer
 class RidesList extends Component {
-  itemComponent = function (item, style) {
-    return <RideItem ride={item} style={style} />
-  }
+  itemComponent = (item, style, section) => <View style={style}>
+    <RideItem ride={item} style={style} />
+    {section.footer !== undefined && section.footer(item)}
+  </View>
 
   onItemPress = (item) => this.props.navigation.push(
     'RideDetail',
