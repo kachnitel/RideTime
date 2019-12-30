@@ -19,14 +19,6 @@ import { Event } from '../stores/EventStore.mobx'
 import { Location } from '../stores/LocationStore.mobx'
 import TabBar from '../components/TabBar'
 
-/**
- * TODO:
- * - get rides for user - public(*) + friends/groups allowed (* - once privacy is implemented)
- *
- * @export
- * @class RidesScreen
- * @extends {React.Component}
- */
 export default
 @inject('EventStore', 'LocationStore', 'UserStore')
 @observer
