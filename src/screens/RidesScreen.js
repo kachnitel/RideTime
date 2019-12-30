@@ -169,6 +169,7 @@ class RidesScreen extends React.Component {
     data: this.props.EventStore
       .list(this.props.UserStore.currentUser.events)
       .filter(this.futureEventFilter)
+      .sort((a: Event, b: Event) => a.datetime - b.datetime)
   })
 
   getMapEvents = () => ({
@@ -176,12 +177,14 @@ class RidesScreen extends React.Component {
     data: this.state.visibleLocations
       .map((location: Location) => location.events).flat()
       .filter(this.futureEventFilter)
+      .sort((a: Event, b: Event) => a.datetime - b.datetime)
   })
 
   getLocationEvents = () => ({
     title: 'Events at ' + this.state.selectedLocation.name,
     data: this.state.selectedLocation.events
       .filter(this.futureEventFilter)
+      .sort((a: Event, b: Event) => a.datetime - b.datetime)
   })
 
   futureEventFilter = (event: Event) => event.datetime > (Math.floor(Date.now() / 1000) - 3600)
