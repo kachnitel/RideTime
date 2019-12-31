@@ -60,6 +60,7 @@ class CreateRideScreen extends React.Component {
     // TODO: Validate
     this.setState({ saving: true })
     await this.event.saveNew()
+    this.props.UserStore.currentUser.addEvent(this.event.id)
 
     ToastAndroid.show('Ride created.', ToastAndroid.SHORT)
 
