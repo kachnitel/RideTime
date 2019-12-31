@@ -11,19 +11,17 @@ import Layout from '../../../constants/Layout'
 
 export default class ButtonIcon extends Component {
   render () {
+    let color = this.props.color || Colors.tintColor
+
     return (
-      <TouchableOpacity
-        {...this.props}
-        style={{ ...styles.button, ...this.props.style }}
-        onPress={this.props.onPress}
-      >
-        <View style={styles.innerContainer}>
+      <TouchableOpacity onPress={this.props.onPress}>
+        <View style={{ ...styles.container, ...this.props.style }}>
           {this.props.iconComponent || <Icon
             name={this.props.icon || 'adb'}
-            color={this.props.color || '#fff'}
+            color={color}
             size={Layout.window.hp(3)}
           />}
-          {this.props.text && <Text style={{ ...styles.text, color: this.props.color || '#fff' }}>{this.props.text}</Text>}
+          {this.props.text && <Text style={{ ...styles.text, color: color }}>{this.props.text}</Text>}
         </View>
       </TouchableOpacity>
     )
@@ -31,16 +29,12 @@ export default class ButtonIcon extends Component {
 }
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: Colors.tintColor,
+  container: {
     padding: Layout.window.hp(1),
-    borderRadius: Layout.window.hp(1)
-  },
-  innerContainer: {
+    borderRadius: Layout.window.hp(1),
     flexDirection: 'row'
   },
   text: {
-    color: '#fff',
     fontSize: Layout.window.hp(2.5),
     fontWeight: 'bold',
     alignSelf: 'center',

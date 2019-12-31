@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { View, StyleSheet, ActivityIndicator } from 'react-native'
 import ButtonIcon from '../form/ButtonIcon'
+import Layout from '../../../constants/Layout'
 
 /**
  * REVIEW: Use TabBar
@@ -22,7 +23,6 @@ export default class InviteChoices extends Component {
   }
 
   render () {
-    let width = 90 / this.props.options.length + '%'
     return this.state.loading
       ? <ActivityIndicator />
       : <View style={styles.choicesContainer}>
@@ -30,10 +30,9 @@ export default class InviteChoices extends Component {
           icon={option.icon}
           text={option.label}
           onPress={() => this.submit(option.action)}
-          style={option.fade
-            ? { ...styles.respondButton, ...styles.dismissButton, width: width }
-            : { ...styles.respondButton, width: width }}
+          style={{ ...styles.respondButton }}
           key={'option_' + index + '_' + option.label}
+          color={option.fade && 'gray'}
         />)}
       </View>
   }
@@ -54,10 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly'
   },
   respondButton: {
-    // width: '40%',
-    textAlign: 'center'
-  },
-  dismissButton: {
-    backgroundColor: 'gray'
+    textAlign: 'center',
+    marginBottom: Layout.window.hp(1)
   }
 })
