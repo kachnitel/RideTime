@@ -23,6 +23,7 @@ export default class TabBar extends Component {
           style={{ width: Layout.window.wp(100 / this.props.options.length) }}
           key={'option_' + index + '_' + option.title}
           active={index === this.state.activeIndex}
+          badge={option.badge}
         />)}
       </View>
     )

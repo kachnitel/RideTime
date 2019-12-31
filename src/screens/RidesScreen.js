@@ -268,8 +268,9 @@ class RidesScreen extends React.Component {
               onPress: () => this.setState({ tab: 'map' })
             },
             {
-              title: `My rides (${this.getMyEvents().map((section) => section.data).flat().length})`,
-              onPress: () => this.setState({ tab: 'my' })
+              title: `My rides (${this.getMyEvents()[1].data.flat().length})`, // confirmed
+              onPress: () => this.setState({ tab: 'my' }),
+              badge: this.getMyEvents()[0].data.flat().length // invites
             },
             {
               title: 'Friends\' rides',

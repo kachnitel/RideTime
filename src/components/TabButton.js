@@ -3,11 +3,15 @@ import React, { Component } from 'react'
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 import Colors from '../../constants/Colors'
 import Layout from '../../constants/Layout'
+import CountBadge from './CountBadge'
 
 export default class TabButton extends Component {
   render () {
     return (
-      <TouchableOpacity onPress={this.props.onPress} disabled={this.props.active}>
+      <TouchableOpacity
+        onPress={this.props.onPress}
+        disabled={this.props.active}
+      >
         <Text
           style={{
             ...this.props.active
@@ -18,6 +22,10 @@ export default class TabButton extends Component {
         >
           {this.props.title}
         </Text>
+        {this.props.badge > 0 && <CountBadge
+          count={this.props.badge}
+          style={styles.badge}
+        />}
       </TouchableOpacity>
     )
   }
@@ -27,7 +35,8 @@ TabButton.propTypes = {
   active: PropTypes.bool,
   onPress: PropTypes.func,
   style: PropTypes.any,
-  title: PropTypes.string
+  title: PropTypes.string,
+  badge: PropTypes.number
 }
 
 const styles = StyleSheet.create({
@@ -43,5 +52,10 @@ const styles = StyleSheet.create({
   tabToggleActive: {
     backgroundColor: '#fff',
     color: Colors.tintColor
+  },
+  badge: {
+    position: 'absolute',
+    right: Layout.window.wp(1),
+    top: Layout.window.hp(1)
   }
 })
