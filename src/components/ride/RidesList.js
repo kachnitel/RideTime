@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
@@ -8,14 +9,15 @@ export default
 @inject('EventStore')
 @observer
 class RidesList extends Component {
-  itemComponent = function (item, style) {
-    return <RideItem ride={item} style={style} />
-  }
+  itemComponent = (item, style, section) => <View style={style}>
+    <RideItem ride={item} style={style} />
+    {section.footer !== undefined && section.footer(item)}
+  </View>
 
   onItemPress = (item) => this.props.navigation.push(
     'RideDetail',
     {
-      event: item
+      eventId: item.id
     }
   )
 
@@ -23,14 +25,18 @@ class RidesList extends Component {
     return (
       <View style={styles.container}>
         <AlternatingStyleList
-          items={this.props.rides}
+          {...this.props}
           itemComponent={this.itemComponent}
           onItemPress={this.onItemPress}
-          onRefresh={this.props.onRefresh}
         />
       </View>
     )
   }
+}
+
+RidesList.propTypes = {
+  ...AlternatingStyleList.propTypes,
+  navigation: PropTypes.any
 }
 
 const styles = StyleSheet.create({

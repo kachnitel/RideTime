@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal'
 import Layout from '../../../constants/Layout'
+import MenuModalOption from './MenuModalOption'
 
 export default class ModalView extends Component {
   render () {
@@ -10,6 +11,13 @@ export default class ModalView extends Component {
       <Modal {...this.props}>
         <View style={{ ...styles.container, ...this.props.containerStyle }}>
           {this.props.children}
+          {this.props.onClose && <MenuModalOption
+            onPress={this.props.onClose}
+            label={'Close'}
+            icon='exit-to-app'
+            description='Close this menu'
+            style={styles.closeItem}
+          />}
         </View>
       </Modal>
     )
@@ -18,6 +26,7 @@ export default class ModalView extends Component {
 
 ModalView.propTypes = {
   ...Modal.propTypes,
+  onClose: PropTypes.func,
   children: PropTypes.any,
   containerStyle: PropTypes.any
 }
@@ -28,5 +37,8 @@ const styles = StyleSheet.create({
     borderRadius: Layout.window.hp(2),
     alignItems: 'center',
     paddingVertical: Layout.window.hp(2)
+  },
+  closeItem: {
+    opacity: 0.5
   }
 })

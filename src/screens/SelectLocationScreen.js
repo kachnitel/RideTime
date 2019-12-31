@@ -7,6 +7,7 @@ import ButtonIcon from '../components/form/ButtonIcon'
 import LocationPicker from '../components/location/LocationPicker'
 import Layout from '../../constants/Layout'
 import HeaderRightView from '../components/navigation_header/HeaderRightView'
+import Colors from '../../constants/Colors'
 
 export default
 @inject('LocationStore')
@@ -22,7 +23,7 @@ class SelectLocationScreen extends React.Component {
           text={displayMap ? 'List' : 'Map'}
           iconComponent={<Icon
             name={displayMap ? 'file-search-outline' : 'map-search-outline'}
-            color='#fff'
+            color={Colors.tintColor}
             size={Layout.window.hp(3)}
           />}
           onPress={navigation.getParam('toggleDisplayMap')}
@@ -63,6 +64,7 @@ class SelectLocationScreen extends React.Component {
           style={styles.locationPicker}
           displayMap={this.state.displayMap}
           onLocationPress={this.goToRideConfig}
+          showFavourites
         />
         {/* Next button? */}
       </View>

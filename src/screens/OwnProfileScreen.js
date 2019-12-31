@@ -7,12 +7,11 @@ import {
   ActivityIndicator
 } from 'react-native'
 import { observer, inject, Provider } from 'mobx-react/native'
-import { Header } from 'react-navigation'
+import { Header, HeaderBackButton } from 'react-navigation'
 import EditProfileHeader from '../components/profile/EditProfileHeader'
 import Layout from '../../constants/Layout'
 import Button from '../components/form/Button'
 import SignOutButton from '../components/SignOutButton'
-import BackButton from '../components/navigation_header/BackButton'
 import HeaderRightView from '../components/navigation_header/HeaderRightView'
 import { User } from '../stores/UserStore.mobx'
 
@@ -22,7 +21,6 @@ export default
 class OwnProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      // w/ little name under in drawer eventually
       title: 'My Profile',
       headerRight: (
         <HeaderRightView>
@@ -38,7 +36,7 @@ class OwnProfileScreen extends React.Component {
           </View>
         </HeaderRightView>
       ),
-      headerLeft: <BackButton navigation={navigation} />
+      headerLeft: <HeaderBackButton onPress={() => navigation.navigate('App')} />
     }
   }
 

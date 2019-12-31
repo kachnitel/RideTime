@@ -1,46 +1,60 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-import { observer } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react/native'
 import AlternatingStyleList from '../../lists/AlternatingStyleList'
 import RouteItem from './RouteItem'
 import TrailFilter from './TrailFilter'
 import Layout from '../../../../constants/Layout'
 
 export default
+@inject('RouteStore')
 @observer
 class SelectRoute extends Component {
   state = {
-    routes: []
+    filter: {
+      difficulty: [],
+      search: ''
+    }
   }
 
-  componentDidMount = () => {
-    this.setState({
-      routes: this.props.location.routes
-    })
+  waitTime = 300
+  timeout = 0
+
+  componentWillUnmount () {
+    clearTimeout(this.timeout)
   }
 
   handleFilterUpdate = (filter) => {
-    let routes = this.props.location.routes
-    if (filter.difficulties.length > 0) {
-      routes = routes.filter((trail) =>
-        filter.difficulties.includes(trail.difficulty))
-    }
-    if (filter.search.length > 0) {
-      routes = routes.filter((trail) =>
-        trail.title.includes(filter.search.trim()))
-    }
     this.setState({
-      routes: routes
+      filter: filter
     })
+
+    clearTimeout(this.timeout) // clears the old timer
+    this.timeout = setTimeout(
+      () => this.props.RouteStore.filter({ rid: this.props.location.id, ...filter }),
+      this.waitTime
+    )
   }
 
-  routesList = () => <AlternatingStyleList
-    items={this.state.routes}
-    onItemPress={(route) => this.props.onSubmit(route)}
-    itemComponent={(item, style) => <RouteItem route={item} style={style} />}
-    windowSize={3}
-    initialNumToRender={5}
-  />
+  routesList = () => {
+    let routes = this.props.location.routes
+    if (this.state.filter.difficulty.length > 0) {
+      routes = routes.filter((trail) =>
+        this.state.filter.difficulty.includes(trail.difficulty))
+    }
+    if (this.state.filter.search.length > 0) {
+      routes = routes.filter((trail) =>
+        trail.title.includes(this.state.filter.search.trim()))
+    }
+
+    return <AlternatingStyleList
+      sections={[{ title: 'Routes', data: routes }]}
+      onItemPress={(route) => this.props.onSubmit(route)}
+      itemComponent={(item, style) => <RouteItem route={item} style={style} />}
+      windowSize={3}
+      initialNumToRender={5}
+    />
+  }
 
   render () {
     return (
@@ -49,7 +63,7 @@ class SelectRoute extends Component {
           style={styles.filter}
           onFilterUpdate={this.handleFilterUpdate}
         />
-        {this.state.routes.length > 0
+        {this.props.location.routes.length > 0
           ? this.routesList()
           : <Text>No routes found in location.</Text>
         }

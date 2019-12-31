@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import {
-  ScrollView,
   StyleSheet,
   ActivityIndicator,
-  RefreshControl
+  View
 } from 'react-native'
 import { inject, observer } from 'mobx-react/native'
 import UsersList from '../components/user/UsersList'
 import Colors from '../../constants/Colors'
 import Layout from '../../constants/Layout'
 import Button from '../components/form/Button'
-import CountHeader from '../components/CountHeader'
 import FriendMenuModal from '../components/friends/FriendMenuModal'
 import DrawerButton from '../components/navigation_header/DrawerButton'
 import HeaderRightView from '../components/navigation_header/HeaderRightView'
@@ -80,13 +78,6 @@ class FriendListScreen extends Component {
     this.refresh()
   }
 
-  refreshControl () {
-    return <RefreshControl
-      refreshing={this.state.loading}
-      onRefresh={this.refresh}
-    />
-  }
-
   refresh = async () => {
     this.setState({ loading: true })
     await this.props.UserStore.loadFriends()
@@ -95,11 +86,7 @@ class FriendListScreen extends Component {
 
   render () {
     return (
-      <ScrollView
-        style={styles.container}
-        refreshControl={this.refreshControl()}
-      >
-        {this.props.UserStore.friendRequests.length > 0 && this.friendRequestList()}
+      <View style={styles.container}>
         {this.friendList()}
         <FriendMenuModal
           visible={this.state.friendMenuModalVisible}
@@ -107,39 +94,28 @@ class FriendListScreen extends Component {
           hide={this.hideFriendMenuModal}
         />
         {this.state.loading && <ActivityIndicator />}
-      </ScrollView>
+      </View>
     )
   }
 
-  friendRequestList = () => <>
-    <CountHeader
-      number={this.props.UserStore.friendRequests.length}
-      style={styles.header}
-      textStyle={styles.headerText}
-    >
-      Requests
-    </CountHeader>
-    <UsersList
-      users={this.props.UserStore.friendRequests}
-      style={styles.list}
-      actions={this.actionsRequest}
-    />
-  </>
-
-  friendList = () => <>
-    <CountHeader
-      number={this.props.UserStore.currentUser.friends.length}
-      style={styles.header}
-      textStyle={styles.headerText}
-    >
-      Friends
-    </CountHeader>
-    <UsersList
-      users={this.props.UserStore.currentUser.friends}
-      style={styles.list}
-      actions={this.actionsFriend}
-    />
-  </>
+  friendList = () => <UsersList
+    sections={[
+      {
+        title: 'Friend requests',
+        data: this.props.UserStore.friendRequests,
+        actions: this.actionsRequest,
+        countHighlight: this.props.UserStore.friendRequests.length > 0
+      },
+      {
+        title: 'Friends',
+        data: this.props.UserStore.currentUser.friends,
+        actions: this.actionsFriend
+      }
+    ]}
+    style={styles.list}
+    onRefresh={this.refresh}
+    refreshing={this.state.loading}
+  />
 }
 
 const styles = StyleSheet.create({
@@ -153,5 +129,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: '#fff'
+  },
+  headerCount: {
+    color: '#b8b8b8cc'
   }
 })

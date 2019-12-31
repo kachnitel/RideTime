@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import {
   StyleSheet,
@@ -76,6 +77,16 @@ class UserItem extends React.Component {
         {this.getActionButtons()}
       </View>
   }
+}
+
+UserItem.propTypes = {
+  actions: PropTypes.arrayOf(PropTypes.shape({
+    icon: PropTypes.string,
+    action: PropTypes.func,
+    disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.func])
+  })),
+  id: PropTypes.number.isRequired,
+  style: PropTypes.any
 }
 
 const styles = StyleSheet.create({

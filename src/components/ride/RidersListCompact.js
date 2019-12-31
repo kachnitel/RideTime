@@ -16,13 +16,18 @@ class RidersListCompact extends Component {
     this.refreshUsers()
   }
 
+  componentDidUpdate = (prevProps) => {
+    if (JSON.stringify(prevProps.userIDs) !== JSON.stringify(this.props.userIDs)) {
+      this.refreshUsers()
+    }
+  }
+
   refreshUsers = async () => {
     let users = await Promise.all(
       this.props.userIDs.map(async (id) => this.props.UserStore.get(id))
     )
 
     this.setState({
-      loading: false,
       users: users
     })
   }

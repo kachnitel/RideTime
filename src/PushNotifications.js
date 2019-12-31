@@ -49,5 +49,12 @@ export default class PushNotifications {
       badge: true,
       vibrate: true
     })
+    Notifications.createChannelAndroidAsync('eventComment', {
+      name: 'Event comments',
+      description: 'New comments in events',
+      sound: true,
+      badge: true,
+      vibrate: true
+    })
   }
 }

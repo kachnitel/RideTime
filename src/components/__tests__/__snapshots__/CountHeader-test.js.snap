@@ -13,6 +13,7 @@ exports[`renders correctly 1`] = `
       Object {
         "fontSize": 33.5,
         "fontWeight": "bold",
+        "paddingRight": 15,
       }
     }
   >
@@ -24,7 +25,6 @@ exports[`renders correctly 1`] = `
         "color": "#b8b8b8",
         "fontSize": 33.5,
         "fontWeight": "bold",
-        "paddingLeft": 10,
       }
     }
   >
@@ -46,6 +46,7 @@ exports[`renders correctly with number 1`] = `
       Object {
         "fontSize": 33.5,
         "fontWeight": "bold",
+        "paddingRight": 15,
       }
     }
   >
@@ -57,7 +58,6 @@ exports[`renders correctly with number 1`] = `
         "color": "#b8b8b8",
         "fontSize": 33.5,
         "fontWeight": "bold",
-        "paddingLeft": 10,
       }
     }
   >

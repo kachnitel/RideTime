@@ -2,7 +2,7 @@ import { inject, observer, Provider } from 'mobx-react/native'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { ActivityIndicator, FlatList, View } from 'react-native'
-import UserStore from '../../stores/UserStore.mobx'
+import UserStore, { User } from '../../stores/UserStore.mobx'
 import Header from '../Header'
 import TouchableRiderItem from './TouchableRiderItem'
 
@@ -12,7 +12,7 @@ export default
 class RidersList extends Component {
   state = {
     loading: true,
-    users: []
+    users: [] // User[]
   }
 
   /**
@@ -60,7 +60,7 @@ class RidersList extends Component {
           data={this.state.users}
           horizontal // Option?
           renderItem={this.riderItemTouchable}
-          keyExtractor={(item, index) => 'index_' + index.toString()}
+          keyExtractor={(item: User) => 'user_' + item.id}
         />}
       </View>
     )

@@ -4,11 +4,11 @@ import DifficultyRangeSlider from './DifficultyRangeSlider'
 import Colors from '../../../../constants/Colors'
 import Layout from '../../../../constants/Layout'
 import InputTitle from '../../form/InputTitle'
-import FormTextInput from '../../form/FormTextInput'
+import TextInputWithTitle from '../../form/TextInputWithTitle'
 
 export default class TrailFilter extends Component {
   filter = {
-    difficulties: [],
+    difficulty: [],
     search: ''
   }
 
@@ -24,17 +24,16 @@ export default class TrailFilter extends Component {
           <InputTitle>Difficulties: </InputTitle>
           <DifficultyRangeSlider
             width={Layout.window.wp(55)}
-            onValuesChange={(values) => this.updateFilter({ difficulties: values })}
+            onValuesChange={(values) => this.updateFilter({ difficulty: values })}
           />
         </View>
-        <View style={styles.row}>
-          <InputTitle>Search: </InputTitle>
-          <FormTextInput
-            placeholder={'Search by name..'}
-            onChangeText={(text) => this.updateFilter({ search: text })}
-            style={styles.input}
-          />
-        </View>
+        <TextInputWithTitle
+          title='Search:'
+          placeholder={'Search by name..'}
+          onChangeText={(text) => this.updateFilter({ search: text.trim() })}
+          style={styles.input}
+          containerStyle={styles.row}
+        />
       </View>
     )
   }
@@ -47,7 +46,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    textAlignVertical: 'center',
     alignItems: 'center'
   },
   input: {

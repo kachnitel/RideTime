@@ -124,9 +124,7 @@ export class BaseCollectionStore {
    */
   async populateEntities (ids: Number[]) {
     let response = await this.provider.list(ids)
-    response.results.map((result) => {
-      this.upsert(result)
-    })
+    return response.results.map(this.upsert)
   }
 
   populateRelated = (related: Object) => {
@@ -140,7 +138,5 @@ export class BaseCollectionStore {
     })
   }
 
-  _findInCollection (id) {
-    return this._collection.find(entity => entity.id === id)
-  }
+  _findInCollection = (id) => this._collection.find(entity => entity.id === id)
 }

@@ -1,15 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-  View,
-  StyleSheet,
-  Alert
-} from 'react-native'
-import Modal from 'react-native-modal'
+import { Alert } from 'react-native'
 import { inject, observer } from 'mobx-react/native'
-import Layout from '../../../constants/Layout'
-import Colors from '../../../constants/Colors'
 import MenuModalOption from '../modal/MenuModalOption'
+import ModalView from '../modal/ModalView'
 
 export default
 @inject('UserStore')
@@ -40,22 +34,18 @@ class FriendMenuModal extends Component {
 
   render () {
     return (
-      <Modal
+      <ModalView
         isVisible={this.props.visible}
         onBackdropPress={this.props.hide}
         onBackButtonPress={this.props.hide}
+        onClose={this.props.hide}
       >
-        <View style={styles.container}>
-          <MenuModalOption
-            onPress={this.handleRemoveFriend}
-            label='Remove friend'
-          />
-          <MenuModalOption
-            onPress={this.props.hide}
-            label='Close'
-          />
-        </View>
-      </Modal>
+        <MenuModalOption
+          onPress={this.handleRemoveFriend}
+          label='Remove friend'
+          icon='remove-circle-outline'
+        />
+      </ModalView>
     )
   }
 }
@@ -65,18 +55,3 @@ FriendMenuModal.propTypes = {
   userId: PropTypes.number,
   visible: PropTypes.bool
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    borderRadius: Layout.window.hp(2),
-    alignItems: 'center'
-  },
-  optionContainer: {
-    borderBottomColor: Colors.darkBackground,
-    borderBottomWidth: 1,
-    paddingVertical: Layout.window.hp(3),
-    width: '100%',
-    alignItems: 'center'
-  }
-})

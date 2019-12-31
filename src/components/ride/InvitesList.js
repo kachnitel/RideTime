@@ -14,6 +14,8 @@ import Header from '../Header'
 import Colors from '../../../constants/Colors'
 import Layout from '../../../constants/Layout'
 import RideDetail from './RideDetail'
+import { Event } from '../../stores/EventStore.mobx'
+import InviteChoices from './InviteChoices'
 
 export default
 @inject('EventStore', 'HideModal')
@@ -45,8 +47,8 @@ class InvitesList extends Component {
     <FlatList
       data={this.props.EventStore.invites}
       renderItem={this.itemComponent}
-      ListEmptyComponent={<Text>No pending invites</Text>}
-      keyExtractor={(item, index) => 'index_' + index.toString()}
+      ListEmptyComponent={<Text style={styles.listEmptyText}>No ride invites</Text>}
+      keyExtractor={(item: Event) => 'event_' + item.id}
       onRefresh={this.refresh}
       refreshing={false}
       extraData={this.props.EventStore.invites.length}
@@ -76,20 +78,21 @@ class InvitesList extends Component {
     </View>
   </View>
 
-  choicesContainer = (event) => <View style={styles.choicesContainer}>
-    <ButtonIcon
-      icon='add-circle-outline'
-      text='Join'
-      style={styles.respondButton}
-      onPress={() => this.acceptInvite(event)}
-    />
-    <ButtonIcon
-      icon='highlight-off'
-      text='Dismiss'
-      style={{ ...styles.respondButton, ...styles.dismissButton }}
-      onPress={() => this.declineInvite(event)}
-    />
-  </View>
+  choicesContainer = (event) => <InviteChoices
+    options={[
+      {
+        icon: 'event-available',
+        label: 'Join',
+        action: () => this.acceptInvite(event)
+      },
+      {
+        icon: 'clear',
+        label: 'Dismiss',
+        fade: true,
+        action: () => this.declineInvite(event)
+      }
+    ]}
+  />
 
   headerButton = () => <ButtonIcon
     icon={this.state.detail ? 'arrow-back' : 'close'}
@@ -105,7 +108,7 @@ class InvitesList extends Component {
         <View style={styles.headerContainer}>
           {this.headerButton()}
           <Header style={styles.header}>
-            {this.state.detail === null ? 'Invites' : this.state.detail.title}
+            {this.state.detail === null ? 'Ride Invites' : this.state.detail.title}
           </Header>
         </View>
         {this.state.detail !== null
@@ -124,10 +127,6 @@ const styles = StyleSheet.create({
   scroll: {
     maxHeight: Layout.window.hp(75)
   },
-  choicesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly'
-  },
   detailChoices: {
     bottom: 0,
     width: '100%',
@@ -136,13 +135,6 @@ const styles = StyleSheet.create({
   },
   detailScroll: {
     height: Layout.window.hp(65)
-  },
-  respondButton: {
-    width: '40%',
-    textAlign: 'center'
-  },
-  dismissButton: {
-    backgroundColor: 'gray'
   },
   header: {
     textAlign: 'center',
@@ -162,5 +154,9 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row'
+  },
+  listEmptyText: {
+    textAlign: 'center',
+    color: 'grey'
   }
 })

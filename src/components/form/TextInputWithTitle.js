@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { View } from 'react-native'
 import InputTitle from './InputTitle'
@@ -14,4 +15,10 @@ export default class TextInputWithTitle extends React.Component {
       </View>
     )
   }
+}
+
+TextInputWithTitle.propTypes = {
+  ...FormTextInput.propTypes,
+  containerStyle: PropTypes.any,
+  title: PropTypes.string
 }

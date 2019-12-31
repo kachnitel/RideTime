@@ -1,23 +1,20 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import Colors from '../../../../constants/Colors'
 import Layout from '../../../../constants/Layout'
-import sharedStyles from './Style'
-import Title from './Title'
+import SummaryItem from './SummaryItem'
 
 export default class RideCount extends Component {
   render () {
     return (
-      <View style={styles.summaryItem}>
-        <Title style={styles.title}>Rides</Title>
-        <Text style={{ ...styles.count, ...styles.content }}>{this.props.count}</Text>
-      </View>
+      <SummaryItem title='Rides'>
+        <Text style={styles.count}>{this.props.count}</Text>
+      </SummaryItem>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  ...sharedStyles,
   count: {
     color: Colors.iconColor,
     fontSize: Layout.window.hp(3.5)

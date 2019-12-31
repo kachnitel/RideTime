@@ -10,7 +10,6 @@ export default
 @observer
 class DrawerButton extends React.Component {
   state = {
-    badgeCount: null,
     loading: false
   }
 
@@ -25,21 +24,18 @@ class DrawerButton extends React.Component {
       this.props.EventStore.loadInvites()
     ])
     this.setState({ loading: false })
-    let count = (this.props.UserStore.friendRequests.length + this.props.EventStore.invites.length)
-    this.setState({
-      badgeCount: count
-    })
   }
 
   render () {
+    let count = (this.props.UserStore.friendRequests.length + this.props.EventStore.invites.length)
     return (
       <TouchableOpacity onPress={() => this.props.navigation.toggleDrawer()}>
         <View style={styles.headerMenuIconContainer}>
           <MaterialIcons style={styles.headerMenuIcon} name='menu' />
           { this.state.loading
             ? <ActivityIndicator style={styles.badge} />
-            : this.state.badgeCount > 0 && <CountBadge
-              count={this.state.badgeCount}
+            : count > 0 && <CountBadge
+              count={count}
               style={styles.badge}
             /> }
         </View>

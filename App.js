@@ -56,6 +56,8 @@ class App extends React.Component {
             EventStore={stores.event}
             LocationStore={stores.location}
             TrailStore={stores.trail}
+            RouteStore={stores.route}
+            CommentStore={stores.comment}
           >
             <AppContainer
               ref={(navigatorRef) => {
@@ -93,14 +95,6 @@ class App extends React.Component {
   }
 
   async _notificationsSubscribe () {
-    /**
-     * When the app is started from a notification,
-     * it can initialize and call the handler before
-     * loading is completed
-     */
-    if (!stores.user.loaded) {
-      await stores.user.loading
-    }
     let notifications = new PushNotifications()
     let handler = new NotificationsHandler()
     notifications.subscribe(handler.listener)

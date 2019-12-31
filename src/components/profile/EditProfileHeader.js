@@ -1,9 +1,8 @@
 import React from 'react'
 import { observer, inject } from 'mobx-react'
-import { View, StyleSheet, ScrollView } from 'react-native'
+import { View, StyleSheet, ScrollView, Image } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-import CoverPicture from './CoverPicture'
-import headerStyles, { profilePictureSize } from './ProfileHeaderStyle'
+import headerStyles, { profilePictureSize } from './ProfileHeaderStyle' // TODO:
 import Layout from '../../../constants/Layout'
 import EditPicture from './EditPicture'
 import SelectDifficulty from '../form/SelectDifficulty'
@@ -18,8 +17,8 @@ class EditProfileHeader extends React.Component {
   render () {
     return (
       <ScrollView keyboardShouldPersistTaps='handled'>
-        <CoverPicture
-          user={this.props.User}
+        <Image // TODO:
+          source={{ uri: 'https://s3.ca-central-1.amazonaws.com/ride-time/cover-images/1.png' }}
           style={headerStyles.coverPicture}
         />
         {/* TODO: Use EditPicture with repositioned icon (override icon style) */}

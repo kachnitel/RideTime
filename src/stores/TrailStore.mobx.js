@@ -9,6 +9,12 @@ export default class TrailStore extends BaseCollectionStore {
   constructor (provider, stores) {
     super(provider, Trail, stores)
   }
+
+  filter = async (filter: Object) => {
+    let response = await this.provider.trailsFilter(filter)
+    let results = response.results
+    return results.map(this.upsert)
+  }
 }
 
 export class Trail extends BaseEntity {

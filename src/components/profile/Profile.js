@@ -16,7 +16,9 @@ class Profile extends React.Component {
       <ScrollView>
         <ProfileHeader user={this.props.User} />
         <RidersList userIDs={this.props.User.friends} style={styles.detailItem} headerText='Friends' />
-        <CountHeader number={this.props.User.events.length} style={styles.detailItem}>Upcoming Rides</CountHeader>
+        <CountHeader number={this.props.User.events.length} containerStyle={styles.detailItem}>
+          Upcoming Rides
+        </CountHeader>
         <Favourites text={this.props.User.favourites} style={styles.detailItem} />
       </ScrollView>
     )

@@ -47,11 +47,6 @@ export default class LocationStore extends BaseCollectionStore {
   }
   @computed get currentLocation () { return this._currentLocation }
 
-  /**
-   * TODO: Use this.filter, deprecate provier methods
-   *
-   * @memberof LocationStore
-   */
   nearby = async (distance: Number) => {
     let coords =
       this.currentLocation.get('coords') ||
@@ -59,43 +54,36 @@ export default class LocationStore extends BaseCollectionStore {
         accuracy: ExpoLocation.Accuracy.Lowest,
         maximumAge: 300000
       })).coords
-    let response = await this.provider.near(
-      coords.latitude,
-      coords.longitude,
-      distance
-    )
-    let results = response.results
-    this.populateResults(results)
-
-    return results
+    return this.filter({
+      lat: coords.latitude,
+      lon: coords.longitude,
+      nearby_range: distance
+    })
   }
 
   /**
-   * TODO: Use this.filter
+   * Bounding box - list locations within a map
+   *
+   * bbox filter is in the format of
+   * top-left lat/lon and bottom-right lat/lon
+   * @param {Array} coords [
+   *  latMin
+   *  lonMin
+   *  latMax
+   *  lonMax
+   * ]
    */
-  bbox = async (bbox: Array) => {
-    let response = await this.provider.bbox(bbox)
-    let results = response.results
-    this.populateResults(results)
-
-    return results
+  bbox = (bbox: Array) => {
+    return this.filter({ bbox: bbox })
   }
 
-  /**
-   * TODO: Use this.filter
-   */
-  search = async (name: String) => {
-    let response = await this.provider.search(name)
-    let results = response.results
-    this.populateResults(results)
-
-    return results
+  search = (name: String) => {
+    return this.filter({ search: name })
   }
 
   filter = async (filter: Object, params: Object = {}) => {
     let response = await this.provider.filter(filter, params)
-    let results = response.results
-    this.populateResults(results)
+    let results = this.populateResults(response.results)
     response.relatedEntities && this.populateRelated(response.relatedEntities)
 
     return results
@@ -105,12 +93,9 @@ export default class LocationStore extends BaseCollectionStore {
    * FIXME: duplicates populateRelated from parent
    *
    * @memberof LocationStore
+   * @returns {Location[]}
    */
-  populateResults = (results: Array) => {
-    results.forEach((result) => {
-      this.upsert(result)
-    })
-  }
+  populateResults = (results: Array) => results.map(this.upsert)
 
   watchPosition
 }
@@ -177,9 +162,13 @@ export class Location extends BaseEntity {
     return this.store.stores.route.list().filter((item) => item.location === this.id)
   }
 
+  @computed get events () {
+    return this.store.stores.event.list().filter((item) => item.location === this.id)
+  }
+
   loadTrails = async () => {
     while (!this._trailsLoaded.completed) {
-      let response = await this.store.provider.trailsByLocation(this.id)
+      let response = await this.store.provider.trailsFilter({ rid: this.id })
       let data = response.results
       this.store.populateRelated({ trail: data })
       this._trailsLoaded.loaded += data.length
@@ -191,7 +180,7 @@ export class Location extends BaseEntity {
 
   loadRoutes = async () => {
     while (!this._routesLoaded.completed) {
-      let response = await this.store.provider.routesByLocation(this.id)
+      let response = await this.store.provider.routesFilter({ rid: this.id })
       let data = response.results
       this.store.populateRelated({ route: data })
       this._routesLoaded.loaded += data.length

@@ -29,6 +29,7 @@ export default class EditDateTime extends React.Component {
           isVisible={this.state.isDateTimePickerVisible}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
+          minimumDate={new Date()}
           mode='datetime'
         />
         {/* Android */}

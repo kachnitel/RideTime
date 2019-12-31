@@ -13,18 +13,25 @@ import navigationService from '../../NavigationService'
  * @extends {Component}
  */
 export default class UsersList extends Component {
-  itemComponent = (id, style) => {
-    return <UserItem id={id} style={style} actions={this.props.actions} />
-  }
+  itemComponent = (id, style, section) => <UserItem
+    id={id}
+    style={style}
+    actions={section.actions}
+  />
 
   render () {
+    let onItemPress = this.props.disableItemPress
+      ? () => {}
+      : this.props.onItemPress === undefined
+        ? (item) => navigationService.navigate('PublicProfile', { id: item })
+        : this.props.onItemPress
     return (
-      <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
+      <View style={{ ...styles.container, ...this.props.style }}>
         <AlternatingStyleList
-          items={this.props.users}
+          {...this.props}
           emptyComponent={<Text>No frenz</Text>}
           itemComponent={this.itemComponent}
-          onItemPress={(item) => navigationService.navigate('PublicProfile', { id: item })}
+          onItemPress={onItemPress}
           keyExtractor={(item) => 'user_' + item}
         />
       </View>
@@ -33,9 +40,15 @@ export default class UsersList extends Component {
 }
 
 UsersList.propTypes = {
-  actions: PropTypes.array,
+  ...AlternatingStyleList.propTypes,
   style: PropTypes.any,
-  users: PropTypes.array
+  sections: PropTypes.arrayOf(PropTypes.shape({
+    actions: PropTypes.array,
+    title: PropTypes.string,
+    data: PropTypes.arrayOf(PropTypes.number)
+  })),
+  onItemPress: PropTypes.func,
+  disableItemPress: PropTypes.bool
 }
 
 const styles = StyleSheet.create({

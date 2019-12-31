@@ -17,17 +17,11 @@ import CountBadge from '../components/CountBadge'
 import HeaderRightView from '../components/navigation_header/HeaderRightView'
 import { Event } from '../stores/EventStore.mobx'
 import { Location } from '../stores/LocationStore.mobx'
+import TabBar from '../components/TabBar'
+import InviteChoices from '../components/ride/InviteChoices'
 
-/**
- * TODO:
- * - get rides for user - public(*) + friends/groups allowed (* - once privacy is implemented)
- *
- * @export
- * @class RidesScreen
- * @extends {React.Component}
- */
 export default
-@inject('EventStore', 'LocationStore')
+@inject('EventStore', 'LocationStore', 'UserStore')
 @observer
 class RidesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -38,6 +32,7 @@ class RidesScreen extends React.Component {
       headerRight: <HeaderRightView>
         <TouchableWithModal
           modalContent={<InvitesList />}
+          modalStyle={styles.invitesModal}
         >
           <InvitesIconBadged />
         </TouchableWithModal>
@@ -53,15 +48,10 @@ class RidesScreen extends React.Component {
       bbox: null,
       visibleLocations: [],
       selectedLocation: null,
-      visibleEvents: []
+      tab: 'map'
     }
-  }
 
-  /**
-   * @memberof RidesScreen
-   */
-  onRidesRefresh = () => {
-    this.onRegionChange()
+    props.EventStore.loadSentRequests()
   }
 
   /**
@@ -70,8 +60,7 @@ class RidesScreen extends React.Component {
    * @param {*} region
    * @memberof RidesScreen
    */
-  onRegionChange = async (region) => {
-    this.setState({ loading: true })
+  onRegionChange = (region) => {
     let bbox = [
       region.latitude - region.latitudeDelta / 2, // southLat - min lat
       region.longitude - region.longitudeDelta / 2, // westLng - min lng
@@ -81,6 +70,13 @@ class RidesScreen extends React.Component {
     if (JSON.stringify(bbox) === JSON.stringify(this.state.bbox)) {
       return
     }
+    this.setState({ bbox: bbox })
+    this.refresh(bbox)
+  }
+
+  refresh = async (bbox: Array) => {
+    this.setState({ loading: true })
+
     let locations = await this.props.LocationStore.filter(
       { bbox: bbox },
       {
@@ -93,64 +89,62 @@ class RidesScreen extends React.Component {
 
     this.setState({
       visibleLocations: locations,
-      bbox: bbox,
-      loading: false,
-      visibleEvents: this.props.EventStore.list().filter((event: Event) => {
-        return locations.find((location: Location) => location.id === event.location) &&
-          event.datetime > (Math.floor(Date.now() / 1000) - 3600)
-      })
+      loading: false
     })
   }
 
-  selectLocation = (locationInfo) => {
-    this.setState({ selectedLocation: locationInfo })
+  selectLocation = (location: Location) => {
+    this.setState({ selectedLocation: location })
   }
 
   clearLocation = () => {
     this.setState({ selectedLocation: null })
   }
 
-  mapMarkers () {
-    return this.state.visibleLocations.map((locationInfo) => {
-      let ridesInLocation = this.state.visibleEvents.filter((event) => event.location === locationInfo.id)
+  mapMarkers (events: Event[]) {
+    return this.state.visibleLocations.map((location: Location) => {
+      let badgeCount = location.events
+        .filter((event: Event) => events.includes(event)) // Filters currently filtered events (my, friends)
+        .length
       return <Marker
         coordinate={{
-          latitude: locationInfo.coords[0],
-          longitude: locationInfo.coords[1]
+          latitude: location.coords[0],
+          longitude: location.coords[1]
         }}
-        key={locationInfo.id}
-        title={locationInfo.name}
-        onPress={() => this.selectLocation(locationInfo)}
+        key={location.id}
+        title={location.name}
+        onPress={() => this.selectLocation(location)}
+        anchor={{ x: 0.5, y: 0.5 }}
       >
-        <Text style={ridesInLocation.length ? styles.locMarker : { ...styles.locMarker, ...styles.emptyMarker }}>
-          {ridesInLocation.length || '⊘'}
+        <Text style={badgeCount ? styles.locMarker : { ...styles.locMarker, ...styles.emptyMarker }}>
+          {badgeCount || '⊘'}
         </Text>
         <Callout>
-          {this.locationCallout(locationInfo)}
+          {this.locationCallout(location)}
         </Callout>
       </Marker>
     })
   }
 
-  locationCallout (locationInfo) {
+  locationCallout (location: Location) {
     return <View style={styles.callout}>
       <Header
         numberOfLines={1}
         ellipsizeMode={'tail'}
         style={styles.calloutTitle}
       >
-        {locationInfo.name}
+        {location.name}
       </Header>
       <Text>Rides in area:</Text>
       <View style={styles.calloutDetailContainer}>
         {Object.keys(DifficultyIcon.icons).map(Number).map((difficultyLevel) => {
           let ridesByLevel = this.props.EventStore.futureEvents.filter(
             (event) =>
-              event.location === locationInfo.id &&
+              event.location === location.id &&
               event.difficulty === difficultyLevel
           ).length
           if (ridesByLevel > 0) {
-            return <View style={styles.calloutDiffIcon} key={locationInfo.id + '_' + difficultyLevel}>
+            return <View style={styles.calloutDiffIcon} key={location.id + '_' + difficultyLevel}>
               <DifficultyIcon d={difficultyLevel} size={Layout.window.hp(3)} />
               <CountBadge count={ridesByLevel} style={styles.calloutDiffIconBadge} />
             </View>
@@ -160,17 +154,91 @@ class RidesScreen extends React.Component {
     </View>
   }
 
+  getFriendsEvents = () => {
+    let ids = this.props.UserStore.currentUser.friends
+      .map((id) => this.props.UserStore.getSync(id).events)
+      .flat()
+
+    return ([{
+      title: 'My friends\' events',
+      data: this.props.EventStore.list(ids).filter(this.futureEventFilter)
+    }])
+  }
+
+  getMyEvents = () => ([
+    {
+      title: 'Invites',
+      countHighlight: true,
+      data: this.props.EventStore.invites
+        .filter(this.futureEventFilter)
+        .sort((a: Event, b: Event) => a.datetime - b.datetime),
+      footer: (event: Event) => <InviteChoices
+        options={[
+          {
+            icon: 'event-available',
+            label: 'Join',
+            action: () => event.acceptInvite()
+          },
+          {
+            icon: 'clear',
+            label: 'Dismiss',
+            fade: true,
+            action: () => event.declineInvite()
+          }
+        ]}
+      />
+    },
+    {
+      title: 'My rides',
+      data: this.props.EventStore
+        .list(this.props.UserStore.currentUser.events)
+        .filter(this.futureEventFilter)
+        .sort((a: Event, b: Event) => a.datetime - b.datetime)
+    },
+    {
+      title: 'Rides at my locations',
+      data: this.props.UserStore.currentUser.locations
+        .map((id) => this.props.LocationStore.getSync(id).events)
+        .flat()
+        .filter(this.futureEventFilter)
+        .sort((a: Event, b: Event) => a.datetime - b.datetime)
+    }
+  ])
+
+  getMapEvents = () => ([{
+    title: 'Nearby events',
+    data: this.state.visibleLocations
+      .map((location: Location) => location.events).flat()
+      .filter(this.futureEventFilter)
+      .sort((a: Event, b: Event) => a.datetime - b.datetime)
+  }])
+
+  getLocationEvents = () => ([{
+    title: 'Events at ' + this.state.selectedLocation.name,
+    data: this.state.selectedLocation.events
+      .filter(this.futureEventFilter)
+      .sort((a: Event, b: Event) => a.datetime - b.datetime)
+  }])
+
+  futureEventFilter = (event: Event) => event.datetime > (Math.floor(Date.now() / 1000) - 3600)
+
   render () {
-    let filteredEventList = this.state.selectedLocation === null
-      ? this.state.visibleEvents
-      : this.state.visibleEvents.filter((event) => event.location === this.state.selectedLocation.id)
+    let sections = this.state.selectedLocation !== null
+      ? this.getLocationEvents()
+      : this.state.tab === 'map'
+        ? this.getMapEvents()
+        : this.state.tab === 'my'
+          ? this.getMyEvents()
+          : this.getFriendsEvents()
+
+    let events = sections.map((section) => section.data).flat()
 
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <View style={{ flex: 35 }}>
           {this.state.loading && <ActivityIndicator style={styles.mapLoading} />}
           <AreaMap
-            markers={this.mapMarkers()}
+            markers={this.mapMarkers(events)}
             onRegionChangeComplete={this.onRegionChange}
             onPress={this.clearLocation}
             showsUserLocation
@@ -179,24 +247,36 @@ class RidesScreen extends React.Component {
         </View>
 
         <View style={{ flex: 65 }}>
-          {filteredEventList.length > 0
-            ? <RidesList
-              navigation={this.props.navigation}
-              onRefresh={this.onRidesRefresh}
-              rides={filteredEventList}
-            />
-            : !this.state.loading && <Text style={styles.noRidesText}>
+          <RidesList
+            navigation={this.props.navigation}
+            onRefresh={() => this.refresh(this.state.bbox)}
+            sections={sections}
+          />
+          {!this.state.loading && events.length === 0 && <Text style={styles.noRidesText}>
               No rides nearby, start one or move the map to see rides in the visible area!
-            </Text>}
+          </Text>}
           {this.state.loading && <View style={styles.listLoading}>
-            <ActivityIndicator color={'#fff'} />
+            <ActivityIndicator />
             <Text>Loading rides in visible area...</Text>
           </View>}
+          <CreateRideButton navigation={this.props.navigation} />
         </View>
-        <CreateRideButton
-          navigation={this.props.navigation}
-          style={styles.createRideButton}
-          size={Layout.window.wp(22)}
+        <TabBar
+          options={[
+            {
+              title: 'Map',
+              onPress: () => this.setState({ tab: 'map' })
+            },
+            {
+              title: `My rides (${this.getMyEvents()[1].data.flat().length})`, // confirmed
+              onPress: () => this.setState({ tab: 'my' }),
+              badge: this.getMyEvents()[0].data.flat().length // invites
+            },
+            {
+              title: 'Friends\' rides',
+              onPress: () => this.setState({ tab: 'friends' })
+            }
+          ]}
         />
       </View>
     )
@@ -248,8 +328,7 @@ const styles = StyleSheet.create({
     zIndex: 10
   },
   listLoading: {
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.25);'
+    alignItems: 'center'
   },
   noRidesText: {
     textAlign: 'center',
@@ -257,9 +336,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
-  createRideButton: {
-    position: 'absolute',
-    bottom: Layout.window.hp(4),
-    right: Layout.window.hp(4)
+  invitesModal: {
+    justifyContent: 'flex-end',
+    margin: 0
   }
 })

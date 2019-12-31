@@ -4,7 +4,7 @@ import {
   Text,
   StyleSheet
 } from 'react-native'
-import { observer } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react/native'
 import { FlatList, TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { MaterialIcons } from '@expo/vector-icons'
 import AlternatingStyleList from '../../lists/AlternatingStyleList'
@@ -18,32 +18,34 @@ import Button from '../../form/Button'
 import TrailFilter from './TrailFilter'
 
 export default
+@inject('TrailStore')
 @observer
 class SelectTrails extends Component {
   state = {
     selected: [],
-    trails: []
+    filter: {
+      difficulty: [],
+      search: ''
+    }
   }
 
-  componentDidMount = () => {
-    this.setState({
-      trails: this.props.location.trails
-    })
+  waitTime = 300
+  timeout = 0
+
+  componentWillUnmount () {
+    clearTimeout(this.timeout)
   }
 
   handleFilterUpdate = (filter) => {
-    let trails = this.props.location.trails
-    if (filter.difficulties.length > 0) {
-      trails = trails.filter((trail) =>
-        filter.difficulties.includes(trail.difficulty))
-    }
-    if (filter.search.length > 0) {
-      trails = trails.filter((trail) =>
-        trail.title.includes(filter.search.trim()))
-    }
     this.setState({
-      trails: trails
+      filter: filter
     })
+
+    clearTimeout(this.timeout) // clears the old timer
+    this.timeout = setTimeout(
+      () => this.props.TrailStore.filter({ rid: this.props.location.id, ...filter }),
+      this.waitTime
+    )
   }
 
   selectTrail = (trail: Trail) => {
@@ -62,17 +64,29 @@ class SelectTrails extends Component {
     }
   }
 
-  trailsList = () => <AlternatingStyleList
-    items={this.state.trails}
-    onItemPress={this.selectTrail}
-    itemComponent={(item, style) => <TrailItem
-      trail={item}
-      style={style}
-      badge={this.badge(item)}
-    />}
-    windowSize={6}
-    initialNumToRender={7}
-  />
+  trailsList = () => {
+    let trails = this.props.location.trails
+    if (this.state.filter.difficulty.length > 0) {
+      trails = trails.filter((trail) =>
+        this.state.filter.difficulty.includes(trail.difficulty))
+    }
+    if (this.state.filter.search.length > 0) {
+      trails = trails.filter((trail) =>
+        trail.title.includes(this.state.filter.search.trim()))
+    }
+
+    return <AlternatingStyleList
+      sections={[{ title: 'Trails', data: trails }]}
+      onItemPress={this.selectTrail}
+      itemComponent={(item, style) => <TrailItem
+        trail={item}
+        style={style}
+        badge={this.badge(item)}
+      />}
+      windowSize={6}
+      initialNumToRender={7}
+    />
+  }
 
   selectedList = () => <View>
     <Header style={styles.selectedListHeader}>Selected trails</Header>
@@ -124,7 +138,7 @@ class SelectTrails extends Component {
           onFilterUpdate={this.handleFilterUpdate}
         />
         <View style={styles.trailsList}>
-          {this.state.trails.length > 0
+          {this.props.location.trails.length > 0
             ? this.trailsList()
             : <Text>No trails found in location.</Text>
           }
