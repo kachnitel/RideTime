@@ -259,7 +259,11 @@ class RidesScreen extends React.Component {
             <ActivityIndicator />
             <Text>Loading rides in visible area...</Text>
           </View>}
-          <CreateRideButton navigation={this.props.navigation} />
+          <CreateRideButton
+            navigation={this.props.navigation}
+            size={Layout.window.wp(18)}
+            style={styles.createRideButton}
+          />
         </View>
         <TabBar
           options={[
@@ -339,5 +343,10 @@ const styles = StyleSheet.create({
   invitesModal: {
     justifyContent: 'flex-end',
     margin: 0
+  },
+  createRideButton: {
+    position: 'absolute',
+    right: Layout.window.wp(5),
+    bottom: Layout.window.hp(2)
   }
 })
