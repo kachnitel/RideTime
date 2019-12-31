@@ -194,6 +194,14 @@ class RidesScreen extends React.Component {
         .list(this.props.UserStore.currentUser.events)
         .filter(this.futureEventFilter)
         .sort((a: Event, b: Event) => a.datetime - b.datetime)
+    },
+    {
+      title: 'Rides at my locations',
+      data: this.props.UserStore.currentUser.locations
+        .map((id) => this.props.LocationStore.getSync(id).events)
+        .flat()
+        .filter(this.futureEventFilter)
+        .sort((a: Event, b: Event) => a.datetime - b.datetime)
     }
   ])
 
