@@ -78,7 +78,7 @@ class LocationPicker extends Component {
     if (this.props.showFavourites) {
       sections.unshift({
         title: 'Favourite locations',
-        data: this.props.UserStore.currentUser.locations
+        data: this.props.UserStore.currentUser.locations.slice()
       })
     }
 

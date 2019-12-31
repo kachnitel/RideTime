@@ -102,13 +102,13 @@ class FriendListScreen extends Component {
     sections={[
       {
         title: 'Friend requests',
-        data: this.props.UserStore.friendRequests,
+        data: this.props.UserStore.friendRequests.slice(),
         actions: this.actionsRequest,
         countHighlight: this.props.UserStore.friendRequests.length > 0
       },
       {
         title: 'Friends',
-        data: this.props.UserStore.currentUser.friends,
+        data: this.props.UserStore.currentUser.friends.slice(),
         actions: this.actionsFriend
       }
     ]}
