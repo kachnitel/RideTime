@@ -138,7 +138,5 @@ export class BaseCollectionStore {
     })
   }
 
-  _findInCollection (id) {
-    return this._collection.find(entity => entity.id === id)
-  }
+  _findInCollection = (id) => this._collection.find(entity => entity.id === id)
 }
