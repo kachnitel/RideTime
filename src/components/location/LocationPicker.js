@@ -8,7 +8,7 @@ import SearchInput from '../form/SearchInput'
 import LocationList from './LocationList'
 
 export default
-@inject('LocationStore')
+@inject('LocationStore', 'UserStore')
 @observer
 class LocationPicker extends Component {
   state = {
@@ -65,6 +65,26 @@ class LocationPicker extends Component {
     </View>
   }
 
+  getListSections = () => {
+    let sections = [
+      {
+        title: 'Nearby locations',
+        data: this.props.showFavourites
+          ? this.getLocationIds().filter((id) => !this.props.UserStore.currentUser.locations.includes(id))
+          : this.getLocationIds()
+      }
+    ]
+
+    if (this.props.showFavourites) {
+      sections.unshift({
+        title: 'Favourite locations',
+        data: this.props.UserStore.currentUser.locations
+      })
+    }
+
+    return sections
+  }
+
   renderList = () => {
     return <>
       <View style={styles.inputRow}>
@@ -81,7 +101,7 @@ class LocationPicker extends Component {
           : this.state.loading
             ? <ActivityIndicator />
             : <LocationList
-              locations={this.getLocationIds()}
+              sections={this.getListSections()}
               onLocationPress={this.props.onLocationPress}
             />
       }
@@ -137,7 +157,8 @@ LocationPicker.propTypes = {
   LocationStore: PropTypes.any,
   displayMap: PropTypes.bool,
   onLocationPress: PropTypes.func,
-  filter: PropTypes.func
+  filter: PropTypes.func,
+  showFavourites: PropTypes.bool
 }
 
 const styles = StyleSheet.create({

@@ -63,6 +63,7 @@ class SelectLocationScreen extends React.Component {
           style={styles.locationPicker}
           displayMap={this.state.displayMap}
           onLocationPress={this.goToRideConfig}
+          showFavourites
         />
         {/* Next button? */}
       </View>

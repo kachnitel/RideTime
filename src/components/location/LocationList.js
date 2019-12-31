@@ -11,11 +11,11 @@ export default class LocationList extends Component {
 
   render () {
     return (
-      <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
+      <View style={{ ...styles.container, ...this.props.style }}>
         <AlternatingStyleList
-          sections={[{ title: 'Locations', data: this.props.locations }]}
+          {...this.props}
           itemComponent={this.itemComponent}
-          onItemPress={this.props.onLocationPress}
+          onItemPress={this.props.onLocationPress} // FIXME: pointless
           keyExtractor={(id) => 'location_' + id}
         />
       </View>
@@ -24,7 +24,7 @@ export default class LocationList extends Component {
 }
 
 LocationList.propTypes = {
-  locations: PropTypes.array,
+  ...AlternatingStyleList.propTypes,
   onLocationPress: PropTypes.func
 }
 
