@@ -6,6 +6,7 @@ import InputTitle from '../../form/InputTitle'
 import TextInputWithTitle from '../../form/TextInputWithTitle'
 import ModalViewMenu from '../../modal/ModalViewMenu'
 import DifficultyIcon from '../../icons/DifficultyIcon'
+import OutlineIcon from '../../icons/OutlineIcon'
 
 export default class TrailFilter extends Component {
   state = {
@@ -26,7 +27,21 @@ export default class TrailFilter extends Component {
   hideFilterMenu = () => this.setState({ showMenu: false })
 
   renderFilterTouchable = () => <TouchableOpacity onPress={this.showFilterMenu}>
-    <Text style={styles.filterText}>Tap to set filters</Text>
+    <View style={styles.filterTouchable}>
+      <Text style={styles.filterText}>Tap to set filters</Text>
+      <View style={styles.difficultiesPreview}>
+        {this.state.filter.difficulty.map((d) => <OutlineIcon
+          thickness={1.1}
+          key={'d_' + d}
+          outlineStyle={styles.outline}
+        >
+          <DifficultyIcon
+            d={d}
+            size={Layout.window.hp(2)}
+          />
+        </OutlineIcon>)}
+      </View>
+    </View>
   </TouchableOpacity>
 
   toggleDifficulty = (difficulty: Number) => {
@@ -97,5 +112,19 @@ const styles = StyleSheet.create({
     color: '#fffa',
     padding: Layout.window.hp(2),
     textAlign: 'center'
+  },
+  filterTouchable: {
+    flexDirection: 'row'
+  },
+  difficultiesPreview: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: Layout.window.hp(1),
+    borderRadius: Layout.window.hp(1)
+  },
+  outline: {
+    color: '#fff'
   }
 })
