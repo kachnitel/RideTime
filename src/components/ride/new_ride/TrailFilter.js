@@ -1,31 +1,68 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
-import DifficultyRangeSlider from './DifficultyRangeSlider'
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import Colors from '../../../../constants/Colors'
 import Layout from '../../../../constants/Layout'
 import InputTitle from '../../form/InputTitle'
 import TextInputWithTitle from '../../form/TextInputWithTitle'
+import ModalViewMenu from '../../modal/ModalViewMenu'
+import DifficultyIcon from '../../icons/DifficultyIcon'
 
 export default class TrailFilter extends Component {
-  filter = {
-    difficulty: [],
-    search: ''
+  state = {
+    showMenu: false,
+    filter: {
+      difficulty: [],
+      search: ''
+    }
   }
 
   updateFilter = (update) => {
-    this.filter = { ...this.filter, ...update }
-    this.props.onFilterUpdate(this.filter)
+    let filter = { ...this.state.filter, ...update }
+    this.props.onFilterUpdate(filter)
+    this.setState({ filter: filter })
   }
+
+  showFilterMenu = () => this.setState({ showMenu: true })
+  hideFilterMenu = () => this.setState({ showMenu: false })
+
+  renderFilterTouchable = () => <TouchableOpacity onPress={this.showFilterMenu}>
+    <Text style={styles.filterText}>Tap to set filters</Text>
+  </TouchableOpacity>
+
+  toggleDifficulty = (difficulty: Number) => {
+    let selected = [...this.state.filter.difficulty]
+    this.state.filter.difficulty.includes(difficulty)
+      ? selected = selected.filter((d) => d !== difficulty)
+      : selected.push(difficulty)
+
+    this.updateFilter({ difficulty: selected })
+  }
+
+  renderFilterMenu = () => <ModalViewMenu
+    isVisible={this.state.showMenu}
+    onBackdropPress={this.hideFilterMenu}
+    onBackButtonPress={this.hideFilterMenu}
+    onClose={this.hideFilterMenu}
+    options={Object.keys(DifficultyIcon.icons).map(Number).map((difficulty: Number) => ({
+      onPress: () => this.toggleDifficulty(difficulty),
+      customIcon: <DifficultyIcon d={difficulty} size={Layout.window.hp(5)} />,
+      label: DifficultyIcon.icons[difficulty].label,
+      icon: this.state.filter.difficulty.includes(difficulty)
+        ? 'check'
+        : this.state.filter.difficulty.length > 0
+          ? 'clear'
+          : 'check',
+      highlight: this.state.filter.difficulty.includes(difficulty)
+    }))}
+  />
 
   render () {
     return (
       <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
         <View style={styles.row}>
-          <InputTitle>Difficulties: </InputTitle>
-          <DifficultyRangeSlider
-            width={Layout.window.wp(55)}
-            onValuesChange={(values) => this.updateFilter({ difficulty: values })}
-          />
+          <InputTitle>Filters: </InputTitle>
+          {this.renderFilterTouchable()}
+          {this.renderFilterMenu()}
         </View>
         <TextInputWithTitle
           title='Search:'
@@ -50,5 +87,11 @@ const styles = StyleSheet.create({
   },
   input: {
     width: Layout.window.wp(55)
+  },
+  filterText: {
+    width: Layout.window.wp(55),
+    color: '#fffa',
+    padding: Layout.window.hp(2),
+    textAlign: 'center'
   }
 })

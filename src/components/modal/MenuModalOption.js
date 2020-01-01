@@ -13,7 +13,8 @@ export default class MenuModalOption extends Component {
         onPress={this.props.onPress}
       >
         <View style={{ ...styles.container, ...this.props.style }}>
-          <View>
+          <View style={styles.iconsContainer}>
+            {this.props.customIcon}
             {this.props.icon && <Icon
               name={this.props.icon}
               size={Layout.window.hp(4)}
@@ -43,7 +44,8 @@ MenuModalOption.propTypes = {
   icon: PropTypes.string,
   label: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
-  style: PropTypes.any
+  style: PropTypes.any,
+  customIcon: PropTypes.object
 }
 
 const styles = StyleSheet.create({
@@ -78,5 +80,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -Layout.window.hp(1),
     top: -Layout.window.hp(1)
+  },
+  iconsContainer: {
+    flexDirection: 'row'
   }
 })
