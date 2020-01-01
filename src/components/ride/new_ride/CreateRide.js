@@ -23,7 +23,7 @@ class CreateRide extends React.Component {
   />
 
   difficulty = () => <SelectDifficulty
-    onValueChange={(d) => this.props.Event.updateDifficulty(d.value)}
+    onValueChange={(d) => this.props.Event.updateDifficulty(d)}
     style={styles.selectDifficulty}
     value={this.props.Event.difficulty}
     title='Select difficulty'
@@ -42,7 +42,7 @@ class CreateRide extends React.Component {
   />
 
   terrain = () => <SelectBike
-    onValueChange={(t) => this.props.Event.updateTerrain(t.value)}
+    onValueChange={(t) => this.props.Event.updateTerrain(t)}
     style={styles.itemContainer}
     value={this.props.Event.terrain || undefined}
     title='Bike type'
@@ -78,7 +78,6 @@ class CreateRide extends React.Component {
       <View {...this.props}>
         {this.title()}
         {this.route()}
-        {/* Private / public */}
         {this.difficulty()}
         {this.datetime()}
         {this.terrain()}

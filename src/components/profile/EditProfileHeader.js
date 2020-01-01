@@ -48,12 +48,12 @@ class EditProfileHeader extends React.Component {
             />
             <SelectDifficulty
               value={this.props.User.level}
-              onValueChange={(val) => this.props.User.updateLevel(val.value)}
+              onValueChange={(val) => this.props.User.updateLevel(val)}
               style={styles.textInput}
             />
             <SelectBike
               value={this.props.User.bike}
-              onValueChange={(val) => this.props.User.updateBike(val.value)}
+              onValueChange={(val) => this.props.User.updateBike(val)}
               style={styles.textInput}
             />
             <HomeLocationsPicker
