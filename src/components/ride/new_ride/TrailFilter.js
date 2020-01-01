@@ -43,17 +43,21 @@ export default class TrailFilter extends Component {
     onBackdropPress={this.hideFilterMenu}
     onBackButtonPress={this.hideFilterMenu}
     onClose={this.hideFilterMenu}
-    options={Object.keys(DifficultyIcon.icons).map(Number).map((difficulty: Number) => ({
-      onPress: () => this.toggleDifficulty(difficulty),
-      customIcon: <DifficultyIcon d={difficulty} size={Layout.window.hp(5)} />,
-      label: DifficultyIcon.icons[difficulty].label,
-      icon: this.state.filter.difficulty.includes(difficulty)
-        ? 'check'
-        : this.state.filter.difficulty.length > 0
-          ? 'clear'
-          : 'check',
-      highlight: this.state.filter.difficulty.includes(difficulty)
-    }))}
+    options={Object.keys(DifficultyIcon.icons)
+      .map(Number)
+      .filter((d) => d > 0)
+      .map((difficulty: Number) => ({
+        onPress: () => this.toggleDifficulty(difficulty),
+        customIcon: <DifficultyIcon d={difficulty} size={Layout.window.hp(5)} />,
+        label: DifficultyIcon.icons[difficulty].label,
+        icon: this.state.filter.difficulty.includes(difficulty)
+          ? 'check'
+          : this.state.filter.difficulty.length > 0
+            ? 'clear'
+            : 'check',
+        highlight: this.state.filter.difficulty.includes(difficulty)
+      }))
+    }
   />
 
   render () {
