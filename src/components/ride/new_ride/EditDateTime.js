@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, ViewPropTypes, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
-import DateTimePicker from 'react-native-modal-datetime-picker'
+import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import TextInputWithTitle from '../../form/TextInputWithTitle'
 
 export default class EditDateTime extends React.Component {
@@ -25,7 +25,7 @@ export default class EditDateTime extends React.Component {
   render () {
     return (
       <View style={this.props.containerStyle}>
-        <DateTimePicker
+        <DateTimePickerModal
           isVisible={this.state.isDateTimePickerVisible}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
