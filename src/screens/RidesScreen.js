@@ -77,6 +77,10 @@ class RidesScreen extends React.Component {
   refresh = async (bbox: Array) => {
     this.setState({ loading: true })
 
+    this.props.EventStore.filter({
+      location: this.props.UserStore.currentUser.locations,
+      dateStart: (Math.floor(Date.now() / 1000) - 3600)
+    })
     let locations = await this.props.LocationStore.filter(
       { bbox: bbox },
       {
