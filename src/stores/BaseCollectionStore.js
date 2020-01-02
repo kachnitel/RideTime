@@ -58,7 +58,7 @@ export class BaseCollectionStore {
       entity = new this.EntityClass(this)
       entity.updateId(id)
       entity.populateFromApi(id)
-      logger.warn(`Trying to get entity ${this.EntityClass.name}:${id} before it is initialized`)
+      this.add(entity)
     }
     return entity
   }
