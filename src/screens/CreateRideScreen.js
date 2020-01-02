@@ -43,7 +43,7 @@ class CreateRideScreen extends React.Component {
     this.event.updateDescription(route.description && this.trimString(route.description, 2048))
 
     let routeString = route.trails.map( // TODO: discards actual route
-      (trail: Trail) => this.props.TrailStore.getSync(trail).title
+      (trail: Trail) => this.props.TrailStore.get(trail).title
     ).join(' ⟫ ') // ⟫ / ⫸ / ⇨ / → / ▶
     this.event.updateRoute(this.trimString(routeString, 2048))
 
@@ -60,6 +60,7 @@ class CreateRideScreen extends React.Component {
     // TODO: Validate
     this.setState({ saving: true })
     await this.event.saveNew()
+    this.props.UserStore.currentUser.addEvent(this.event.id)
 
     ToastAndroid.show('Ride created.', ToastAndroid.SHORT)
 

@@ -47,7 +47,7 @@ class AuthLoadingScreen extends React.Component {
       this.setState({ loadingText: 'Loading user...' })
       let user
       try {
-        user = await this.props.UserStore.get(signedInUserId)
+        user = await this.props.UserStore.getAsync(signedInUserId)
       } catch (error) {
         // Custom catch to allow redirect
         Alert.alert('Error loading account ID: ' + signedInUserId)

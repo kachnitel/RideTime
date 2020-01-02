@@ -30,11 +30,11 @@ export default class UserStore extends BaseCollectionStore {
    * @memberof UserStore
    */
   @computed get currentUser () {
-    return this.getSync(this.applicationStore.userId)
+    return this.get(this.applicationStore.userId)
   }
 
   getCurrentUserAsync () {
-    return this.get(this.applicationStore.userId)
+    return this.getAsync(this.applicationStore.userId)
   }
 
   _friendRequests = observable.array([])

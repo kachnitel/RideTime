@@ -77,6 +77,10 @@ class RidesScreen extends React.Component {
   refresh = async (bbox: Array) => {
     this.setState({ loading: true })
 
+    this.props.EventStore.filter({
+      location: this.props.UserStore.currentUser.locations,
+      dateStart: (Math.floor(Date.now() / 1000) - 3600)
+    })
     let locations = await this.props.LocationStore.filter(
       { bbox: bbox },
       {
@@ -156,7 +160,7 @@ class RidesScreen extends React.Component {
 
   getFriendsEvents = () => {
     let ids = this.props.UserStore.currentUser.friends
-      .map((id) => this.props.UserStore.getSync(id).events)
+      .map((id) => this.props.UserStore.get(id).events)
       .flat()
 
     return ([{
@@ -198,7 +202,7 @@ class RidesScreen extends React.Component {
     {
       title: 'Rides at my locations',
       data: this.props.UserStore.currentUser.locations
-        .map((id) => this.props.LocationStore.getSync(id).events)
+        .map((id) => this.props.LocationStore.get(id).events)
         .flat()
         .filter(this.futureEventFilter)
         .sort((a: Event, b: Event) => a.datetime - b.datetime)

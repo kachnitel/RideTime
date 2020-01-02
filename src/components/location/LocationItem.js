@@ -21,7 +21,7 @@ class LocationItem extends React.Component {
   }
 
   async componentDidMount () {
-    this.location = await this.props.LocationStore.get(this.props.locationId)
+    this.location = await this.props.LocationStore.getAsync(this.props.locationId)
     this.setState({ loading: false })
   }
 

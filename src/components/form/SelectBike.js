@@ -5,30 +5,20 @@ import TerrainIcon from '../icons/TerrainIcon'
 
 export default class SelectBike extends React.Component {
   render () {
-    let options = Object.keys(TerrainIcon.icons).map((value) => {
-      return ({
-        value: value,
-        ...TerrainIcon.icons[value]
-      })
-    })
-
-    let value = this.props.value !== undefined
-      ? {
-        ...TerrainIcon.icons[this.props.value],
-        value: this.props.value
-      }
-      : undefined
+    let options = Object.keys(TerrainIcon.icons).map((value) => ({
+      customIcon: <TerrainIcon terrain={value} size={Layout.window.hp(6)} />,
+      label: TerrainIcon.icons[value].label,
+      value: value,
+      icon: (this.props.value === value) ? 'check' : undefined,
+      highlight: this.props.value === value
+    }))
 
     return (
       <SelectWithIcon
         {...this.props}
         options={options}
         placeholder={this.props.placeholder || 'What\'s your primary bike?'}
-        headerText='Select bike type'
-        footerText={this.props.footerText || 'Choose what kind of bike do you ride most often. It will be displayed on yor profile.'}
         title={this.props.title || 'Your bike'}
-        icon={(value) => <TerrainIcon terrain={value} size={Layout.window.hp(6)} />}
-        value={value}
       />
     )
   }

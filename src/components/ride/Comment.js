@@ -20,7 +20,7 @@ class Comment extends Component {
 
   loadUser = async () => {
     this.setState({ loadingUser: true })
-    let user = await this.props.UserStore.get(this.props.comment.author)
+    let user = await this.props.UserStore.getAsync(this.props.comment.author)
     this.setState({
       user: user,
       loadingUser: false,

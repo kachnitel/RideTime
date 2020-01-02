@@ -136,7 +136,7 @@ class LocationPicker extends Component {
     >
       <UrlTile urlTemplate={tileUrl} maximumZ={19} />
       {this.getLocationIds().map((id) => {
-        let location = this.props.LocationStore.getSync(id)
+        let location = this.props.LocationStore.get(id)
         let latlng = {
           latitude: location.coords[0],
           longitude: location.coords[1]

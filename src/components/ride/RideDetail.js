@@ -92,7 +92,7 @@ class RideDetail extends Component {
 
   getFilteredFriends = () => this.state.inviteFilter != null && this.state.inviteFilter.length > 0
     ? this.props.UserStore.currentUser.friends.filter(
-      (id) => this.props.UserStore.getSync(id)
+      (id) => this.props.UserStore.get(id)
         .name.includes(this.state.inviteFilter))
     : this.props.UserStore.currentUser.friends
 }

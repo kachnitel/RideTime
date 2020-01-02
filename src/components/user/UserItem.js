@@ -23,7 +23,7 @@ class UserItem extends React.Component {
   }
 
   async componentDidMount () {
-    this.user = await this.props.UserStore.get(this.props.id)
+    this.user = await this.props.UserStore.getAsync(this.props.id)
     this.setState({ loading: false })
   }
 
