@@ -77,7 +77,7 @@ class RideDetailScreen extends React.Component {
 
   componentDidMount = async () => {
     let id = this.props.navigation.getParam('eventId')
-    this.event = await this.props.EventStore.get(id)
+    this.event = await this.props.EventStore.getAsync(id)
     this.setState({ loading: false })
     this.props.navigation.setParams({ event: this.event })
     this.event.isMember() && await this.event.loadRequested()

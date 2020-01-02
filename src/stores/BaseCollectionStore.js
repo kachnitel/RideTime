@@ -18,7 +18,7 @@ export class BaseCollectionStore {
     this.populateEntities = this.populateEntities.bind(this)
   }
 
-  get = async (id: Number) => {
+  getAsync = async (id: Number) => {
     let result = await this.getEntity(id)
     return result
   }
@@ -48,16 +48,17 @@ export class BaseCollectionStore {
   }
 
   /**
-   * Synchronously return locally stored Entity
-   *
    * @param {Number} id
    * @returns {BaseEntity}
    * @memberof BaseCollectionStore
    */
-  getSync (id: Number) {
+  get (id: Number) {
     let entity = this._findInCollection(id)
     if (!entity) {
-      throw new Error(`Trying to get entity ${this.EntityClass.name}:${id} before it is initialized`)
+      entity = new this.EntityClass(this)
+      entity.updateId(id)
+      entity.populateFromApi(id)
+      logger.warn(`Trying to get entity ${this.EntityClass.name}:${id} before it is initialized`)
     }
     return entity
   }

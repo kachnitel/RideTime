@@ -43,7 +43,7 @@ class CreateRideScreen extends React.Component {
     this.event.updateDescription(route.description && this.trimString(route.description, 2048))
 
     let routeString = route.trails.map( // TODO: discards actual route
-      (trail: Trail) => this.props.TrailStore.getSync(trail).title
+      (trail: Trail) => this.props.TrailStore.get(trail).title
     ).join(' ⟫ ') // ⟫ / ⫸ / ⇨ / → / ▶
     this.event.updateRoute(this.trimString(routeString, 2048))
 

@@ -32,7 +32,7 @@ class PublicProfileScreen extends React.Component {
 
   async componentDidMount () {
     let userId = this.props.navigation.getParam('id')
-    this.user = await this.props.UserStore.get(userId)
+    this.user = await this.props.UserStore.getAsync(userId)
     this.setState({ loading: false })
   }
 

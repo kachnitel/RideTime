@@ -12,7 +12,7 @@ class FriendMenuModal extends Component {
   handleRemoveFriend = () => {
     Alert.alert(
       'Are you sure?',
-      `Remove ${this.props.UserStore.getSync(this.props.userId).name} from friends?`,
+      `Remove ${this.props.UserStore.get(this.props.userId).name} from friends?`,
       [
         {
           text: 'Cancel',

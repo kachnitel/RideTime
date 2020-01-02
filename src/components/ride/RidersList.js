@@ -15,15 +15,6 @@ class RidersList extends Component {
     users: [] // User[]
   }
 
-  /**
-   * Note: **All** users should be already known before
-   * this list is mounted
-   * TODO: Switch to getSync once API & stores prepopulate
-   *   - Event members
-   *   - Friends
-   *
-   * @memberof RidersList
-   */
   componentDidMount = () => {
     this.refreshUsers()
   }
@@ -36,7 +27,7 @@ class RidersList extends Component {
 
   refreshUsers = async () => {
     let users = await Promise.all(
-      this.props.userIDs.map(async (id) => this.props.UserStore.get(id))
+      this.props.userIDs.map(async (id) => this.props.UserStore.getAsync(id))
     )
 
     this.setState({

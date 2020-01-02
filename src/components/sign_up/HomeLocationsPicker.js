@@ -25,7 +25,7 @@ class HomeLocationsPicker extends React.Component {
 
   componentDidMount = async () => {
     let locations = await Promise.all([
-      this.state.picked.map(async (id) => await this.props.LocationStore.get(id))
+      this.state.picked.map(async (id) => this.props.LocationStore.getAsync(id))
     ])
     this.setState({
       loading: false,
@@ -49,7 +49,7 @@ class HomeLocationsPicker extends React.Component {
           return (
             <View key={item} style={styles.selectedItemContainer}>
               <Text style={styles.selectedItemText} numberOfLines={1}>
-                {this.props.LocationStore.getSync(item).name}
+                {this.props.LocationStore.get(item).name}
               </Text>
               <TouchableNativeFeedback onPress={() => this.removeItem(item)}>
                 <Icon

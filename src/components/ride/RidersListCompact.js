@@ -24,7 +24,7 @@ class RidersListCompact extends Component {
 
   refreshUsers = async () => {
     let users = await Promise.all(
-      this.props.userIDs.map(async (id) => this.props.UserStore.get(id))
+      this.props.userIDs.map(async (id) => this.props.UserStore.getAsync(id))
     )
 
     this.setState({

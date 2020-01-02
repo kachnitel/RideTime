@@ -12,7 +12,7 @@ test('should add user to store', async () => {
 
   store.add(user)
 
-  expect(await store.get(1)).toBe(user)
+  expect(await store.getAsync(1)).toBe(user)
 })
 
 test('should return correct API object', () => {

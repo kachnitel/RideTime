@@ -73,7 +73,7 @@ class RequestList extends Component {
     <View style={styles.detailComponentProfile}>
 
       <ProfileHeader
-        user={this.props.UserStore.getSync(this.state.detail)}
+        user={this.props.UserStore.get(this.state.detail)}
       />
     </View>
     {this.inviteChoices(this.state.detail)}

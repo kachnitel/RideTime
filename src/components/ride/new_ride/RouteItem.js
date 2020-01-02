@@ -22,7 +22,7 @@ class RouteItem extends Component {
   trailsList = () => <View style={styles.trailsContainer}>
     {
       this.props.route.trails.slice(0, 10).map((trailId, index) => {
-        let trail = this.props.TrailStore.getSync(trailId)
+        let trail = this.props.TrailStore.get(trailId)
 
         return <View key={'trail_' + trail.id + '_' + index} style={styles.trailItem}>
           <OutlineDifficultyIcon size={Layout.window.hp(2)} difficulty={trail.difficulty} />
