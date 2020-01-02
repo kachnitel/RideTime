@@ -214,6 +214,7 @@ export class Event extends BaseEntity {
     await this.store.provider.join(this.id)
     this.addMember(this.store.userStore.currentUser.id)
     this.invited.remove(this.store.userStore.currentUser.id)
+    this.store.userStore.currentUser.addEvent(this.id)
     this.store.removeInvite(this)
   }
 
