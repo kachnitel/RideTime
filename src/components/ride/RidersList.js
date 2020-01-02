@@ -26,9 +26,7 @@ class RidersList extends Component {
   }
 
   refreshUsers = async () => {
-    let users = await Promise.all(
-      this.props.userIDs.map(async (id) => this.props.UserStore.getAsync(id))
-    )
+    let users = this.props.userIDs.map((id) => this.props.UserStore.get(id))
 
     this.setState({
       loading: false,
