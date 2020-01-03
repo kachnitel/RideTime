@@ -30,7 +30,7 @@ class SignInScreen extends React.Component {
 
   authenticate = async () => {
     this.setState({ loading: true, loadingMessage: 'Getting token...' })
-    logger.debug('Calling loginWithAuth0')
+
     let auth = new Authentication()
     let token = await auth.loginWithAuth0()
     if (!token || !token.access_token) {
@@ -39,11 +39,9 @@ class SignInScreen extends React.Component {
       this.setState({ loading: false })
       return
     }
-    logger.debug('Token received / updating ApplicationStore', token)
     this.setState({ loadingMessage: 'Token received, updating store...' })
     this.props.ApplicationStore.updateAccessToken(token.access_token) // token undefined!
 
-    logger.debug('Calling getUserInfo')
     this.setState({ loadingMessage: 'Getting user info...' })
     let userInfo = await auth.getUserInfo(token.access_token)
     logger.debug('UserInfo received / Signing in', userInfo)
@@ -58,7 +56,6 @@ class SignInScreen extends React.Component {
       throw new Error('Sign in failed')
     }
 
-    logger.debug('Sign in result received', signInResult)
     if (signInResult.success) {
       this.handleSignIn(signInResult.user, token)
     } else {
