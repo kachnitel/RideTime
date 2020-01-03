@@ -45,7 +45,27 @@ exports[`renders correctly 1`] = `
         "paddingBottom": 13.5,
       }
     }
-  />
+  >
+    <Image
+      onLayout={[Function]}
+      source={
+        Object {
+          "uri": null,
+        }
+      }
+      style={
+        Object {
+          "aspectRatio": 1,
+          "backgroundColor": "rgba(12, 94, 20, 0.5);",
+          "borderRadius": 0,
+          "height": 80,
+          "marginRight": -26.5,
+          "width": 80,
+          "zIndex": 1,
+        }
+      }
+    />
+  </View>
 </View>
 `;
 
@@ -104,6 +124,26 @@ exports[`renders correctly with style 1`] = `
         "paddingBottom": 13.5,
       }
     }
-  />
+  >
+    <Image
+      onLayout={[Function]}
+      source={
+        Object {
+          "uri": null,
+        }
+      }
+      style={
+        Object {
+          "aspectRatio": 1,
+          "backgroundColor": "rgba(12, 94, 20, 0.5);",
+          "borderRadius": 0,
+          "height": 80,
+          "marginRight": -26.5,
+          "width": 80,
+          "zIndex": 1,
+        }
+      }
+    />
+  </View>
 </View>
 `;
