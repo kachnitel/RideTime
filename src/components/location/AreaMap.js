@@ -1,5 +1,5 @@
 import React from 'react'
-import MapView, { UrlTile } from 'react-native-maps'
+import MapView from 'react-native-maps'
 import { inject, observer } from 'mobx-react/native'
 import { StyleSheet, ActivityIndicator } from 'react-native'
 
@@ -21,7 +21,6 @@ class AreaMap extends React.Component {
       return <ActivityIndicator />
     }
 
-    let tileUrl = 'http://c.tile.openstreetmap.org/{z}/{x}/{y}.png'
     let latLng = {
       latitude: this.state.currentLocation.latitude,
       longitude: this.state.currentLocation.longitude
@@ -35,7 +34,6 @@ class AreaMap extends React.Component {
       style={styles.map}
       {...this.props}
     >
-      <UrlTile urlTemplate={tileUrl} maximumZ={19} />
       {this.props.markers}
     </MapView>
   }
