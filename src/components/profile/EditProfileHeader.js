@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer, inject } from 'mobx-react'
 import { View, StyleSheet, ScrollView, Image } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { MaterialIcons } from '@expo/vector-icons'
 import headerStyles, { profilePictureSize } from './ProfileHeaderStyle' // TODO:
 import Layout from '../../../constants/Layout'
 import EditPicture from './EditPicture'
@@ -22,7 +22,7 @@ class EditProfileHeader extends React.Component {
           style={headerStyles.coverPicture}
         />
         {/* TODO: Use EditPicture with repositioned icon (override icon style) */}
-        <Icon name='edit' style={styles.editIcon} />
+        <MaterialIcons name='edit' style={styles.editIcon} />
         <View style={headerStyles.businessCard}>
           <View style={headerStyles.profilePicture}>
             <EditPicture

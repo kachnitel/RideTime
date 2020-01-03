@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import * as ImageManipulator from 'expo-image-manipulator'
 import * as ImagePicker from 'expo-image-picker'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { MaterialIcons } from '@expo/vector-icons'
 import ProfilePicture from './ProfilePicture'
 import Layout from '../../../constants/Layout'
 import { logger } from '../../Logger'
@@ -54,7 +54,7 @@ export default class EditPicture extends React.Component {
       <TouchableOpacity onPress={this._selectPicture}>
         <View style={this.props.style} >
           <ProfilePicture picture={this.props.picture} size={this.props.size} />
-          <Icon
+          <MaterialIcons
             name='edit'
             style={{
               ...styles.editIcon,

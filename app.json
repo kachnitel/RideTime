@@ -1,35 +1,35 @@
 {
-    "expo": {
-        "name": "RideTime",
-        "scheme": "ridetime",
-        "description": "Mountain bikes made social. Plan rides, join your friends or meet new people to ride with!",
-        "slug": "RideTime",
-        "privacy": "public",
-        "sdkVersion": "35.0.0",
-        "platforms": [
-            "ios",
-            "android"
-        ],
-        "version": "0.8.4",
-        "orientation": "portrait",
-        "icon": "./assets/images/icon.png",
-        "splash": {
-            "image": "assets/images/DSC_0214.png",
-            "resizeMode": "cover",
-            "backgroundColor": "#0c5e14"
-        },
-        "updates": {
-            "fallbackToCacheTimeout": 10
-        },
-        "assetBundlePatterns": [
-            "**/*"
-        ],
-        "android": {
-            "package": "com.kachnitel.ridetime"
-        },
-        "ios": {
-            "supportsTablet": false
-        },
-        "githubUrl": "https://github.com/kachnitel/RideTime"
-    }
+  "expo": {
+    "name": "RideTime",
+    "scheme": "ridetime",
+    "description": "Mountain bikes made social. Plan rides, join your friends or meet new people to ride with!",
+    "slug": "RideTime",
+    "privacy": "public",
+    "sdkVersion": "36.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "0.8.4",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "assets/images/DSC_0214.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#0c5e14"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 10
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.kachnitel.ridetime"
+    },
+    "ios": {
+      "supportsTablet": false
+    },
+    "githubUrl": "https://github.com/kachnitel/RideTime"
+  }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
-import ActionButton from 'react-native-action-button'
-import Layout from '../../../../constants/Layout'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
+import Colors from '../../../../constants/Colors'
 
 export class CreateRideButton extends React.Component {
   navigateToNewRide = () => {
@@ -9,17 +9,30 @@ export class CreateRideButton extends React.Component {
   }
 
   render () {
-    return <ActionButton
-      buttonColor='rgba(134, 194, 50, 1)'
-      size={Layout.window.wp(18)}
-      buttonTextStyle={styles.actionButtonIcon}
-      onPress={() => { this.navigateToNewRide() }}
-    />
+    let size = this.props.size
+    let dimensions = {
+      fontSize: size * 0.6,
+      padding: size * 0.2,
+      borderRadius: size / 2
+    }
+    return <View style={{ ...styles.actionButtonIcon, ...this.props.style }}>
+      <TouchableOpacity onPress={this.navigateToNewRide}>
+        <MaterialIcons
+          name='add'
+          style={{ ...styles.icon, ...dimensions }}
+        />
+      </TouchableOpacity>
+    </View>
   }
 }
 
 const styles = StyleSheet.create({
   actionButtonIcon: {
-    fontSize: Layout.window.wp(12)
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  icon: {
+    backgroundColor: Colors.iconColor,
+    color: '#fff'
   }
 })

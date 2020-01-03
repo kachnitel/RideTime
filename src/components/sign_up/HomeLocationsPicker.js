@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { MaterialIcons } from '@expo/vector-icons'
 import InputTitle from '../form/InputTitle'
 import Layout from '../../../constants/Layout'
 import Colors from '../../../constants/Colors'
@@ -52,7 +52,7 @@ class HomeLocationsPicker extends React.Component {
                 {this.props.LocationStore.get(item).name}
               </Text>
               <TouchableNativeFeedback onPress={() => this.removeItem(item)}>
-                <Icon
+                <MaterialIcons
                   name='clear'
                   size={Layout.window.hp(3.5)}
                   style={styles.selectedItemRemoveIcon}

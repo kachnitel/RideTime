@@ -7,7 +7,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { inject, observer } from 'mobx-react/native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { MaterialIcons } from '@expo/vector-icons'
 import Layout from '../../../constants/Layout'
 import Colors from '../../../constants/Colors'
 import { User } from '../../stores/UserStore.mobx'
@@ -51,7 +51,7 @@ class UserItem extends React.Component {
           key={action + index}
           style={style}
         >
-          <Icon name={icon} size={Layout.window.hp(3.5)} color='#fff' />
+          <MaterialIcons name={icon} size={Layout.window.hp(3.5)} color='#fff' />
         </TouchableOpacity>
       })}
     </View>
