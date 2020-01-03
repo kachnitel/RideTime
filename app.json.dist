@@ -25,7 +25,12 @@
       "**/*"
     ],
     "android": {
-      "package": "com.kachnitel.ridetime"
+      "package": "com.kachnitel.ridetime",
+      "config": {
+        "googleMaps": {
+          "apiKey": ""
+        }
+      }
     },
     "ios": {
       "supportsTablet": false
