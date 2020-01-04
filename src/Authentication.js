@@ -33,7 +33,7 @@ export default class Authentication {
    *
    * @memberof Authentication
    */
-  loginWithAuth0 = async (nest: Number = 0) => {
+  loginWithAuth0 = async () => {
     let redirectUrl = AuthSession.getRedirectUrl()
     let oAuthState = randomatic('Aa0', 7)
     let codeVerifier = randomatic('Aa0', 50)
@@ -64,14 +64,17 @@ export default class Authentication {
       result.type === 'dismiss' ||
       (result.type === 'error' && result.errorCode === 'login-declined')
     ) {
-      // FIXME: alert never pops up for 'login-declined', despite the if correctly evaluating true
+      // FIXME: alert never pops without delay here, despite the if correctly evaluating true
+      // Any way to check if the window has closed, if that's the issue?
+      await new Promise((resolve) => setTimeout(resolve, 5000))
+
       let retry = await alertAsync(
         'Authentication dismissed',
         'Cancel signing in?',
         'Try again',
         'Exit'
       )
-      return retry ? this.loginWithAuth0(nest + 1) : false
+      return retry ? this.loginWithAuth0() : false
     }
     logger.error('Login failed', result)
     throw new Error('Error signing in')
