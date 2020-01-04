@@ -39,8 +39,7 @@ class SignInScreen extends React.Component {
       this.setState({ loading: false })
       return
     }
-    this.setState({ loadingMessage: 'Token received, updating store...' })
-    this.props.ApplicationStore.updateAccessToken(token.access_token) // token undefined!
+    this.props.ApplicationStore.updateAccessToken(token.access_token)
 
     this.setState({ loadingMessage: 'Getting user info...' })
     let userInfo = await auth.getUserInfo(token.access_token)
