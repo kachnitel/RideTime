@@ -1,11 +1,12 @@
 import { inject, observer } from 'mobx-react/native'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native'
-import MapView, { Marker, UrlTile } from 'react-native-maps'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { Marker } from 'react-native-maps'
 import Layout from '../../../constants/Layout'
 import SearchInput from '../form/SearchInput'
 import LocationList from './LocationList'
+import AreaMap from '../location/AreaMap'
 
 export default
 @inject('LocationStore', 'UserStore')
@@ -108,48 +109,46 @@ class LocationPicker extends Component {
       </>
   }
 
+  getMarkers = () => this.getLocationIds().map((id) => {
+    let location = this.props.LocationStore.get(id)
+    let latlng = {
+      latitude: location.coords[0],
+      longitude: location.coords[1]
+    }
+    return <Marker
+      coordinate={latlng}
+      title={location.name}
+      key={location.id}
+      description={'Tap to select'}
+      onCalloutPress={() => this.props.onLocationPress(location.id)}
+    />
+  })
+
   renderMap = () => {
-    let coords = this.props.LocationStore.currentLocation.get('coords')
-    let tileUrl = 'http://c.tile.openstreetmap.org/{z}/{x}/{y}.png'
-    return <MapView
-      initialRegion={{
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-        latitudeDelta: 0.2,
-        longitudeDelta: 0.1
-      }}
+    return <AreaMap
       style={styles.map}
-      provider={null}
-      mapType={Platform.OS === 'android' ? 'none' : 'standard'}
-      onRegionChangeComplete={async (region) => {
-        let bbox = [
-          region.latitude - region.latitudeDelta / 2, // southLat - min lat
-          region.longitude - region.longitudeDelta / 2, // westLng - min lng
-          region.latitude + region.latitudeDelta / 2, // northLat - max lat
-          region.longitude + region.longitudeDelta / 2 // eastLng - max lng
-        ]
-        let locations = await this.props.LocationStore.bbox(bbox)
-        this.setState({
-          locationIds: locations.map((location) => location.id)
-        })
-      }}
-    >
-      <UrlTile urlTemplate={tileUrl} maximumZ={19} />
-      {this.getLocationIds().map((id) => {
-        let location = this.props.LocationStore.get(id)
-        let latlng = {
-          latitude: location.coords[0],
-          longitude: location.coords[1]
-        }
-        return <Marker
-          coordinate={latlng}
-          title={location.name}
-          key={location.id}
-          description={'Tap to select'}
-          onCalloutPress={() => this.props.onLocationPress(location.id)}
-        />
-      })}
-    </MapView>
+      onRegionChangeComplete={this.onRegionChange}
+      markers={this.getMarkers()}
+    />
+  }
+
+  /**
+   * REVIEW: Duplicated from RidesScreen
+   *
+   * @param {*} region
+   * @memberof RidesScreen
+   */
+  onRegionChange = async (region) => {
+    let bbox = [
+      region.latitude - region.latitudeDelta / 2, // southLat - min lat
+      region.longitude - region.longitudeDelta / 2, // westLng - min lng
+      region.latitude + region.latitudeDelta / 2, // northLat - max lat
+      region.longitude + region.longitudeDelta / 2 // eastLng - max lng
+    ]
+    let locations = await this.props.LocationStore.bbox(bbox)
+    this.setState({
+      locationIds: locations.map((location) => location.id)
+    })
   }
 }
 

@@ -1,7 +1,9 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import MapView from 'react-native-maps'
 import { inject, observer } from 'mobx-react/native'
 import { StyleSheet, ActivityIndicator } from 'react-native'
+import LocationStore from '../../stores/LocationStore.mobx'
 
 export default
 @inject('LocationStore')
@@ -37,6 +39,11 @@ class AreaMap extends React.Component {
       {this.props.markers}
     </MapView>
   }
+}
+
+AreaMap.propTypes = {
+  LocationStore: PropTypes.instanceOf(LocationStore),
+  markers: PropTypes.arrayOf(PropTypes.object)
 }
 
 const styles = StyleSheet.create({
