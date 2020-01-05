@@ -20,13 +20,8 @@ const env = {
   staging: {
     apiUrl: 'https://ridebikes.today',
     dev: false,
-    version: Constants.manifest.version
+    version: Constants.manifest.version + '-' + Constants.manifest.releaseChannel
   }
-  // TODO: Use `Constants.manifest.releaseChannel` and
-  // `exp publish --release-channel prod`
-  // prod: {
-  //   apiUrl: 'https://ridebikes.today'
-  // }
 }
 
 export const getEnvVars = () => {
