@@ -66,7 +66,7 @@ export default class Authentication {
     ) {
       // FIXME: alert never pops without delay here, despite the if correctly evaluating true
       // Any way to check if the window has closed, if that's the issue?
-      await new Promise((resolve) => setTimeout(resolve, 5000))
+      await new Promise((resolve) => setTimeout(resolve, 15000))
 
       let retry = await alertAsync(
         'Authentication dismissed',
