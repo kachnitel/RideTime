@@ -14,9 +14,11 @@ class DetailsForm extends React.Component {
       <Form>
         <SelectDifficulty
           onValueChange={(value) => this.props.User.updateLevel(value)}
+          value={this.props.User.level}
         />
         <SelectBike
           onValueChange={(value) => this.props.User.updateBike(value)}
+          value={this.props.User.bike}
         />
         <HomeLocationsPicker
           onValueChange={(values) => this.props.User.updateLocations(values)}
