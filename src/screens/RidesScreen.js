@@ -165,7 +165,9 @@ class RidesScreen extends React.Component {
 
     return ([{
       title: 'My friends\' events',
-      data: this.props.EventStore.list(ids).filter(this.futureEventFilter)
+      data: ids.length > 0
+        ? this.props.EventStore.list(ids).filter(this.futureEventFilter)
+        : []
     }])
   }
 
