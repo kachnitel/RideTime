@@ -194,10 +194,12 @@ class RidesScreen extends React.Component {
     },
     {
       title: 'My rides',
-      data: this.props.EventStore
-        .list(this.props.UserStore.currentUser.events)
-        .filter(this.futureEventFilter)
-        .sort((a: Event, b: Event) => a.datetime - b.datetime)
+      data: this.props.UserStore.currentUser.events.length > 0
+        ? this.props.EventStore
+          .list(this.props.UserStore.currentUser.events)
+          .filter(this.futureEventFilter)
+          .sort((a: Event, b: Event) => a.datetime - b.datetime)
+        : []
     },
     {
       title: 'Rides at my locations',
