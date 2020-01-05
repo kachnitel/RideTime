@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import { Linking } from 'expo'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { inject, observer } from 'mobx-react/native'
 import { logger } from '../Logger'
 import ModalView from '../components/modal/ModalView'
 import Button from '../components/form/Button'
@@ -9,7 +10,10 @@ import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
 import { getEnvVars } from '../../constants/Env'
 
-export default class VersionTag extends Component {
+export default
+@inject('UserStore')
+@observer
+class VersionTag extends Component {
   lastPress = 0
   state = {
     logModalVisible: false,
