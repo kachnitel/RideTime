@@ -3,9 +3,6 @@ import { Image, StyleSheet, Linking, TouchableNativeFeedback } from 'react-nativ
 import Layout from '../../constants/Layout'
 import { logger } from '../Logger'
 
-/**
- * TODO: stop propagation of click
- */
 export default class TrailforksLink extends Component {
   handleTrailforksLink = async () => {
     let url = 'https://www.trailforks.com/' + this.props.relativeUrl
