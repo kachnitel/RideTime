@@ -49,7 +49,6 @@ export default class Authentication {
         audience: auth0Audience
       })
     })
-    logger.debug('AuthSession result', result)
 
     if (result.type === 'success') {
       if (oAuthState !== result.params.state) {
@@ -92,17 +91,16 @@ export default class Authentication {
    *
    * @memberof Authentication
    */
-  getOAuthToken = (codeVerifier, code) => {
-    logger.info('Getting OAuth token')
-
-    return this.connection.post('oauth/token', {
+  getOAuthToken = (codeVerifier, code) => this.connection.post(
+    'oauth/token',
+    {
       grant_type: 'authorization_code',
       client_id: auth0ClientId,
       code_verifier: codeVerifier,
       code: code,
       redirect_uri: auth0RedirectUri
-    })
-  }
+    }
+  )
 
   /**
    * Exchange refresh_token for access_token
@@ -119,21 +117,14 @@ export default class Authentication {
    *
    * @memberof Authentication
    */
-  refreshToken = async (refreshToken) => {
-    logger.info('Refreshing token')
-
-    let content = await this.connection.post(
-      'oauth/token',
-      {
-        grant_type: 'refresh_token',
-        client_id: auth0ClientId,
-        refresh_token: refreshToken
-      }
-    )
-
-    // logger.info('Result(refresh) /oauth/token: ', content)
-    return content
-  }
+  refreshToken = (refreshToken) => this.connection.post(
+    'oauth/token',
+    {
+      grant_type: 'refresh_token',
+      client_id: auth0ClientId,
+      refresh_token: refreshToken
+    }
+  )
 
   /**
    * GET /userinfo (JSON)
@@ -142,8 +133,7 @@ export default class Authentication {
    *
    * @memberof Authentication
    */
-  getUserInfo = async (apiToken) => {
-    logger.info('Getting user info')
+  getUserInfo = (apiToken) => {
     this.connection.addHeaders({
       'Authorization': 'Bearer ' + apiToken
     })
