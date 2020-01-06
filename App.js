@@ -1,7 +1,14 @@
 import { AppLoading, Updates } from 'expo'
 import * as Font from 'expo-font'
 import React from 'react'
-import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
+import {
+  Platform,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+  AppState
+} from 'react-native'
 import Layout from './constants/Layout'
 import AppContainer from './src/navigation/AppNavigator'
 import PropTypes from 'prop-types'
@@ -35,6 +42,10 @@ class App extends React.Component {
 
   componentDidMount = () => {
     this._checkUpdate()
+
+    // HACK: Workaround to "touch" AppState
+    // - See https://github.com/expo/expo/issues/6679#issuecomment-570963717
+    logger.debug(AppState.currentState)
   }
 
   render () {
