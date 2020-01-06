@@ -36,6 +36,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'rgba(220, 220, 220, .5);',
     borderRadius: Layout.window.wp(1.5),
-    padding: Layout.window.wp(1)
+    padding: Layout.window.wp(0.5)
   }
 })

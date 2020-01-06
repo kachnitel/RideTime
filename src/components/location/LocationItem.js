@@ -10,6 +10,7 @@ import {
 import Layout from '../../../constants/Layout'
 import LocationItemDetail from './LocationItemDetail'
 import { Location } from '../../stores/LocationStore.mobx'
+import TrailforksLink from '../TrailforksLink'
 
 export default
 @inject('LocationStore')
@@ -30,9 +31,12 @@ class LocationItem extends React.Component {
       this.state.loading
         ? <ActivityIndicator style={{ ...styles.container, ...this.props.style }} />
         : <View style={{ ...styles.container, ...this.props.style }}>
-          <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
-            {this.location.name}
-          </Text>
+          <View style={styles.headerContainer}>
+            <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
+              {this.location.name}
+            </Text>
+            <TrailforksLink relativeUrl={'region/' + this.location.alias + '/'} />
+          </View>
           <LocationItemDetail location={this.location} />
         </View>
     )
@@ -52,7 +56,9 @@ const styles = StyleSheet.create({
   container: {
     height: Layout.window.hp(10),
     paddingVertical: Layout.window.hp(1.5),
-    paddingHorizontal: Layout.window.wp(4),
+    paddingHorizontal: Layout.window.wp(4)
+  },
+  headerContainer: {
     flexDirection: 'row'
   }
 })
