@@ -15,7 +15,6 @@ import Colors from '../../constants/Colors'
 import Layout from '../../constants/Layout'
 import Button from '../components/form/Button'
 import { logger } from '../Logger'
-import { alertAsync } from '../AsyncAlert'
 import VersionTag from '../components/VersionTag'
 
 export default
@@ -25,7 +24,8 @@ export default
 class SignInScreen extends React.Component {
   state = {
     loading: false,
-    loadingMessage: 'Loading...'
+    loadingMessage: 'Loading...',
+    error: false
   }
 
   authenticate = async () => {
@@ -35,8 +35,8 @@ class SignInScreen extends React.Component {
     let token = await auth.loginWithAuth0()
     if (!token || !token.access_token) {
       logger.error('Login failed', { token: token })
-      alertAsync('Login failed!')
-      this.setState({ loading: false })
+      // alertAsync('Login failed!')
+      this.setState({ loading: false, error: true })
       return
     }
     this.props.ApplicationStore.updateAccessToken(token.access_token)
@@ -107,6 +107,11 @@ class SignInScreen extends React.Component {
           </View>
           <Button title='Get started!' onPress={this.authenticate} />
           <VersionTag style={styles.versionTag} />
+          {this.state.error && <Text style={styles.errorText}>
+            Error signing in!
+
+            Please try again or let us know if the problem persists!
+          </Text>}
         </View>
     )
   }
@@ -138,5 +143,8 @@ const styles = StyleSheet.create({
   versionTag: {
     bottom: 0,
     position: 'absolute'
+  },
+  errorText: {
+    color: Colors.warningText
   }
 })

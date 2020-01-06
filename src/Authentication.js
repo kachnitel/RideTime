@@ -8,7 +8,6 @@ import {
 import randomatic from 'randomatic'
 import { Connection } from './Connection'
 import { logger } from './Logger'
-import { alertAsync } from './AsyncAlert'
 import qs from 'qs'
 
 /*
@@ -57,24 +56,12 @@ export default class Authentication {
         throw new Error('OAuth state mismatch')
       }
 
-      let token = await this.getOAuthToken(codeVerifier, result.params.code)
-
-      return token
+      return this.getOAuthToken(codeVerifier, result.params.code)
     } else if (
       result.type === 'dismiss' ||
       (result.type === 'error' && result.errorCode === 'login-declined')
     ) {
-      // FIXME: alert never pops without delay here, despite the if correctly evaluating true
-      // Any way to check if the window has closed, if that's the issue?
-      await new Promise((resolve) => setTimeout(resolve, 15000))
-
-      let retry = await alertAsync(
-        'Authentication dismissed',
-        'Cancel signing in?',
-        'Try again',
-        'Exit'
-      )
-      return retry ? this.loginWithAuth0() : false
+      return false
     }
     logger.error('Login failed', result)
     throw new Error('Error signing in')
@@ -105,18 +92,16 @@ export default class Authentication {
    *
    * @memberof Authentication
    */
-  getOAuthToken = async (codeVerifier, code) => {
+  getOAuthToken = (codeVerifier, code) => {
     logger.info('Getting OAuth token')
 
-    let content = await this.connection.post('oauth/token', {
+    return this.connection.post('oauth/token', {
       grant_type: 'authorization_code',
       client_id: auth0ClientId,
       code_verifier: codeVerifier,
       code: code,
       redirect_uri: auth0RedirectUri
     })
-
-    return content
   }
 
   /**
@@ -162,8 +147,6 @@ export default class Authentication {
     this.connection.addHeaders({
       'Authorization': 'Bearer ' + apiToken
     })
-    let user = await this.connection.get('userinfo')
-
-    return user
+    return this.connection.get('userinfo')
   }
 }
