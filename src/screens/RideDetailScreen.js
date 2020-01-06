@@ -81,7 +81,8 @@ class RideDetailScreen extends React.Component {
     this.setState({ loading: false })
     this.props.navigation.setParams({ event: this.event })
     this.event.isMember() && await this.event.loadRequested()
-    this.props.navigation.setParams({ event: this.event }) // HACK: updates badge
+    // HACK: updates badge; See https://github.com/kachnitel/RideTime/issues/147
+    this.props.navigation.setParams({ event: this.event })
   }
 
   showMenuModal = () => this.setState({ menuModalVisible: true })
