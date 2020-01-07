@@ -29,27 +29,22 @@ class SignInScreen extends React.Component {
   }
 
   authenticate = async () => {
-    this.setState({ loading: true, loadingMessage: 'Getting token...' })
+    this.setState({ loading: true, loadingMessage: 'Authenticating...' })
 
     let auth = new Authentication()
     let token = await auth.loginWithAuth0()
     if (!token || !token.access_token) {
       logger.error('Login failed', { token: token })
-      // alertAsync('Login failed!')
       this.setState({ loading: false, error: true })
       return
     }
     this.props.ApplicationStore.updateAccessToken(token.access_token)
 
-    this.setState({ loadingMessage: 'Getting user info...' })
-    let userInfo = await auth.getUserInfo(token.access_token)
-    logger.debug('UserInfo received / Signing in', userInfo)
     this.setState({ loadingMessage: 'Signing in...' })
     try {
-      var signInResult = await ApiConnection.post('signin', userInfo)
+      var signInResult = await ApiConnection.post('signin')
     } catch (error) {
       logger.error('POST to signin failed', {
-        userInfo: userInfo,
         error: error
       })
       throw new Error('Sign in failed')
@@ -58,7 +53,12 @@ class SignInScreen extends React.Component {
     if (signInResult.success) {
       this.handleSignIn(signInResult.user, token)
     } else {
-      this.props.navigation.navigate('SignUp', { user: userInfo, token: token })
+      this.setState({ loadingMessage: 'Getting user info...' })
+      console.log(await auth.getUserInfo(token.access_token))
+      this.props.navigation.navigate('SignUp', {
+        user: await auth.getUserInfo(token.access_token),
+        token: token
+      })
     }
   }
 
