@@ -29,6 +29,10 @@ export default class RidersProvider {
     return ApiConnection.post('signin', data)
   }
 
+  signOut = (data) => {
+    return ApiConnection.post('signout', data)
+  }
+
   loadFriends = () => {
     return ApiConnection.get('api/users/friends')
   }

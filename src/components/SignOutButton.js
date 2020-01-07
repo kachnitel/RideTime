@@ -29,10 +29,7 @@ class SignOutButton extends Component {
             let auth = new Authentication()
             await auth.logoutFromAuth0()
 
-            SecureStore.deleteItemAsync('refreshToken')
-            this.props.ApplicationStore.reset()
-            this.props.UserStore.reset()
-            this.props.EventStore.reset()
+            this._resetApp()
 
             this.props.navigation.navigate('Auth')
           }
@@ -40,6 +37,13 @@ class SignOutButton extends Component {
       ],
       { onDismiss: () => logger.info('Sign out cancelled') }
     )
+  }
+
+  _resetApp = async () => {
+    SecureStore.deleteItemAsync('refreshToken')
+    await this.props.UserStore.signOut()
+    this.props.ApplicationStore.reset()
+    this.props.EventStore.reset()
   }
 
   render () {

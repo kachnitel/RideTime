@@ -94,6 +94,13 @@ export default class UserStore extends BaseCollectionStore {
       : false
   }
 
+  async signOut () {
+    this.reset()
+    return this.provider.signOut({
+      notificationsToken: await (new PushNotifications()).getToken()
+    })
+  }
+
   /**
    * Search users by name
    *
