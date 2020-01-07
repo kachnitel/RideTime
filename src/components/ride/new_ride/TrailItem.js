@@ -24,10 +24,10 @@ class TrailItem extends Component {
 
   render () {
     return (
-      <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
+      <View {...this.props} style={styles.container}>
         <View style={styles.titleContainer}>
           <OutlineDifficultyIcon difficulty={this.props.trail.difficulty} />
-          <Header style={{ ...styles.title, ...this.props.style }}>{this.props.trail.title}</Header>
+          <Header style={styles.title}>{this.props.trail.title}</Header>
           <View style={styles.headerIcons}>
             {this.props.badge !== undefined && this.props.badge}
             <TrailforksLink relativeUrl={'trails/' + this.props.trail.alias + '/'} />

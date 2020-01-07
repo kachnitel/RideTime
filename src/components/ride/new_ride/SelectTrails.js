@@ -7,7 +7,7 @@ import {
 import { observer, inject } from 'mobx-react/native'
 import { FlatList, TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { MaterialIcons } from '@expo/vector-icons'
-import AlternatingStyleList from '../../lists/AlternatingStyleList'
+import StyledSectionList from '../../lists/StyledSectionList'
 import TrailItem from './TrailItem'
 import Colors from '../../../../constants/Colors'
 import Layout from '../../../../constants/Layout'
@@ -75,12 +75,11 @@ class SelectTrails extends Component {
         trail.title.includes(this.state.filter.search.trim()))
     }
 
-    return <AlternatingStyleList
+    return <StyledSectionList
       sections={[{ title: 'Trails', data: trails }]}
       onItemPress={this.selectTrail}
-      itemComponent={(item, style) => <TrailItem
+      itemComponent={(item) => <TrailItem
         trail={item}
-        style={style}
         badge={this.badge(item)}
       />}
       windowSize={6}

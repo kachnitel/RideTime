@@ -29,10 +29,10 @@ class LocationItem extends React.Component {
   render () {
     return (
       this.state.loading
-        ? <ActivityIndicator style={{ ...styles.container, ...this.props.style }} />
-        : <View style={{ ...styles.container, ...this.props.style }}>
+        ? <ActivityIndicator style={styles.container} />
+        : <View style={styles.container}>
           <View style={styles.headerContainer}>
-            <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
+            <Text style={styles.name} numberOfLines={1} >
               {this.location.name}
             </Text>
             <TrailforksLink relativeUrl={'region/' + this.location.alias + '/'} />

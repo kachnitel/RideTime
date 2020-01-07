@@ -14,7 +14,7 @@ export default
 @observer
 class RouteItem extends Component {
   description = () => this.props.route.description
-    ? <Text style={this.props.style}>
+    ? <Text>
       {this.props.route.description}
     </Text>
     : null
@@ -26,12 +26,12 @@ class RouteItem extends Component {
 
         return <View key={'trail_' + trail.id + '_' + index} style={styles.trailItem}>
           <OutlineDifficultyIcon size={Layout.window.hp(2)} difficulty={trail.difficulty} />
-          <Text style={{ color: this.props.style.color }}>{trail.title}</Text>
+          <Text>{trail.title}</Text>
         </View>
       })
     }
     {(this.props.route.trails.length > 10) && <View style={styles.trailItem}>
-      <Text style={{ color: this.props.style.color }}>...</Text>
+      <Text>...</Text>
     </View>}
   </View>
 
@@ -41,14 +41,14 @@ class RouteItem extends Component {
 
   render () {
     return (
-      <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
+      <View {...this.props} style={styles.container}>
         <View style={styles.titleContainer}>
           <OutlineDifficultyIcon difficulty={this.props.route.difficulty} />
-          <Header style={{ ...styles.title, ...this.props.style }}>{this.props.route.title}</Header>
+          <Header style={styles.title}>{this.props.route.title}</Header>
           {this.trailforksLink()}
         </View>
         {this.description()}
-        <TerrainProfile profile={this.props.route.profile} style={this.props.style} />
+        <TerrainProfile profile={this.props.route.profile} />
         {this.trailsList()}
       </View>
     )

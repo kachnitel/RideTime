@@ -6,29 +6,22 @@ import Layout from '../../../constants/Layout'
 import CountHeader from '../CountHeader'
 
 /**
- * @property function itemComponent with "item" and "style" params
- * - item contains the ListItem data
- * - style is style applied to ListItem from AlternatingStyleList
- *
  * @export
- * @class AlternatingStyleList
+ * @class StyledSectionList
  * @extends {Component}
  */
-export default class AlternatingStyleList extends Component {
+export default class StyledSectionList extends Component {
   state = {
     refreshing: false
   }
 
   touchableItem = ({ item, index, section }) => {
-    let style = index % 2 === 0 ? styles.listItemWhite : styles.listItemBlack
-
     return <TouchableHighlight onPress={() => this.props.onItemPress(item)}>
       {/* View here isolates TouchableHighlight's style from itemComponent
       https://github.com/facebook/react-native/issues/22751 */}
-      <View>
+      <View style={styles.item}>
         {this.props.itemComponent(
           item,
-          style,
           section
         )}
       </View>
@@ -65,7 +58,7 @@ export default class AlternatingStyleList extends Component {
   }
 }
 
-AlternatingStyleList.propTypes = {
+StyledSectionList.propTypes = {
   onItemPress: PropTypes.func,
   sections: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string,
@@ -82,19 +75,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  listItemWhite: {
-    backgroundColor: '#fff'
-  },
-  listItemBlack: {
-    backgroundColor: Colors.darkBackground,
-    color: '#fff'
+  item: {
+    marginVertical: Layout.window.hp(0.5),
+    marginHorizontal: Layout.window.wp(1),
+    padding: Layout.window.hp(0.5),
+    backgroundColor: '#ccc6',
+    borderRadius: Layout.window.hp(2)
   },
   header: {
-    backgroundColor: Colors.tintColor,
     justifyContent: 'center',
     padding: Layout.window.hp(0.75)
   },
   headerText: {
-    color: '#fff'
+    color: Colors.tintColor
   }
 })

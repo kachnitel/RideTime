@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import PropTypes from 'prop-types'
-import AlternatingStyleList from '../lists/AlternatingStyleList'
+import StyledSectionList from '../lists/StyledSectionList'
 import UserItem from '../user/UserItem'
 import navigationService from '../../NavigationService'
 
@@ -13,9 +13,8 @@ import navigationService from '../../NavigationService'
  * @extends {Component}
  */
 export default class UsersList extends Component {
-  itemComponent = (id, style, section) => <UserItem
+  itemComponent = (id, section) => <UserItem
     id={id}
-    style={style}
     actions={section.actions}
   />
 
@@ -27,7 +26,7 @@ export default class UsersList extends Component {
         : this.props.onItemPress
     return (
       <View style={{ ...styles.container, ...this.props.style }}>
-        <AlternatingStyleList
+        <StyledSectionList
           {...this.props}
           emptyComponent={<Text>No frenz</Text>}
           itemComponent={this.itemComponent}
@@ -40,7 +39,7 @@ export default class UsersList extends Component {
 }
 
 UsersList.propTypes = {
-  ...AlternatingStyleList.propTypes,
+  ...StyledSectionList.propTypes,
   style: PropTypes.any,
   sections: PropTypes.arrayOf(PropTypes.shape({
     actions: PropTypes.array,

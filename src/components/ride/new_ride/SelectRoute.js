@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
-import AlternatingStyleList from '../../lists/AlternatingStyleList'
+import StyledSectionList from '../../lists/StyledSectionList'
 import RouteItem from './RouteItem'
 import TrailFilter from './TrailFilter'
 import Layout from '../../../../constants/Layout'
@@ -47,10 +47,10 @@ class SelectRoute extends Component {
         trail.title.includes(this.state.filter.search.trim()))
     }
 
-    return <AlternatingStyleList
+    return <StyledSectionList
       sections={[{ title: 'Routes', data: routes }]}
       onItemPress={(route) => this.props.onSubmit(route)}
-      itemComponent={(item, style) => <RouteItem route={item} style={style} />}
+      itemComponent={(item) => <RouteItem route={item} />}
       windowSize={3}
       initialNumToRender={5}
     />

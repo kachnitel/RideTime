@@ -73,8 +73,6 @@ exports[`renders correctly with style 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "black",
-      "color": "#fff",
       "height": 227,
       "paddingHorizontal": 30,
       "paddingTop": 20,
@@ -85,8 +83,6 @@ exports[`renders correctly with style 1`] = `
     numberOfLines={1}
     style={
       Object {
-        "backgroundColor": "black",
-        "color": "#fff",
         "fontSize": 36.5,
       }
     }
