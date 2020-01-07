@@ -6,7 +6,8 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   Text,
-  BackHandler
+  BackHandler,
+  ActivityIndicator
 } from 'react-native'
 import * as SecureStore from 'expo-secure-store'
 import { Header } from 'react-navigation'
@@ -33,7 +34,8 @@ class SignUpScreen extends React.Component {
 
     this.state = {
       formPosition: 1,
-      selectedPicture: null
+      selectedPicture: null,
+      loading: false
     }
 
     this.user = this.initUser(props.navigation.getParam('user'), props.UserStore)
@@ -107,7 +109,7 @@ class SignUpScreen extends React.Component {
    * @memberof SignUpScreen
    */
   submit = async () => {
-    // TODO: Show loading
+    this.setState({ loading: true })
     let user = await this.props.UserStore.signUp(this.user)
 
     let token = this.props.navigation.getParam('token')
@@ -155,11 +157,14 @@ class SignUpScreen extends React.Component {
               disabled={!this.user.name || !this.user.email}
             />
             {
-              this.state.formPosition === 2 && <Button
-                title='Sign Up!'
-                onPress={this.submit}
-                color={Colors.confirmationHighlight}
-              />
+              this.state.formPosition === 2 && (this.state.loading
+                ? <ActivityIndicator />
+                : <Button
+                  title='Sign Up!'
+                  onPress={this.submit}
+                  color={Colors.confirmationHighlight}
+                  disabled={this.state.loading}
+                />)
             }
           </View>
         </View>
