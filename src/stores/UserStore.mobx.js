@@ -1,4 +1,4 @@
-import { observable, action, computed, toJS, autorun } from 'mobx'
+import { observable, action, computed, toJS } from 'mobx'
 import RidersProvider from '../providers/RidersProvider'
 import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
@@ -7,19 +7,11 @@ import PushNotifications from '../PushNotifications'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
-  @observable _loaded = false
   @observable applicationStore: ApplicationStore
 
   constructor (provider, stores, applicationStore: ApplicationStore) {
     super(provider, User, stores)
     this.applicationStore = applicationStore
-
-    autorun(async (reaction) => {
-      if (this.applicationStore.accessToken && this.applicationStore.userId && !this.loaded) {
-        // FIXME: rather pointless since it no longer waits for user here
-        this.updateLoaded(true)
-      }
-    })
   }
 
   /**
@@ -47,9 +39,6 @@ export default class UserStore extends BaseCollectionStore {
   @computed get sentRequests () { return this._sentRequests }
   @action addSentRequest (id: Number) { this._sentRequests.indexOf(id) === -1 && this._sentRequests.push(id) }
   @action removeSentRequest (id: Number) { this._sentRequests.remove(id) }
-
-  @action updateLoaded (newValue: Boolean) { this._loaded = newValue }
-  @computed get loaded () { return this._loaded }
 
   async loadFriends () {
     let friends = await this.provider.loadFriends()

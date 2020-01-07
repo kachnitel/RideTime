@@ -18,7 +18,7 @@ export default
 class DrawerContent extends Component {
   render () {
     return <View style={styles.container}>
-      {this.props.UserStore.loaded && <ProfileHeader user={this.props.UserStore.currentUser} />}
+      <ProfileHeader user={this.props.UserStore.currentUser} />
       <View style={styles.editProfileButton}>
         <Button
           onPress={() => this.props.navigation.navigate('EditProfile')}
