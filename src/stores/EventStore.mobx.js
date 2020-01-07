@@ -75,6 +75,11 @@ export default class EventStore extends BaseCollectionStore {
    * @memberof EventStore
    */
   filterFutureEvent = (event: Event) => event.datetime > (Math.floor(Date.now() / 1000) - 3600)
+
+  reset () {
+    this._invites.clear()
+    this._sentRequests.clear()
+  }
 }
 
 export class Event extends BaseEntity {

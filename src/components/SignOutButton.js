@@ -8,7 +8,7 @@ import { logger } from '../Logger'
 import Authentication from '../Authentication'
 
 export default
-@inject('ApplicationStore')
+@inject('ApplicationStore', 'UserStore', 'EventStore')
 @observer
 class SignOutButton extends Component {
   _signOut = () => {
@@ -28,10 +28,13 @@ class SignOutButton extends Component {
           onPress: async () => {
             let auth = new Authentication()
             await auth.logoutFromAuth0()
-            this.props.navigation.navigate('Auth')
 
             SecureStore.deleteItemAsync('refreshToken')
             this.props.ApplicationStore.reset()
+            this.props.UserStore.reset()
+            this.props.EventStore.reset()
+
+            this.props.navigation.navigate('Auth')
           }
         }
       ],

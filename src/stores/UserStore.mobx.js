@@ -106,6 +106,11 @@ export default class UserStore extends BaseCollectionStore {
     this.provider.removeFriend(id)
     this.currentUser.removeFriend(id)
   }
+
+  reset () {
+    this._friendRequests.clear()
+    this._sentRequests.clear()
+  }
 }
 
 export class User extends BaseEntity {
