@@ -4,6 +4,7 @@ import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
 import ApplicationStore from './ApplicationStore.mobx'
 import PushNotifications from '../PushNotifications'
+import { logger } from '../Logger'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
@@ -16,8 +17,6 @@ export default class UserStore extends BaseCollectionStore {
 
     autorun(async (reaction) => {
       if (this.applicationStore.accessToken && this.applicationStore.userId && !this.loaded) {
-        let notifications = new PushNotifications()
-        notifications.updateToken()
         // FIXME: rather pointless since it no longer waits for user here
         this.updateLoaded(true)
       }
@@ -63,6 +62,27 @@ export default class UserStore extends BaseCollectionStore {
 
     friends.requests.received.forEach(this.upsert)
     this.updateFriendRequests(friends.requests.received.map((userData) => userData.id))
+  }
+
+  async signUp (user: User) {
+    return user.saveNew()
+  }
+
+  async signIn () {
+    try {
+      var signInResponse = await this.provider.signIn({
+        notificationsToken: await (new PushNotifications()).getToken()
+      })
+    } catch (error) {
+      logger.error('POST to signin failed', {
+        error: error.data
+      })
+      throw new Error('Sign in failed')
+    }
+
+    return signInResponse.success
+      ? this.upsert(signInResponse.user)
+      : false
   }
 
   /**
@@ -204,7 +224,10 @@ export class User extends BaseEntity {
     if (this.tempPicture && this.tempPicture.isWeb) {
       data.picture = this.tempPicture.uri
     }
-    let userResponse = await this.store.provider.signUp(data)
+    let userResponse = await this.store.provider.signUp({
+      userInfo: data,
+      notificationsToken: await (new PushNotifications()).getToken()
+    })
 
     this.populateFromApiResponse(userResponse)
 

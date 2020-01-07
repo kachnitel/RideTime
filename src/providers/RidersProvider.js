@@ -25,6 +25,10 @@ export default class RidersProvider {
     return ApiConnection.post('signup', data)
   }
 
+  signIn = (data) => {
+    return ApiConnection.post('signin', data)
+  }
+
   loadFriends = () => {
     return ApiConnection.get('api/users/friends')
   }

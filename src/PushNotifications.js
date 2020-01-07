@@ -1,6 +1,5 @@
 import { Notifications } from 'expo'
 import * as Permissions from 'expo-permissions'
-import NotificationsProvider from './providers/NotificationsProvider'
 
 export default class PushNotifications {
   getToken = async () => {
@@ -18,16 +17,7 @@ export default class PushNotifications {
       return
     }
 
-    let token = await Notifications.getExpoPushTokenAsync()
-    return token
-  }
-
-  updateToken = async () => {
-    let token = await this.getToken()
-    if (token) {
-      let provider = new NotificationsProvider()
-      provider.setToken(token)
-    }
+    return Notifications.getExpoPushTokenAsync()
   }
 
   /**

@@ -8,7 +8,6 @@ import {
 import { observer, inject } from 'mobx-react'
 import * as SecureStore from 'expo-secure-store'
 import Authentication from '../Authentication'
-import ApiConnection from '../ApiConnection'
 import BulletList from '../components/lists/BulletList'
 import TerrainIcon from '../components/icons/TerrainIcon'
 import Colors from '../../constants/Colors'
@@ -16,6 +15,7 @@ import Layout from '../../constants/Layout'
 import Button from '../components/form/Button'
 import { logger } from '../Logger'
 import VersionTag from '../components/VersionTag'
+import { User } from '../stores/UserStore.mobx'
 
 export default
 @inject('UserStore')
@@ -41,20 +41,13 @@ class SignInScreen extends React.Component {
     this.props.ApplicationStore.updateAccessToken(token.access_token)
 
     this.setState({ loadingMessage: 'Signing in...' })
-    try {
-      var signInResult = await ApiConnection.post('signin')
-    } catch (error) {
-      logger.error('POST to signin failed', {
-        error: error
-      })
-      throw new Error('Sign in failed')
-    }
 
-    if (signInResult.success) {
-      this.handleSignIn(signInResult.user, token)
+    let user = await this.props.UserStore.signIn()
+
+    if (user) {
+      this.handleSignIn(user, token)
     } else {
       this.setState({ loadingMessage: 'Getting user info...' })
-      console.log(await auth.getUserInfo(token.access_token))
       this.props.navigation.navigate('SignUp', {
         user: await auth.getUserInfo(token.access_token),
         token: token
@@ -66,22 +59,13 @@ class SignInScreen extends React.Component {
    * Set current user ID in ApplicationStore and redirect to App
    * @memberof SignInScreen
    */
-  handleSignIn = (signInResponse, token) => {
-    if (!Number.isInteger(signInResponse.id)) {
-      logger.info('Authentication error:', {
-        signInResponse: signInResponse,
-        token: token
-      })
-      throw new Error('Invalid user ID:' + signInResponse.id)
-    }
-
+  handleSignIn = (user: User, token) => {
     // On successful login save tokens
     SecureStore.setItemAsync('refreshToken', token.refresh_token)
 
-    this.props.UserStore.upsert(signInResponse)
-    this.props.ApplicationStore.updateUserId(signInResponse.id)
+    this.props.ApplicationStore.updateUserId(user.id)
     // Signed in
-    logger.info(`User ${signInResponse.id} signed in`)
+    logger.info(`User ${user.id} signed in`)
     this.props.navigation.navigate('App')
   }
 
