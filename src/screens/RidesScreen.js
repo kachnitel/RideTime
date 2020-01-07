@@ -247,8 +247,8 @@ class RidesScreen extends React.Component {
     let events = sections.map((section) => section.data).flat()
 
     return (
-      <View style={{ flex: 1, flexDirection: 'column' }}>
-        <View style={{ flex: 35 }}>
+      <View style={styles.container}>
+        <View style={styles.mapContainer}>
           {this.state.loading && <ActivityIndicator style={styles.mapLoading} />}
           <AreaMap
             markers={this.mapMarkers(events)}
@@ -259,7 +259,7 @@ class RidesScreen extends React.Component {
           />
         </View>
 
-        <View style={{ flex: 65 }}>
+        <View style={styles.listContainer}>
           <RidesList
             navigation={this.props.navigation}
             onRefresh={() => this.refresh(this.state.bbox)}
@@ -301,6 +301,15 @@ class RidesScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  mapContainer: {
+    flex: 30
+  },
+  listContainer: {
+    flex: 70
+  },
   locMarker: {
     backgroundColor: Colors.tintColor,
     borderRadius: Layout.window.hp(1),
