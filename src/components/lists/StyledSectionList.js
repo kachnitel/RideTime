@@ -77,9 +77,9 @@ const styles = StyleSheet.create({
   },
   item: {
     marginVertical: Layout.window.hp(0.5),
-    marginHorizontal: Layout.window.wp(1),
-    padding: Layout.window.hp(0.5),
-    backgroundColor: '#ccc6',
+    marginHorizontal: Layout.window.wp(2),
+    padding: Layout.window.hp(1),
+    backgroundColor: '#ccc3',
     borderRadius: Layout.window.hp(2)
   },
   header: {

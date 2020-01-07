@@ -6,26 +6,11 @@ exports[`renders correctly 1`] = `
   color="#999999"
   hidesWhenStopped={true}
   size="small"
-  style={
-    Object {
-      "height": 133.5,
-      "paddingHorizontal": 30,
-      "paddingVertical": 20,
-    }
-  }
 />
 `;
 
 exports[`renders correctly 2`] = `
-<View
-  style={
-    Object {
-      "height": 133.5,
-      "paddingHorizontal": 30,
-      "paddingVertical": 20,
-    }
-  }
->
+<View>
   <View
     style={
       Object {

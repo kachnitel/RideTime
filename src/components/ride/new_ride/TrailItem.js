@@ -24,7 +24,7 @@ class TrailItem extends Component {
 
   render () {
     return (
-      <View {...this.props} style={styles.container}>
+      <View {...this.props}>
         <View style={styles.titleContainer}>
           <OutlineDifficultyIcon difficulty={this.props.trail.difficulty} />
           <Header style={styles.title}>{this.props.trail.title}</Header>
@@ -46,10 +46,6 @@ TrailItem.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: Layout.window.hp(1.5),
-    paddingHorizontal: Layout.window.wp(4)
-  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center'

@@ -92,10 +92,7 @@ UserItem.propTypes = {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: Layout.window.hp(12.5),
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: Layout.window.wp(3)
+    alignItems: 'center'
   },
   details: {
     alignItems: 'flex-start',

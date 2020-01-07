@@ -29,7 +29,7 @@ class LocationItem extends React.Component {
   render () {
     return (
       this.state.loading
-        ? <ActivityIndicator style={styles.container} />
+        ? <ActivityIndicator />
         : <View style={styles.container}>
           <View style={styles.headerContainer}>
             <Text style={styles.name} numberOfLines={1} >
@@ -52,11 +52,6 @@ const styles = StyleSheet.create({
   name: {
     fontSize: Layout.window.hp(2.75),
     flex: 1
-  },
-  container: {
-    height: Layout.window.hp(10),
-    paddingVertical: Layout.window.hp(1.5),
-    paddingHorizontal: Layout.window.wp(4)
   },
   headerContainer: {
     flexDirection: 'row'
