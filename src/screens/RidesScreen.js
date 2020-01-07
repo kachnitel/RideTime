@@ -87,7 +87,7 @@ class RidesScreen extends React.Component {
       dateStart: (Math.floor(Date.now() / 1000) - 3600)
     })
     let locations = await this.props.LocationStore.filter(
-      { bbox: bbox },
+      { bbox: bbox.map((coord: Number) => coord.toFixed(4)) }, // REVIEW:
       {
         related: 'event',
         eventFilter: {
