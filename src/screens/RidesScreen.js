@@ -48,10 +48,15 @@ class RidesScreen extends React.Component {
       bbox: null,
       visibleLocations: [],
       selectedLocation: null,
-      tab: 'map'
+      tab: 'map',
+      myEvents: []
     }
 
     props.EventStore.loadSentRequests()
+  }
+
+  componentDidMount = () => {
+    this.setState({ myEvents: this.getMyEvents() })
   }
 
   /**
@@ -236,7 +241,7 @@ class RidesScreen extends React.Component {
       : this.state.tab === 'map'
         ? this.getMapEvents()
         : this.state.tab === 'my'
-          ? this.getMyEvents()
+          ? this.state.myEvents
           : this.getFriendsEvents()
 
     let events = sections.map((section) => section.data).flat()
@@ -280,9 +285,9 @@ class RidesScreen extends React.Component {
               onPress: () => this.setState({ tab: 'map' })
             },
             {
-              title: `My rides (${this.getMyEvents()[1].data.flat().length})`, // confirmed
+              title: `My rides (${this.state.myEvents[1]?.data.length})`, // confirmed
               onPress: () => this.setState({ tab: 'my' }),
-              badge: this.getMyEvents()[0].data.flat().length // invites
+              badge: this.state.myEvents[0]?.data.length // invites
             },
             {
               title: 'Friends\' rides',
