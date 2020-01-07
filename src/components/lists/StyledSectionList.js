@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, TouchableHighlight, View, SectionList } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, SectionList } from 'react-native'
 import Colors from '../../../constants/Colors'
 import Layout from '../../../constants/Layout'
 import CountHeader from '../CountHeader'
@@ -16,8 +16,8 @@ export default class StyledSectionList extends Component {
   }
 
   touchableItem = ({ item, index, section }) => {
-    return <TouchableHighlight onPress={() => this.props.onItemPress(item)}>
-      {/* View here isolates TouchableHighlight's style from itemComponent
+    return <TouchableOpacity onPress={() => this.props.onItemPress(item)}>
+      {/* View here isolates TouchableOpacity's style from itemComponent
       https://github.com/facebook/react-native/issues/22751 */}
       <View style={styles.item}>
         {this.props.itemComponent(
@@ -25,7 +25,7 @@ export default class StyledSectionList extends Component {
           section
         )}
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   }
 
   sectionHeader = ({ section: { title, data, countHighlight } }) =>
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
   },
   header: {
     justifyContent: 'center',
-    padding: Layout.window.hp(0.75)
+    padding: Layout.window.hp(0.75),
+    backgroundColor: '#fffb'
   },
   headerText: {
     color: Colors.tintColor
