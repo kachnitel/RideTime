@@ -5,7 +5,8 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Keyboard,
-  Text
+  Text,
+  BackHandler
 } from 'react-native'
 import * as SecureStore from 'expo-secure-store'
 import { Header } from 'react-navigation'
@@ -17,12 +18,16 @@ import Button from '../components/form/Button'
 import Layout from '../../constants/Layout'
 import { User } from '../stores/UserStore.mobx'
 import { logger } from '../Logger'
+import { alertAsync } from '../AsyncAlert'
+import Authentication from '../Authentication'
 
 export default
 @inject('UserStore')
 @inject('ApplicationStore')
 @observer
 class SignUpScreen extends React.Component {
+  backHandler
+
   constructor (props) {
     super(props)
 
@@ -32,6 +37,17 @@ class SignUpScreen extends React.Component {
     }
 
     this.user = this.initUser(props.navigation.getParam('user'), props.UserStore)
+  }
+
+  componentDidMount () {
+    this.backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.handleBackPress
+    )
+  }
+
+  componentWillUnmount () {
+    this.backHandler.remove()
   }
 
   initUser = (userInfo, store) => {
@@ -65,6 +81,26 @@ class SignUpScreen extends React.Component {
     }
 
     this.setState({ formPosition: position })
+  }
+
+  handleBackPress = () => {
+    this.exit()
+    return true
+  }
+
+  exit = async () => {
+    let exit = await alertAsync(
+      'Cancel signing up?',
+      'Are you sure?',
+      'Yes',
+      'No'
+    )
+
+    if (exit) {
+      let auth = new Authentication()
+      await auth.logoutFromAuth0()
+      this.props.navigation.navigate('SignIn')
+    }
   }
 
   /**

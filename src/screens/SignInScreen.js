@@ -22,11 +22,13 @@ export default
 @inject('ApplicationStore')
 @observer
 class SignInScreen extends React.Component {
-  state = {
+  static initialState = {
     loading: false,
     loadingMessage: 'Loading...',
     error: false
   }
+
+  state = SignInScreen.initialState
 
   authenticate = async () => {
     this.setState({ loading: true, loadingMessage: 'Authenticating...' })
@@ -47,8 +49,8 @@ class SignInScreen extends React.Component {
     if (user) {
       this.handleSignIn(user, token)
     } else {
-      this.setState({ loadingMessage: 'Getting user info...' })
-      this.props.navigation.navigate('SignUp', {
+      this.setState({ loadingMessage: 'Getting user details...' })
+      this.navigateOut('SignUp', {
         user: await auth.getUserInfo(token.access_token),
         token: token
       })
@@ -66,7 +68,12 @@ class SignInScreen extends React.Component {
     this.props.ApplicationStore.updateUserId(user.id)
     // Signed in
     logger.info(`User ${user.id} signed in`)
-    this.props.navigation.navigate('App')
+    this.navigateOut('App')
+  }
+
+  navigateOut = (screen: String, params: Object) => {
+    this.setState(SignInScreen.initialState)
+    this.props.navigation.navigate(screen, params)
   }
 
   render () {
