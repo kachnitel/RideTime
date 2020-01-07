@@ -4,7 +4,6 @@ import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
 import ApplicationStore from './ApplicationStore.mobx'
 import PushNotifications from '../PushNotifications'
-import { logger } from '../Logger'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
@@ -65,20 +64,30 @@ export default class UserStore extends BaseCollectionStore {
   }
 
   async signUp (user: User) {
-    return user.saveNew()
+    let exclude = ['picture']
+    let data = user.createApiJson(exclude)
+
+    if (user.tempPicture && user.tempPicture.isWeb) {
+      data.picture = user.tempPicture.uri
+    }
+    let userResponse = await this.provider.signUp({
+      userInfo: data,
+      notificationsToken: await (new PushNotifications()).getToken()
+    })
+
+    let result = this.upsert(userResponse)
+
+    if (user.tempPicture && !user.tempPicture.isWeb) {
+      user.uploadPicture(user.tempPicture)
+    }
+
+    return result
   }
 
   async signIn () {
-    try {
-      var signInResponse = await this.provider.signIn({
-        notificationsToken: await (new PushNotifications()).getToken()
-      })
-    } catch (error) {
-      logger.error('POST to signin failed', {
-        error: error.data
-      })
-      throw new Error('Sign in failed')
-    }
+    let signInResponse = await this.provider.signIn({
+      notificationsToken: await (new PushNotifications()).getToken()
+    })
 
     return signInResponse.success
       ? this.upsert(signInResponse.user)
@@ -212,34 +221,14 @@ export class User extends BaseEntity {
   @action updateTempPicture (newValue: Object) { this._tempPicture = newValue }
   @computed get tempPicture () { return this._tempPicture }
 
-  /**
-   * Save a new user to Store/DB
-   *
-   * @memberof User
-   */
-  @action async saveNew () {
-    let exclude = ['picture']
-    let data = this.createApiJson(exclude)
+  async uploadPicture (image: Object) {
+    let response = await this.store.provider.uploadPicture(this.id, image)
+    // Update picture url
+    this.populateFromApiResponse(response)
+    // Reset tempPicture
+    this.updateTempPicture(User.prototype._tempPicture)
 
-    if (this.tempPicture && this.tempPicture.isWeb) {
-      data.picture = this.tempPicture.uri
-    }
-    let userResponse = await this.store.provider.signUp({
-      userInfo: data,
-      notificationsToken: await (new PushNotifications()).getToken()
-    })
-
-    this.populateFromApiResponse(userResponse)
-
-    if (this.tempPicture && !this.tempPicture.isWeb) {
-      this.uploadPicture(this.tempPicture)
-    }
-
-    this.store.add(this)
-  }
-
-  @action uploadPicture (image: Object) {
-    return this.store.provider.uploadPicture(this.id, image)
+    return this._picture
   }
 
   @action async update (user: User) {
@@ -257,11 +246,7 @@ export class User extends BaseEntity {
       } else {
         exclude.push('picture')
 
-        let response = await this.uploadPicture(toJS(user.tempPicture))
-        // Update picture url
-        this.populateFromApiResponse(response)
-        // Reset tempPicture
-        this.updateTempPicture(User.prototype._tempPicture)
+        this.uploadPicture(toJS(user.tempPicture))
       }
     }
 

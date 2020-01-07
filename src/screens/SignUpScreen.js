@@ -72,13 +72,13 @@ class SignUpScreen extends React.Component {
    */
   submit = async () => {
     // TODO: Show loading
-    await this.user.saveNew()
+    let user = await this.props.UserStore.signUp(this.user)
 
     let token = this.props.navigation.getParam('token')
     SecureStore.setItemAsync('refreshToken', token.refresh_token)
-    this.props.ApplicationStore.updateUserId(this.user.id)
+    this.props.ApplicationStore.updateUserId(user.id)
     // Signed up
-    logger.info(`User ${this.user.id} signed up`)
+    logger.info(`User ${user.id} signed up`)
     this.props.navigation.navigate('App')
   }
 
