@@ -11,7 +11,7 @@ const hydrate = create({
 })
 
 hydrate('applicationStore', applicationStore).then((data) => {
-  logger.info('Hydrated ApplicationStore', JSON.stringify(data))
+  logger.info('Hydrated ApplicationStore', data)
 })
 
 export default applicationStore

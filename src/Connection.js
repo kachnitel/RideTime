@@ -59,11 +59,18 @@ export class Connection {
     let url = this.baseUrl + '/' + path
     let requestHeaders = headers === null ? this.getHeaders() : headers
 
-    let logHeaders = JSON.stringify(
-      requestHeaders,
-      (key, val) => key === 'Authorization' ? val.slice(0, 10) + '...' + val.slice(-3) : val
-    )
-    logger.info('Request:', [method, url, data, logHeaders].join(' '))
+    let logHeaders = { ...requestHeaders }
+    if (logHeaders.hasOwnProperty('Authorization')) {
+      logHeaders.Authorization =
+        [
+          logHeaders.Authorization.slice(0, 10),
+          logHeaders.Authorization.slice(-3)
+        ].join('...')
+    }
+    logger.info('Request:' + [method, url].join(' '), {
+      data,
+      logHeaders
+    })
 
     try {
       var response = await fetch(url, {
