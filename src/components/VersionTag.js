@@ -42,6 +42,7 @@ class VersionTag extends Component {
       data={this.state.logEntries.reverse()}
       inverted
       renderItem={this.logEntry}
+      keyExtractor={({ id }) => 'log_' + id}
     />
     <Button
       onPress={this.sendMail}
