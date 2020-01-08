@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, ScrollView, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
 import { Linking } from 'expo'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { inject, observer } from 'mobx-react/native'
@@ -38,17 +38,38 @@ class VersionTag extends Component {
     isVisible={this.state.logModalVisible}
     onRequestClose={this.hideLogModal}
   >
-    <ScrollView>
-      {this.state.logEntries.map((entry) => <View key={entry.id}>
-        <Text>{JSON.stringify(entry)}</Text>
-        <View style={{ height: 1, backgroundColor: 'red' }} />
-      </View>)}
-    </ScrollView>
+    <FlatList
+      data={this.state.logEntries.reverse()}
+      inverted
+      renderItem={this.logEntry}
+    />
     <Button
       onPress={this.sendMail}
       title='Email log'
     />
   </ModalView>
+
+  logEntry = (item) => {
+    let entry = item.item
+    let context = JSON.stringify(JSON.parse(entry.context), null, 2)
+    let levelColor = {
+      debug: '#222',
+      info: '#080',
+      warn: '#740',
+      error: '#800'
+    }[entry.level]
+
+    return <View style={styles.logEntryContainer}>
+      <View style={{ ...styles.logEntryHeader, backgroundColor: levelColor }}>
+        <Text style={styles.logEntryHeaderText}>{entry.id}</Text>
+        <Text style={styles.logEntryHeaderText}>{entry.level}</Text>
+      </View>
+      <View style={styles.messageContainer}>
+        <Text style={styles.logMessage}>{entry.message}</Text>
+        <Text>{context}</Text>
+      </View>
+    </View>
+  }
 
   sendMail = () => {
     let mail = 'admin@ridebikes.today'
@@ -76,5 +97,30 @@ const styles = StyleSheet.create({
   versionText: {
     fontSize: Layout.window.hp(1.5),
     color: Colors.noticeText
+  },
+  logEntryHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#9999',
+    paddingHorizontal: Layout.window.hp(2),
+    borderTopLeftRadius: Layout.window.hp(1),
+    borderTopRightRadius: Layout.window.hp(1)
+  },
+  logEntryHeaderText: {
+    color: '#fff',
+    fontWeight: 'bold'
+  },
+  messageContainer: {
+    padding: Layout.window.hp(1)
+  },
+  logMessage: {
+    fontWeight: 'bold'
+  },
+  logEntryContainer: {
+    margin: Layout.window.hp(1),
+    backgroundColor: '#eee',
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: Layout.window.hp(1)
   }
 })
