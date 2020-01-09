@@ -18,12 +18,11 @@ export default class TabBar extends Component {
     return (
       <View style={styles.container}>
         {this.props.options.map((option, index) => <TabButton
-          title={option.title}
+          {...option}
           onPress={() => this.handleSelect(index)}
           style={{ width: Layout.window.wp(100 / this.props.options.length) }}
           key={'option_' + index + '_' + option.title}
           active={index === this.state.activeIndex}
-          badge={option.badge}
         />)}
       </View>
     )
@@ -33,13 +32,14 @@ export default class TabBar extends Component {
 TabBar.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
     onPress: PropTypes.func,
-    title: PropTypes.string
+    title: PropTypes.string,
+    icon: PropTypes.string
   }))
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: Layout.window.hp(6.5),
+    height: Layout.window.hp(7),
     flexDirection: 'row',
     justifyContent: 'space-evenly'
   }
