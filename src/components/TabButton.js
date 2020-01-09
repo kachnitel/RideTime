@@ -58,17 +58,20 @@ TabButton.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.tintColor,
     padding: Layout.window.hp(2),
     alignItems: 'center',
     justifyContent: 'center',
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderLeftColor: '#ccc',
+    borderRightColor: '#ddd',
     flex: 1
   },
   containerActive: {
-    backgroundColor: '#fff'
+    backgroundColor: '#ccc3'
   },
   tabToggle: {
-    color: '#fff'
+    color: '#888'
   },
   tabToggleActive: {
     color: Colors.tintColor

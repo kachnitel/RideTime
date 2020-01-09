@@ -16,7 +16,7 @@ export default class TabBar extends Component {
 
   render () {
     return (
-      <View style={styles.container}>
+      <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
         {this.props.options.map((option, index) => <TabButton
           {...option}
           onPress={() => this.handleSelect(index)}

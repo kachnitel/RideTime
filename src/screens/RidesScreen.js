@@ -297,6 +297,7 @@ class RidesScreen extends React.Component {
               onPress: () => this.setState({ tab: 'friends' })
             }
           ]}
+          style={styles.tabBar}
         />
       </View>
     )
@@ -373,5 +374,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: Layout.window.wp(5),
     bottom: Layout.window.hp(2)
+  },
+  tabBar: {
+    borderTopColor: Colors.tintColor,
+    borderTopWidth: 1
   }
 })
