@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start'
   },
   startTime: {
-    fontSize: Layout.window.hp(2.5)
+    fontSize: Layout.window.hp(2),
+    color: '#888'
   },
   startTimeContainer: {
     marginLeft: 'auto',
