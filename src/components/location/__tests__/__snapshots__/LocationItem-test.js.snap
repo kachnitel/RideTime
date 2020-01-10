@@ -10,80 +10,109 @@ exports[`renders correctly 1`] = `
 `;
 
 exports[`renders correctly 2`] = `
-<View>
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+    }
+  }
+>
+  <Image
+    source={
+      Object {
+        "uri": "https://ep1.pinkbike.org/p2pbundefined/p2pbundefined.jpg",
+      }
+    }
+    style={
+      Object {
+        "borderRadius": 13.5,
+        "marginRight": 15,
+        "resizeMode": "contain",
+        "width": "20%",
+      }
+    }
+  />
   <View
     style={
       Object {
-        "flexDirection": "row",
+        "flex": 1,
       }
     }
   >
-    <Text
-      numberOfLines={1}
-      style={
-        Object {
-          "flex": 1,
-          "fontSize": 36.5,
-        }
-      }
-    >
-      Place
-    </Text>
     <View
       style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#ffbcbc",
-            "borderColor": "red",
-            "borderWidth": 1,
-            "height": 100,
-            "justifyContent": "center",
-            "margin": 10,
-            "width": 300,
-          },
-          undefined,
-        ]
+        Object {
+          "flexDirection": "row",
+        }
       }
     >
       <Text
+        numberOfLines={1}
         style={
           Object {
-            "color": "#333333",
-            "margin": 20,
+            "flex": 1,
+            "fontSize": 36.5,
           }
         }
       >
-        TouchableNativeFeedback is not supported on this platform!
+        Place
       </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#ffbcbc",
+              "borderColor": "red",
+              "borderWidth": 1,
+              "height": 100,
+              "justifyContent": "center",
+              "margin": 10,
+              "width": 300,
+            },
+            undefined,
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#333333",
+              "margin": 20,
+            }
+          }
+        >
+          TouchableNativeFeedback is not supported on this platform!
+        </Text>
+      </View>
     </View>
-  </View>
-  <View
-    style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-      }
-    }
-  >
-    <LocationDifficulties
-      difficulties={
-        Array [
-          1,
-          2,
-        ]
-      }
-      iconSize={53.5}
+    <View
       style={
         Object {
-          "backgroundColor": "rgba(220, 220, 220, .5);",
-          "borderRadius": 11.5,
+          "alignItems": "center",
           "flexDirection": "row",
-          "padding": 4,
+          "justifyContent": "space-between",
         }
       }
-    />
+    >
+      <LocationDifficulties
+        difficulties={
+          Array [
+            1,
+            2,
+          ]
+        }
+        iconSize={53.5}
+        style={
+          Object {
+            "backgroundColor": "rgba(220, 220, 220, .5);",
+            "borderRadius": 11.5,
+            "flexDirection": "row",
+            "padding": 4,
+          }
+        }
+      />
+    </View>
   </View>
 </View>
 `;

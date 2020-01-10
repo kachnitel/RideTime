@@ -11,6 +11,7 @@ import Layout from '../../../constants/Layout'
 import LocationItemDetail from './LocationItemDetail'
 import { Location } from '../../stores/LocationStore.mobx'
 import TrailforksLink from '../TrailforksLink'
+import CoverPicture from './CoverPicture'
 
 export default
 @inject('LocationStore')
@@ -31,13 +32,19 @@ class LocationItem extends React.Component {
       this.state.loading
         ? <ActivityIndicator />
         : <View style={styles.container}>
-          <View style={styles.headerContainer}>
-            <Text style={styles.name} numberOfLines={1} >
-              {this.location.name}
-            </Text>
-            <TrailforksLink relativeUrl={'region/' + this.location.alias + '/'} />
+          <CoverPicture
+            id={this.location.coverPhoto}
+            style={styles.coverPhoto}
+          />
+          <View style={styles.details}>
+            <View style={styles.headerContainer}>
+              <Text style={styles.name} numberOfLines={1} >
+                {this.location.name}
+              </Text>
+              <TrailforksLink relativeUrl={'region/' + this.location.alias + '/'} />
+            </View>
+            <LocationItemDetail location={this.location} />
           </View>
-          <LocationItemDetail location={this.location} />
         </View>
     )
   }
@@ -49,11 +56,23 @@ LocationItem.propTypes = {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row'
+  },
   name: {
     fontSize: Layout.window.hp(2.75),
     flex: 1
   },
   headerContainer: {
     flexDirection: 'row'
+  },
+  coverPhoto: {
+    width: '20%',
+    resizeMode: 'contain',
+    marginRight: Layout.window.wp(2),
+    borderRadius: Layout.window.hp(1)
+  },
+  details: {
+    flex: 1
   }
 })
