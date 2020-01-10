@@ -6,7 +6,7 @@ import CoverPicture from './CoverPicture'
 import Layout from '../../../constants/Layout'
 import DifficultyIcon from '../icons/DifficultyIcon'
 
-const LocationMarker = ({ location, onPress, highlight }) => {
+const LocationMarker = ({ location, onCalloutPress, highlight }) => {
   let latlng = {
     latitude: location.coords[0],
     longitude: location.coords[1]
@@ -16,7 +16,7 @@ const LocationMarker = ({ location, onPress, highlight }) => {
     coordinate={latlng}
     title={location.name}
     description={'Tap to select'}
-    onCalloutPress={() => onPress(location.id)}
+    onCalloutPress={() => onCalloutPress(location.id)}
     anchor={{ x: 0.5, y: 0.5 }}
   >
     <View style={styles.container}>

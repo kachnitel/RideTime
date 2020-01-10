@@ -113,6 +113,7 @@ class LocationPicker extends Component {
     location={this.props.LocationStore.get(id)}
     key={'loc_' + id}
     highlight={this.props.UserStore.currentUser.locations.includes(id)}
+    onCalloutPress={this.props.onLocationPress}
   />)
 
   renderMap = () => <View style={styles.map}>
