@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderLeftColor: '#ccc',
     borderRightColor: '#ddd',
-    flex: 1
+    height: '100%'
   },
   containerActive: {
     backgroundColor: '#ccc3'

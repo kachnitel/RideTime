@@ -15,15 +15,17 @@ export default class TabBar extends Component {
   }
 
   render () {
+    let buttonWidth = (100 / this.props.options.length).toString() + '%'
     return (
       <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
-        {this.props.options.map((option, index) => <TabButton
-          {...option}
-          onPress={() => this.handleSelect(index)}
-          style={{ width: Layout.window.wp(100 / this.props.options.length) }}
-          key={'option_' + index + '_' + option.title}
-          active={index === this.state.activeIndex}
-        />)}
+        {this.props.options.map((option, index) => <View style={{ width: buttonWidth }} >
+          <TabButton
+            {...option}
+            onPress={() => this.handleSelect(index)}
+            key={'option_' + index + '_' + option.title}
+            active={index === this.state.activeIndex}
+          />
+        </View>)}
       </View>
     )
   }
