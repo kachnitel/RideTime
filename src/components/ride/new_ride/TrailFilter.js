@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
-import Colors from '../../../../constants/Colors'
 import Layout from '../../../../constants/Layout'
 import InputTitle from '../../form/InputTitle'
 import TextInputWithTitle from '../../form/TextInputWithTitle'
@@ -97,7 +96,7 @@ export default class TrailFilter extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.darkBackground
+    // backgroundColor: Colors.darkBackground // TODO: Colors.something
   },
   row: {
     flexDirection: 'row',
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     width: Layout.window.wp(55),
-    color: '#fffa',
+    color: '#0006',
     padding: Layout.window.hp(2),
     textAlign: 'center'
   },
