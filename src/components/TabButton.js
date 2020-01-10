@@ -59,7 +59,6 @@ TabButton.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    padding: Layout.window.hp(2),
     alignItems: 'center',
     justifyContent: 'center',
     borderLeftWidth: 1,
