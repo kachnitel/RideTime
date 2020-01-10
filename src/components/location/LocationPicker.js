@@ -2,11 +2,11 @@ import { inject, observer } from 'mobx-react/native'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
-import { Marker } from 'react-native-maps'
 import Layout from '../../../constants/Layout'
 import SearchInput from '../form/SearchInput'
 import LocationList from './LocationList'
 import AreaMap from '../location/AreaMap'
+import LocationMarker from './LocationMarker'
 
 export default
 @inject('LocationStore', 'UserStore')
@@ -109,20 +109,10 @@ class LocationPicker extends Component {
       </>
   }
 
-  getMarkers = () => this.getLocationIds().map((id) => {
-    let location = this.props.LocationStore.get(id)
-    let latlng = {
-      latitude: location.coords[0],
-      longitude: location.coords[1]
-    }
-    return <Marker
-      coordinate={latlng}
-      title={location.name}
-      key={location.id}
-      description={'Tap to select'}
-      onCalloutPress={() => this.props.onLocationPress(location.id)}
-    />
-  })
+  getMarkers = () => this.getLocationIds().map((id) => <LocationMarker
+    location={this.props.LocationStore.get(id)}
+    key={'loc_' + id}
+  />)
 
   renderMap = () => {
     return <AreaMap
