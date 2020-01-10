@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react/native'
 import {
   StyleSheet,
-  Text,
   View,
   ActivityIndicator
 } from 'react-native'
@@ -12,6 +11,7 @@ import LocationItemDetail from './LocationItemDetail'
 import { Location } from '../../stores/LocationStore.mobx'
 import TrailforksLink from '../TrailforksLink'
 import CoverPicture from './CoverPicture'
+import Header from '../Header'
 
 export default
 @inject('LocationStore')
@@ -38,9 +38,7 @@ class LocationItem extends React.Component {
           />
           <View style={styles.details}>
             <View style={styles.headerContainer}>
-              <Text style={styles.name} numberOfLines={1} >
-                {this.location.name}
-              </Text>
+              <Header>{this.location.name}</Header>
               <TrailforksLink relativeUrl={'region/' + this.location.alias + '/'} />
             </View>
             <LocationItemDetail location={this.location} />
@@ -64,7 +62,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   headerContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   coverPhoto: {
     width: '20%',
