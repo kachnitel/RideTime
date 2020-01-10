@@ -34,6 +34,7 @@ export default class TabButton extends Component {
                 ? { ...styles.tabToggle, ...styles.tabToggleActive }
                 : styles.tabToggle
             }
+            numberOfLines={1}
           >
             {this.props.title}
           </Text>
