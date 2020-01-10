@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import MapView from 'react-native-maps'
 import { inject, observer } from 'mobx-react/native'
-import { StyleSheet, ActivityIndicator } from 'react-native'
+import { StyleSheet } from 'react-native'
 import LocationStore from '../../stores/LocationStore.mobx'
 
 export default
@@ -19,10 +19,6 @@ class AreaMap extends React.Component {
   }
 
   render () {
-    if (!this.state.currentLocation) {
-      return <ActivityIndicator />
-    }
-
     let latLng = {
       latitude: this.state.currentLocation.latitude,
       longitude: this.state.currentLocation.longitude
