@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   rideItem: {
     backgroundColor: '#fff',
-    padding: 0
+    padding: Layout.window.wp(4)
   },
   detailListItem: {
     paddingVertical: Layout.window.hp(1.5),
