@@ -37,10 +37,12 @@ const hydrate = create({
 hydrate('locationStore', stores.location).then((data) => {
   logger.info(
     'Hydrated LocationStore',
-    JSON.stringify(
+    JSON.parse(JSON.stringify(
       data,
-      (key, val) => key === 'stores' ? undefined : val // Filter out stores
-    )
+      (key, val) => key === 'stores' // Filter out stores
+        ? '[' + Object.keys(stores).map((store) => stores[store].constructor.name).join(',') + ']'
+        : val
+    ))
   )
 })
 

@@ -4,9 +4,10 @@ import {
   Text,
   StyleSheet
 } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { observer, inject } from 'mobx-react/native'
-import { FlatList, TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { MaterialIcons } from '@expo/vector-icons'
+import DraggableFlatList from 'react-native-draggable-flatlist'
 import StyledSectionList from '../../lists/StyledSectionList'
 import TrailItem from './TrailItem'
 import Colors from '../../../../constants/Colors'
@@ -87,33 +88,50 @@ class SelectTrails extends Component {
     />
   }
 
-  selectedList = () => <View>
+  selectedList = () => <View style={styles.selectedListContainer}>
     <Header style={styles.selectedListHeader}>Selected trails</Header>
-    <FlatList
+    <DraggableFlatList
       data={this.state.selected}
-      extraData={this.state.selected}
+      extraData={this.state.selected.length}
       keyExtractor={(item) => 'trail_ ' + item.id}
-      renderItem={({ item }) => <View style={styles.selectedItemContainer}>
-        <DifficultyIcon d={item.difficulty} size={Layout.window.hp(3)} />
-        <Text style={styles.selectedItemText}>{item.title}</Text>
-        {this.removeSelectedIcon(item)}
-      </View>}
+      renderItem={this.selectedListItem}
+      onDragEnd={({ data }) => this.setState({ selected: data })} // TODO:
     />
   </View>
 
-  removeSelectedIcon = (item) => <View style={styles.selectedItemRemoveIconContainer}>
-    <TouchableNativeFeedback
-      onPress={() => this.setState((prevState) => ({
-        selected: prevState.selected.filter((current) => current !== item)
-      }))}
-    >
-      <MaterialIcons
-        name='clear'
-        size={Layout.window.hp(3.5)}
-        style={styles.selectedItemRemoveIcon}
-      />
-    </TouchableNativeFeedback>
-  </View>
+  selectedListItem = ({ item, index, drag, isActive }) => <TouchableOpacity onLongPress={drag}>
+    <View style={isActive
+      ? { ...styles.selectedItemContainer, ...styles.selectedItemContainerActive }
+      : styles.selectedItemContainer
+    }>
+      <DifficultyIcon d={item.difficulty} size={Layout.window.hp(3)} />
+      <Text style={styles.selectedItemText}>{item.title}</Text>
+      <View style={styles.selectedItemIconContainer}>
+        {this.removeSelectedIcon(item)}
+        {this.moveSelectedIcon(drag)}
+      </View>
+    </View>
+  </TouchableOpacity>
+
+  removeSelectedIcon = (item) => <TouchableOpacity
+    onPress={() => this.setState((prevState) => ({
+      selected: prevState.selected.filter((current) => current !== item)
+    }))}
+  >
+    <MaterialIcons
+      name='clear'
+      size={Layout.window.hp(3.5)}
+      style={styles.selectedItemIcon}
+    />
+  </TouchableOpacity>
+
+  moveSelectedIcon = (drag: Function) => <TouchableOpacity onPressIn={drag}>
+    <MaterialIcons
+      name='reorder'
+      size={Layout.window.hp(3.5)}
+      style={styles.selectedItemIcon}
+    />
+  </TouchableOpacity>
 
   bottomButtons = () => <View style={styles.bottomButtons}>
     <Button
@@ -188,15 +206,16 @@ const styles = StyleSheet.create({
     padding: Layout.window.hp(1),
     color: '#fff'
   },
-  selectedItemRemoveIcon: {
+  selectedItemIcon: {
     padding: Layout.window.hp(0.5),
     margin: Layout.window.hp(0.25),
     color: '#fff6',
     backgroundColor: '#fff2',
     borderRadius: Layout.window.hp(2.5)
   },
-  selectedItemRemoveIconContainer: {
-    marginLeft: 'auto'
+  selectedItemIconContainer: {
+    marginLeft: 'auto',
+    flexDirection: 'row'
   },
   selectedItemContainer: {
     padding: Layout.window.hp(0.25),
@@ -208,12 +227,18 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     marginBottom: Layout.window.hp(0.25)
   },
+  selectedItemContainerActive: {
+    backgroundColor: '#fff6'
+  },
   bottomButtons: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-evenly'
   },
   bottomButton: {
+    flex: 1
+  },
+  selectedListContainer: {
     flex: 1
   }
 })

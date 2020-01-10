@@ -26,12 +26,13 @@ class Logger {
     })
   }
 
-  _addMessage = (level: String, message: String, context) => {
+  _addMessage (level: String, message: String, context) {
     if (getEnvVars().dev) {
       try {
         let method = console[level]
         if (typeof method === 'function') {
-          console[level](message, context)
+          // HACK: Prevent logging 'undefined' if called without 'context'
+          console[level](...[...arguments].slice(1))
         } else {
           throw new Error(`Unsupported level "${level}"`)
         }
@@ -81,10 +82,18 @@ class Logger {
     ))
   }
 
-  debug = (message: String, context) => this._addMessage('debug', message, context)
-  info = (message: String, context) => this._addMessage('info', message, context)
-  warn = (message: String, context) => this._addMessage('warn', message, context)
-  error = (message: String, context) => this._addMessage('error', message, context)
+  debug (message: String, context) {
+    this._addMessage('debug', ...arguments)
+  }
+  info (message: String, context) {
+    this._addMessage('info', ...arguments)
+  }
+  warn (message: String, context) {
+    this._addMessage('warn', ...arguments)
+  }
+  error (message: String, context) {
+    this._addMessage('error', ...arguments)
+  }
 }
 
 const logger = new Logger()

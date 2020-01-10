@@ -4,6 +4,7 @@ import { BaseEntity } from './BaseEntity'
 import { BaseCollectionStore } from './BaseCollectionStore'
 import ApplicationStore from './ApplicationStore.mobx'
 import PushNotifications from '../PushNotifications'
+import { logger } from '../Logger'
 
 export default class UserStore extends BaseCollectionStore {
   provider: RidersProvider
@@ -85,9 +86,15 @@ export default class UserStore extends BaseCollectionStore {
 
   async signOut () {
     this.reset()
-    return this.provider.signOut({
-      notificationsToken: await (new PushNotifications()).getToken()
-    })
+    try {
+      var result = await this.provider.signOut({
+        notificationsToken: await (new PushNotifications()).getToken()
+      })
+    } catch (error) {
+      logger.warn('Error signing out!', error)
+      return false
+    }
+    return result
   }
 
   /**
