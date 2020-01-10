@@ -7,6 +7,7 @@ import SearchInput from '../form/SearchInput'
 import LocationList from './LocationList'
 import AreaMap from '../location/AreaMap'
 import LocationMarker from './LocationMarker'
+import { Location } from '../../stores/LocationStore.mobx'
 
 export default
 @inject('LocationStore', 'UserStore')
@@ -114,13 +115,14 @@ class LocationPicker extends Component {
     highlight={this.props.UserStore.currentUser.locations.includes(id)}
   />)
 
-  renderMap = () => {
-    return <AreaMap
+  renderMap = () => <View style={styles.map}>
+    <AreaMap
       style={styles.map}
       onRegionChangeComplete={this.onRegionChange}
       markers={this.getMarkers()}
     />
-  }
+    {this.state.loading && <ActivityIndicator style={styles.mapActivityIndicator} />}
+  </View>
 
   /**
    * REVIEW: Duplicated from RidesScreen
@@ -135,10 +137,20 @@ class LocationPicker extends Component {
       region.latitude + region.latitudeDelta / 2, // northLat - max lat
       region.longitude + region.longitudeDelta / 2 // eastLng - max lng
     ]
-    let locations = await this.props.LocationStore.bbox(bbox)
+    this.loadBbox(bbox)
+    let locations = this.props.LocationStore.list().filter((location: Location) => {
+      return location.coords[0] > bbox[0] && location.coords[0] < bbox[2] &&
+        location.coords[1] > bbox[1] && location.coords[1] < bbox[3]
+    })
     this.setState({
       locationIds: locations.map((location) => location.id)
     })
+  }
+
+  loadBbox = async (bbox: Array) => {
+    this.setState({ loading: true })
+    await this.props.LocationStore.bbox(bbox)
+    this.setState({ loading: false })
   }
 }
 
@@ -161,5 +173,8 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1
+  },
+  mapActivityIndicator: {
+    position: 'absolute'
   }
 })
