@@ -1,11 +1,12 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { Marker } from 'react-native-maps'
+import { MaterialIcons } from '@expo/vector-icons'
 import CoverPicture from './CoverPicture'
 import Layout from '../../../constants/Layout'
 import DifficultyIcon from '../icons/DifficultyIcon'
 
-const LocationMarker = ({ location, onPress }) => {
+const LocationMarker = ({ location, onPress, highlight }) => {
   let latlng = {
     latitude: location.coords[0],
     longitude: location.coords[1]
@@ -38,6 +39,11 @@ const LocationMarker = ({ location, onPress }) => {
       >
         {location.name}
       </Text>
+      {highlight && <MaterialIcons
+        name='favorite'
+        style={styles.favoriteIcon}
+        size={Layout.window.hp(2)}
+      />}
     </View>
   </Marker>
 }
@@ -68,5 +74,11 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     height: '5%'
+  },
+  favoriteIcon: {
+    position: 'absolute',
+    top: Layout.window.hp(0.75),
+    left: Layout.window.hp(0.75),
+    color: 'red'
   }
 })

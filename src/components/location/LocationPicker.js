@@ -112,6 +112,7 @@ class LocationPicker extends Component {
   getMarkers = () => this.getLocationIds().map((id) => <LocationMarker
     location={this.props.LocationStore.get(id)}
     key={'loc_' + id}
+    highlight={this.props.UserStore.currentUser.locations.includes(id)}
   />)
 
   renderMap = () => {
