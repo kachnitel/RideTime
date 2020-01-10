@@ -3,7 +3,6 @@ import { View, ActivityIndicator, Text, StyleSheet } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import { Marker, Callout } from 'react-native-maps'
 import AreaMap from '../components/location/AreaMap'
-import { CreateRideButton } from '../components/ride/new_ride/CreateRideButton'
 import RidesList from '../components/ride/RidesList'
 import DrawerButton from '../components/navigation_header/DrawerButton'
 import TouchableWithModal from '../components/modal/TouchableWithModal'
@@ -19,6 +18,7 @@ import { Event } from '../stores/EventStore.mobx'
 import { Location } from '../stores/LocationStore.mobx'
 import TabBar from '../components/TabBar'
 import InviteChoices from '../components/ride/InviteChoices'
+import TabButton from '../components/TabButton'
 
 export default
 @inject('EventStore', 'LocationStore', 'UserStore')
@@ -236,6 +236,37 @@ class RidesScreen extends React.Component {
 
   futureEventFilter = (event: Event) => event.datetime > (Math.floor(Date.now() / 1000) - 3600)
 
+  renderTabBar = () => <View style={styles.tabBarContainer}>
+    <TabBar
+      options={[
+        {
+          title: 'Map',
+          onPress: () => this.setState({ tab: 'map' }),
+          icon: 'map'
+        },
+        {
+          title: `My rides (${this.state.myEvents[1]?.data.length})`, // confirmed
+          onPress: () => this.setState({ tab: 'my' }),
+          icon: 'person-outline',
+          badge: this.state.myEvents[0]?.data.length // invites
+        },
+        {
+          title: 'Friends\' rides',
+          icon: 'people-outline',
+          onPress: () => this.setState({ tab: 'friends' })
+        }
+      ]}
+      style={styles.tabBar}
+    />
+    <TabButton
+      style={styles.tabBarButton}
+      icon='add'
+      title='Create'
+      color='#fff'
+      onPress={() => this.props.navigation.push('NewRide')}
+    />
+  </View>
+
   render () {
     let sections = this.state.selectedLocation !== null
       ? this.getLocationEvents()
@@ -273,33 +304,8 @@ class RidesScreen extends React.Component {
             <ActivityIndicator />
             <Text>Loading rides in visible area...</Text>
           </View>}
-          <CreateRideButton
-            navigation={this.props.navigation}
-            size={Layout.window.wp(18)}
-            style={styles.createRideButton}
-          />
         </View>
-        <TabBar
-          options={[
-            {
-              title: 'Map',
-              onPress: () => this.setState({ tab: 'map' }),
-              icon: 'map'
-            },
-            {
-              title: `My rides (${this.state.myEvents[1]?.data.length})`, // confirmed
-              onPress: () => this.setState({ tab: 'my' }),
-              icon: 'person-outline',
-              badge: this.state.myEvents[0]?.data.length // invites
-            },
-            {
-              title: 'Friends\' rides',
-              icon: 'people-outline',
-              onPress: () => this.setState({ tab: 'friends' })
-            }
-          ]}
-          style={styles.tabBar}
-        />
+        {this.renderTabBar()}
       </View>
     )
   }
@@ -371,13 +377,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     margin: 0
   },
-  createRideButton: {
-    position: 'absolute',
-    right: Layout.window.wp(5),
-    bottom: Layout.window.hp(2)
+  tabBarContainer: {
+    borderTopColor: Colors.tintColor,
+    borderTopWidth: 1,
+    flexDirection: 'row',
+    height: Layout.window.hp(7)
   },
   tabBar: {
-    borderTopColor: Colors.tintColor,
-    borderTopWidth: 1
+    flex: 1
+  },
+  tabBarButton: {
+    width: Layout.window.wp(15)
   }
 })
