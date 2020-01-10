@@ -213,6 +213,7 @@ class RidesScreen extends React.Component {
       data: this.props.UserStore.currentUser.locations
         .map((id) => this.props.LocationStore.get(id).events)
         .flat()
+        .filter((event) => !this.props.UserStore.currentUser.events.includes(event.id))
         .filter(this.futureEventFilter)
         .sort((a: Event, b: Event) => a.datetime - b.datetime)
     }
