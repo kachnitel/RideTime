@@ -12,7 +12,14 @@ export default class LocationDifficulties extends React.Component {
         return <View key={difficulty}>
           <DifficultyIcon d={Number(difficulty)} size={props.iconSize} />
           {/* <Text style={styles.trailCount}>{trailCount}</Text> */}
-          <CountBadge count={trailCount} style={styles.trailCountBadge} />
+          <CountBadge
+            count={trailCount}
+            style={{
+              ...styles.trailCountBadge,
+              fontSize: props.iconSize / 3,
+              minWidth: props.iconSize / 3
+            }}
+          />
         </View>
       }
     })
