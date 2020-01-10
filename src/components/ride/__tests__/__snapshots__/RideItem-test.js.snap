@@ -3,10 +3,10 @@
 exports[`renders correctly 1`] = `
 <View>
   <Text
-    numberOfLines={1}
     style={
       Object {
-        "fontSize": 36.5,
+        "fontSize": 33.5,
+        "fontWeight": "bold",
       }
     }
   >
@@ -63,10 +63,10 @@ exports[`renders correctly 1`] = `
 exports[`renders correctly with style 1`] = `
 <View>
   <Text
-    numberOfLines={1}
     style={
       Object {
-        "fontSize": 36.5,
+        "fontSize": 33.5,
+        "fontWeight": "bold",
       }
     }
   >

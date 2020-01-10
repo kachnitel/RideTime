@@ -43,15 +43,15 @@ exports[`renders correctly 2`] = `
       style={
         Object {
           "flexDirection": "row",
+          "justifyContent": "space-between",
         }
       }
     >
       <Text
-        numberOfLines={1}
         style={
           Object {
-            "flex": 1,
-            "fontSize": 36.5,
+            "fontSize": 33.5,
+            "fontWeight": "bold",
           }
         }
       >
