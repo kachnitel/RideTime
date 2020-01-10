@@ -99,13 +99,12 @@ class LocationPicker extends Component {
       {
         this.state.typing
           ? <Text>Type three or more letters to search...</Text>
-          : this.state.loading
-            ? <ActivityIndicator />
-            : <LocationList
-              sections={this.getListSections()}
-              onLocationPress={this.props.onLocationPress}
-            />
+          : <LocationList
+            sections={this.getListSections()}
+            onLocationPress={this.props.onLocationPress}
+          />
       }
+      { this.state.loading && <ActivityIndicator />}
       </>
   }
 
