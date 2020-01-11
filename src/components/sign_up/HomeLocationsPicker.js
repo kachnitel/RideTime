@@ -65,21 +65,6 @@ class HomeLocationsPicker extends React.Component {
     )
   }
 
-  renderOption = ({ id, name }) => {
-    if (this.state.picked.indexOf(id) !== -1) return <></>
-    return (
-      <TouchableNativeFeedback activeOpacity={0.7}
-        onPress={() => this.onSelect(id)}
-      >
-        <View
-          style={styles.optionContainer}
-        >
-          <Text style={styles.optionText}>{name}</Text>
-        </View>
-      </TouchableNativeFeedback>
-    )
-  }
-
   render () {
     let maxItems = 3
     return (
