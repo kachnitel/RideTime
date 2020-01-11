@@ -6,6 +6,7 @@ import DifficultyIcon from '../icons/DifficultyIcon'
 import TerrainIcon from '../icons/TerrainIcon'
 import Layout from '../../../constants/Layout'
 import CountIcon from '../icons/CountIcon'
+import Colors from '../../../constants/Colors'
 
 export default
 @observer
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
   },
   startTime: {
     fontSize: Layout.window.hp(2),
-    color: '#888'
+    color: Colors.tabIconDefault
   },
   startTimeContainer: {
     marginLeft: 'auto',

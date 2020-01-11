@@ -63,15 +63,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderLeftWidth: 1,
     borderRightWidth: 1,
-    borderLeftColor: '#ccc',
-    borderRightColor: '#ddd',
+    borderLeftColor: Colors.tabIconDefault,
+    borderRightColor: Colors.fadedText,
     height: '100%'
   },
   containerActive: {
-    backgroundColor: '#ccc3'
+    backgroundColor: Colors.itemBackground
   },
   tabToggle: {
-    color: '#888'
+    color: Colors.tabIconDefault
   },
   tabToggleActive: {
     color: Colors.tintColor

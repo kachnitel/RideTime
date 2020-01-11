@@ -5,6 +5,7 @@ import ProfilePicture from './ProfilePicture'
 import OutlineIcon from '../icons/OutlineIcon'
 import DifficultyIcon from '../icons/DifficultyIcon'
 import Layout from '../../../constants/Layout'
+import Colors from '../../../constants/Colors'
 
 export default class ProfilePictureDecorated extends Component {
   renderDiffIcon = () => {
@@ -41,6 +42,6 @@ const styles = StyleSheet.create({
     right: -5
   },
   outlineIcon: {
-    color: '#fff'
+    color: Colors.secondaryText
   }
 })

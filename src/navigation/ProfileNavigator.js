@@ -14,7 +14,7 @@ const ProfileStack = createStackNavigator(
     initialRouteName: 'EditProfile',
     defaultNavigationOptions: ({ navigation }) => ({
       headerStyle: {
-        backgroundColor: '#ffffff'
+        backgroundColor: Colors.appBackground
       },
       headerTintColor: Colors.tintColor
     })

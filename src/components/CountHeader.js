@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native'
 import Header from './Header'
 import Layout from '../../constants/Layout'
 import CountBadge from './CountBadge'
+import Colors from '../../constants/Colors'
 
 export default class CountHeader extends Component {
   render () {
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     paddingRight: Layout.window.wp(2)
   },
   count: {
-    color: '#b8b8b8'
+    color: Colors.fadedText
   },
   countHighlight: {
     fontSize: Layout.window.hp(2.5),

@@ -56,18 +56,18 @@ const styles = StyleSheet.create({
   input: {
     fontSize: Layout.window.hp(2.5),
     borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0);',
+    borderColor: Colors.transparent,
     borderBottomColor: Colors.tintColor,
     borderBottomWidth: 1,
-    color: '#fff',
+    color: Colors.inputText,
     padding: Layout.window.hp(1),
     width: Layout.window.wp(65),
-    backgroundColor: 'rgba(255,255,255,0.03);'
+    backgroundColor: Colors.inputBackground
   },
   inputFocused: {
     borderRadius: Layout.window.hp(0.5),
     borderWidth: 1,
     borderColor: Colors.tintColor,
-    backgroundColor: '#fff2'
+    backgroundColor: Colors.inputBackgroundFocused
   }
 })

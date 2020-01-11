@@ -3,12 +3,13 @@ import React, { Component } from 'react'
 import OutlineIcon from './OutlineIcon'
 import DifficultyIcon from './DifficultyIcon'
 import Layout from '../../../constants/Layout'
+import Colors from '../../../constants/Colors'
 
 export default class OutlineDifficultyIcon extends Component {
   render () {
     return (
       <OutlineIcon
-        outlineStyle={{ color: this.props.outlineColor || '#fff' }}
+        outlineStyle={{ color: this.props.outlineColor || Colors.appBackground }}
         thickness={this.props.thickness || 1.1}
       >
         <DifficultyIcon

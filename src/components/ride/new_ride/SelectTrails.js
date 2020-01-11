@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   },
   badge: {
     backgroundColor: Colors.tintColor,
-    color: '#fff',
+    color: Colors.secondaryText,
     height: '100%',
     textAlignVertical: 'center',
     textAlign: 'center',
@@ -200,17 +200,17 @@ const styles = StyleSheet.create({
     paddingBottom: Layout.window.hp(3.5)
   },
   selectedListHeader: {
-    color: '#fff'
+    color: Colors.secondaryText
   },
   selectedItemText: {
     padding: Layout.window.hp(1),
-    color: '#fff'
+    color: Colors.secondaryText
   },
   selectedItemIcon: {
     padding: Layout.window.hp(0.5),
     margin: Layout.window.hp(0.25),
-    color: '#fff6',
-    backgroundColor: '#fff2',
+    color: Colors.listHeaderBackground,
+    backgroundColor: Colors.inputBackground,
     borderRadius: Layout.window.hp(2.5)
   },
   selectedItemIconContainer: {
@@ -221,14 +221,14 @@ const styles = StyleSheet.create({
     padding: Layout.window.hp(0.25),
     paddingLeft: Layout.window.hp(1),
     flexDirection: 'row',
-    backgroundColor: '#fff2',
+    backgroundColor: Colors.inputBackground,
     borderRadius: Layout.window.hp(2.75),
     alignItems: 'center',
     textAlignVertical: 'center',
     marginBottom: Layout.window.hp(0.25)
   },
   selectedItemContainerActive: {
-    backgroundColor: '#fff6'
+    backgroundColor: Colors.listHeaderBackground
   },
   selectedListContainer: {
     flex: 1

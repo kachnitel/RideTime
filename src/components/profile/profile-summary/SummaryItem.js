@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import Layout from '../../../../constants/Layout'
+import Colors from '../../../../constants/Colors'
 
 export default class SummaryItem extends Component {
   render () {
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   title: {
-    color: '#fff',
+    color: Colors.secondaryText,
     textTransform: 'uppercase',
     fontSize: Layout.window.hp(1.5)
   },

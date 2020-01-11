@@ -108,6 +108,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.tintColor
   },
   actionButtonDisabled: {
-    backgroundColor: '#6666'
+    backgroundColor: Colors.fadedText
   }
 })

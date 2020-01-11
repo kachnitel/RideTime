@@ -97,17 +97,17 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
     backgroundColor: Colors.tintColor,
-    color: '#fff'
+    color: Colors.secondaryText
   },
   link: {
-    color: '#fff',
+    color: Colors.secondaryText,
     opacity: 0.75,
     padding: Layout.window.hp(1)
   },
   option: {
     height: Layout.window.hp(10),
     borderBottomWidth: 1,
-    borderBottomColor: '#6666'
+    borderBottomColor: Colors.tabIconDefault
   },
   bottomSeparator: {
     // flex: 1,

@@ -4,6 +4,7 @@ import { View, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal'
 import Layout from '../../../constants/Layout'
 import MenuModalOption from './MenuModalOption'
+import Colors from '../../../constants/Colors'
 
 export default class ModalView extends Component {
   render () {
@@ -33,7 +34,7 @@ ModalView.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.appBackground,
     borderRadius: Layout.window.hp(2),
     alignItems: 'center',
     paddingVertical: Layout.window.hp(2)

@@ -6,6 +6,7 @@ import TextInputWithTitle from '../../form/TextInputWithTitle'
 import ModalViewMenu from '../../modal/ModalViewMenu'
 import DifficultyIcon from '../../icons/DifficultyIcon'
 import OutlineIcon from '../../icons/OutlineIcon'
+import Colors from '../../../../constants/Colors'
 
 export default class TrailFilter extends Component {
   state = {
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     width: Layout.window.wp(55),
-    color: '#0006',
+    color: Colors.tabIconDefault,
     padding: Layout.window.hp(2),
     textAlign: 'center'
   },
@@ -124,6 +125,6 @@ const styles = StyleSheet.create({
     borderRadius: Layout.window.hp(1)
   },
   outline: {
-    color: '#fff'
+    color: Colors.secondaryText
   }
 })

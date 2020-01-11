@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     height: Layout.window.hp(30)
   },
   rideItem: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.appBackground,
     padding: Layout.window.wp(4)
   },
   detailListItem: {
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   actionButtonIcon: {
     fontSize: Layout.window.hp(4.5),
-    color: '#fff',
+    color: Colors.secondaryText,
     textAlign: 'center',
     textAlignVertical: 'center',
     backgroundColor: Colors.iconColor,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingTop: Layout.window.hp(1),
     flex: 1,
-    color: '#fff'
+    color: Colors.secondaryText
   },
   inviteHeader: {
     color: Colors.tintColor,

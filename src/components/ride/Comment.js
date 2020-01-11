@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   user: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#0003',
+    backgroundColor: Colors.darkBackgroundTransparent,
     borderRadius: Layout.window.hp(2)
   },
   userName: {
@@ -51,10 +51,10 @@ const styles = StyleSheet.create({
     marginHorizontal: Layout.window.hp(0.25)
   },
   self: {
-    color: '#666'
+    color: Colors.inputPlaceholder
   },
   message: {
-    color: '#fff',
+    color: Colors.secondaryText,
     flexWrap: 'wrap',
     flex: 1,
     height: '100%',

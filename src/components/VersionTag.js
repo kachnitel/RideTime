@@ -102,13 +102,12 @@ const styles = StyleSheet.create({
   logEntryHeader: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    backgroundColor: '#9999',
     paddingHorizontal: Layout.window.hp(2),
     borderTopLeftRadius: Layout.window.hp(1),
     borderTopRightRadius: Layout.window.hp(1)
   },
   logEntryHeaderText: {
-    color: '#fff',
+    color: Colors.secondaryText,
     fontWeight: 'bold'
   },
   messageContainer: {
@@ -119,8 +118,8 @@ const styles = StyleSheet.create({
   },
   logEntryContainer: {
     margin: Layout.window.hp(1),
-    backgroundColor: '#eee',
-    borderColor: '#ddd',
+    backgroundColor: Colors.itemBackground,
+    borderColor: Colors.fadedText,
     borderWidth: 1,
     borderRadius: Layout.window.hp(1)
   }

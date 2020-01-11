@@ -5,6 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import CoverPicture from './CoverPicture'
 import Layout from '../../../constants/Layout'
 import DifficultyIcon from '../icons/DifficultyIcon'
+import Colors from '../../../constants/Colors'
 
 const LocationMarker = ({ location, onCalloutPress, highlight }) => {
   let latlng = {
@@ -54,7 +55,7 @@ export default LocationMarker
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#0006',
+    backgroundColor: Colors.darkBackgroundTransparent,
     borderRadius: Layout.window.hp(2),
     width: Layout.window.hp(9),
     overflow: 'hidden',
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: Layout.window.hp(1.5),
-    color: '#fff',
+    color: Colors.secondaryText,
     paddingHorizontal: Layout.window.wp(1),
     height: Layout.window.hp(3)
   },

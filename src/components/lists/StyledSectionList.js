@@ -79,13 +79,13 @@ const styles = StyleSheet.create({
     marginVertical: Layout.window.hp(0.5),
     marginHorizontal: Layout.window.wp(2),
     padding: Layout.window.hp(1),
-    backgroundColor: '#ccc3',
+    backgroundColor: Colors.itemBackground,
     borderRadius: Layout.window.hp(2)
   },
   header: {
     justifyContent: 'center',
     padding: Layout.window.hp(0.75),
-    backgroundColor: '#fffb'
+    backgroundColor: Colors.listHeaderBackground
   },
   headerText: {
     color: Colors.tintColor

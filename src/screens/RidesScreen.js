@@ -262,7 +262,6 @@ class RidesScreen extends React.Component {
       style={styles.tabBarButton}
       icon='add'
       title='Create'
-      color='#fff'
       onPress={() => this.props.navigation.push('NewRide')}
     />
   </View>
@@ -324,8 +323,8 @@ const styles = StyleSheet.create({
   locMarker: {
     backgroundColor: Colors.tintColor,
     borderRadius: Layout.window.hp(1),
-    color: '#fff',
-    borderColor: '#fff',
+    color: Colors.secondaryText,
+    borderColor: Colors.secondaryText,
     borderWidth: 1,
     paddingHorizontal: Layout.window.hp(1),
     paddingVertical: Layout.window.hp(0.5),
@@ -349,11 +348,7 @@ const styles = StyleSheet.create({
   },
   calloutDiffIcon: {
     alignItems: 'center',
-    borderColor: '#DFDFDF',
-    borderRadius: Layout.window.hp(1),
-    borderWidth: 1,
-    padding: Layout.window.hp(0.75),
-    margin: 1
+    padding: Layout.window.hp(0.75)
   },
   calloutDiffIconBadge: {
     position: 'absolute',
