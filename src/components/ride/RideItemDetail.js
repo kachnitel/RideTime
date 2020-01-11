@@ -45,6 +45,7 @@ class RideItemDetail extends React.Component {
     name='person-outline'
     size={Layout.window.hp(5)}
     color={'#878787'}
+    count={this.props.ride.members.length}
   />
 
   render () {
