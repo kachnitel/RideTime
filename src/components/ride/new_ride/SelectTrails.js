@@ -82,6 +82,7 @@ class SelectTrails extends Component {
       itemComponent={(item) => <TrailItem
         trail={item}
         badge={this.badge(item)}
+        style={this.state.selected.includes(item) && { opacity: 0.3 }}
       />}
       windowSize={6}
       initialNumToRender={7}
