@@ -3,37 +3,29 @@ import { View, Text, StyleSheet } from 'react-native'
 import { inject, observer } from 'mobx-react/native'
 import Layout from '../../../constants/Layout'
 import Colors from '../../../constants/Colors'
+import ProfilePicture from '../profile/ProfilePicture'
+import { User } from '../../stores/UserStore.mobx'
 
 export default
 @inject('UserStore')
 @observer
 class Comment extends Component {
-  state = {
-    loadingUser: true,
-    user: null,
-    outgoing: false
-  }
+  user: User
 
-  componentDidMount = () => {
-    this.loadUser()
-  }
-
-  loadUser = async () => {
-    this.setState({ loadingUser: true })
-    let user = await this.props.UserStore.getAsync(this.props.comment.author)
-    this.setState({
-      user: user,
-      loadingUser: false,
-      outgoing: user === this.props.UserStore.currentUser
-    })
+  constructor (props) {
+    super(props)
+    this.user = this.props.UserStore.get(this.props.comment.author)
   }
 
   render () {
     return (
       <View style={styles.container}>
-        {this.state.user && (this.state.outgoing
-          ? <Text style={{ ...styles.userName, ...styles.self }}>You</Text>
-          : <Text style={styles.userName}>{this.state.user.name}</Text>)}
+        <View style={styles.user}>
+          <ProfilePicture picture={this.user.picture} size={Layout.window.hp(3.5)} />
+          {this.user === this.props.UserStore.currentUser
+            ? <Text style={{ ...styles.userName, ...styles.self }}>You</Text>
+            : <Text style={styles.userName}>{this.user.name}</Text>}
+        </View>
         <Text style={styles.message}>{this.props.comment.message}</Text>
       </View>
     )
@@ -46,13 +38,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     padding: Layout.window.hp(0.3)
   },
-  userName: {
-    color: Colors.tintColor,
-    paddingHorizontal: Layout.window.hp(1),
-    paddingVertical: Layout.window.hp(0.5),
-    marginHorizontal: Layout.window.hp(0.25),
+  user: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#0003',
     borderRadius: Layout.window.hp(2)
+  },
+  userName: {
+    color: Colors.tintColor,
+    paddingHorizontal: Layout.window.hp(0.5),
+    paddingVertical: Layout.window.hp(0.5),
+    marginHorizontal: Layout.window.hp(0.25)
   },
   self: {
     color: '#666'
@@ -62,6 +58,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flex: 1,
     height: '100%',
-    textAlignVertical: 'center'
+    textAlignVertical: 'center',
+    paddingLeft: Layout.window.wp(1)
   }
 })
