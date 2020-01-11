@@ -81,6 +81,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: Layout.window.hp(0.75),
     left: Layout.window.hp(0.75),
-    color: 'red'
+    color: Colors.errorHighlight
   }
 })

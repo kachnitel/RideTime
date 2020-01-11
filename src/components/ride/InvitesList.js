@@ -157,6 +157,6 @@ const styles = StyleSheet.create({
   },
   listEmptyText: {
     textAlign: 'center',
-    color: 'grey'
+    color: Colors.fadedText
   }
 })

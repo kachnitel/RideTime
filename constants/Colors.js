@@ -22,5 +22,6 @@ export default {
   secondaryTintColor: '#67922e', // Used in ride descriptions where iconColor is too bright
   warningText: '#666804', // Sign up only ATM
   confirmationHighlight: '#f90',
+  errorHighlight: '#F00',
   transparent: 'rgba(0,0,0,0);'
 }

@@ -24,7 +24,7 @@ export default class FormTextInput extends React.Component {
    */
   render () {
     let inputStyle = this.props.required && !this.props.value
-      ? { ...this.props.style, ...styles.input, borderBottomColor: 'red' }
+      ? { ...this.props.style, ...styles.input, borderBottomColor: Colors.errorHighlight }
       : { ...this.props.style, ...styles.input }
 
     if (this.state.focused) {

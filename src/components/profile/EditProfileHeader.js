@@ -77,13 +77,13 @@ const styles = StyleSheet.create({
   editIcon: {
     fontSize: Layout.window.hp(5),
     position: 'absolute',
-    borderColor: 'white',
+    borderColor: Colors.secondaryText,
     borderWidth: 1,
     borderRadius: Layout.window.hp(0.75),
     textShadowColor: Colors.darkBackgroundTransparent,
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
-    color: 'white',
+    color: Colors.secondaryText,
     backgroundColor: Colors.listHeaderBackground,
     right: 5,
     top: 5
