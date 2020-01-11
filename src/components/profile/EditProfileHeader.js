@@ -2,13 +2,13 @@ import React from 'react'
 import { observer, inject } from 'mobx-react'
 import { View, StyleSheet, ScrollView, Image } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-import headerStyles, { profilePictureSize } from './ProfileHeaderStyle' // TODO:
 import Layout from '../../../constants/Layout'
 import EditPicture from './EditPicture'
 import SelectDifficulty from '../form/SelectDifficulty'
 import SelectBike from '../form/SelectBike'
 import TextInputWithTitle from '../form/TextInputWithTitle'
 import HomeLocationsPicker from '../sign_up/HomeLocationsPicker'
+import Colors from '../../../constants/Colors'
 
 export default
 @inject('User')
@@ -19,15 +19,14 @@ class EditProfileHeader extends React.Component {
       <ScrollView keyboardShouldPersistTaps='handled'>
         <Image // TODO:
           source={{ uri: 'https://s3.ca-central-1.amazonaws.com/ride-time/cover-images/1.png' }}
-          style={headerStyles.coverPicture}
+          style={styles.coverPicture}
         />
         {/* TODO: Use EditPicture with repositioned icon (override icon style) */}
         <MaterialIcons name='edit' style={styles.editIcon} />
-        <View style={headerStyles.businessCard}>
-          <View style={headerStyles.profilePicture}>
+        <View style={styles.businessCard}>
+          <View style={styles.profilePicture}>
             <EditPicture
               picture={this.props.User.picture}
-              size={profilePictureSize}
               onSelect={(val) => this.props.User.updateTempPicture(val)}
             />
           </View>
@@ -88,5 +87,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.75);',
     right: 5,
     top: 5
+  },
+  coverPicture: {
+    width: '100%',
+    aspectRatio: 1.4
+  },
+  businessCard: {
+    backgroundColor: Colors.darkBackground,
+    width: '85%',
+    marginTop: '-33%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    paddingBottom: Layout.window.hp(4)
+  },
+  profilePicture: {
+    width: '40%',
+    marginTop: '-20%'
   }
 })

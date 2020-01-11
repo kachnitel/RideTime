@@ -53,13 +53,10 @@ export default class EditPicture extends React.Component {
     return (
       <TouchableOpacity onPress={this._selectPicture}>
         <View style={this.props.style} >
-          <ProfilePicture picture={this.props.picture} size={this.props.size} />
+          <ProfilePicture picture={this.props.picture} />
           <MaterialIcons
             name='edit'
-            style={{
-              ...styles.editIcon,
-              fontSize: this.props.iconSize || this.props.size * 0.25
-            }}
+            style={styles.editIcon}
           />
         </View>
       </TouchableOpacity>
@@ -71,7 +68,6 @@ EditPicture.propTypes = {
   iconSize: PropTypes.number,
   onSelect: PropTypes.func,
   picture: PropTypes.string,
-  size: PropTypes.number,
   style: PropTypes.any
 }
 
