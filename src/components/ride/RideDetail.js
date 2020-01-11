@@ -32,7 +32,7 @@ class RideDetail extends Component {
         <View style={{ ...styles.detailListItem, ...styles.membersListContainer }} >
           <RidersList
             userIDs={this.props.Event.members.slice()}
-            headerText='Members' textColor={Colors.darkBackgroundText}
+            headerText='Members' textColor={Colors.secondaryText}
           />
           {/* Only show invite button if member */}
           {this.props.Event.isMember() && this.inviteButton()}
