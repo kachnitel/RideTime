@@ -17,7 +17,7 @@ export default class LocationItemDetail extends React.Component {
         <LocationDifficulties
           difficulties={this.props.location.difficulties}
           style={styles.locationDifficulties}
-          iconSize={Layout.window.hp(4)} />
+          iconSize={Layout.window.hp(3.5)} />
       </View>
     )
   }
@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
   },
   locationDifficulties: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(220, 220, 220, .5);',
     borderRadius: Layout.window.wp(1.5),
     padding: Layout.window.wp(0.5)
   }

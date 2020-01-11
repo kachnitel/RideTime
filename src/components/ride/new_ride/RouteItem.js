@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import { Route } from '../../../stores/RouteStore.mobx'
 import Layout from '../../../../constants/Layout'
+import Colors from '../../../../constants/Colors'
 import Header from '../../Header'
 import TerrainProfile from '../../TerrainProfile'
 import OutlineDifficultyIcon from '../../icons/OutlineDifficultyIcon'
@@ -70,9 +71,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   trailItem: {
-    backgroundColor: 'rgba(184, 184, 184, 0.3)',
     flexDirection: 'row',
-    // textAlignVertical: 'center',
+    backgroundColor: Colors.itemBackground,
     alignItems: 'center',
     padding: Layout.window.wp(0.5),
     borderRadius: Layout.window.hp(1),

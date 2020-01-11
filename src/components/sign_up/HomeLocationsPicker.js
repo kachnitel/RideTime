@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     padding: Layout.window.hp(1),
     flexWrap: 'wrap',
     flexDirection: 'row',
-    backgroundColor: 'rgba(255,255,255,0.03);'
+    backgroundColor: Colors.inputBackground
   },
   selectedItemContainer: {
     padding: Layout.window.hp(0.25),

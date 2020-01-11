@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 1,
     borderRadius: Layout.window.hp(0.75),
-    textShadowColor: 'rgba(0,0,0, 0.75)',
+    textShadowColor: Colors.darkBackgroundTransparent,
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
     color: 'white',

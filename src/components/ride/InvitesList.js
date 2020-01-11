@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   },
   headerButton: {
     paddingVertical: Layout.window.hp(0),
-    backgroundColor: 'rgba(255,255,255,0);',
+    backgroundColor: Colors.transparent,
     opacity: 0.75
   },
   headerContainer: {
