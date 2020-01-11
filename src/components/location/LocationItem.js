@@ -49,8 +49,7 @@ class LocationItem extends React.Component {
 }
 
 LocationItem.propTypes = {
-  locationId: PropTypes.number,
-  style: PropTypes.any
+  locationId: PropTypes.number
 }
 
 const styles = StyleSheet.create({

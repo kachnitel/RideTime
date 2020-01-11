@@ -66,7 +66,6 @@ export default class EditPicture extends React.Component {
 }
 
 EditPicture.propTypes = {
-  iconSize: PropTypes.number,
   onSelect: PropTypes.func,
   picture: PropTypes.string,
   style: PropTypes.any
