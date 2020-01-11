@@ -15,8 +15,8 @@ import Layout from '../../../../constants/Layout'
 import { Trail } from '../../../stores/TrailStore.mobx'
 import DifficultyIcon from '../../icons/DifficultyIcon'
 import Header from '../../Header'
-import Button from '../../form/Button'
 import TrailFilter from './TrailFilter'
+import InviteChoices from '../InviteChoices'
 
 export default
 @inject('TrailStore')
@@ -95,7 +95,7 @@ class SelectTrails extends Component {
       extraData={this.state.selected.length}
       keyExtractor={(item) => 'trail_ ' + item.id}
       renderItem={this.selectedListItem}
-      onDragEnd={({ data }) => this.setState({ selected: data })} // TODO:
+      onDragEnd={({ data }) => this.setState({ selected: data })}
     />
   </View>
 
@@ -133,19 +133,19 @@ class SelectTrails extends Component {
     />
   </TouchableOpacity>
 
-  bottomButtons = () => <View style={styles.bottomButtons}>
-    <Button
-      title='Clear'
-      onPress={() => { this.setState({ selected: [] }) }}
-      color='gray'
-      style={styles.bottomButton}
-    />
-    <Button
-      title='Next'
-      onPress={() => { this.props.onSubmit(this.state.selected) }}
-      style={styles.bottomButton}
-    />
-  </View>
+  bottomButtons = () => <InviteChoices options={[
+    {
+      icon: 'clear-all',
+      label: 'Clear',
+      fade: true,
+      action: () => { this.setState({ selected: [] }) }
+    },
+    {
+      icon: 'arrow-forward',
+      label: 'Next',
+      action: () => { this.props.onSubmit(this.state.selected) }
+    }
+  ]} />
 
   render () {
     return (
@@ -177,7 +177,6 @@ const styles = StyleSheet.create({
   badge: {
     backgroundColor: Colors.tintColor,
     color: '#fff',
-    // marginLeft: 'auto',
     height: '100%',
     textAlignVertical: 'center',
     textAlign: 'center',
@@ -229,14 +228,6 @@ const styles = StyleSheet.create({
   },
   selectedItemContainerActive: {
     backgroundColor: '#fff6'
-  },
-  bottomButtons: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly'
-  },
-  bottomButton: {
-    flex: 1
   },
   selectedListContainer: {
     flex: 1
