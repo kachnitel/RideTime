@@ -3,7 +3,6 @@ import { View, ActivityIndicator, Text, StyleSheet } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import { Marker, Callout } from 'react-native-maps'
 import AreaMap from '../components/location/AreaMap'
-import { CreateRideButton } from '../components/ride/new_ride/CreateRideButton'
 import RidesList from '../components/ride/RidesList'
 import DrawerButton from '../components/navigation_header/DrawerButton'
 import TouchableWithModal from '../components/modal/TouchableWithModal'
@@ -19,6 +18,7 @@ import { Event } from '../stores/EventStore.mobx'
 import { Location } from '../stores/LocationStore.mobx'
 import TabBar from '../components/TabBar'
 import InviteChoices from '../components/ride/InviteChoices'
+import TabButton from '../components/TabButton'
 
 export default
 @inject('EventStore', 'LocationStore', 'UserStore')
@@ -213,6 +213,7 @@ class RidesScreen extends React.Component {
       data: this.props.UserStore.currentUser.locations
         .map((id) => this.props.LocationStore.get(id).events)
         .flat()
+        .filter((event) => !this.props.UserStore.currentUser.events.includes(event.id))
         .filter(this.futureEventFilter)
         .sort((a: Event, b: Event) => a.datetime - b.datetime)
     }
@@ -235,6 +236,36 @@ class RidesScreen extends React.Component {
 
   futureEventFilter = (event: Event) => event.datetime > (Math.floor(Date.now() / 1000) - 3600)
 
+  renderTabBar = () => <View style={styles.tabBarContainer}>
+    <TabBar
+      options={[
+        {
+          title: 'Map',
+          onPress: () => this.setState({ tab: 'map' }),
+          icon: 'map'
+        },
+        {
+          title: `My rides (${this.state.myEvents[1]?.data.length})`, // confirmed
+          onPress: () => this.setState({ tab: 'my' }),
+          icon: 'person-outline',
+          badge: this.state.myEvents[0]?.data.length // invites
+        },
+        {
+          title: 'Friends\' rides',
+          icon: 'people-outline',
+          onPress: () => this.setState({ tab: 'friends' })
+        }
+      ]}
+      style={styles.tabBar}
+    />
+    <TabButton
+      style={styles.tabBarButton}
+      icon='add'
+      title='Create'
+      onPress={() => this.props.navigation.push('NewRide')}
+    />
+  </View>
+
   render () {
     let sections = this.state.selectedLocation !== null
       ? this.getLocationEvents()
@@ -247,8 +278,8 @@ class RidesScreen extends React.Component {
     let events = sections.map((section) => section.data).flat()
 
     return (
-      <View style={{ flex: 1, flexDirection: 'column' }}>
-        <View style={{ flex: 35 }}>
+      <View style={styles.container}>
+        <View style={styles.mapContainer}>
           {this.state.loading && <ActivityIndicator style={styles.mapLoading} />}
           <AreaMap
             markers={this.mapMarkers(events)}
@@ -259,7 +290,7 @@ class RidesScreen extends React.Component {
           />
         </View>
 
-        <View style={{ flex: 65 }}>
+        <View style={styles.listContainer}>
           <RidesList
             navigation={this.props.navigation}
             onRefresh={() => this.refresh(this.state.bbox)}
@@ -272,40 +303,28 @@ class RidesScreen extends React.Component {
             <ActivityIndicator />
             <Text>Loading rides in visible area...</Text>
           </View>}
-          <CreateRideButton
-            navigation={this.props.navigation}
-            size={Layout.window.wp(18)}
-            style={styles.createRideButton}
-          />
         </View>
-        <TabBar
-          options={[
-            {
-              title: 'Map',
-              onPress: () => this.setState({ tab: 'map' })
-            },
-            {
-              title: `My rides (${this.state.myEvents[1]?.data.length})`, // confirmed
-              onPress: () => this.setState({ tab: 'my' }),
-              badge: this.state.myEvents[0]?.data.length // invites
-            },
-            {
-              title: 'Friends\' rides',
-              onPress: () => this.setState({ tab: 'friends' })
-            }
-          ]}
-        />
+        {this.renderTabBar()}
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  mapContainer: {
+    flex: 30
+  },
+  listContainer: {
+    flex: 70
+  },
   locMarker: {
     backgroundColor: Colors.tintColor,
     borderRadius: Layout.window.hp(1),
-    color: '#fff',
-    borderColor: '#fff',
+    color: Colors.secondaryText,
+    borderColor: Colors.secondaryText,
     borderWidth: 1,
     paddingHorizontal: Layout.window.hp(1),
     paddingVertical: Layout.window.hp(0.5),
@@ -329,11 +348,7 @@ const styles = StyleSheet.create({
   },
   calloutDiffIcon: {
     alignItems: 'center',
-    borderColor: '#DFDFDF',
-    borderRadius: Layout.window.hp(1),
-    borderWidth: 1,
-    padding: Layout.window.hp(0.75),
-    margin: 1
+    padding: Layout.window.hp(0.75)
   },
   calloutDiffIconBadge: {
     position: 'absolute',
@@ -357,9 +372,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     margin: 0
   },
-  createRideButton: {
-    position: 'absolute',
-    right: Layout.window.wp(5),
-    bottom: Layout.window.hp(2)
+  tabBarContainer: {
+    borderTopColor: Colors.tintColor,
+    borderTopWidth: 1,
+    flexDirection: 'row',
+    height: Layout.window.hp(7)
+  },
+  tabBar: {
+    flex: 1
+  },
+  tabBarButton: {
+    width: Layout.window.wp(15)
   }
 })

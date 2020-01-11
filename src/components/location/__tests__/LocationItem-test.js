@@ -6,7 +6,6 @@ import LocationStore, { Location } from '../../../stores/LocationStore.mobx'
 import LocationsProvider from '../../../providers/LocationsProvider'
 
 jest.mock('../LocationDifficulties', () => 'LocationDifficulties')
-jest.mock('../../ride/RiderCount', () => 'RiderCount')
 
 it('renders correctly', async () => {
   let testLocation = {

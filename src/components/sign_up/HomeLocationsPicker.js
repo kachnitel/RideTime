@@ -65,21 +65,6 @@ class HomeLocationsPicker extends React.Component {
     )
   }
 
-  renderOption = ({ id, name }) => {
-    if (this.state.picked.indexOf(id) !== -1) return <></>
-    return (
-      <TouchableNativeFeedback activeOpacity={0.7}
-        onPress={() => this.onSelect(id)}
-      >
-        <View
-          style={styles.optionContainer}
-        >
-          <Text style={styles.optionText}>{name}</Text>
-        </View>
-      </TouchableNativeFeedback>
-    )
-  }
-
   render () {
     let maxItems = 3
     return (
@@ -157,35 +142,35 @@ const styles = StyleSheet.create({
     padding: Layout.window.hp(1),
     flexWrap: 'wrap',
     flexDirection: 'row',
-    backgroundColor: 'rgba(255,255,255,0.03);'
+    backgroundColor: Colors.inputBackground
   },
   selectedItemContainer: {
     padding: Layout.window.hp(0.25),
     flexDirection: 'row',
-    backgroundColor: '#fff2',
+    backgroundColor: Colors.inputBackgroundFocused,
     borderRadius: Layout.window.hp(2.75),
     maxWidth: '100%'
   },
   selectedItemText: {
-    color: '#fff',
+    color: Colors.secondaryText,
     fontSize: Layout.window.hp(2.5),
     padding: Layout.window.hp(1)
   },
   selectedItemRemoveIcon: {
     padding: Layout.window.hp(0.5),
     margin: Layout.window.hp(0.25),
-    color: '#fff6',
-    backgroundColor: '#fff2',
+    color: Colors.listHeaderBackground,
+    backgroundColor: Colors.inputBackground,
     borderRadius: Layout.window.hp(2.5)
   },
   placeholderText: {
-    color: '#666',
+    color: Colors.inputPlaceholder,
     fontSize: Layout.window.hp(2.5)
   },
   optionContainer: {
     height: Layout.window.hp(8),
     justifyContent: 'center',
-    borderBottomColor: '#ccc',
+    borderBottomColor: Colors.fadedText,
     borderBottomWidth: 1
   },
   optionText: {

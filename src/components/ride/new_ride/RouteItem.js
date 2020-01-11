@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import { Route } from '../../../stores/RouteStore.mobx'
 import Layout from '../../../../constants/Layout'
+import Colors from '../../../../constants/Colors'
 import Header from '../../Header'
 import TerrainProfile from '../../TerrainProfile'
 import OutlineDifficultyIcon from '../../icons/OutlineDifficultyIcon'
@@ -14,7 +15,7 @@ export default
 @observer
 class RouteItem extends Component {
   description = () => this.props.route.description
-    ? <Text style={this.props.style}>
+    ? <Text>
       {this.props.route.description}
     </Text>
     : null
@@ -26,12 +27,12 @@ class RouteItem extends Component {
 
         return <View key={'trail_' + trail.id + '_' + index} style={styles.trailItem}>
           <OutlineDifficultyIcon size={Layout.window.hp(2)} difficulty={trail.difficulty} />
-          <Text style={{ color: this.props.style.color }}>{trail.title}</Text>
+          <Text>{trail.title}</Text>
         </View>
       })
     }
     {(this.props.route.trails.length > 10) && <View style={styles.trailItem}>
-      <Text style={{ color: this.props.style.color }}>...</Text>
+      <Text>...</Text>
     </View>}
   </View>
 
@@ -41,14 +42,14 @@ class RouteItem extends Component {
 
   render () {
     return (
-      <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
+      <View {...this.props}>
         <View style={styles.titleContainer}>
           <OutlineDifficultyIcon difficulty={this.props.route.difficulty} />
-          <Header style={{ ...styles.title, ...this.props.style }}>{this.props.route.title}</Header>
+          <Header style={styles.title}>{this.props.route.title}</Header>
           {this.trailforksLink()}
         </View>
         {this.description()}
-        <TerrainProfile profile={this.props.route.profile} style={this.props.style} />
+        <TerrainProfile profile={this.props.route.profile} />
         {this.trailsList()}
       </View>
     )
@@ -61,10 +62,6 @@ RouteItem.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: Layout.window.hp(1.5),
-    paddingHorizontal: Layout.window.wp(4)
-  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center'
@@ -74,9 +71,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   trailItem: {
-    backgroundColor: 'rgba(184, 184, 184, 0.3)',
     flexDirection: 'row',
-    // textAlignVertical: 'center',
+    backgroundColor: Colors.itemBackground,
     alignItems: 'center',
     padding: Layout.window.wp(0.5),
     borderRadius: Layout.window.hp(1),

@@ -1,31 +1,48 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { TouchableOpacity, Text, StyleSheet } from 'react-native'
+import { TouchableOpacity, Text, StyleSheet, View } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
 import Colors from '../../constants/Colors'
 import Layout from '../../constants/Layout'
 import CountBadge from './CountBadge'
 
 export default class TabButton extends Component {
+  renderIcon = () => this.props.icon && <MaterialIcons
+    name={this.props.icon}
+    color={this.props.active ? styles.tabToggleActive.color : styles.tabToggle.color}
+    size={Layout.window.hp(3)}
+  />
+
   render () {
     return (
       <TouchableOpacity
         onPress={this.props.onPress}
         disabled={this.props.active}
       >
-        <Text
+        <View
           style={{
             ...this.props.active
-              ? { ...styles.tabToggle, ...styles.tabToggleActive }
-              : styles.tabToggle,
+              ? { ...styles.container, ...styles.containerActive }
+              : styles.container,
             ...this.props.style
           }}
         >
-          {this.props.title}
-        </Text>
-        {this.props.badge > 0 && <CountBadge
-          count={this.props.badge}
-          style={styles.badge}
-        />}
+          {this.renderIcon()}
+          <Text
+            style={
+              this.props.active
+                ? { ...styles.tabToggle, ...styles.tabToggleActive }
+                : styles.tabToggle
+            }
+            numberOfLines={1}
+          >
+            {this.props.title}
+          </Text>
+          {this.props.badge > 0 && <CountBadge
+            count={this.props.badge}
+            style={styles.badge}
+          />}
+        </View>
       </TouchableOpacity>
     )
   }
@@ -36,21 +53,27 @@ TabButton.propTypes = {
   onPress: PropTypes.func,
   style: PropTypes.any,
   title: PropTypes.string,
-  badge: PropTypes.number
+  badge: PropTypes.number,
+  icon: PropTypes.string
 }
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderLeftColor: Colors.tabIconDefault,
+    borderRightColor: Colors.fadedText,
+    height: '100%'
+  },
+  containerActive: {
+    backgroundColor: Colors.itemBackground
+  },
   tabToggle: {
-    backgroundColor: Colors.tintColor,
-    color: '#fff',
-    padding: Layout.window.hp(2),
-    fontWeight: 'bold',
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    flex: 1
+    color: Colors.tabIconDefault
   },
   tabToggleActive: {
-    backgroundColor: '#fff',
     color: Colors.tintColor
   },
   badge: {

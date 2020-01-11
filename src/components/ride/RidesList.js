@@ -3,14 +3,14 @@ import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import RideItem from './RideItem'
-import AlternatingStyleList from '../lists/AlternatingStyleList'
+import StyledSectionList from '../lists/StyledSectionList'
 
 export default
 @inject('EventStore')
 @observer
 class RidesList extends Component {
-  itemComponent = (item, style, section) => <View style={style}>
-    <RideItem ride={item} style={style} />
+  itemComponent = (item, section) => <View>
+    <RideItem ride={item} />
     {section.footer !== undefined && section.footer(item)}
   </View>
 
@@ -24,7 +24,7 @@ class RidesList extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <AlternatingStyleList
+        <StyledSectionList
           {...this.props}
           itemComponent={this.itemComponent}
           onItemPress={this.onItemPress}
@@ -35,7 +35,7 @@ class RidesList extends Component {
 }
 
 RidesList.propTypes = {
-  ...AlternatingStyleList.propTypes,
+  ...StyledSectionList.propTypes,
   navigation: PropTypes.any
 }
 

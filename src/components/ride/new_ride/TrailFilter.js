@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
-import Colors from '../../../../constants/Colors'
 import Layout from '../../../../constants/Layout'
 import InputTitle from '../../form/InputTitle'
 import TextInputWithTitle from '../../form/TextInputWithTitle'
 import ModalViewMenu from '../../modal/ModalViewMenu'
 import DifficultyIcon from '../../icons/DifficultyIcon'
 import OutlineIcon from '../../icons/OutlineIcon'
+import Colors from '../../../../constants/Colors'
 
 export default class TrailFilter extends Component {
   state = {
@@ -97,7 +97,7 @@ export default class TrailFilter extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.darkBackground
+    // backgroundColor: Colors.darkBackground // TODO: Colors.something
   },
   row: {
     flexDirection: 'row',
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     width: Layout.window.wp(55),
-    color: '#fffa',
+    color: Colors.tabIconDefault,
     padding: Layout.window.hp(2),
     textAlign: 'center'
   },
@@ -125,6 +125,6 @@ const styles = StyleSheet.create({
     borderRadius: Layout.window.hp(1)
   },
   outline: {
-    color: '#fff'
+    color: Colors.secondaryText
   }
 })

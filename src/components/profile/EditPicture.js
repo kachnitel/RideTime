@@ -12,6 +12,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import ProfilePicture from './ProfilePicture'
 import Layout from '../../../constants/Layout'
 import { logger } from '../../Logger'
+import Colors from '../../../constants/Colors'
 
 export default class EditPicture extends React.Component {
   /**
@@ -53,13 +54,10 @@ export default class EditPicture extends React.Component {
     return (
       <TouchableOpacity onPress={this._selectPicture}>
         <View style={this.props.style} >
-          <ProfilePicture picture={this.props.picture} size={this.props.size} />
+          <ProfilePicture picture={this.props.picture} />
           <MaterialIcons
             name='edit'
-            style={{
-              ...styles.editIcon,
-              fontSize: this.props.iconSize || this.props.size * 0.25
-            }}
+            style={styles.editIcon}
           />
         </View>
       </TouchableOpacity>
@@ -68,10 +66,8 @@ export default class EditPicture extends React.Component {
 }
 
 EditPicture.propTypes = {
-  iconSize: PropTypes.number,
   onSelect: PropTypes.func,
   picture: PropTypes.string,
-  size: PropTypes.number,
   style: PropTypes.any
 }
 
@@ -79,14 +75,14 @@ const styles = StyleSheet.create({
   editIcon: {
     fontSize: Layout.window.hp(5),
     position: 'absolute',
-    borderColor: 'white',
+    borderColor: Colors.secondaryText,
     borderWidth: 1,
     borderRadius: Layout.window.hp(0.75),
-    textShadowColor: 'rgba(0,0,0, 0.75)',
+    textShadowColor: Colors.darkBackgroundTransparent,
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
-    color: 'white',
-    backgroundColor: 'rgba(255,255,255,0.75);',
+    color: Colors.secondaryText,
+    backgroundColor: Colors.listHeaderBackground,
     right: 5,
     bottom: 5
   }

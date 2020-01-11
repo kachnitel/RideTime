@@ -4,19 +4,19 @@ import {
   Text,
   StyleSheet
 } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { observer, inject } from 'mobx-react/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import DraggableFlatList from 'react-native-draggable-flatlist'
-import AlternatingStyleList from '../../lists/AlternatingStyleList'
+import StyledSectionList from '../../lists/StyledSectionList'
 import TrailItem from './TrailItem'
 import Colors from '../../../../constants/Colors'
 import Layout from '../../../../constants/Layout'
 import { Trail } from '../../../stores/TrailStore.mobx'
 import DifficultyIcon from '../../icons/DifficultyIcon'
 import Header from '../../Header'
-import Button from '../../form/Button'
 import TrailFilter from './TrailFilter'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import InviteChoices from '../InviteChoices'
 
 export default
 @inject('TrailStore')
@@ -76,13 +76,13 @@ class SelectTrails extends Component {
         trail.title.includes(this.state.filter.search.trim()))
     }
 
-    return <AlternatingStyleList
+    return <StyledSectionList
       sections={[{ title: 'Trails', data: trails }]}
       onItemPress={this.selectTrail}
-      itemComponent={(item, style) => <TrailItem
+      itemComponent={(item) => <TrailItem
         trail={item}
-        style={style}
         badge={this.badge(item)}
+        style={this.state.selected.includes(item) && { opacity: 0.3 }}
       />}
       windowSize={6}
       initialNumToRender={7}
@@ -96,7 +96,7 @@ class SelectTrails extends Component {
       extraData={this.state.selected.length}
       keyExtractor={(item) => 'trail_ ' + item.id}
       renderItem={this.selectedListItem}
-      onDragEnd={({ data }) => this.setState({ selected: data })} // TODO:
+      onDragEnd={({ data }) => this.setState({ selected: data })}
     />
   </View>
 
@@ -134,19 +134,19 @@ class SelectTrails extends Component {
     />
   </TouchableOpacity>
 
-  bottomButtons = () => <View style={styles.bottomButtons}>
-    <Button
-      title='Clear'
-      onPress={() => { this.setState({ selected: [] }) }}
-      color='gray'
-      style={styles.bottomButton}
-    />
-    <Button
-      title='Next'
-      onPress={() => { this.props.onSubmit(this.state.selected) }}
-      style={styles.bottomButton}
-    />
-  </View>
+  bottomButtons = () => <InviteChoices options={[
+    {
+      icon: 'clear-all',
+      label: 'Clear',
+      fade: true,
+      action: () => { this.setState({ selected: [] }) }
+    },
+    {
+      icon: 'arrow-forward',
+      label: 'Next',
+      action: () => { this.props.onSubmit(this.state.selected) }
+    }
+  ]} />
 
   render () {
     return (
@@ -177,8 +177,7 @@ const styles = StyleSheet.create({
   },
   badge: {
     backgroundColor: Colors.tintColor,
-    color: '#fff',
-    // marginLeft: 'auto',
+    color: Colors.secondaryText,
     height: '100%',
     textAlignVertical: 'center',
     textAlign: 'center',
@@ -201,17 +200,17 @@ const styles = StyleSheet.create({
     paddingBottom: Layout.window.hp(3.5)
   },
   selectedListHeader: {
-    color: '#fff'
+    color: Colors.secondaryText
   },
   selectedItemText: {
     padding: Layout.window.hp(1),
-    color: '#fff'
+    color: Colors.secondaryText
   },
   selectedItemIcon: {
     padding: Layout.window.hp(0.5),
     margin: Layout.window.hp(0.25),
-    color: '#fff6',
-    backgroundColor: '#fff2',
+    color: Colors.listHeaderBackground,
+    backgroundColor: Colors.inputBackground,
     borderRadius: Layout.window.hp(2.5)
   },
   selectedItemIconContainer: {
@@ -222,22 +221,14 @@ const styles = StyleSheet.create({
     padding: Layout.window.hp(0.25),
     paddingLeft: Layout.window.hp(1),
     flexDirection: 'row',
-    backgroundColor: '#fff2',
+    backgroundColor: Colors.inputBackground,
     borderRadius: Layout.window.hp(2.75),
     alignItems: 'center',
     textAlignVertical: 'center',
     marginBottom: Layout.window.hp(0.25)
   },
   selectedItemContainerActive: {
-    backgroundColor: '#fff6'
-  },
-  bottomButtons: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly'
-  },
-  bottomButton: {
-    flex: 1
+    backgroundColor: Colors.listHeaderBackground
   },
   selectedListContainer: {
     flex: 1

@@ -21,6 +21,7 @@ import NotificationsHandler from './src/NotificationsHandler'
 import { logger } from './src/Logger'
 import { alertAsync } from './src/AsyncAlert'
 import { getEnvVars } from './constants/Env'
+import Colors from './constants/Colors'
 
 /**
  * Set default Text style
@@ -137,6 +138,6 @@ App.propTypes = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: Colors.appBackground
   }
 })

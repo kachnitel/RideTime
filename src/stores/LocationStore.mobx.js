@@ -115,13 +115,15 @@ export class Location extends BaseEntity {
     'coords',
     'difficulties',
     'imagemap',
-    'alias'
+    'alias',
+    'coverPhoto'
   ]
 
   @observable _id = false
   @observable _name = null // User.id
   @observable _imagemap = null
   @observable _alias = null
+  @observable _coverPhoto = null
   _coords = observable.array([])
   @observable _difficulties = {
     0: 0,
@@ -158,6 +160,9 @@ export class Location extends BaseEntity {
 
   @action updateImagemap (newValue: String) { this._imagemap = newValue }
   @computed get imagemap () { return this._imagemap }
+
+  @action updateCoverPhoto (newValue: String) { this._coverPhoto = newValue }
+  @computed get coverPhoto () { return this._coverPhoto }
 
   @computed get trails () {
     return this.store.stores.trail.list().filter((item) => item.location === this.id)

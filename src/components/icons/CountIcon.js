@@ -1,20 +1,24 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import PropTypes from 'prop-types'
+import { MaterialIcons } from '@expo/vector-icons'
 
 export default class CountIcon extends React.Component {
   render () {
-    let child = React.Children.only(this.props.children)
-
     return (
       <View style={{ ...styles.container, ...this.props.style }} {...this.props}>
         <Text style={{
-          ...styles.countIcon,
-          ...this.props.fontStyle
+          ...styles.count,
+          color: this.props.color,
+          fontSize: this.props.size * 0.6
         }}>
           {this.props.count || 0}
         </Text>
-        {child}
+        <MaterialIcons
+          name={this.props.name}
+          size={this.props.size}
+          style={{ color: this.props.color }}
+        />
       </View>
     )
   }
@@ -22,15 +26,14 @@ export default class CountIcon extends React.Component {
 
 CountIcon.propTypes = {
   count: PropTypes.number,
-  fontStyle: Text.propTypes.style,
-  size: PropTypes.number,
-  style: PropTypes.any
+  size: PropTypes.number.isRequired,
+  style: PropTypes.any,
+  name: PropTypes.oneOf(Object.keys(MaterialIcons.glyphMap))
 }
 
 const styles = StyleSheet.create({
-  countIcon: {
-    fontWeight: 'bold',
-    paddingRight: 2
+  count: {
+    fontWeight: 'bold'
   },
   container: {
     flexDirection: 'row',

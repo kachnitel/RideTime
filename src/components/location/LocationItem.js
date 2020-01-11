@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react/native'
 import {
   StyleSheet,
-  Text,
   View,
   ActivityIndicator
 } from 'react-native'
@@ -11,6 +10,8 @@ import Layout from '../../../constants/Layout'
 import LocationItemDetail from './LocationItemDetail'
 import { Location } from '../../stores/LocationStore.mobx'
 import TrailforksLink from '../TrailforksLink'
+import CoverPicture from './CoverPicture'
+import Header from '../Header'
 
 export default
 @inject('LocationStore')
@@ -29,36 +30,47 @@ class LocationItem extends React.Component {
   render () {
     return (
       this.state.loading
-        ? <ActivityIndicator style={{ ...styles.container, ...this.props.style }} />
-        : <View style={{ ...styles.container, ...this.props.style }}>
-          <View style={styles.headerContainer}>
-            <Text style={{ ...styles.name, ...this.props.style }} numberOfLines={1} >
-              {this.location.name}
-            </Text>
-            <TrailforksLink relativeUrl={'region/' + this.location.alias + '/'} />
+        ? <ActivityIndicator />
+        : <View style={styles.container}>
+          <CoverPicture
+            id={this.location.coverPhoto}
+            style={styles.coverPhoto}
+          />
+          <View style={styles.details}>
+            <View style={styles.headerContainer}>
+              <Header>{this.location.name}</Header>
+              <TrailforksLink relativeUrl={'region/' + this.location.alias + '/'} />
+            </View>
+            <LocationItemDetail location={this.location} />
           </View>
-          <LocationItemDetail location={this.location} />
         </View>
     )
   }
 }
 
 LocationItem.propTypes = {
-  locationId: PropTypes.number,
-  style: PropTypes.any
+  locationId: PropTypes.number
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row'
+  },
   name: {
     fontSize: Layout.window.hp(2.75),
     flex: 1
   },
-  container: {
-    height: Layout.window.hp(10),
-    paddingVertical: Layout.window.hp(1.5),
-    paddingHorizontal: Layout.window.wp(4)
-  },
   headerContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  coverPhoto: {
+    width: '20%',
+    resizeMode: 'contain',
+    marginRight: Layout.window.wp(2),
+    borderRadius: Layout.window.hp(1)
+  },
+  details: {
+    flex: 1
   }
 })

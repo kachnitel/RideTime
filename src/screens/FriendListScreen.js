@@ -6,8 +6,6 @@ import {
 } from 'react-native'
 import { inject, observer } from 'mobx-react/native'
 import UsersList from '../components/user/UsersList'
-import Colors from '../../constants/Colors'
-import Layout from '../../constants/Layout'
 import Button from '../components/form/Button'
 import FriendMenuModal from '../components/friends/FriendMenuModal'
 import DrawerButton from '../components/navigation_header/DrawerButton'
@@ -112,25 +110,13 @@ class FriendListScreen extends Component {
         actions: this.actionsFriend
       }
     ]}
-    style={styles.list}
     onRefresh={this.refresh}
     refreshing={this.state.loading}
   />
 }
 
 const styles = StyleSheet.create({
-  list: {},
   container: {
     flex: 1
-  },
-  header: {
-    backgroundColor: Colors.tintColor,
-    padding: Layout.window.hp(1.5)
-  },
-  headerText: {
-    color: '#fff'
-  },
-  headerCount: {
-    color: '#b8b8b8cc'
   }
 })

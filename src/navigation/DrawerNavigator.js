@@ -50,7 +50,7 @@ const DrawerStack = createDrawerNavigator(
     headerMode: 'screen',
     defaultNavigationOptions: ({ navigation }) => ({
       headerStyle: {
-        backgroundColor: '#ffffff'
+        backgroundColor: Colors.appBackground
       },
       headerTintColor: Colors.tintColor
     }),

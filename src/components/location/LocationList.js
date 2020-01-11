@@ -2,17 +2,17 @@ import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import LocationItem from './LocationItem'
-import AlternatingStyleList from '../lists/AlternatingStyleList'
+import StyledSectionList from '../lists/StyledSectionList'
 
 export default class LocationList extends Component {
-  itemComponent = function (item, style) {
-    return <LocationItem locationId={item} style={style} />
+  itemComponent = function (item) {
+    return <LocationItem locationId={item} />
   }
 
   render () {
     return (
       <View style={{ ...styles.container, ...this.props.style }}>
-        <AlternatingStyleList
+        <StyledSectionList
           {...this.props}
           itemComponent={this.itemComponent}
           onItemPress={this.props.onLocationPress} // FIXME: pointless
@@ -24,7 +24,7 @@ export default class LocationList extends Component {
 }
 
 LocationList.propTypes = {
-  ...AlternatingStyleList.propTypes,
+  ...StyledSectionList.propTypes,
   onLocationPress: PropTypes.func
 }
 

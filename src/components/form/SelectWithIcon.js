@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: Layout.window.wp(1),
     width: Layout.window.wp(65),
-    backgroundColor: 'rgba(255,255,255,0.03);'
+    backgroundColor: Colors.inputBackground
   },
   innerContainer: {
     flexDirection: 'row',
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: Layout.window.hp(2.5),
-    color: '#fff',
+    color: Colors.inputText,
     textAlignVertical: 'center',
     paddingHorizontal: Layout.window.wp(5),
     height: Layout.window.hp(7)
   },
   placeholderText: {
-    color: '#666',
+    color: Colors.inputPlaceholder,
     paddingHorizontal: Layout.window.wp(1.5)
   }
 })

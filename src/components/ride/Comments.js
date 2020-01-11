@@ -89,17 +89,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: Layout.window.hp(1),
     right: Layout.window.hp(1),
-    backgroundColor: '#6669',
+    backgroundColor: Colors.itemBackground,
     padding: Layout.window.hp(0.75),
     borderRadius: Layout.window.hp(1.5)
   },
   listEmptyText: {
     alignSelf: 'center',
-    textAlignVertical: 'center',
-    color: '#fff3'
+    color: Colors.itemBackground
   },
   commentCount: {
-    color: '#fff'
+    color: Colors.secondaryText
   },
   input: {
     flex: 1

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
+import { View, StyleSheet, ActivityIndicator } from 'react-native'
 import UsersList from '../components/user/UsersList'
 import { inject, observer } from 'mobx-react/native'
-import Colors from '../../constants/Colors'
 import Layout from '../../constants/Layout'
 import SearchInput from '../components/form/SearchInput'
 
@@ -63,7 +62,7 @@ class AddFriendScreen extends Component {
     return (
       this.state.loading
         ? <ActivityIndicator />
-        : <ScrollView style={styles.container}>
+        : <View style={styles.container}>
           {/* TODO: Move to header */}
           <SearchInput
             onChangeText={this.handleSearchOnChange}
@@ -76,22 +75,15 @@ class AddFriendScreen extends Component {
               data: this.state.userIds,
               actions: this.actions
             }]}
-            style={styles.list}
           />
-        </ScrollView>
+        </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  list: {},
   container: {
     flex: 1
-  },
-  header: {
-    backgroundColor: Colors.tintColor,
-    color: '#fff',
-    padding: Layout.window.hp(1.5)
   },
   search: {
     padding: Layout.window.hp(1.5),

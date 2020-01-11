@@ -44,13 +44,13 @@ const styles = StyleSheet.create({
     marginTop: '-20%'
   },
   name: {
-    color: '#fff',
+    color: Colors.secondaryText,
     fontSize: Layout.window.hp(3.75),
     padding: Layout.window.hp(2),
     paddingBottom: Layout.window.hp(0.5)
   },
   hometown: {
-    color: '#fff',
+    color: Colors.secondaryText,
     fontSize: Layout.window.hp(2.5)
   },
   profileSummary: {

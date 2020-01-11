@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     marginTop: 40,
-    color: '#fff'
+    color: Colors.secondaryText
   },
   introText: {
     height: Layout.window.hp(20),
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'center',
     fontSize: Layout.window.hp(3),
-    color: '#fff'
+    color: Colors.secondaryText
   },
   versionTag: {
     bottom: 0,

@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   loadingText: {
-    color: '#fff'
+    color: Colors.secondaryText
   },
   versionTag: {
     bottom: 0,

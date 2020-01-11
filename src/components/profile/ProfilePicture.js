@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, StyleSheet } from 'react-native'
+import Colors from '../../../constants/Colors'
 
 export default class ProfilePicture extends React.Component {
   state = {
@@ -43,6 +44,6 @@ ProfilePicture.propTypes = {
 
 const styles = StyleSheet.create({
   image: {
-    backgroundColor: 'rgba(12, 94, 20, 0.5);'
+    backgroundColor: Colors.darkBackgroundTransparent
   }
 })

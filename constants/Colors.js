@@ -1,18 +1,28 @@
 const tintColor = '#0C5E14'
+const appBackground = '#fff'
 
 export default {
-  tintColor,
-  tabIconDefault: '#ccc',
-  tabIconSelected: tintColor,
-  tabBar: '#fefefe',
-  errorBackground: 'red',
-  errorText: '#fff',
-  warningBackground: '#EAEB5E',
-  warningText: '#666804',
-  noticeBackground: tintColor,
-  noticeText: '#fff',
-  iconColor: '#85c131',
+  appBackground: appBackground,
   darkBackground: '#222629',
-  darkBackgroundText: '#fff',
-  confirmationHighlight: '#f90'
+  darkBackgroundTransparent: '#0006', // Map marker only ATM
+  tabIconDefault: '#aaa',
+  tabIconSelected: tintColor,
+  secondaryText: appBackground,
+  fadedText: '#b8b8b8',
+  // Lists
+  listHeaderBackground: '#fffb',
+  itemBackground: '#ccc3',
+  // Input
+  inputText: '#fff',
+  inputPlaceholder: '#666',
+  inputBackground: 'rgba(255,255,255,0.03);',
+  inputBackgroundFocused: '#fff2',
+  // ... the rest?
+  tintColor,
+  iconColor: '#85c131',
+  secondaryTintColor: '#67922e', // Used in ride descriptions where iconColor is too bright
+  warningText: '#666804', // Sign up only ATM
+  confirmationHighlight: '#f90',
+  errorHighlight: '#F00',
+  transparent: 'rgba(0,0,0,0);'
 }

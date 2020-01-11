@@ -6,7 +6,11 @@ import Colors from '../../constants/Colors'
 
 export default class CountBadge extends Component {
   render () {
-    return <Text style={{ ...styles.badge, ...this.props.style }}>{this.props.count}</Text>
+    return <Text
+      numberOfLines={1}
+      {...this.props}
+      style={{ ...styles.badge, ...this.props.style }}
+    >{this.props.count}</Text>
   }
 }
 

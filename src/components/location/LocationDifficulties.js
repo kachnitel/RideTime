@@ -4,6 +4,7 @@ import { View, StyleSheet } from 'react-native'
 import DifficultyIcon from '../icons/DifficultyIcon'
 import Layout from '../../../constants/Layout'
 import CountBadge from '../CountBadge'
+import Colors from '../../../constants/Colors'
 
 export default class LocationDifficulties extends React.Component {
   createDifficultyIcons (props) {
@@ -11,8 +12,14 @@ export default class LocationDifficulties extends React.Component {
       if (trailCount > 0) {
         return <View key={difficulty}>
           <DifficultyIcon d={Number(difficulty)} size={props.iconSize} />
-          {/* <Text style={styles.trailCount}>{trailCount}</Text> */}
-          <CountBadge count={trailCount} style={styles.trailCountBadge} />
+          <CountBadge
+            count={trailCount}
+            style={{
+              ...styles.trailCountBadge,
+              fontSize: props.iconSize / 3,
+              minWidth: props.iconSize / 3
+            }}
+          />
         </View>
       }
     })
@@ -40,20 +47,11 @@ LocationDifficulties.defaultProps = {
 }
 
 const styles = StyleSheet.create({
-  trailCount: {
-    fontSize: Layout.window.hp(1.75),
-    alignSelf: 'center',
-    backgroundColor: '#fffa',
-    borderRadius: Layout.window.hp(1),
-    padding: 0,
-    paddingHorizontal: Layout.window.wp(1)
-  },
   trailCountBadge: {
     position: 'absolute',
     right: 0,
     fontSize: Layout.window.hp(1.5),
     minWidth: Layout.window.hp(2),
-    backgroundColor: '#cccc'
-    // backgroundColor: ,
+    backgroundColor: Colors.listHeaderBackground
   }
 })

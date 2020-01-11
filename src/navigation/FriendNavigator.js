@@ -14,7 +14,7 @@ const FriendStack = createStackNavigator(
     initialRouteName: 'FriendList',
     defaultNavigationOptions: ({ navigation }) => ({
       headerStyle: {
-        backgroundColor: '#ffffff'
+        backgroundColor: Colors.appBackground
       },
       headerTintColor: Colors.tintColor
     })

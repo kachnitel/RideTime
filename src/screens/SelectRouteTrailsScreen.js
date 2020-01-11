@@ -64,11 +64,13 @@ class SelectRouteTrailsScreen extends Component {
     options={[
       {
         title: 'Trails',
-        onPress: this.handleTabToggle
+        onPress: this.handleTabToggle,
+        icon: 'playlist-add'
       },
       {
         title: 'Routes',
-        onPress: this.handleTabToggle
+        onPress: this.handleTabToggle,
+        icon: 'timeline'
       }
     ]}
   />
@@ -137,12 +139,12 @@ class SelectRouteTrailsScreen extends Component {
    */
   render () {
     return <SafeAreaView style={styles.container}>
-      {this.tabToggle()}
       {
         this.state.trailsTab
           ? this.selectTrails()
           : this.selectRoute()
       }
+      {this.tabToggle()}
     </SafeAreaView>
   }
 }
