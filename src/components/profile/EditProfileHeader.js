@@ -37,6 +37,7 @@ class EditProfileHeader extends React.Component {
               placeholder='Your name'
               title='Name'
               containerStyle={styles.textInput}
+              required
             />
             <TextInputWithTitle
               value={this.props.User.hometown}
