@@ -38,14 +38,14 @@ class RideItemDetail extends React.Component {
   messageCount = () => this.props.ride.comments.length > 0 && <CountIcon
     name='chat-bubble-outline'
     size={Layout.window.hp(5)}
-    color={'#aaa'}
+    color={Colors.tabIconDefault}
     count={this.props.ride.comments.length}
   />
 
   memberCount = () => <CountIcon
     name='person-outline'
     size={Layout.window.hp(5)}
-    color={'#878787'}
+    color={Colors.inputPlaceholder}
     count={this.props.ride.members.length}
   />
 

@@ -47,7 +47,7 @@ exports[`renders correctly 1`] = `
       style={
         Object {
           "aspectRatio": 1,
-          "backgroundColor": "rgba(12, 94, 20, 0.5);",
+          "backgroundColor": "#0006",
           "borderRadius": 0,
           "height": 80,
           "marginRight": -26.5,
@@ -107,7 +107,7 @@ exports[`renders correctly with style 1`] = `
       style={
         Object {
           "aspectRatio": 1,
-          "backgroundColor": "rgba(12, 94, 20, 0.5);",
+          "backgroundColor": "#0006",
           "borderRadius": 0,
           "height": 80,
           "marginRight": -26.5,

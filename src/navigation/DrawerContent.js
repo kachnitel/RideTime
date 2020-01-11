@@ -28,7 +28,7 @@ class DrawerContent extends Component {
       <ScrollView contentContainerStyle={styles.itemsContainer}>
         <DrawerItems
           {...this.props}
-          activeTintColor={'#fff'}
+          activeTintColor={Colors.secondaryText}
           activeBackgroundColor={Colors.tintColor}
         />
       </ScrollView>

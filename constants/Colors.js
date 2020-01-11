@@ -1,12 +1,13 @@
 const tintColor = '#0C5E14'
+const appBackground = '#fff'
 
 export default {
-  appBackground: '#fff',
+  appBackground: appBackground,
   darkBackground: '#222629',
   darkBackgroundTransparent: '#0006', // Map marker only ATM
   tabIconDefault: '#aaa',
   tabIconSelected: tintColor,
-  secondaryText: '#fff',
+  secondaryText: appBackground,
   fadedText: '#b8b8b8',
   // Lists
   listHeaderBackground: '#fffb',

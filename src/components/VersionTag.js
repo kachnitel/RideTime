@@ -97,7 +97,7 @@ class VersionTag extends Component {
 const styles = StyleSheet.create({
   versionText: {
     fontSize: Layout.window.hp(1.5),
-    color: Colors.noticeText
+    color: Colors.listHeaderBackground
   },
   logEntryHeader: {
     flexDirection: 'row',

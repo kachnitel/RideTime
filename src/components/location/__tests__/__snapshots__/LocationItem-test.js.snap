@@ -102,10 +102,9 @@ exports[`renders correctly 2`] = `
             2,
           ]
         }
-        iconSize={53.5}
+        iconSize={46.5}
         style={
           Object {
-            "backgroundColor": "rgba(220, 220, 220, .5);",
             "borderRadius": 11.5,
             "flexDirection": "row",
             "padding": 4,
