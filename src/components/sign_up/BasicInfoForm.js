@@ -20,7 +20,7 @@ class BasicInfoForm extends React.Component {
         {/* TODO: cover picture */}
         <EditPicture
           picture={this.props.User.picture}
-          size={Layout.window.hp(15)}
+          style={styles.picture}
           iconSize={Layout.window.hp(4)}
           onSelect={this._handleSelectPicture}
         />
@@ -53,5 +53,8 @@ class BasicInfoForm extends React.Component {
 const styles = StyleSheet.create({
   inputContainer: {
     padding: Layout.window.hp(3)
+  },
+  picture: {
+    width: Layout.window.hp(15)
   }
 })
