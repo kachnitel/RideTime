@@ -373,8 +373,6 @@ const styles = StyleSheet.create({
     margin: 0
   },
   tabBarContainer: {
-    borderTopColor: Colors.tintColor,
-    borderTopWidth: 1,
     flexDirection: 'row',
     height: Layout.window.hp(7)
   },

@@ -24,5 +24,6 @@ export default {
   warningText: '#666804', // Sign up only ATM
   confirmationHighlight: '#f90',
   errorHighlight: '#F00',
-  transparent: 'rgba(0,0,0,0);'
+  transparent: 'rgba(0,0,0,0);',
+  shadow: 'black'
 }

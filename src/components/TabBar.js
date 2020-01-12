@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import Layout from '../../constants/Layout'
 import TabButton from './TabButton'
+import Colors from '../../constants/Colors'
 
 export default class TabBar extends Component {
   state = {
@@ -45,6 +46,15 @@ const styles = StyleSheet.create({
   container: {
     height: Layout.window.hp(7),
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    shadowColor: Colors.shadow,
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.30,
+    shadowRadius: 4.65,
+    elevation: 8,
+    backgroundColor: Colors.appBackground
   }
 })

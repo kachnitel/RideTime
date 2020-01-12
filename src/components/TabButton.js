@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
+    borderLeftWidth: 0.33,
+    borderRightWidth: 0.33,
     borderLeftColor: Colors.tabIconDefault,
     borderRightColor: Colors.fadedText,
     height: '100%'
