@@ -257,13 +257,14 @@ class RidesScreen extends React.Component {
         }
       ]}
       style={styles.tabBar}
-    />
-    <TabButton
-      style={styles.tabBarButton}
-      icon='add'
-      title='Create'
-      onPress={() => this.props.navigation.push('NewRide')}
-    />
+    >
+      <TabButton
+        style={styles.tabBarButton}
+        icon='add'
+        title='Create'
+        onPress={() => this.props.navigation.push('NewRide')}
+      />
+    </TabBar>
   </View>
 
   render () {

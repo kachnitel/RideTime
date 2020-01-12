@@ -19,16 +19,19 @@ export default class TabBar extends Component {
     let buttonWidth = (100 / this.props.options.length).toString() + '%'
     return (
       <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
-        {this.props.options.map((option, index) => <View
-          style={{ width: buttonWidth }}
-          key={'option_' + index + '_' + option.title}
-        >
-          <TabButton
-            {...option}
-            onPress={() => this.handleSelect(index)}
-            active={index === this.state.activeIndex}
-          />
-        </View>)}
+        <View style={styles.tabs}>
+          {this.props.options.map((option, index) => <View
+            style={{ width: buttonWidth }}
+            key={'option_' + index + '_' + option.title}
+          >
+            <TabButton
+              {...option}
+              onPress={() => this.handleSelect(index)}
+              active={index === this.state.activeIndex}
+            />
+          </View>)}
+        </View>
+        {this.props.children}
       </View>
     )
   }
@@ -44,9 +47,8 @@ TabBar.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    height: Layout.window.hp(7),
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    height: Layout.window.hp(7),
     shadowColor: Colors.shadow,
     shadowOffset: {
       width: 0,
@@ -56,5 +58,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 8,
     backgroundColor: Colors.appBackground
+  },
+  tabs: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    flex: 1
   }
 })
