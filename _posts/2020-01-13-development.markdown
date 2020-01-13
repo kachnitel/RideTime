@@ -5,7 +5,7 @@ category: Development
 title: How's it coming along?
 description: |
 ---
-  ## What's done:
+## What's done:
 ### Friendships
 - You can join using Google or Facebook (Pinkbike coming soon!)
 - Find your friends, add them to friend list and invite for rides!
