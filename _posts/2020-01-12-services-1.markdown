@@ -1,0 +1,8 @@
+---
+layout: default
+img: screenshot-ridesscreen.jpg
+category: Services
+title: Nearby rides map
+description: |
+---
+  See who's going out riding around you or when are your friends goind out for a rip!

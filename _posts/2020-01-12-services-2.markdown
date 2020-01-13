@@ -1,0 +1,8 @@
+---
+layout: default
+img: screenshot-map-selectlocation.jpg
+category: Services
+title: Plan a ride at a nearby location
+description: |
+---
+  Plan a ride at any nearby location or town you can find on <a href="https://www.trailforks.com">Trailforks</a> or search anywhere in the world to plan a trip!
