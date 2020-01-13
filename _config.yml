@@ -24,9 +24,9 @@ permalink: pretty
 # ----------------------- #
 
 social:
-  - title: twitter
-    url: https://twitter.com/SBootstrap
+  - title: facebook
+    url: https://www.facebook.com/ridetimeapp/
   - title: github
-    url: https://github.com/IronSummitMedia/startbootstrap
-  - title: linkedin
-    url:
+    url: https://github.com/kachnitel/RideTime
+  - title: download
+    url: https://expo.io/artifacts/8901f8e6-29a3-42f4-a063-3c5192b588ce
