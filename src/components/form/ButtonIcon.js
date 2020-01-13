@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: Layout.window.hp(2.5),
-    fontWeight: 'bold',
     alignSelf: 'center',
     paddingHorizontal: Layout.window.hp(1)
   }
