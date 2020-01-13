@@ -2,15 +2,13 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.com
-title: Your Awesome Site
-email: your-email@domain.com
-author: Your Name
-description: > # "Write an awesome description for your new site here. 
-  You can edit this line in _config.yml. It will appear in your document 
-  head meta (for Google search results) and in your feed.xml site 
-  description.
-copyright: 'Copyright &copy; 2015 Your Name. All Rights Reserved.'
+url: https://kachnitel.github.io/RideTime/
+title: RideTime
+email: admin@ridebikes.today
+author: Ondrej Vana
+description: > # "Write an awesome description for your new site here.
+  Riding bikes is fun, but riding together is more fun! Make riding more fun and safer riding with friends and meeting new people to ride your bike with!
+copyright: 'Copyright &copy; 2020 Ondrej Vana. All Rights Reserved.'
 credits: 'Credits: Landing Page is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com/">Start Bootstrap</a>.'
 
 # ----------------------- #
@@ -31,4 +29,4 @@ social:
   - title: github
     url: https://github.com/IronSummitMedia/startbootstrap
   - title: linkedin
-    url: 
+    url:
