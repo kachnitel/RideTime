@@ -1,0 +1,8 @@
+---
+layout: default
+img: screenshot-ride-comments.jpg
+category: Services
+title: Use the chat to plan a sick ride or a big all day trip to the mountains
+description: |
+---
+  Group instant messaging in each event to help you make the perfect plan

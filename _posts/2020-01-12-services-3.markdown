@@ -1,0 +1,9 @@
+---
+layout: default
+img: screenshot-selectroute.jpg
+category: Services
+title: See what's out there to ride
+description: |
+---
+  Check out what's each riding location has to offer. A list of <a href="https://www.trailforks.com">Trailforks</a>' trails and routes can be selected at each location, or just skip the selection altogether to just go for a ride, or maybe invite some friends and make the plan together!
+  This area is still very much in progress and a lot of improvements are there to be made, but it's in progress!

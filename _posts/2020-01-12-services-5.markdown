@@ -1,0 +1,8 @@
+---
+layout: default
+img: screenshot-invite.jpg
+category: Services
+title: Invite friends to rides
+description: |
+---
+  You can create a private ride that only your friends can see, or even one that noone can see until you invite them! Just for the days you feel picky, maybe all the days?
