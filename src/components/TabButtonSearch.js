@@ -58,6 +58,7 @@ export default class TabButtonSearch extends Component {
           style={{ ...this.props.style, ...styles.search }}
           onChangeText={this.handleSearchOnChange}
           disabled={this.state.loading}
+          autoFocus
         />}
         <TabButton
           {...this.props}
