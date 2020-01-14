@@ -48,12 +48,9 @@ class SelectLocationScreen extends React.Component {
         : this.props.LocationStore.nearby(25)
     })
     let locations = val
-      ? await this.props.LocationStore.searchAsync(val) // TODO: filter cached then load
+      ? await this.props.LocationStore.searchAsync(val)
       : await this.props.LocationStore.nearbyAsync(25)
-    this.setState({
-      locations: locations,
-      loading: false
-    })
+    this.addLocations(locations)
   }
 
   onBboxUpdate = async (bbox: Array) => {
@@ -62,11 +59,17 @@ class SelectLocationScreen extends React.Component {
       loading: true
     })
     let locations = await this.props.LocationStore.bboxAsync(bbox)
-    this.setState({
-      locations: locations,
-      loading: false
-    })
+    this.addLocations(locations)
   }
+
+  addLocations = (locations: Array) => this.setState((prevState) => ({
+    locations: [
+      ...locations,
+      ...prevState.locations
+        .filter((location: Location) => !locations.includes(location))
+    ],
+    loading: false
+  }))
 
   renderTabBar = () => <TabBar
     options={[
