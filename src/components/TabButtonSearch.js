@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
 import TabButton from './TabButton'
 import Layout from '../../constants/Layout'
+import Colors from '../../constants/Colors'
 import { View } from 'react-native-animatable'
 import SearchInput from './form/SearchInput'
 
@@ -46,9 +48,6 @@ export default class TabButtonSearch extends Component {
     this.setState({ showSearch: false })
   }
 
-  /**
-   * TODO: Clear/cancel button
-   */
   render () {
     return (
       <View style={styles.container}>
@@ -59,6 +58,16 @@ export default class TabButtonSearch extends Component {
           onChangeText={this.handleSearchOnChange}
           disabled={this.state.loading}
           autoFocus
+        /> }
+        {this.state.loading && <ShimmerPlaceHolder
+          autoRun
+          style={styles.loading}
+          height={Layout.window.hp(0.33)}
+          colorShimmer={[
+            Colors.appBackground,
+            Colors.secondaryTintColor,
+            Colors.appBackground
+          ]}
         />}
         <TabButton
           {...this.props}
@@ -91,5 +100,8 @@ const styles = StyleSheet.create({
     width: Layout.window.wp(40),
     padding: Layout.window.wp(2),
     fontSize: Layout.window.hp(2.5)
+  },
+  loading: {
+    position: 'absolute'
   }
 })
