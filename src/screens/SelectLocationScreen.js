@@ -24,7 +24,8 @@ class SelectLocationScreen extends React.Component {
   state = {
     loading: true,
     displayMap: false,
-    locations: []
+    locations: [],
+    searching: false
   }
 
   componentDidMount = () => {
@@ -39,7 +40,10 @@ class SelectLocationScreen extends React.Component {
   }
 
   onSearchUpdate = async (val: String) => {
-    this.setState({ loading: true })
+    this.setState({
+      loading: true,
+      searching: !!val?.length
+    })
     let locations = val
       ? await this.props.LocationStore.search(val) // TODO: filter cached then load
       : await this.props.LocationStore.nearby(25)
@@ -92,16 +96,23 @@ class SelectLocationScreen extends React.Component {
     let favourites = this.props.UserStore.currentUser.locations
       .map((id) => this.props.LocationStore.get(id))
 
-    return [
-      {
-        title: 'Favourite locations',
-        data: favourites.slice()
-      },
-      {
-        title: 'Nearby locations',
-        data: this.state.locations.filter((location) => !favourites.includes(location))
-      }
-    ]
+    return this.state.searching
+      ? [
+        {
+          title: 'Search locations',
+          data: this.state.locations
+        }
+      ]
+      : [
+        {
+          title: 'Favourite locations',
+          data: favourites.slice()
+        },
+        {
+          title: 'Nearby locations',
+          data: this.state.locations.filter((location) => !favourites.includes(location))
+        }
+      ]
   }
 
   render () {
