@@ -6,7 +6,7 @@ import StyledSectionList from '../lists/StyledSectionList'
 
 export default class LocationList extends Component {
   itemComponent = function (item) {
-    return <LocationItem locationId={item} />
+    return <LocationItem location={item} />
   }
 
   render () {
@@ -16,7 +16,7 @@ export default class LocationList extends Component {
           {...this.props}
           itemComponent={this.itemComponent}
           onItemPress={this.props.onLocationPress} // FIXME: pointless
-          keyExtractor={(id) => 'location_' + id}
+          keyExtractor={({ id }) => 'location_' + id}
         />
       </View>
     )

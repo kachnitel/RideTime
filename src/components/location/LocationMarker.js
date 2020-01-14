@@ -17,7 +17,7 @@ const LocationMarker = ({ location, onCalloutPress, highlight }) => {
     coordinate={latlng}
     title={location.name}
     description={'Tap to select'}
-    onCalloutPress={() => onCalloutPress(location.id)}
+    onCalloutPress={() => onCalloutPress(location)}
     anchor={{ x: 0.5, y: 0.5 }}
     tracksViewChanges={false}
   >

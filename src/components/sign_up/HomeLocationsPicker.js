@@ -1,12 +1,14 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native'
+import { View, Text, StyleSheet, TouchableNativeFeedback, ActivityIndicator } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import InputTitle from '../form/InputTitle'
 import Layout from '../../../constants/Layout'
 import Colors from '../../../constants/Colors'
 import ModalView from '../modal/ModalView'
-import LocationPicker from '../location/LocationPicker'
+import LocationList from '../location/LocationList'
+import TabButtonSearch from '../TabButtonSearch'
+import { Location } from '../../stores/LocationStore.mobx'
 
 export default
 @inject('LocationStore')
@@ -17,16 +19,15 @@ class HomeLocationsPicker extends React.Component {
 
     this.state = {
       visible: false,
-      picked: this.props.value || [],
+      picked: props.value || [],
       loading: true,
       locations: []
     }
   }
 
   componentDidMount = async () => {
-    let locations = await Promise.all([
-      this.state.picked.map(async (id) => this.props.LocationStore.getAsync(id))
-    ])
+    let locations = await this.props.LocationStore.nearby(25)
+
     this.setState({
       loading: false,
       locations: locations
@@ -37,6 +38,17 @@ class HomeLocationsPicker extends React.Component {
     if (JSON.stringify(this.state.picked) !== JSON.stringify(prevState.picked)) {
       this.props.onValueChange(this.state.picked)
     }
+  }
+
+  onSearchUpdate = async (val: String) => {
+    this.setState({ loading: true })
+    let locations = val
+      ? await this.props.LocationStore.search(val) // TODO: filter cached then load
+      : await this.props.LocationStore.nearby(25)
+    this.setState({
+      locations: locations,
+      loading: false
+    })
   }
 
   /**
@@ -65,6 +77,15 @@ class HomeLocationsPicker extends React.Component {
     )
   }
 
+  getListSections = () => {
+    return [
+      {
+        title: 'Nearby locations',
+        data: this.state.locations.filter((location) => !this.state.picked.includes(location.id))
+      }
+    ]
+  }
+
   render () {
     let maxItems = 3
     return (
@@ -87,11 +108,21 @@ class HomeLocationsPicker extends React.Component {
           onBackButtonPress={this.onCancel}
           onBackdropPress={this.onCancel}
         >
-          <LocationPicker
-            style={styles.locationPicker}
-            onLocationPress={this.onSelect}
-            filter={(location) => !this.state.picked.includes(location)} // Filters out already selected
-          />
+          <View style={styles.locationList}>
+            <LocationList
+              sections={this.getListSections()}
+              onLocationPress={this.onSelect}
+            />
+            <View style={styles.searchContainer}>
+              <TabButtonSearch
+                style={styles.search}
+                icon='search'
+                title='Search'
+                onUpdate={this.onSearchUpdate}
+              />
+            </View>
+            {this.state.loading && <ActivityIndicator style={styles.loadingIndicator} />}
+          </View>
         </ModalView>
       </View>
     )
@@ -106,10 +137,11 @@ class HomeLocationsPicker extends React.Component {
    *
    * @memberof HomeLocationsPicker
    */
-  onSelect = (newPicked) => {
-    if (this.state.picked.indexOf(newPicked) === -1) {
+  onSelect = (newPicked: Location) => {
+    let id = newPicked.id
+    if (this.state.picked.indexOf(id) === -1) {
       this.setState((prevState) => ({
-        picked: [...prevState.picked, newPicked]
+        picked: [...prevState.picked, id]
       }))
     }
 
@@ -177,8 +209,23 @@ const styles = StyleSheet.create({
     fontSize: Layout.window.hp(2.5),
     padding: Layout.window.hp(1)
   },
-  locationPicker: {
+  locationList: {
     width: '100%',
     height: '100%' // REVIEW: Should be flexible
+  },
+  search: {
+    padding: Layout.window.hp(2),
+    borderLeftWidth: 0,
+    borderRightWidth: 0
+  },
+  searchContainer: {
+    height: Layout.window.hp(7),
+    width: '100%',
+    alignItems: 'center'
+  },
+  loadingIndicator: {
+    position: 'absolute',
+    bottom: Layout.window.hp(10),
+    alignSelf: 'center'
   }
 })
