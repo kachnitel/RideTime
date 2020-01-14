@@ -35,6 +35,7 @@ export default class LocationMap extends Component {
         <AreaMap
           style={styles.map}
           onRegionChangeComplete={this.onRegionChange}
+          showsUserLocation
           markers={this.getMarkers()}
         />
       </View>
