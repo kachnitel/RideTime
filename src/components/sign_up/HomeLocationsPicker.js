@@ -25,13 +25,8 @@ class HomeLocationsPicker extends React.Component {
     }
   }
 
-  componentDidMount = async () => {
-    let locations = await this.props.LocationStore.nearby(25)
-
-    this.setState({
-      loading: false,
-      locations: locations
-    })
+  componentDidMount = () => {
+    this.onSearchUpdate()
   }
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -43,8 +38,8 @@ class HomeLocationsPicker extends React.Component {
   onSearchUpdate = async (val: String) => {
     this.setState({ loading: true })
     let locations = val
-      ? await this.props.LocationStore.search(val) // TODO: filter cached then load
-      : await this.props.LocationStore.nearby(25)
+      ? await this.props.LocationStore.searchAsync(val)
+      : await this.props.LocationStore.nearbyAsync(25)
     this.setState({
       locations: locations,
       loading: false

@@ -44,12 +44,12 @@ class SelectLocationScreen extends React.Component {
       loading: true,
       searching: !!val,
       locations: val
-        ? this.props.LocationStore.searchSync(val)
-        : this.props.LocationStore.nearbySync(25)
+        ? this.props.LocationStore.search(val)
+        : this.props.LocationStore.nearby(25)
     })
     let locations = val
-      ? await this.props.LocationStore.search(val) // TODO: filter cached then load
-      : await this.props.LocationStore.nearby(25)
+      ? await this.props.LocationStore.searchAsync(val) // TODO: filter cached then load
+      : await this.props.LocationStore.nearbyAsync(25)
     this.setState({
       locations: locations,
       loading: false
@@ -61,7 +61,7 @@ class SelectLocationScreen extends React.Component {
       locations: this.props.LocationStore.bbox(bbox),
       loading: true
     })
-    let locations = await this.props.LocationStore.bbox(bbox)
+    let locations = await this.props.LocationStore.bboxAsync(bbox)
     this.setState({
       locations: locations,
       loading: false

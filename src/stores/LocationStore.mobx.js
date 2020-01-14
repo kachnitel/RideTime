@@ -47,7 +47,7 @@ export default class LocationStore extends BaseCollectionStore {
   }
   @computed get currentLocation () { return this._currentLocation }
 
-  nearby = async (distance: Number) => {
+  nearbyAsync = async (distance: Number) => {
     let coords =
       this.currentLocation.get('coords') ||
       (await ExpoLocation.getCurrentPositionAsync({
@@ -61,7 +61,7 @@ export default class LocationStore extends BaseCollectionStore {
     })
   }
 
-  nearbySync = (distance: Number) => this._collection.filter((location: Location) => {
+  nearby = (distance: Number) => this._collection.filter((location: Location) => {
     return location.distance < distance
   })
 
@@ -77,20 +77,20 @@ export default class LocationStore extends BaseCollectionStore {
    *  lonMax
    * ]
    */
-  bbox = (bbox: Array) => {
+  bboxAsync = (bbox: Array) => {
     return this.filter({ bbox: bbox })
   }
 
-  bboxSync = (bbox: Array) => this._collection.filter((location: Location) => {
+  bbox = (bbox: Array) => this._collection.filter((location: Location) => {
     return location.coords[0] > bbox[0] && location.coords[0] < bbox[2] &&
       location.coords[1] > bbox[1] && location.coords[1] < bbox[3]
   })
 
-  search = (name: String) => {
+  searchAsync = (name: String) => {
     return this.filter({ search: name })
   }
 
-  searchSync = (name: String) => this._collection.filter((location: Location) => {
+  search = (name: String) => this._collection.filter((location: Location) => {
     return location.name.includes(name)
   })
 
