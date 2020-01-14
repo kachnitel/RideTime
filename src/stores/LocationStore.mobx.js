@@ -176,6 +176,31 @@ export class Location extends BaseEntity {
     return this.store.stores.event.list().filter((item) => item.location === this.id)
   }
 
+  /**
+   * Credit: https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
+   *
+   * @readonly
+   * @memberof Location
+   */
+  @computed get distance () {
+    let toRad = (deg) => deg * Math.PI / 180
+
+    let [ lat1, lon1 ] = this.coords
+    let lat2 = this.store.currentLocation.get('coords').latitude
+    let lon2 = this.store.currentLocation.get('coords').longitude
+    let R = 6371 // Radius of the earth in km
+
+    let dLat = toRad(lat2 - lat1)
+    let dLon = toRad(lon2 - lon1)
+    let a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2)
+
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    return R * c // Distance in km
+  }
+
   loadTrails = async () => {
     while (!this._trailsLoaded.completed) {
       let response = await this.store.provider.trailsFilter({ rid: this.id })

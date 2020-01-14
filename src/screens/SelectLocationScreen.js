@@ -101,6 +101,7 @@ class SelectLocationScreen extends React.Component {
         {
           title: 'Search locations',
           data: this.state.locations
+            .sort((a: Location, b: Location) => a.distance - b.distance)
         }
       ]
       : [
@@ -110,7 +111,9 @@ class SelectLocationScreen extends React.Component {
         },
         {
           title: 'Nearby locations',
-          data: this.state.locations.filter((location) => !favourites.includes(location))
+          data: this.state.locations
+            .filter((location) => !favourites.includes(location))
+            .sort((a: Location, b: Location) => a.distance - b.distance)
         }
       ]
   }

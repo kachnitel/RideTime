@@ -2,8 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   StyleSheet,
-  View
+  View,
+  Text
 } from 'react-native'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Layout from '../../../constants/Layout'
 import LocationItemDetail from './LocationItemDetail'
 import TrailforksLink from '../TrailforksLink'
@@ -12,6 +14,11 @@ import Header from '../Header'
 import { Location } from '../../stores/LocationStore.mobx'
 
 export default class LocationItem extends React.Component {
+  renderDistance = () => <View style={styles.distanceContainer}>
+    <MaterialCommunityIcons name='map-marker-distance' />
+    <Text>{this.props.location.distance.toFixed(1)} km</Text>
+  </View>
+
   render () {
     return (
       <View style={styles.container}>
@@ -25,6 +32,8 @@ export default class LocationItem extends React.Component {
             <TrailforksLink relativeUrl={'region/' + this.props.location.alias + '/'} />
           </View>
           <LocationItemDetail location={this.props.location} />
+          {/* TODO: Show in "detail" */}
+          {this.renderDistance()}
         </View>
       </View>
     )
@@ -55,5 +64,10 @@ const styles = StyleSheet.create({
   },
   details: {
     flex: 1
+  },
+  distanceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    opacity: 0.5
   }
 })
