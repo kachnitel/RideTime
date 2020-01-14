@@ -61,6 +61,10 @@ export default class LocationStore extends BaseCollectionStore {
     })
   }
 
+  nearbySync = (distance: Number) => this._collection.filter((location: Location) => {
+    return location.distance < distance
+  })
+
   /**
    * Bounding box - list locations within a map
    *
@@ -77,9 +81,18 @@ export default class LocationStore extends BaseCollectionStore {
     return this.filter({ bbox: bbox })
   }
 
+  bboxSync = (bbox: Array) => this._collection.filter((location: Location) => {
+    return location.coords[0] > bbox[0] && location.coords[0] < bbox[2] &&
+      location.coords[1] > bbox[1] && location.coords[1] < bbox[3]
+  })
+
   search = (name: String) => {
     return this.filter({ search: name })
   }
+
+  searchSync = (name: String) => this._collection.filter((location: Location) => {
+    return location.name.includes(name)
+  })
 
   filter = async (filter: Object, params: Object = {}) => {
     let response = await this.provider.filter(filter, params)
