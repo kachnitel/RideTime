@@ -3,6 +3,7 @@ import RideDetailScreen from '../screens/RideDetailScreen'
 import SelectLocationScreen from '../screens/SelectLocationScreen'
 import CreateRideScreen from '../screens/CreateRideScreen'
 import SelectRouteTrailsScreen from '../screens/SelectRouteTrailsScreen'
+import CardStackStyleInterpolator from 'react-navigation-stack/src/views/StackView/StackViewStyleInterpolator.tsx'
 
 const NewRideStack = createStackNavigator(
   {
@@ -15,7 +16,10 @@ const NewRideStack = createStackNavigator(
     initialRouteName: 'SelectLocation',
     navigationOptions: {
       header: null
-    }
+    },
+    transitionConfig: () => ({
+      screenInterpolator: CardStackStyleInterpolator.forHorizontal
+    })
   }
 )
 
