@@ -17,7 +17,7 @@ export default class TabButton extends Component {
     return (
       <TouchableOpacity
         onPress={this.props.onPress}
-        disabled={this.props.active}
+        disabled={this.props.disabled}
       >
         <View
           style={{

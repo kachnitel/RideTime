@@ -28,6 +28,7 @@ export default class TabBar extends Component {
               {...option}
               onPress={() => this.handleSelect(index)}
               active={index === this.state.activeIndex}
+              disabled={index === this.state.activeIndex}
             />
           </View>)}
         </View>
