@@ -10,6 +10,7 @@ import TabButton from '../components/TabButton'
 import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
 import TrailFilter from '../components/ride/new_ride/TrailFilter'
+import { Header } from 'react-navigation'
 
 export default
 @observer
@@ -162,7 +163,11 @@ class SelectRouteTrailsScreen extends Component {
    * @memberof SelectRouteTrailsScreen
    */
   render () {
-    return <KeyboardAvoidingView style={styles.container}>
+    return <KeyboardAvoidingView
+      keyboardVerticalOffset={Header.HEIGHT + 24}
+      behavior='padding'
+      style={styles.container}
+    >
       {
         this.state.trailsTab
           ? this.selectTrails()
