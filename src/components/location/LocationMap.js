@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import AreaMap from './AreaMap'
 import LocationMarker from './LocationMarker'
 import { Location } from '../../stores/LocationStore.mobx'
+import { inject, observer } from 'mobx-react/native'
 
-export default class LocationMap extends Component {
+export default
+@inject('UserStore')
+@observer
+class LocationMap extends Component {
   getMarkers = () => this.props.locations.slice().map((location: Location) => <LocationMarker
     location={location}
     key={'loc_' + location.id}
-    // highlight={this.props.UserStore.currentUser.locations.includes(location.id)}
+    highlight={this.props.UserStore.currentUser.locations.includes(location.id)}
     onCalloutPress={this.props.onLocationPress}
   />)
 
@@ -30,15 +34,12 @@ export default class LocationMap extends Component {
 
   render () {
     return (
-      // FIXME: Style - use ...props
-      <View style={styles.map}>
-        <AreaMap
-          style={styles.map}
-          onRegionChangeComplete={this.onRegionChange}
-          showsUserLocation
-          markers={this.getMarkers()}
-        />
-      </View>
+      <AreaMap
+        style={styles.map}
+        onRegionChangeComplete={this.onRegionChange}
+        showsUserLocation
+        markers={this.getMarkers()}
+      />
     )
   }
 }
@@ -46,8 +47,5 @@ export default class LocationMap extends Component {
 const styles = StyleSheet.create({
   map: {
     flex: 1
-  },
-  mapActivityIndicator: {
-    position: 'absolute'
   }
 })
