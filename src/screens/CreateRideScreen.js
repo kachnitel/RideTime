@@ -39,8 +39,9 @@ class CreateRideScreen extends React.Component {
     this.event.updateTitle(route.title + ' ride')
     this.event.updateLocation(this.props.navigation.getParam('location').id)
     this.event.updateCreatedBy(this.props.UserStore.currentUser.id)
-    this.event.updateDifficulty(route.difficulty)
+    this.event.updateDifficulty(route.difficulty || this.props.UserStore.currentUser.level)
     this.event.updateDescription(route.description && this.trimString(route.description, 2048))
+    this.event.updateTerrain(this.props.UserStore.currentUser.bike)
 
     let routeString = route.trails.map( // TODO: discards actual route
       (trail: Trail) => this.props.TrailStore.get(trail).title
