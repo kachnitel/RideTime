@@ -3,48 +3,29 @@ import { View, StyleSheet, Text } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import StyledSectionList from '../../lists/StyledSectionList'
 import RouteItem from './RouteItem'
-import TrailFilter from './TrailFilter'
-import Layout from '../../../../constants/Layout'
 
 export default
 @inject('RouteStore')
 @observer
 class SelectRoute extends Component {
-  state = {
-    filter: {
-      difficulty: [],
-      search: ''
+  componentDidUpdate = (prevProps, prevState) => {
+    if (JSON.stringify(prevProps.filter) !== JSON.stringify(this.props.filter)) {
+      this.refresh()
     }
   }
 
-  waitTime = 300
-  timeout = 0
-
-  componentWillUnmount () {
-    clearTimeout(this.timeout)
-  }
-
-  handleFilterUpdate = (filter) => {
-    this.setState({
-      filter: filter
-    })
-
-    clearTimeout(this.timeout) // clears the old timer
-    this.timeout = setTimeout(
-      () => this.props.RouteStore.filter({ rid: this.props.location.id, ...filter }),
-      this.waitTime
-    )
-  }
+  refresh = () =>
+    this.props.RouteStore.filter({ rid: this.props.location.id, ...this.props.filter })
 
   routesList = () => {
     let routes = this.props.location.routes
-    if (this.state.filter.difficulty.length > 0) {
+    if (this.props.filter.difficulty.length > 0) {
       routes = routes.filter((trail) =>
-        this.state.filter.difficulty.includes(trail.difficulty))
+        this.props.filter.difficulty.includes(trail.difficulty))
     }
-    if (this.state.filter.search.length > 0) {
+    if (this.props.filter.search.length > 0) {
       routes = routes.filter((trail) =>
-        trail.title.includes(this.state.filter.search.trim()))
+        trail.title.includes(this.props.filter.search.trim()))
     }
 
     return <StyledSectionList
@@ -59,10 +40,6 @@ class SelectRoute extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <TrailFilter
-          style={styles.filter}
-          onFilterUpdate={this.handleFilterUpdate}
-        />
         {this.props.location.routes.length > 0
           ? this.routesList()
           : <Text>No routes found in location.</Text>
@@ -75,9 +52,5 @@ class SelectRoute extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
-  filter: {
-    width: '100%',
-    padding: Layout.window.wp(5)
   }
 })

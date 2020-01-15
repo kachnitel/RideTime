@@ -2,25 +2,20 @@ import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import Layout from '../../../../constants/Layout'
 import InputTitle from '../../form/InputTitle'
-import TextInputWithTitle from '../../form/TextInputWithTitle'
 import ModalViewMenu from '../../modal/ModalViewMenu'
 import DifficultyIcon from '../../icons/DifficultyIcon'
 import OutlineIcon from '../../icons/OutlineIcon'
 import Colors from '../../../../constants/Colors'
+import SearchInput from '../../form/SearchInput'
 
 export default class TrailFilter extends Component {
   state = {
-    showMenu: false,
-    filter: {
-      difficulty: [],
-      search: ''
-    }
+    showMenu: false
   }
 
   updateFilter = (update) => {
-    let filter = { ...this.state.filter, ...update }
+    let filter = { ...this.props.filter, ...update }
     this.props.onFilterUpdate(filter)
-    this.setState({ filter: filter })
   }
 
   showFilterMenu = () => this.setState({ showMenu: true })
@@ -30,7 +25,7 @@ export default class TrailFilter extends Component {
     <View style={styles.filterTouchable}>
       <Text style={styles.filterText}>Tap to set filters</Text>
       <View style={styles.difficultiesPreview}>
-        {this.state.filter.difficulty.map((d) => <OutlineIcon
+        {this.props.filter.difficulty.map((d) => <OutlineIcon
           thickness={1.1}
           key={'d_' + d}
           outlineStyle={styles.outline}
@@ -45,8 +40,8 @@ export default class TrailFilter extends Component {
   </TouchableOpacity>
 
   toggleDifficulty = (difficulty: Number) => {
-    let selected = [...this.state.filter.difficulty]
-    this.state.filter.difficulty.includes(difficulty)
+    let selected = [...this.props.filter.difficulty]
+    this.props.filter.difficulty.includes(difficulty)
       ? selected = selected.filter((d) => d !== difficulty)
       : selected.push(difficulty)
 
@@ -65,12 +60,12 @@ export default class TrailFilter extends Component {
         onPress: () => this.toggleDifficulty(difficulty),
         customIcon: <DifficultyIcon d={difficulty} size={Layout.window.hp(5)} />,
         label: DifficultyIcon.icons[difficulty].label,
-        icon: this.state.filter.difficulty.includes(difficulty)
+        icon: this.props.filter.difficulty.includes(difficulty)
           ? 'check'
-          : this.state.filter.difficulty.length > 0
+          : this.props.filter.difficulty.length > 0
             ? 'clear'
             : 'check',
-        highlight: this.state.filter.difficulty.includes(difficulty)
+        highlight: this.props.filter.difficulty.includes(difficulty)
       }))
     }
   />
@@ -83,22 +78,21 @@ export default class TrailFilter extends Component {
           {this.renderFilterTouchable()}
           {this.renderFilterMenu()}
         </View>
-        <TextInputWithTitle
-          title='Search:'
-          placeholder={'Search by name..'}
-          onChangeText={(text) => this.updateFilter({ search: text.trim() })}
-          style={styles.input}
-          containerStyle={styles.row}
-        />
+        <View style={styles.row}>
+          <InputTitle>Search: </InputTitle>
+          <SearchInput
+            placeholder={'Search by name..'}
+            onChangeText={(text) => this.updateFilter({ search: text.trim() })}
+            style={styles.input}
+          />
+        </View>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: Colors.darkBackground // TODO: Colors.something
-  },
+  container: {},
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -110,8 +104,7 @@ const styles = StyleSheet.create({
   filterText: {
     width: Layout.window.wp(55),
     color: Colors.tabIconDefault,
-    padding: Layout.window.hp(2),
-    textAlign: 'center'
+    padding: Layout.window.hp(2)
   },
   filterTouchable: {
     flexDirection: 'row'

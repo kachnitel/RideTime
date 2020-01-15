@@ -15,7 +15,6 @@ import Layout from '../../../../constants/Layout'
 import { Trail } from '../../../stores/TrailStore.mobx'
 import DifficultyIcon from '../../icons/DifficultyIcon'
 import Header from '../../Header'
-import TrailFilter from './TrailFilter'
 import InviteChoices from '../InviteChoices'
 
 export default
@@ -23,31 +22,17 @@ export default
 @observer
 class SelectTrails extends Component {
   state = {
-    selected: [],
-    filter: {
-      difficulty: [],
-      search: ''
+    selected: []
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (JSON.stringify(prevProps.filter) !== JSON.stringify(this.props.filter)) {
+      this.refresh()
     }
   }
 
-  waitTime = 300
-  timeout = 0
-
-  componentWillUnmount () {
-    clearTimeout(this.timeout)
-  }
-
-  handleFilterUpdate = (filter) => {
-    this.setState({
-      filter: filter
-    })
-
-    clearTimeout(this.timeout) // clears the old timer
-    this.timeout = setTimeout(
-      () => this.props.TrailStore.filter({ rid: this.props.location.id, ...filter }),
-      this.waitTime
-    )
-  }
+  refresh = () =>
+    this.props.TrailStore.filter({ rid: this.props.location.id, ...this.props.filter })
 
   selectTrail = (trail: Trail) => {
     if (!this.state.selected.includes(trail)) {
@@ -67,13 +52,13 @@ class SelectTrails extends Component {
 
   trailsList = () => {
     let trails = this.props.location.trails
-    if (this.state.filter.difficulty.length > 0) {
+    if (this.props.filter.difficulty.length > 0) {
       trails = trails.filter((trail) =>
-        this.state.filter.difficulty.includes(trail.difficulty))
+        this.props.filter.difficulty.includes(trail.difficulty))
     }
-    if (this.state.filter.search.length > 0) {
+    if (this.props.filter.search.length > 0) {
       trails = trails.filter((trail) =>
-        trail.title.includes(this.state.filter.search.trim()))
+        trail.title.includes(this.props.filter.search.trim()))
     }
 
     return <StyledSectionList
@@ -151,10 +136,6 @@ class SelectTrails extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <TrailFilter
-          style={styles.filter}
-          onFilterUpdate={this.handleFilterUpdate}
-        />
         <View style={styles.trailsList}>
           {this.props.location.trails.length > 0
             ? this.trailsList()
@@ -184,10 +165,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     width: Layout.window.wp(6),
     borderRadius: Layout.window.hp(1)
-  },
-  filter: {
-    width: '100%',
-    padding: Layout.window.wp(5)
   },
   trailsList: {
     flex: 65

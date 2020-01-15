@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { observer } from 'mobx-react/native'
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
-import { SafeAreaView } from 'react-navigation'
+import { View, Text, StyleSheet, ActivityIndicator, KeyboardAvoidingView } from 'react-native'
 import { Location } from '../stores/LocationStore.mobx'
 import { Route } from '../stores/RouteStore.mobx'
 import SelectTrails from '../components/ride/new_ride/SelectTrails'
@@ -10,6 +9,7 @@ import TabBar from '../components/TabBar'
 import TabButton from '../components/TabButton'
 import Layout from '../../constants/Layout'
 import Colors from '../../constants/Colors'
+import TrailFilter from '../components/ride/new_ride/TrailFilter'
 
 export default
 @observer
@@ -24,7 +24,12 @@ class SelectRouteTrailsScreen extends Component {
   state = {
     trailsTab: true,
     loadingTrails: true,
-    loadingRoutes: true
+    loadingRoutes: true,
+    filter: {
+      difficulty: [],
+      search: ''
+    },
+    showFilter: false
   }
 
   location: Location
@@ -63,6 +68,13 @@ class SelectRouteTrailsScreen extends Component {
   >
     <TabButton
       style={styles.tabBarButton}
+      icon={this.state.showFilter ? 'close' : 'filter-list'}
+      title='Filter'
+      onPress={() => this.setState((prevState) => ({ showFilter: !prevState.showFilter }))}
+      active={this.state.filter.difficulty.length > 0 || !!this.state.filter.search}
+    />
+    <TabButton
+      style={styles.tabBarButton}
       icon='skip-next'
       title='Skip'
       onPress={() => {
@@ -75,6 +87,18 @@ class SelectRouteTrailsScreen extends Component {
 
   handleTabToggle = () => this.setState((prevState) => ({ trailsTab: !prevState.trailsTab }))
 
+  filter = () => <TrailFilter
+    onFilterUpdate={this.handleFilterUpdate}
+    style={styles.filterContainer}
+    filter={this.state.filter}
+  />
+
+  handleFilterUpdate = (filter) => {
+    this.setState({
+      filter: filter
+    })
+  }
+
   /**
    * Allow selecting multiple trails in area and create Route
    */
@@ -86,6 +110,7 @@ class SelectRouteTrailsScreen extends Component {
     : <SelectTrails
       location={this.location}
       onSubmit={(trails) => this.createRouteFromTrails(trails)}
+      filter={this.state.filter}
     />)
 
   /**
@@ -99,6 +124,7 @@ class SelectRouteTrailsScreen extends Component {
     : <SelectRoute
       location={this.location}
       onSubmit={(route) => this.submit(route)}
+      filter={this.state.filter}
     />)
 
   createRouteFromTrails = (trails: Array) => {
@@ -136,14 +162,15 @@ class SelectRouteTrailsScreen extends Component {
    * @memberof SelectRouteTrailsScreen
    */
   render () {
-    return <SafeAreaView style={styles.container}>
+    return <KeyboardAvoidingView style={styles.container}>
       {
         this.state.trailsTab
           ? this.selectTrails()
           : this.selectRoute()
       }
+      {this.state.showFilter && this.filter()}
       {this.tabToggle()}
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   }
 }
 
@@ -165,5 +192,16 @@ const styles = StyleSheet.create({
   tabBarButton: {
     width: Layout.window.wp(15),
     color: Colors.tintColor
+  },
+  filterContainer: {
+    backgroundColor: Colors.appBackground,
+    padding: Layout.window.wp(4),
+    elevation: 4,
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+    shadowRadius: StyleSheet.hairlineWidth,
+    shadowOffset: {
+      height: StyleSheet.hairlineWidth
+    }
   }
 })
