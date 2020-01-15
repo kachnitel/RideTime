@@ -6,31 +6,18 @@ import { Location } from '../stores/LocationStore.mobx'
 import { Route } from '../stores/RouteStore.mobx'
 import SelectTrails from '../components/ride/new_ride/SelectTrails'
 import SelectRoute from '../components/ride/new_ride/SelectRoute'
-import Button from '../components/form/Button'
-import HeaderRightView from '../components/navigation_header/HeaderRightView'
 import TabBar from '../components/TabBar'
+import TabButton from '../components/TabButton'
+import Layout from '../../constants/Layout'
+import Colors from '../../constants/Colors'
 
 export default
 @observer
 class SelectRouteTrailsScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     let location = navigation.getParam('location')
-    let route = new Route()
-    route.updateTitle(location.name)
     return {
-      title: location.name,
-      headerRight: <HeaderRightView>
-        <Button
-          title='Skip'
-          onPress={() => navigation.push(
-            'CreateRide',
-            {
-              location: location,
-              route: route
-            }
-          )}
-        />
-      </HeaderRightView>
+      title: location.name
     }
   }
 
@@ -73,7 +60,18 @@ class SelectRouteTrailsScreen extends Component {
         icon: 'timeline'
       }
     ]}
-  />
+  >
+    <TabButton
+      style={styles.tabBarButton}
+      icon='skip-next'
+      title='Skip'
+      onPress={() => {
+        let route = new Route()
+        route.updateTitle(this.location.name)
+        return this.submit(route)
+      }}
+    />
+  </TabBar>
 
   handleTabToggle = () => this.setState((prevState) => ({ trailsTab: !prevState.trailsTab }))
 
@@ -107,7 +105,7 @@ class SelectRouteTrailsScreen extends Component {
     let trailIds = trails.map((trail) => trail.id)
     let route = new Route()
     route.updateTrails(trailIds)
-    route.updateTitle(this.location.name)
+    route.updateTitle(trails.length === 1 ? trails[0].title : this.location.name)
     route.updateDifficulty(Math.max(...trails.map((trail) => trail.difficulty)))
 
     this.submit(route)
@@ -163,5 +161,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1
+  },
+  tabBarButton: {
+    width: Layout.window.wp(15),
+    color: Colors.tintColor
   }
 })
