@@ -18,8 +18,8 @@ export default class EditDateTime extends React.Component {
   hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false })
 
   handleDatePicked = (date) => {
-    this.props.onSelect(date)
     this.hideDateTimePicker()
+    this.props.onSelect(date)
   };
 
   render () {
