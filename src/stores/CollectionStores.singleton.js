@@ -6,11 +6,13 @@ import RouteStore from './RouteStore.mobx'
 import RidesProvider from '../providers/RidesProvider'
 import RidersProvider from '../providers/RidersProvider'
 import LocationsProvider from '../providers/LocationsProvider'
+import TrackingProvider from '../providers/TrackingProvider'
 import applicationStore from './ApplicationStore.singleton'
 import { create } from 'mobx-persist'
 import { AsyncStorage } from 'react-native'
 import { logger } from '../Logger'
 import CommentStore from './CommentStore.mobx'
+import TrackingStore from './TrackingStore.mobx'
 
 const stores = {
   user: null,
@@ -18,7 +20,8 @@ const stores = {
   location: null,
   trail: null,
   route: null,
-  comment: null
+  comment: null,
+  tracking: null
 }
 
 stores.user = new UserStore(new RidersProvider(), stores, applicationStore)
@@ -28,6 +31,7 @@ stores.location = new LocationStore(locationsProvider, stores)
 stores.trail = new TrailStore(locationsProvider, stores)
 stores.route = new RouteStore(locationsProvider, stores)
 stores.comment = new CommentStore(new RidesProvider(), stores)
+stores.tracking = new TrackingStore(new TrackingProvider(), stores)
 
 const hydrate = create({
   storage: AsyncStorage,

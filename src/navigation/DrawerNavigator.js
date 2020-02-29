@@ -9,6 +9,7 @@ import Colors from '../../constants/Colors'
 import Layout from '../../constants/Layout'
 import CountBadge from '../components/CountBadge'
 import stores from '../stores/CollectionStores.singleton'
+import TrackingStack from './TrackingNavigator'
 
 let getIcon = (name: String, color) => <MaterialIcons
   name={name}
@@ -43,12 +44,19 @@ const DrawerStack = createDrawerNavigator(
         drawerLabel: ({ tintColor }) => getLabel('Friends', tintColor, stores.user.friendRequests.length),
         drawerIcon: ({ tintColor }) => getIcon('people-outline', tintColor)
       }
+    },
+    Tracking: {
+      screen: TrackingStack,
+      navigationOptions: {
+        drawerLabel: ({ tintColor }) => getLabel('Live tracking', tintColor), // TODO: use badge when enabled
+        drawerIcon: ({ tintColor }) => getIcon('gps-fixed', tintColor)
+      }
     }
   },
   {
     initialRouteName: 'Home',
     headerMode: 'screen',
-    defaultNavigationOptions: ({ navigation }) => ({
+    defaultNavigationOptions: ({ navigation }) => ({ // REVIEW: no workie, set in each nav
       headerStyle: {
         backgroundColor: Colors.appBackground
       },

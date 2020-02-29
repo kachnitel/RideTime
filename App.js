@@ -70,6 +70,7 @@ class App extends React.Component {
             TrailStore={stores.trail}
             RouteStore={stores.route}
             CommentStore={stores.comment}
+            TrackingStore={stores.tracking}
           >
             <AppContainer
               ref={(navigatorRef) => {
