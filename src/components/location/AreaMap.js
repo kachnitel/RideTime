@@ -33,13 +33,15 @@ class AreaMap extends React.Component {
       {...this.props}
     >
       {this.props.markers}
+      {this.props.polylines}
     </MapView>
   }
 }
 
 AreaMap.propTypes = {
   LocationStore: PropTypes.instanceOf(LocationStore),
-  markers: PropTypes.arrayOf(PropTypes.object)
+  markers: PropTypes.arrayOf(PropTypes.object),
+  polylines: PropTypes.arrayOf(PropTypes.object)
 }
 
 const styles = StyleSheet.create({

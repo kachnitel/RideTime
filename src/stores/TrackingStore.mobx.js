@@ -3,7 +3,6 @@ import { BaseCollectionStore } from './BaseCollectionStore'
 import TrackingProvider from '../providers/TrackingProvider'
 import * as ExpoLocation from 'expo-location'
 import { BaseEntity } from './BaseEntity'
-import { User } from './UserStore.mobx'
 import { Event } from './EventStore.mobx'
 import { logger } from '../Logger'
 
@@ -26,10 +25,25 @@ export default class TrackingStore extends BaseCollectionStore {
   @action updateStatus (newValue: ?String) { this._status = newValue }
   @computed get status () { return this._status }
 
-  @computed get current () {
-    // TODO: List most recent location of all known users
+  @computed get trackedUsers () {
+    return this._collection
+      .map((ul: UserLocation) => ul.user)
+      .filter((item, index, array) => array.indexOf(item) === index) // Unique
   }
-  // @computed get history () {}
+
+  @computed get current () {
+    return this.trackedUsers.map((user: Number) => this._collection
+      .filter((ul: UserLocation) => ul.user === user)
+      .sort((a: UserLocation, b: UserLocation) => b.timestamp - a.timestamp)[0] // Desc
+    )
+  }
+
+  @computed get tracks () {
+    return this.trackedUsers.map((user: Number) => this._collection
+      .filter((ul: UserLocation) => ul.user === user)
+      .sort((a: UserLocation, b: UserLocation) => b.timestamp - a.timestamp) // Desc
+    )
+  }
 
   list = async () => {
     let response = await this.provider.list()
@@ -118,10 +132,10 @@ export class UserLocation extends BaseEntity {
   @action updateId (newValue: Number) { this._id = newValue }
   @computed get id () { return this._id }
 
-  @action updateUser (newValue: User) { this._user = newValue }
+  @action updateUser (newValue: Number) { this._user = newValue }
   @computed get user () { return this._user }
 
-  @action updateEvent (newValue: Event) { this._event = newValue }
+  @action updateEvent (newValue: Number) { this._event = newValue }
   @computed get event () { return this._event }
 
   @action updateVisibility (newValue: string) { this._visibility = newValue }
