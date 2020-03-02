@@ -1,8 +1,10 @@
 import { action, computed, observable } from 'mobx'
+import { Alert } from 'react-native'
+import * as ExpoLocation from 'expo-location'
+import * as TaskManager from 'expo-task-manager'
+import * as BackgroundFetch from 'expo-background-fetch'
 import { BaseCollectionStore } from './BaseCollectionStore'
 import TrackingProvider from '../providers/TrackingProvider'
-import * as ExpoLocation from 'expo-location'
-import * as BackgroundFetch from 'expo-background-fetch'
 import { BaseEntity } from './BaseEntity'
 import { Event } from './EventStore.mobx'
 import { logger } from '../Logger'
@@ -51,35 +53,63 @@ export default class TrackingStore extends BaseCollectionStore {
   }
 
   enable = async (visibility: String, event: ?Event) => {
+    await this.stores.location.getLocationPermissions()
+
     if (visibility === 'event') {
       this._event = event
     }
     this.updateStatus(visibility)
 
-    await this.stores.location.getLocationPermissions()
+    let status = await BackgroundFetch.getStatusAsync()
+    switch (status) {
+      case BackgroundFetch.Status.Restricted:
+      case BackgroundFetch.Status.Denied:
+        logger.log('Background execution is disabled')
+        Alert.alert('Background sync is disabled')
+        return
+      default: {
+        logger.debug('Registering tasks')
 
-    ExpoLocation.startLocationUpdatesAsync(TRACKING_BG_UPDATE, {
-      accuracy: ExpoLocation.Accuracy.High,
-      timeInterval: 5000,
-      distanceInterval: 5, // REVIEW:
-      foregroundService: {
-        notificationTitle: 'RideTime Live tracking',
-        notificationBody: 'Live location tracking enabled'
+        await this.cleanupTasks()
+        await Promise.all([
+          await ExpoLocation.startLocationUpdatesAsync(TRACKING_BG_UPDATE, {
+            accuracy: ExpoLocation.Accuracy.High,
+            timeInterval: 15000,
+            distanceInterval: 10, // REVIEW:
+            foregroundService: {
+              notificationTitle: 'RideTime Live tracking',
+              notificationBody: 'Live location tracking enabled'
+            }
+          }),
+          await BackgroundFetch.registerTaskAsync(TRACKING_BG_SYNC, {
+            minimumInterval: 15
+          })
+        ])
+
+        logger.debug('Registered tasks', await TaskManager.getRegisteredTasksAsync())
       }
-    })
-
-    await BackgroundFetch.registerTaskAsync(TRACKING_BG_SYNC, {
-      minimumInterval: 15
-    })
+    }
   }
 
   stop = () => {
-    ExpoLocation.stopLocationUpdatesAsync(TRACKING_BG_UPDATE)
-    BackgroundFetch.unregisterTaskAsync(TRACKING_BG_SYNC)
+    this.cleanupTasks()
     this._queue.clear()
     this.provider.clear()
     this.updateEvent(null)
     this.updateStatus(null)
+  }
+
+  cleanupTasks = async () => {
+    let tasks = await TaskManager.getRegisteredTasksAsync()
+
+    if (tasks.find(f => f.taskName === TRACKING_BG_UPDATE)) {
+      logger.debug('Killing task ' + TRACKING_BG_UPDATE)
+      await ExpoLocation.stopLocationUpdatesAsync(TRACKING_BG_UPDATE)
+    }
+    if (tasks.find(f => f.taskName === TRACKING_BG_SYNC)) {
+      logger.debug('Killing task ' + TRACKING_BG_SYNC)
+      await BackgroundFetch.unregisterTaskAsync(TRACKING_BG_SYNC)
+    }
   }
 
   enqueue = (location: ExpoLocation.LocationData) => {
