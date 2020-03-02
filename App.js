@@ -13,6 +13,8 @@ import Layout from './constants/Layout'
 import AppContainer from './src/navigation/AppNavigator'
 import PropTypes from 'prop-types'
 import { Provider, observer } from 'mobx-react'
+import * as TaskManager from 'expo-task-manager'
+import * as BackgroundFetch from 'expo-background-fetch'
 import applicationStore from './src/stores/ApplicationStore.singleton'
 import stores from './src/stores/CollectionStores.singleton'
 import PushNotifications from './src/PushNotifications'
@@ -22,6 +24,7 @@ import { logger } from './src/Logger'
 import { alertAsync } from './src/AsyncAlert'
 import { getEnvVars } from './constants/Env'
 import Colors from './constants/Colors'
+import { TRACKING_BG_UPDATE, TRACKING_BG_SYNC } from './constants/Strings'
 
 /**
  * Set default Text style
@@ -33,6 +36,24 @@ Text.render = function (...args) {
     style: [{ fontFamily: 'Roboto', fontSize: Layout.window.hp(2) }, origin.props.style]
   })
 }
+
+TaskManager.defineTask(TRACKING_BG_UPDATE, ({ data: { locations }, error }) => {
+  if (error) {
+    logger.error('Error processing background location update', error)
+    return
+  }
+  locations.map(stores.tracking.enqueue)
+})
+
+TaskManager.defineTask(TRACKING_BG_SYNC, () => {
+  try {
+    const receivedNewData = stores.tracking.push()
+    return receivedNewData ? BackgroundFetch.Result.NewData : BackgroundFetch.Result.NoData
+  } catch (error) {
+    logger.error('Error syncing location data', error)
+    return BackgroundFetch.Result.Failed
+  }
+})
 
 export default
 @observer

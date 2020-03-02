@@ -2,22 +2,11 @@ import { action, computed, observable } from 'mobx'
 import { BaseCollectionStore } from './BaseCollectionStore'
 import TrackingProvider from '../providers/TrackingProvider'
 import * as ExpoLocation from 'expo-location'
-import * as TaskManager from 'expo-task-manager'
+import * as BackgroundFetch from 'expo-background-fetch'
 import { BaseEntity } from './BaseEntity'
 import { Event } from './EventStore.mobx'
 import { logger } from '../Logger'
-import stores from './CollectionStores.singleton'
-
-const BACKGROUND_UPDATE = 'bg-update'
-
-TaskManager.defineTask(BACKGROUND_UPDATE, async ({ data: { locations }, error }) => {
-  if (error) {
-    logger.error('Error processing background location update', error)
-    return
-  }
-  console.log(locations)
-  locations.map(stores.tracking.enqueue)
-})
+import { TRACKING_BG_UPDATE, TRACKING_BG_SYNC } from '../../constants/Strings'
 
 export default class TrackingStore extends BaseCollectionStore {
   provider: TrackingProvider
@@ -27,9 +16,8 @@ export default class TrackingStore extends BaseCollectionStore {
   }
 
   _queue = observable.array([])
-  @observable _event = null
   @observable _status = null // null|'event'|'friends'|'emergency'
-  _syncInterval = null
+  @observable _event = null
 
   @action updateEvent (newValue: Event) { this._event = newValue }
   @computed get event () { return this._event }
@@ -70,7 +58,7 @@ export default class TrackingStore extends BaseCollectionStore {
 
     await this.stores.location.getLocationPermissions()
 
-    ExpoLocation.startLocationUpdatesAsync(BACKGROUND_UPDATE, {
+    ExpoLocation.startLocationUpdatesAsync(TRACKING_BG_UPDATE, {
       accuracy: ExpoLocation.Accuracy.High,
       timeInterval: 5000,
       distanceInterval: 5, // REVIEW:
@@ -79,12 +67,15 @@ export default class TrackingStore extends BaseCollectionStore {
         notificationBody: 'Live location tracking enabled'
       }
     })
-    this._syncInterval = setInterval(this.push, 10000)
+
+    await BackgroundFetch.registerTaskAsync(TRACKING_BG_SYNC, {
+      minimumInterval: 15
+    })
   }
 
   stop = () => {
-    ExpoLocation.stopLocationUpdatesAsync(BACKGROUND_UPDATE)
-    clearInterval(this._syncInterval)
+    ExpoLocation.stopLocationUpdatesAsync(TRACKING_BG_UPDATE)
+    BackgroundFetch.unregisterTaskAsync(TRACKING_BG_SYNC)
     this._queue.clear()
     this.provider.clear()
     this.updateEvent(null)

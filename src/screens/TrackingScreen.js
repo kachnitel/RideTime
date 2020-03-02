@@ -28,7 +28,12 @@ class TrackingScreen extends React.Component {
   }
 
   componentDidMount = () => {
-    this._refreshInterval = setInterval(() => this.props.TrackingStore.list(), 5000)
+    this.props.TrackingStore.list()
+    // Sync frequently when app is in foreground
+    this._refreshInterval = setInterval(() => {
+      this.props.TrackingStore.list()
+      this.props.TrackingStore.push()
+    }, 15000)
   }
 
   componentWillUnmount = () => {
@@ -101,7 +106,7 @@ class TrackingScreen extends React.Component {
         />
         <Button title='start' onPress={() => this.props.TrackingStore.enable('friends')} />
         <Button title='stop' onPress={() => this.props.TrackingStore.stop()} />
-        <Button title='clg data' onPress={() => console.log(this.props.TrackingStore._collection.length)} />
+        <Button title='clear data' onPress={() => console.log(this.props.TrackingStore._collection.clear())} />
       </View>
     )
   }
