@@ -2,9 +2,22 @@ import { action, computed, observable } from 'mobx'
 import { BaseCollectionStore } from './BaseCollectionStore'
 import TrackingProvider from '../providers/TrackingProvider'
 import * as ExpoLocation from 'expo-location'
+import * as TaskManager from 'expo-task-manager'
 import { BaseEntity } from './BaseEntity'
 import { Event } from './EventStore.mobx'
 import { logger } from '../Logger'
+import stores from './CollectionStores.singleton'
+
+const BACKGROUND_UPDATE = 'bg-update'
+
+TaskManager.defineTask(BACKGROUND_UPDATE, async ({ data: { locations }, error }) => {
+  if (error) {
+    logger.error('Error processing background location update', error)
+    return
+  }
+  console.log(locations)
+  locations.map(stores.tracking.enqueue)
+})
 
 export default class TrackingStore extends BaseCollectionStore {
   provider: TrackingProvider
@@ -17,7 +30,6 @@ export default class TrackingStore extends BaseCollectionStore {
   @observable _event = null
   @observable _status = null // null|'event'|'friends'|'emergency'
   _syncInterval = null
-  _watchPosition = null
 
   @action updateEvent (newValue: Event) { this._event = newValue }
   @computed get event () { return this._event }
@@ -54,37 +66,38 @@ export default class TrackingStore extends BaseCollectionStore {
     if (visibility === 'event') {
       this._event = event
     }
+    this.updateStatus(visibility)
 
     await this.stores.location.getLocationPermissions()
-    this._watchPosition = await ExpoLocation.watchPositionAsync(
-      {
-        accuracy: ExpoLocation.Accuracy.High,
-        timeInterval: 5000,
-        distanceInterval: 5 // REVIEW:
-      },
-      (location) => this.enqueue(
-        location,
-        visibility,
-        event
-      )
-    )
+
+    ExpoLocation.startLocationUpdatesAsync(BACKGROUND_UPDATE, {
+      accuracy: ExpoLocation.Accuracy.High,
+      timeInterval: 5000,
+      distanceInterval: 5, // REVIEW:
+      foregroundService: {
+        notificationTitle: 'RideTime Live tracking',
+        notificationBody: 'Live location tracking enabled'
+      }
+    })
     this._syncInterval = setInterval(this.push, 10000)
   }
 
   stop = () => {
-    this._watchPosition.remove()
+    ExpoLocation.stopLocationUpdatesAsync(BACKGROUND_UPDATE)
     clearInterval(this._syncInterval)
     this._queue.clear()
     this.provider.clear()
+    this.updateEvent(null)
+    this.updateStatus(null)
   }
 
-  enqueue = (location: ExpoLocation.LocationData, visibility: String, event: ?Event) => {
+  enqueue = (location: ExpoLocation.LocationData) => {
     let ul = new UserLocation(this)
     ul.updateCoords([location.coords.latitude, location.coords.longitude])
     ul.updateTimestamp(Math.floor(location.timestamp / 1000))
     ul.updateUser(this.stores.user.currentUser)
-    ul.updateVisibility(visibility)
-    event && ul.updateEvent(event)
+    ul.updateVisibility(this._status)
+    this._event && ul.updateEvent(this._event)
 
     this._queue.push(ul)
   }
