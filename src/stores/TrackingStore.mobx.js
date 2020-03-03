@@ -101,6 +101,9 @@ export default class TrackingStore extends BaseCollectionStore {
     this.provider.clear()
     this.updateEvent(null)
     this.updateStatus(null)
+    this._collection
+      .filter((ul: UserLocation) => ul.user === this.stores.user.currentUser.id)
+      .forEach((ul: UserLocation) => this._collection.remove(ul))
   }
 
   cleanupTasks = async () => {
