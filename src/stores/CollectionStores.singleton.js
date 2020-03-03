@@ -50,4 +50,16 @@ hydrate('locationStore', stores.location).then((data) => {
   )
 })
 
+hydrate('trackingStore', stores.tracking).then((data) => {
+  logger.info(
+    'Hydrated TrackingStore',
+    JSON.parse(JSON.stringify(
+      data,
+      (key, val) => key === 'stores' // Filter out stores
+        ? '[' + Object.keys(stores).map((store) => stores[store].constructor.name).join(',') + ']'
+        : val
+    ))
+  )
+})
+
 export default stores

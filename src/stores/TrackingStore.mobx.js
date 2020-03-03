@@ -1,4 +1,5 @@
 import { action, computed, observable } from 'mobx'
+import { persist } from 'mobx-persist'
 import { Alert } from 'react-native'
 import * as ExpoLocation from 'expo-location'
 import * as TaskManager from 'expo-task-manager'
@@ -9,6 +10,7 @@ import { BaseEntity } from './BaseEntity'
 import { Event } from './EventStore.mobx'
 import { logger } from '../Logger'
 import { TRACKING_BG_UPDATE, TRACKING_BG_SYNC } from '../../constants/Strings'
+import Colors from '../../constants/Colors'
 
 export default class TrackingStore extends BaseCollectionStore {
   provider: TrackingProvider
@@ -18,8 +20,8 @@ export default class TrackingStore extends BaseCollectionStore {
   }
 
   _queue = observable.array([])
-  @observable _status = null // null|'event'|'friends'|'emergency'
-  @observable _event = null
+  @persist @observable _status = null // null|'event'|'friends'|'emergency'
+  @persist @observable _event = null
 
   @action updateEvent (newValue: Event) { this._event = newValue }
   @computed get event () { return this._event }
@@ -56,7 +58,7 @@ export default class TrackingStore extends BaseCollectionStore {
     await this.stores.location.getLocationPermissions()
 
     if (visibility === 'event') {
-      this._event = event
+      this.updateEvent(event)
     }
     this.updateStatus(visibility)
 
@@ -78,11 +80,13 @@ export default class TrackingStore extends BaseCollectionStore {
             distanceInterval: 10, // REVIEW:
             foregroundService: {
               notificationTitle: 'RideTime Live tracking',
-              notificationBody: 'Live location tracking enabled'
+              notificationBody: 'Live location tracking enabled',
+              notificationColor: Colors.tintColor
             }
           }),
           await BackgroundFetch.registerTaskAsync(TRACKING_BG_SYNC, {
-            minimumInterval: 15
+            minimumInterval: 15,
+            stopOnTerminate: false
           })
         ])
 
