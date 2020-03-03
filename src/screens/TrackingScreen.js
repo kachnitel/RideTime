@@ -33,7 +33,7 @@ class TrackingScreen extends React.Component {
     this._refreshInterval = setInterval(() => {
       this.props.TrackingStore.list()
       this.props.TrackingStore.push()
-    }, 15000)
+    }, 5000)
   }
 
   componentWillUnmount = () => {
@@ -106,7 +106,7 @@ class TrackingScreen extends React.Component {
         />
         <Button title='start' onPress={() => this.props.TrackingStore.enable('friends')} />
         <Button title='stop' onPress={() => this.props.TrackingStore.stop()} />
-        <Button title='clear data' onPress={() => console.log(this.props.TrackingStore._collection.clear())} />
+        <Button title='clear data' onPress={() => this.props.TrackingStore._collection.clear()} />
       </View>
     )
   }
