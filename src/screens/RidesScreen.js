@@ -2,6 +2,7 @@ import React from 'react'
 import { View, ActivityIndicator, Text, StyleSheet } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import { Marker, Callout } from 'react-native-maps'
+import { MaterialIcons } from '@expo/vector-icons'
 import AreaMap from '../components/location/AreaMap'
 import RidesList from '../components/ride/RidesList'
 import DrawerButton from '../components/navigation_header/DrawerButton'
@@ -297,9 +298,18 @@ class RidesScreen extends React.Component {
             onRefresh={() => this.refresh(this.state.bbox)}
             sections={sections}
           />
-          {!this.state.loading && events.length === 0 && <Text style={styles.noRidesText}>
+          {!this.state.loading && events.length === 0 && <>
+            {/* TODO: create <EmptyComponent icon='name' text='' /> */}
+            <MaterialIcons
+              name={'event-busy'}
+              size={Layout.window.wp(50)}
+              color={Colors.tintColor}
+              style={{ opacity: 0.1, alignSelf: 'center' }} // TODO:
+            />
+            <Text style={styles.noRidesText}>
               No rides nearby, start one or move the map to see rides in the visible area!
-          </Text>}
+            </Text>
+          </>}
           {this.state.loading && <View style={styles.listLoading}>
             <ActivityIndicator />
             <Text>Loading rides in visible area...</Text>
