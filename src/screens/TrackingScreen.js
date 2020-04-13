@@ -8,6 +8,7 @@ import UserMarker from '../components/tracking/UserMarker'
 import Button from '../components/form/Button'
 import { UserLocation } from '../stores/TrackingStore.mobx'
 import Layout from '../../constants/Layout'
+import Colors from '../../constants/Colors'
 
 export default
 @inject('UserStore', 'TrackingStore')
@@ -97,6 +98,7 @@ class TrackingScreen extends React.Component {
   }
 
   render () {
+    let active = !!this.props.TrackingStore.status
     return (
       <View style={styles.container}>
         <AreaMap
@@ -104,8 +106,13 @@ class TrackingScreen extends React.Component {
           markers={this.getMarkers()}
           polylines={this.getLines()}
         />
-        <Button title='start' onPress={() => this.props.TrackingStore.enable('friends')} />
-        <Button title='stop' onPress={() => this.props.TrackingStore.stop()} />
+        <View style={styles.startButton}>
+          <Button
+            title={active ? 'stop' : 'start'}
+            onPress={() => active ? this.props.TrackingStore.stop() : this.props.TrackingStore.enable('friends')}
+            color={active ? Colors.confirmationHighlight : undefined}
+          />
+        </View>
         <Button title='clear data' onPress={() => this.props.TrackingStore._collection.clear()} />
       </View>
     )
@@ -115,5 +122,12 @@ class TrackingScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  startButton: {
+    position: 'absolute',
+    bottom: Layout.window.wp(10),
+    right: Layout.window.wp(10),
+    aspectRatio: 1,
+    borderRadius: Layout.window.hp(5)
   }
 })
