@@ -1,4 +1,4 @@
-import { AuthSession } from 'expo'
+import * as AuthSession from 'expo-auth-session'
 import {
   auth0ClientId,
   auth0Domain,
