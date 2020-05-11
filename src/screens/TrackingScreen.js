@@ -1,20 +1,26 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, FlatList, Text, TouchableHighlight } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import { Polyline } from 'react-native-maps'
 import DrawerButton from '../components/navigation_header/DrawerButton'
 import AreaMap from '../components/location/AreaMap'
 import UserMarker from '../components/tracking/UserMarker'
 import { UserLocation } from '../stores/TrackingStore.mobx'
+import { User } from '../stores/UserStore.mobx'
+import { Event } from '../stores/EventStore.mobx'
 import Layout from '../../constants/Layout'
 import TabBar from '../components/TabBar'
 import TabButton from '../components/TabButton'
 import ModalView from '../components/modal/ModalView'
 import UsersList from '../components/user/UsersList'
-import { User } from '../stores/UserStore.mobx'
+import Header from '../components/Header'
+import Colors from '../../constants/Colors'
+import MenuModalOption from '../components/modal/MenuModalOption'
+import RideItem from '../components/ride/RideItem'
+import moment from 'moment'
 
 export default
-@inject('UserStore', 'TrackingStore')
+@inject('UserStore', 'TrackingStore', 'EventStore')
 @observer
 class TrackingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -28,19 +34,45 @@ class TrackingScreen extends React.Component {
   MAX_COLORS = 15
 
   state = {
-    modalVisible: false,
+    usersModalVisible: false,
+    typeModalVisible: false,
+    eventModalVisible: false,
     users: {}
   }
 
-  showModal = () => {
+  showUsersModal = () => {
     this.setState({
-      modalVisible: true
+      usersModalVisible: true
     })
   }
 
-  hideModal = () => {
+  hideUsersModal = () => {
     this.setState({
-      modalVisible: false
+      usersModalVisible: false
+    })
+  }
+
+  showTypeModal = () => {
+    this.setState({
+      typeModalVisible: true
+    })
+  }
+
+  hideTypeModal = () => {
+    this.setState({
+      typeModalVisible: false
+    })
+  }
+
+  showEventModal = () => {
+    this.setState({
+      eventModalVisible: true
+    })
+  }
+
+  hideEventModal = () => {
+    this.setState({
+      eventModalVisible: false
     })
   }
 
@@ -119,26 +151,26 @@ class TrackingScreen extends React.Component {
         // TODO: Badge
         style={styles.tabBarButton}
         icon='list'
-        onPress={this.state.modalVisible ? this.hideModal : this.showModal}
+        onPress={this.state.usersModalVisible ? this.hideUsersModal : this.showUsersModal}
         title='Show users'
-        active={this.state.modalVisible}
+        active={this.state.usersModalVisible}
         badge={this.props.TrackingStore.trackedUsers.length}
       />
       <TabButton
         active={active}
         style={styles.tabBarButton}
         icon={active ? 'my-location' : 'location-searching'}
-        onPress={() => active ? this.props.TrackingStore.stop() : this.props.TrackingStore.enable('friends')}
+        onPress={() => active ? this.props.TrackingStore.stop() : this.showTypeModal()}
         title={active ? 'Stop tracking' : 'Start tracking'}
       />
     </TabBar>
   </View>
 
-  renderModal = () => <ModalView
-    isVisible={this.state.modalVisible}
-    onBackButtonPress={this.hideModal}
-    onBackdropPress={this.hideModal}
-    style={styles.modal}
+  renderUsersModal = () => <ModalView
+    isVisible={this.state.usersModalVisible}
+    onBackButtonPress={this.hideUsersModal}
+    onBackdropPress={this.hideUsersModal}
+    style={styles.usersModal}
   >
     <View
       style={styles.usersList}
@@ -155,6 +187,77 @@ class TrackingScreen extends React.Component {
     </View>
   </ModalView>
 
+  renderTypeModal = () => <ModalView
+    isVisible={this.state.typeModalVisible}
+    onBackButtonPress={this.hideTypeModal}
+    onBackdropPress={this.hideTypeModal}
+  >
+    <Header style={styles.header}>Visibility</Header>
+    <MenuModalOption
+      style={styles.option}
+      onPress={() => {
+        this.props.TrackingStore.enable('friends')
+        this.hideTypeModal()
+      }}
+      label='Friends'
+      description='All your friends can see your location'
+      icon='people-outline'
+    />
+    <MenuModalOption
+      style={styles.option}
+      onPress={() => {
+        this.hideTypeModal()
+        this.showEventModal()
+      }}
+      label='Event'
+      description='Allow people you are riding with to see your location'
+      icon='event'
+    />
+    <MenuModalOption
+      style={styles.option}
+      onPress={() => {
+        this.props.TrackingStore.enable('emergency')
+        this.hideTypeModal()
+      }}
+      label='Emergency'
+      description='Anyone nearby can see your location. Use if you need help!'
+      icon='healing'
+      highlight
+    />
+  </ModalView>
+
+  renderEventsModal = () => <ModalView
+    isVisible={this.state.eventModalVisible}
+    onBackButtonPress={this.hideEventModal}
+    onBackdropPress={this.hideEventModal}
+  >
+    <Header style={styles.header}>Events</Header>
+    <FlatList
+      data={this.props.EventStore
+        .list(this.props.UserStore.currentUser.events)
+        .filter((event: Event) => event.datetime * 1000 > moment().startOf('day'))}
+      renderItem={this.itemComponent}
+      ListEmptyComponent={<Text style={styles.listEmptyText}>No current events, create one!</Text>}
+      keyExtractor={(item: Event) => 'event_' + item.id}
+      onRefresh={this.refresh}
+      refreshing={false}
+      extraData={this.props.EventStore.invites.length}
+      style={styles.eventList}
+    />
+  </ModalView>
+
+  itemComponent = (item) => {
+    let event: Event = item.item
+    return <TouchableHighlight
+      onPress={() => {
+        this.props.TrackingStore.enable('event', event)
+        this.hideEventModal()
+      }}
+    >
+      <RideItem ride={event} style={styles.eventContainer} />
+    </TouchableHighlight>
+  }
+
   render () {
     let active = !!this.props.TrackingStore.status
     return (
@@ -165,7 +268,9 @@ class TrackingScreen extends React.Component {
           polylines={this.getLines()}
         />
         {this.renderTabBar(active)}
-        {this.renderModal()}
+        {this.renderUsersModal()}
+        {this.renderTypeModal()}
+        {this.renderEventsModal()}
       </View>
     )
   }
@@ -178,12 +283,27 @@ const styles = StyleSheet.create({
   tabBarButton: {
     width: Layout.window.wp(50)
   },
-  modal: {
+  usersModal: {
     justifyContent: 'flex-end',
     margin: 0
   },
   usersList: {
     width: '100%',
     height: '50%'
+  },
+  header: {
+    paddingVertical: Layout.window.hp(1),
+    width: '100%',
+    textAlign: 'center',
+    backgroundColor: Colors.tintColor,
+    color: Colors.secondaryText
+  },
+  option: {
+    height: Layout.window.hp(10),
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.tabIconDefault
+  },
+  eventList: {
+    width: '90%'
   }
 })
