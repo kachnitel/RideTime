@@ -31,6 +31,7 @@ class AreaMap extends React.Component {
       }}
       style={styles.map}
       {...this.props}
+      ref={(ref) => this.props.updateRef && this.props.updateRef(ref)}
     >
       {this.props.markers}
       {this.props.polylines}
@@ -41,7 +42,8 @@ class AreaMap extends React.Component {
 AreaMap.propTypes = {
   LocationStore: PropTypes.instanceOf(LocationStore),
   markers: PropTypes.arrayOf(PropTypes.object),
-  polylines: PropTypes.arrayOf(PropTypes.object)
+  polylines: PropTypes.arrayOf(PropTypes.object),
+  updateRef: PropTypes.func
 }
 
 const styles = StyleSheet.create({
