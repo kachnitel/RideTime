@@ -254,9 +254,19 @@ class TrackingScreen extends React.Component {
         this.hideEventModal()
       }}
     >
-      <RideItem ride={event} style={styles.eventContainer} />
+      <RideItem ride={event} />
     </TouchableHighlight>
   }
+
+  renderEvent = () => this.props.TrackingStore.status === 'event' &&
+    <RideItem
+      ride={this.props.EventStore.get(this.props.TrackingStore.event)}
+      style={styles.currentEvent}
+    />
+
+  renderEmergency = () => this.props.TrackingStore.status === 'emergency' && <View style={styles.emergency}>
+    <Text>Emergency</Text>
+  </View>
 
   render () {
     let active = !!this.props.TrackingStore.status
@@ -267,6 +277,8 @@ class TrackingScreen extends React.Component {
           markers={this.getMarkers()}
           polylines={this.getLines()}
         />
+        {this.renderEvent()}
+        {this.renderEmergency()}
         {this.renderTabBar(active)}
         {this.renderUsersModal()}
         {this.renderTypeModal()}
@@ -305,5 +317,15 @@ const styles = StyleSheet.create({
   },
   eventList: {
     width: '90%'
+  },
+  currentEvent: {
+    height: Layout.window.hp(17),
+    padding: Layout.window.wp(2)
+  },
+  emergency: {
+    backgroundColor: 'red',
+    padding: Layout.window.wp(2),
+    alignItems: 'center'
+
   }
 })
