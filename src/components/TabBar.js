@@ -15,23 +15,26 @@ export default class TabBar extends Component {
     this.props.options[index].onPress()
   }
 
+  renderTabs = () => this.props.options && <View style={styles.tabs}>
+    {this.props.options.map((option, index) => <View
+      style={{
+        width: (100 / this.props.options.length).toString() + '%'
+      }}
+      key={'option_' + index + '_' + option.title}
+    >
+      <TabButton
+        {...option}
+        onPress={() => this.handleSelect(index)}
+        active={index === this.state.activeIndex}
+        disabled={index === this.state.activeIndex}
+      />
+    </View>)}
+  </View>
+
   render () {
-    let buttonWidth = (100 / this.props.options.length).toString() + '%'
     return (
       <View {...this.props} style={{ ...styles.container, ...this.props.style }}>
-        <View style={styles.tabs}>
-          {this.props.options.map((option, index) => <View
-            style={{ width: buttonWidth }}
-            key={'option_' + index + '_' + option.title}
-          >
-            <TabButton
-              {...option}
-              onPress={() => this.handleSelect(index)}
-              active={index === this.state.activeIndex}
-              disabled={index === this.state.activeIndex}
-            />
-          </View>)}
-        </View>
+        {this.renderTabs()}
         {this.props.children}
       </View>
     )
