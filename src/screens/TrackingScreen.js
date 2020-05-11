@@ -32,6 +32,7 @@ class TrackingScreen extends React.Component {
 
   _refreshInterval = null
   MAX_COLORS = 15
+  map = null
 
   state = {
     usersModalVisible: false,
@@ -148,7 +149,6 @@ class TrackingScreen extends React.Component {
   renderTabBar = (active: Boolean) => <View style={styles.tabBarContainer}>
     <TabBar>
       <TabButton
-        // TODO: Badge
         style={styles.tabBarButton}
         icon='list'
         onPress={this.state.usersModalVisible ? this.hideUsersModal : this.showUsersModal}
@@ -181,8 +181,15 @@ class TrackingScreen extends React.Component {
           title: 'Tracked users',
           data: this.props.TrackingStore.trackedUsers.slice()
         }]}
-        // TODO: center map
-        onItemPress={(user: User) => console.log(user.id)}
+        onItemPress={(user: User) => {
+          let userloc: UserLocation = this.props.TrackingStore.current
+            .filter((ul: UserLocation) => ul.user === user)[0]
+          let coords = {
+            latitude: userloc.coords[0],
+            longitude: userloc.coords[1]
+          }
+          this.map.animateCamera({ center: coords }, { duration: 500 })
+        }}
       />
     </View>
   </ModalView>
@@ -236,8 +243,8 @@ class TrackingScreen extends React.Component {
       data={this.props.EventStore
         .list(this.props.UserStore.currentUser.events)
         .filter((event: Event) => event.datetime * 1000 > moment().startOf('day'))}
-      renderItem={this.itemComponent}
-      ListEmptyComponent={<Text style={styles.listEmptyText}>No current events, create one!</Text>}
+      renderItem={this.eventComponent}
+      ListEmptyComponent={<Text style={styles.listEmptyText}>No current events, why not start one!</Text>}
       keyExtractor={(item: Event) => 'event_' + item.id}
       onRefresh={this.refresh}
       refreshing={false}
@@ -246,7 +253,7 @@ class TrackingScreen extends React.Component {
     />
   </ModalView>
 
-  itemComponent = (item) => {
+  eventComponent = (item) => {
     let event: Event = item.item
     return <TouchableHighlight
       onPress={() => {
@@ -264,9 +271,10 @@ class TrackingScreen extends React.Component {
       style={styles.currentEvent}
     />
 
-  renderEmergency = () => this.props.TrackingStore.status === 'emergency' && <View style={styles.emergency}>
-    <Text>Emergency</Text>
-  </View>
+  renderEmergency = () => this.props.TrackingStore.status === 'emergency' &&
+    <View style={styles.emergency}>
+      <Text>Emergency</Text>
+    </View>
 
   render () {
     let active = !!this.props.TrackingStore.status
@@ -276,6 +284,7 @@ class TrackingScreen extends React.Component {
           showsUserLocation
           markers={this.getMarkers()}
           polylines={this.getLines()}
+          updateRef={(map) => { this.map = map }}
         />
         {this.renderEvent()}
         {this.renderEmergency()}
