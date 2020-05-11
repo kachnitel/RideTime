@@ -10,7 +10,7 @@ export default
 class RideItem extends React.Component {
   render () {
     return (
-      <View>
+      <View {...this.props}>
         <Header>{this.props.ride.title}</Header>
         <RideItemDetail ride={this.props.ride} />
         <RidersListCompact userIDs={this.props.ride.members.slice()} />

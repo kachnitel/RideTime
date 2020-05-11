@@ -1,7 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<View>
+<View
+  ride={
+    Object {
+      "difficulty": 1,
+      "location": "Alice Lake",
+      "locationGps": Array [
+        49.775666,
+        -123.123307,
+      ],
+      "members": Array [
+        1,
+      ],
+      "route": "Some trails",
+      "terrain": "trail",
+      "title": "Joey's Alice lake lap",
+    }
+  }
+>
   <Text
     style={
       Object {
@@ -61,7 +78,30 @@ exports[`renders correctly 1`] = `
 `;
 
 exports[`renders correctly with style 1`] = `
-<View>
+<View
+  ride={
+    Object {
+      "difficulty": 1,
+      "location": "Alice Lake",
+      "locationGps": Array [
+        49.775666,
+        -123.123307,
+      ],
+      "members": Array [
+        1,
+      ],
+      "route": "Some trails",
+      "terrain": "trail",
+      "title": "Joey's Alice lake lap",
+    }
+  }
+  style={
+    Object {
+      "backgroundColor": "black",
+      "color": "#fff",
+    }
+  }
+>
   <Text
     style={
       Object {
