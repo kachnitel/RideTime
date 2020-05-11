@@ -5,10 +5,13 @@ import { Polyline } from 'react-native-maps'
 import DrawerButton from '../components/navigation_header/DrawerButton'
 import AreaMap from '../components/location/AreaMap'
 import UserMarker from '../components/tracking/UserMarker'
-import Button from '../components/form/Button'
 import { UserLocation } from '../stores/TrackingStore.mobx'
 import Layout from '../../constants/Layout'
-import Colors from '../../constants/Colors'
+import TabBar from '../components/TabBar'
+import TabButton from '../components/TabButton'
+import ModalView from '../components/modal/ModalView'
+import UsersList from '../components/user/UsersList'
+import { User } from '../stores/UserStore.mobx'
 
 export default
 @inject('UserStore', 'TrackingStore')
@@ -25,7 +28,20 @@ class TrackingScreen extends React.Component {
   MAX_COLORS = 15
 
   state = {
+    modalVisible: false,
     users: {}
+  }
+
+  showModal = () => {
+    this.setState({
+      modalVisible: true
+    })
+  }
+
+  hideModal = () => {
+    this.setState({
+      modalVisible: false
+    })
   }
 
   componentDidMount = () => {
@@ -97,6 +113,48 @@ class TrackingScreen extends React.Component {
     return (c)
   }
 
+  renderTabBar = (active: Boolean) => <View style={styles.tabBarContainer}>
+    <TabBar>
+      <TabButton
+        // TODO: Badge
+        style={styles.tabBarButton}
+        icon='list'
+        onPress={this.state.modalVisible ? this.hideModal : this.showModal}
+        title='Show users'
+        active={this.state.modalVisible}
+        badge={this.props.TrackingStore.trackedUsers.length}
+      />
+      <TabButton
+        active={active}
+        style={styles.tabBarButton}
+        icon={active ? 'my-location' : 'location-searching'}
+        onPress={() => active ? this.props.TrackingStore.stop() : this.props.TrackingStore.enable('friends')}
+        title={active ? 'Stop tracking' : 'Start tracking'}
+      />
+    </TabBar>
+  </View>
+
+  renderModal = () => <ModalView
+    isVisible={this.state.modalVisible}
+    onBackButtonPress={this.hideModal}
+    onBackdropPress={this.hideModal}
+    style={styles.modal}
+  >
+    <View
+      style={styles.usersList}
+    >
+      <UsersList
+      // REVIEW: separate current ride, friends, emergency on top and red badge
+        sections={[{
+          title: 'Tracked users',
+          data: this.props.TrackingStore.trackedUsers.slice()
+        }]}
+        // TODO: center map
+        onItemPress={(user: User) => console.log(user.id)}
+      />
+    </View>
+  </ModalView>
+
   render () {
     let active = !!this.props.TrackingStore.status
     return (
@@ -106,14 +164,8 @@ class TrackingScreen extends React.Component {
           markers={this.getMarkers()}
           polylines={this.getLines()}
         />
-        <View style={styles.startButton}>
-          <Button
-            title={active ? 'stop' : 'start'}
-            onPress={() => active ? this.props.TrackingStore.stop() : this.props.TrackingStore.enable('friends')}
-            color={active ? Colors.confirmationHighlight : undefined}
-          />
-        </View>
-        <Button title='clear data' onPress={() => this.props.TrackingStore._collection.clear()} />
+        {this.renderTabBar(active)}
+        {this.renderModal()}
       </View>
     )
   }
@@ -123,11 +175,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  startButton: {
-    position: 'absolute',
-    bottom: Layout.window.wp(10),
-    right: Layout.window.wp(10),
-    aspectRatio: 1,
-    borderRadius: Layout.window.hp(5)
+  tabBarButton: {
+    width: Layout.window.wp(50)
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0
+  },
+  usersList: {
+    width: '100%',
+    height: '50%'
   }
 })
