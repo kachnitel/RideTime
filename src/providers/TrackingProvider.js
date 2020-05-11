@@ -11,7 +11,7 @@ export default class LocationsProvider {
     sessionId: userLocation.user.id,
     timestamp: userLocation.timestamp,
     visibility: userLocation.visibility,
-    event: userLocation.event?.id
+    event: userLocation.event
   })))
 
   clear = () => ApiConnection.delete('api/tracking')

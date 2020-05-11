@@ -23,7 +23,7 @@ export default class TrackingStore extends BaseCollectionStore {
   @persist @observable _status = null // null|'event'|'friends'|'emergency'
   @persist @observable _event = null
 
-  @action updateEvent (newValue: Event) { this._event = newValue }
+  @action updateEvent (newValue: Number) { this._event = newValue }
   @computed get event () { return this._event }
 
   @action updateStatus (newValue: ?String) { this._status = newValue }
@@ -58,7 +58,7 @@ export default class TrackingStore extends BaseCollectionStore {
     await this.stores.location.getLocationPermissions()
 
     if (visibility === 'event') {
-      this.updateEvent(event)
+      this.updateEvent(event.id)
     }
     this.updateStatus(visibility)
 
@@ -125,8 +125,7 @@ export default class TrackingStore extends BaseCollectionStore {
     ul.updateTimestamp(Math.floor(location.timestamp / 1000))
     ul.updateUser(this.stores.user.currentUser)
     ul.updateVisibility(this._status)
-    this._event && ul.updateEvent(this._event)
-
+    this._status === 'event' && ul.updateEvent(this._event)
     this._queue.push(ul)
   }
 
