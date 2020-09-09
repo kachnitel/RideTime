@@ -29,4 +29,4 @@ social:
   - title: github
     url: https://github.com/kachnitel/RideTime
   - title: download
-    url: https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40kachnitel/RideTime-0b0539f36aae47c4b392a71144267756-signed.apk
+    url: https://ride-time.s3.ca-central-1.amazonaws.com/apk/RideTime-73db4232388d492dadfae35b66063418-signed.apk
