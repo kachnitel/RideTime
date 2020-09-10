@@ -75,10 +75,14 @@ export default class UserStore extends BaseCollectionStore {
   }
 
   async signIn () {
-    let signInResponse = await this.provider.signIn({
-      notificationsToken: await (new PushNotifications()).getToken()
-    })
-
+    try {
+      var signInResponse = await this.provider.signIn({
+        notificationsToken: await (new PushNotifications()).getToken()
+      })
+    } catch (error) {
+      logger.warn('Error signing in!', error)
+      return false
+    }
     return signInResponse.success
       ? this.upsert(signInResponse.user)
       : false
