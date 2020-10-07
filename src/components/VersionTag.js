@@ -25,11 +25,16 @@ class VersionTag extends Component {
     let delta = new Date().getTime() - this.lastPress
 
     if (delta < 200) {
-      let logs = await logger.getMessages(25)
-      this.setState({ logEntries: logs, logModalVisible: true })
+      this.loadLogs()
+      this.setState({ logModalVisible: true })
     }
 
     this.lastPress = new Date().getTime()
+  }
+
+  loadLogs = async () => {
+    let logs = await logger.getMessages(this.state.logEntries.length + 25)
+    this.setState({ logEntries: logs })
   }
 
   hideLogModal = () => this.setState({ logModalVisible: false })
@@ -43,6 +48,7 @@ class VersionTag extends Component {
       inverted
       renderItem={this.logEntry}
       keyExtractor={({ id }) => 'log_' + id}
+      onEndReached={this.loadLogs}
     />
     <Button
       onPress={this.sendMail}
