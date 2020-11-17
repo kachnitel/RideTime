@@ -58,6 +58,9 @@ class CreateRide extends React.Component {
     onChangeText={(desc) => this.props.Event.updateDescription(desc)}
   />
 
+  /**
+   * on edit go to select trails/route screen, add strava route option?
+   */
   route = () => <TextInputWithTitle
     title='Planned route'
     placeholder='Mashiter, 50 more shades, Rupert'

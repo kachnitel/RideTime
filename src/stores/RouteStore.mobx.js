@@ -29,7 +29,9 @@ export class Route extends BaseEntity {
     'location',
     'profile',
     'trails',
-    'alias'
+    'alias',
+    'source',
+    'remoteId'
   ]
 
   @observable _id = false
@@ -43,6 +45,8 @@ export class Route extends BaseEntity {
   @observable _location = null
   _trails = observable.array([])
   @observable _alias = null
+  @observable _source = null
+  @observable _remoteId = null
 
   @action updateId (newValue: Number) { this._id = newValue }
   @computed get id () { return this._id }
@@ -71,4 +75,10 @@ export class Route extends BaseEntity {
   @computed get trails () { return this._trails }
   @action addTrail (id: Number) { this._trails.indexOf(id) === -1 && this._trails.push(id) }
   @action removeTrail (id: Number) { this._trails.remove(id) }
+
+  @action updateSource (newValue: Number) { this._source = newValue }
+  @computed get source () { return this._source }
+
+  @action updateRemoteId (newValue: Number) { this._remoteId = newValue }
+  @computed get remoteId () { return this._remoteId }
 }

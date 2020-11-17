@@ -129,7 +129,9 @@ export class Location extends BaseEntity {
     'difficulties',
     'imagemap',
     'alias',
-    'coverPhoto'
+    'coverPhoto',
+    'source',
+    'remoteId'
   ]
 
   @observable _id = false
@@ -145,6 +147,8 @@ export class Location extends BaseEntity {
     3: 0,
     4: 0
   }
+  @observable _source = null
+  @observable _remoteId = null
 
   _trailsLoaded = {
     completed: false,
@@ -189,6 +193,12 @@ export class Location extends BaseEntity {
     return this.store.stores.event.list().filter((item) => item.location === this.id)
   }
 
+  @action updateSource (newValue: Number) { this._source = newValue }
+  @computed get source () { return this._source }
+
+  @action updateRemoteId (newValue: Number) { this._remoteId = newValue }
+  @computed get remoteId () { return this._remoteId }
+
   /**
    * Credit: https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
    *
@@ -216,7 +226,7 @@ export class Location extends BaseEntity {
 
   loadTrails = async () => {
     while (!this._trailsLoaded.completed) {
-      let response = await this.store.provider.trailsFilter({ rid: this.id })
+      let response = await this.store.provider.trailsFilter({ rid: this.remoteId })
       let data = response.results
       this.store.populateRelated({ trail: data })
       this._trailsLoaded.loaded += data.length
@@ -228,7 +238,7 @@ export class Location extends BaseEntity {
 
   loadRoutes = async () => {
     while (!this._routesLoaded.completed) {
-      let response = await this.store.provider.routesFilter({ rid: this.id })
+      let response = await this.store.provider.routesFilter({ rid: this.remoteId })
       let data = response.results
       this.store.populateRelated({ route: data })
       this._routesLoaded.loaded += data.length
