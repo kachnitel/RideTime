@@ -13,7 +13,7 @@ export default class LocationsProvider {
   }
 
   trailsFilter = (filter: Object) => {
-    return ApiConnection.get('api/locations/trails', {
+    return ApiConnection.get('api/trails', {
       filter: {
         activitytype: 1,
         ...filter
@@ -22,7 +22,7 @@ export default class LocationsProvider {
   }
 
   routesFilter = (filter: Object) => {
-    return ApiConnection.get('api/locations/routes', {
+    return ApiConnection.get('api/routes', {
       filter: {
         activitytype: 1,
         ...filter
