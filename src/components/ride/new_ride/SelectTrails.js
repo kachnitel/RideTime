@@ -32,7 +32,7 @@ class SelectTrails extends Component {
   }
 
   refresh = () =>
-    this.props.TrailStore.filter({ rid: this.props.location.id, ...this.props.filter })
+    this.props.TrailStore.filter({ rid: this.props.location.remoteId, ...this.props.filter })
 
   selectTrail = (trail: Trail) => {
     if (!this.state.selected.includes(trail)) {

@@ -15,7 +15,7 @@ class SelectRoute extends Component {
   }
 
   refresh = () =>
-    this.props.RouteStore.filter({ rid: this.props.location.id, ...this.props.filter })
+    this.props.RouteStore.filter({ rid: this.props.location.remoteId, ...this.props.filter })
 
   routesList = () => {
     let routes = this.props.location.routes
