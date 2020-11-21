@@ -18,7 +18,7 @@ const env = {
     version: Constants.manifest.version + '-dev'
   },
   staging: {
-    apiUrl: 'https://ridebikes.today',
+    apiUrl: 'https://api.ridebikes.today/' + Constants.manifest.extra.apiVersion,
     dev: false,
     version: Constants.manifest.version + '-' + Constants.manifest.releaseChannel
   }
