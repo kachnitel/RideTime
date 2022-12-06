@@ -42,7 +42,7 @@
     "mobx-react": "^5.4.4",
     "moment": "^2.24.0",
     "prop-types": "^15.6.2",
-    "qs": "^6.9.1",
+    "qs": "^6.9.7",
     "randomatic": "^3.1.1",
     "react": "16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
